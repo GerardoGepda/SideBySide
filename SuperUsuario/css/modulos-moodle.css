@@ -1,0 +1,50 @@
+
+.icon
+{
+
+  width: 30px;
+  margin-top: 13px;
+  margin-left: 20px;
+}
+
+.icon2
+{
+
+  width: 20px;
+  margin-right: 10px;
+}
+
+
+.title2-text
+{
+margin-left:25px;
+margin-top: -8px;
+color: white;
+font-weight: bold;
+letter-spacing: 2px;
+}
+
+
+
+.buttons
+{
+	float: right;
+}
+
+.main
+{
+background-color: #BE0032;
+border-radius: 40px;
+}
+#example
+{
+	color: black;
+}
+#main-inicio
+{
+	margin-top: 50px;
+}
+.card-body
+{
+	border-radius: 40px;
+}

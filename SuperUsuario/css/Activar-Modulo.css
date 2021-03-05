@@ -1,0 +1,58 @@
+
+.row {
+    margin: auto;
+    margin-top: 20px;
+    border-color: #CDCACA;
+    border-width: 3px;
+    border-radius: 40px;
+    border-style: solid;
+    width: 90%;
+}
+
+#table {
+    margin-left: -2%;
+    border-radius: 50px;
+}
+
+thead {
+    background-color: black;
+    color: white;
+}
+
+#table,
+#nota {
+    margin-top: 20px;
+}
+
+p {
+    color: black;
+    font-size: 14px;
+}
+
+#nota {
+    border-width: 2px;
+    border-color: #BE0032;
+    border-style: dotted;
+    height: 140px;
+    margin: 20px;
+}
+
+.icon-img {
+    width: 20px;
+    margin-top: -3px;
+    margin-right: 3px;
+}
+
+.icon-img-2 {
+    width: 20px;
+    margin-top: -3px;
+    margin-right: 25px;
+}
+
+#btn {
+    background-color: #BE0032;
+    height: 40px;
+    width: 125px;
+    margin: auto;
+    color: white;
+}
