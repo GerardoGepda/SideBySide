@@ -1,0 +1,386 @@
+		.title{
+background-color: #ADADB2;
+color: black;
+height: 55px;
+
+
+}
+.main-title {
+    font-size: 25px;
+    align-items: center;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-top: 12px;
+    margin-left: 5px;
+}
+h2 , .icon{
+  float: left;
+  font-family: 'Roboto', sans-serif;
+}
+
+.icon 
+{
+
+  width: 30px;
+  margin-top: 13px;
+  margin-left: 20px;
+}
+@media screen and (max-width: 480px) {
+	.main-title {
+    font-size: 15px;
+    align-items: center;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-top: 20px;
+    margin-left: 5px;
+}
+.icon 
+{
+
+  width: 25px;
+  margin-top: 16px;
+  margin-left: 20px;
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*Responsivo-design*/
+
+/*Resolucion para dispositivos moviles muy pequeños*/
+@media(max-width: 540px)
+{
+.main-title
+{
+	font-size: 16px;
+	margin-top: 20px;
+}
+#titulo
+{
+	font-size: 20px;
+}
+}
+/*Resolucion para dispositivos moviles  pequeños*/
+@media(min-width: 541px) and (max-width:720px )
+{
+
+}
+/*Resolucion para tablets*/
+@media(min-width: 721px) and (max-width: 960px) 
+{
+#status
+{
+	margin-left: 35px;
+}
+}
+/*Resolucion para pc de escritorio*/
+@media(min-width: 961px){
+	#linea
+{
+	
+	width: 80%;
+	margin-left: 30px;
+	max-width: 100%;
+	margin-bottom: -20px;
+}
+
+#boton1
+{
+	margin-right: 100px;
+}
+
+
+}
+
+
+
+/*Estilo de Formulario 1*/
+* {
+  box-sizing: border-box;
+}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+label {
+  padding: 12px 12px 12px 0;
+  display: inline-block;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  float: right;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+
+.col-25 {
+  float: left;
+  width: 25%;
+  margin-top: 6px;
+}
+
+.col-75 {
+  float: left;
+  width: 90%;
+  margin-top: 6px;
+}
+
+/*Fin de estilo de Formulario*/
+
+
+/*Estilo General*/
+#linea
+{
+	background-color: #e4e4e4;
+	height: 3px;
+	margin-top: -20px;
+	border-radius: 10px;
+	width: 89%;
+	margin-left: 30px;
+	max-width: 100%;
+	margin-bottom: -20px;
+}
+
+#btn
+{
+background-color: #9d120e;
+width: 200px;
+border-radius: 30px;
+font-size: 15px;
+margin: auto;
+color: white;
+}
+
+#boton1,#boton2
+{
+	display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#Contenedor1,#Contenedor2
+{
+	height: 90%;
+}
+#Contenedor1
+{
+	border-color: #e4e4e4;
+	border-style: solid;
+	border-width: 4px;
+	border-radius: 40px;
+}
+
+#Contenedor2
+{
+	border-color: white;
+	border-style: solid;
+	border-width: 4px;
+	border-radius: 40px;
+	background-color: #bcbbbc;
+}
+#Info-1_Texto-1
+{
+	display: inline-block;
+	color: black;
+}
+
+
+#label
+{
+	color: black;
+	margin-bottom: -20px;
+}
+#input
+{
+	background-color: #e4e4e4;
+	height: 30px;
+	border-radius: 20px;
+	border-color: white;
+}
+
+/*
+#mensaje
+{
+height: 50px;
+margin: auto;
+margin-bottom: 30px;
+width: 100%;
+}
+
+.title-detalles
+{
+	text-align: center;
+	font-weight:bold;
+	font-size: 25px;
+	letter-spacing: 2px;
+	color: black;
+	text-align: left;
+}
+
+#Imfo-1
+{
+	background-color: white;
+    border-color: #aaaaaa;
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 40px;
+}
+.Imfo-1-texto1
+{
+color: black;
+}
+.mb-4
+{
+	color: black;
+}
+#divisor
+{
+	 height: 3px;
+  background-color: #aaaaaa;
+  border-radius: 10px;
+}
+label
+{
+	color: black;
+}
+.subtitle-left,.subtitle-right,.subtitle,.subtitle-problem,.subtitle
+{
+	color: black;
+	font-weight: bold;
+	margin-bottom: -5px;
+	
+}
+.subtitle
+{
+	margin-left: 110px;
+}
+.subtitle-problem
+{
+	margin-left: 10%;
+	font-size: 10px;
+}
+.subtitle-left
+{
+	margin-left: 10px;
+}
+.subtitle-right
+{
+	margin-right: 1000px;
+}
+.subtitle
+{
+	margin-right: 75%;
+}
+.subtitle-problem
+{
+	margin-left: 35px;
+}
+#exampleFormControlTextarea3
+{
+background-color: #aaaaaa;
+border-radius: 10px;	
+}
+#input-info-left,#input-info-right,#input-info-problem
+{
+	background-color: #aaaaaa;
+	width: 200px;
+	border-radius: 20px;
+	height: 33px;
+	border-color: white;
+}
+#input-info-right
+{
+	margin-left: 100px;
+}
+#input-info-problem
+{
+	margin-left: 65px;
+}
+#btn-1,#btn-2
+{
+	background: #BE0032;
+	height: 37px;
+	width: 150px;
+	color: white;
+	border-radius: 30px;
+	font-size: 15px;
+	font-weight: bold;
+	margin-left: 120px;
+}
+.picture
+{
+	width: 25px;
+	height: 25px;
+	margin-right: 5px;
+}
+.card-text,.mb-4
+{
+	color: black;
+	font-weight: bold;
+}
+#texto1
+{
+font-style: italic;
+font-weight: normal;
+margin-left: 4px;
+}
+#Imfo-2
+{
+	background-color: #D9D2D2;
+	 border-color: #aaaaaa;
+    border-width: 5px;
+    border-style: solid;
+    border-radius: 40px;
+}
+#exampleFormControlTextarea3
+{
+	background-color: #c7c7c7;
+
+}
+#btn-2
+{
+	margin-top: 40px;
+	margin-bottom: 27px;
+}
+#main
+{
+	margin-top: -30px;
+	border-color: white;
+}
+.title-2
+{
+	margin-left: 30px;
+}*/
+@media screen and (max-width: 400px)
+{
+	#problema
+	{
+		font-size: 15px;
+	}
+}
