@@ -1,0 +1,35 @@
+<script type="text/javascript">
+    $(document).ready(function() {
+        $(".desinscribir").hide();
+
+    });
+
+</script>
+<script type="text/javascript">
+    function inscribe(alumno, taller, inscribir) {
+          $.post("inscribir.php",{alumno:alumno, taller:taller, inscribir:inscribir},function(data) {
+            if (data==1) {
+              $("#inscribir").hide();
+              $("#desinscribir").show();
+            }else if (data==2) {
+              $("#inscribir").show();
+              $("#desinscribir").hide();
+            }
+          });
+        }
+</script>
+[27-Nov-2019 09:21:18 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home2/oportunidad/public_html/Alumno/SoliHoras.php:15) in /home2/oportunidad/public_html/Alumno/SoliHoras.php on line 50
+[24-Nov-2020 12:55:24 America/Chicago] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/IndicacionesRetiros.php:1) in /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/templates/head.php on line 2
+[24-Nov-2020 12:58:21 America/Chicago] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/IndicacionesRetiros.php:1) in /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/templates/head.php on line 2
+[24-Nov-2020 12:58:26 America/Chicago] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/IndicacionesRetiros.php:1) in /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/templates/head.php on line 2
+[24-Nov-2020 12:59:58 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/IndicacionesRetiros.php:1) in /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/templates/head.php on line 2
+[24-Nov-2020 12:59:58 America/Chicago] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/IndicacionesRetiros.php:1) in /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/templates/head.php on line 3
+[24-Nov-2020 13:00:03 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/IndicacionesRetiros.php:1) in /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/templates/head.php on line 2
+[24-Nov-2020 13:00:03 America/Chicago] PHP Warning:  session_start(): Cannot send session cache limiter - headers already sent (output started at /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/IndicacionesRetiros.php:1) in /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/templates/head.php on line 3
+[22-Dec-2020 16:27:32 America/Chicago] PHP Warning:  copy(): Filename cannot be empty in /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/SoliHoras.php on line 173
+[22-Dec-2020 16:27:51 America/Chicago] PHP Warning:  copy(): Filename cannot be empty in /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/SoliHoras.php on line 173
+[17-Jan-2021 20:40:33 America/Chicago] PHP Parse error:  syntax error, unexpected '}', expecting end of file in /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/renovacionBeca.php on line 135
+[20-Jan-2021 21:28:39 America/Chicago] PHP Warning:  copy(): Filename cannot be empty in /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/SoliHoras.php on line 173
+[20-Jan-2021 21:28:39 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/SoliHoras.php:173) in /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/SoliHoras.php on line 238
+[20-Jan-2021 21:28:47 America/Chicago] PHP Warning:  copy(): Filename cannot be empty in /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/SoliHoras.php on line 173
+[20-Jan-2021 21:28:47 America/Chicago] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/SoliHoras.php:173) in /home2/oportunidad/Portal.workeysoportunidades.org/Alumno/SoliHoras.php on line 238
