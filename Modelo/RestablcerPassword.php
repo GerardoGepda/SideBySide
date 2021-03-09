@@ -122,8 +122,8 @@ if (isset($_POST['Restablecer']))
                      $consulta2->execute();
                 }
                 $_SESSION['message'] = 'Cuenta Activada';
-                $_SESSION['message2'] = 'success';             
-                header("Location: ../login.php");                               
+                $_SESSION['message2'] = 'success'; 
+                header("Location: ../index.php");                               
 				
             }
 			else

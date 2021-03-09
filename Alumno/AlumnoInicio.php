@@ -346,7 +346,6 @@ while($fila2 = $stmt2->fetch()){
 
 
 <!-- Fin primera Fila-->
-<br>
 <div class="row">
     <!--Comiezo de estructura de trabajo 2fila-->
     <div class="container-fluid text-center" ng-app="app">
@@ -365,33 +364,34 @@ while($fila2 = $stmt2->fetch()){
                     <div class="text-center align-self-center" id="carnet">
                         <br>
                         <img src="../img/imgUser/<?php echo $FotoAlumno?>" alt="img de usuario" class="user">
-
-
                         <h4 id="info1"><?php echo $Nombre_Alumno; ?></h4>
                         <h4 id="info1"><?php echo $Carnet; ?></h4>
-                        <h6 id="info1" class="little"> <?php echo utf8_encode($univerisdad); ?></h6>
+                        <h6 id="info1" class="little"> <?php echo $univerisdad; ?></h6>
 
                     </div>
 
                 </div>
 
                 <br class="salto"><br class="salto"><br class="salto"><br class="salto">
+                
                 <div class="Info-Alumno1-sec ">
 
                     <section class="opciones">
                         <p id="mainTitle" class="parrafo">Carrera: </p>
-                        <p class="carrera"><?php echo utf8_encode($Carrera )?></p>
+                        <p class="carrera"><?php echo $Carrera?></p>
                         <br>
                         <p id="mainTitle" class="promo1">Promocion: </p>
                         <p class="promo"><?php echo $promocion ?></p>
                         <br>
+
                         <p id="mainTitle" class="estado1">Estatus Actual: </p>
                         <p class="estado"><?php echo $Estado; ?></p>
                         <br>
+
                         <p id="mainTitle" class="estadolab1"> Estado Laboral: </p>
-                        <p class="estadolab" style="position: relative; right: 105px;">
-                            <?php echo "<b id='estado'>".$estadoLaboral."</b>";  ?></p>
+                        <p class="estadolab" style="position: relative; right: 105px;"><?php echo $estadoLaboral;  ?></p>
                         <p id="mainTitle" class="talleres1"> Total de Talleres: </p>
+                        
                         <p class="talleres"><?php echo "<b id='estado'>".$Historico."</b>";  ?></p>
                         <br>
                         <p id="mainTitle" class="financiamiento1"> Financiamiento: </p>
@@ -406,16 +406,16 @@ while($fila2 = $stmt2->fetch()){
                         $modulos = $row['CantidadModulos'];
                     }    
                     
-$TotalTalleresAlumno = $modulos; 
-$Porcentaje = ($TotalTalleresAlumno /6)*100 ;
-$TotalReunionAlumno =4;
-$TotalReuniones = 5;
-$Porc2 = round((($TotalReunionAlumno * 100)/$TotalReuniones),1);
-		?>
+                    $TotalTalleresAlumno = $modulos; 
+                    $Porcentaje = ($TotalTalleresAlumno /6)*100 ;
+                    $TotalReunionAlumno =4;
+                    $TotalReuniones = 5;
+                    $Porc2 = round((($TotalReunionAlumno * 100)/$TotalReuniones),1);
+		            ?>
                 </div>
             </div>
             <div class="Info-Alumno2">
-                <h3 class="subtitle-p">Progreso</h3>
+                <h3 class="subtitle-p text-center">Progreso</h3>
 
                 <section class="Info1 float-left h-50 w-75" style="margin-left:10%">
                     <div class="grafico ">
@@ -448,7 +448,6 @@ $Porc2 = round((($TotalReunionAlumno * 100)/$TotalReuniones),1);
                     </div>
                 </section>
             </div>
-            <br>
 
             <div class="Info-Alumno3 ">
                 <br class="salto"><br class="salto"><br class="salto"><br class="salto"><br class="salto"><br
@@ -497,22 +496,7 @@ $Porc2 = round((($TotalReunionAlumno * 100)/$TotalReuniones),1);
                     <a href="SolicitudCambio.php" class="btn btn-info" id="button-info">Cambiar</a>
                 </div>
             </div>
-            <?php
-						if ($consulta11->rowCount()>=1)
-						{
-							while ($fila11=$consulta11->fetch())
-								{		echo "
-							<tr class='bg-light'>
-							<td>".$fila11['Titulo']."</td>
-							<td>".$fila11['Fecha']."</td>
-							<td>".$fila11['asistencia']."</td>
 
-							</tr>";
-
-						}
-					}
-
-					?>
 
             </tbody>
             </table>

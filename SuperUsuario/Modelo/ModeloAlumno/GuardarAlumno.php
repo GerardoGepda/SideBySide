@@ -39,7 +39,9 @@ else if(isset($_POST['CarnetAlumno']))
 		$Correo= strtolower($_POST['correo']);
 		$rol = $_POST['cargo'];
 		$asistencia = $_POST['Asistencia'];
-		
+
+		$EstadoCerti = $_POST['estadoCerti'];
+		$CantidadModulos = $_POST['cantidadModulos'];
 
 		$TotalTaller = $_POST['cantidaTaller'];
 		$StatusActual = $_POST['statusActual'];
@@ -98,7 +100,11 @@ else if(isset($_POST['CarnetAlumno']))
   
   				//Si todo fue correcto dejara pasar los datos de lo contrario no
   				//Prepara la  consulta para insertar un dato
-				$consulta=$pdo->prepare("INSERT INTO alumnos(ID_Alumno,Nombre,Id_Carrera,Class,correo,ID_Empresa,Sexo,Estado,ID_Status,ID_Sede,SedeAsistencia,TotalTalleres,StatusActual,FuenteFinacimiento) VALUES(:CarnetAlumno,:NombreAlumno,:NombreCarrera,:NClass,:correo,:idempresa,:Sexo,:estadoAlumno,:IDStatus,:sede,:Asistencia,:TotalTalleres,:StatusActual,:FuenteFinacimiento)");
+				$consulta=$pdo->prepare("INSERT INTO alumnos(ID_Alumno,Nombre,Id_Carrera,
+				Class,correo,ID_Empresa,Sexo,Estado,ID_Status,ID_Sede,SedeAsistencia,TotalTalleres,
+				StatusActual,FuenteFinacimiento,CantidadModulos,EstadoCerti) VALUES(:CarnetAlumno,:NombreAlumno,:NombreCarrera,
+				:NClass,:correo,:idempresa,:Sexo,:estadoAlumno,:IDStatus,:sede,:Asistencia,
+				:TotalTalleres,:StatusActual,:FuenteFinacimiento,:CantidadModulos,:EstadoCerti)");
 
 				// Pasamos los parametros para la inserción de datos
                  	$consulta->bindParam(':CarnetAlumno',$IDCarnet);
@@ -116,7 +122,8 @@ else if(isset($_POST['CarnetAlumno']))
                  	$consulta->bindParam(':TotalTalleres',$TotalTaller);
                  	$consulta->bindParam(':StatusActual',$StatusActual);
                  	$consulta->bindParam(':FuenteFinacimiento',$Finaciamiento);
-             
+					$consulta->bindParam(':CantidadModulos',$CantidadModulos);
+					$consulta->bindParam(':EstadoCerti',$EstadoCerti);
 
                  	if (!$consulta->execute()) // Si los datos no fueron correcto Nos dira en una alerta
                  	{
@@ -152,8 +159,8 @@ else if(isset($_POST['CarnetAlumno']))
 				$PrimerNombre = explode(" ", $NombreAlumno);
 				//Enviamos el correo para  mandar la contraseña generado 
 				$asunto = "Bienvenido a Workeys Oportunidades";
-$header = "Este correo electrónico ha sido generado automáticamente, por favor no responda a este correo. Hola ".$PrimerNombre[0]." queremos darte  la noticia que te han inscrito a una plataforma  llamada  Workeys Oportunidades la cuál podrá acceder en la siguiente  URL  http://portal.workeysoportunidades.org/";
-$Mensaje= "La cuál podrás acceder  con tu correo  oficial de  Oportunidades y tu contraseña  es:  " .$password. "   Una  vez accediendo a la plataforma podrás cambiarla. \n\n\n Saludos Cordiales.";
+				$header = "Este correo electrónico ha sido generado automáticamente, por favor no responda a este correo. Hola ".$PrimerNombre[0]." queremos darte  la noticia que te han inscrito a una plataforma  llamada  Workeys Oportunidades la cuál podrá acceder en la siguiente  URL  http://portal.workeysoportunidades.org/";
+				$Mensaje= "La cuál podrás acceder  con tu correo  oficial de  Oportunidades y tu contraseña  es:  " .$password. "   Una  vez accediendo a la plataforma podrás cambiarla. \n\n\n Saludos Cordiales.";
 
 				if (!$consulta3->execute()) 
 				{
@@ -163,7 +170,6 @@ $Mensaje= "La cuál podrás acceder  con tu correo  oficial de  Oportunidades y 
 
 				}else
 				{
-
 					if ( mail($Correo,$asunto,$Mensaje,$header)) {
 					//Si todo fue correcto muestra el resultado con exito;
 						$_SESSION['message3'] = 'Correo Enviado';
@@ -180,10 +186,6 @@ $Mensaje= "La cuál podrás acceder  con tu correo  oficial de  Oportunidades y 
 					$_SESSION['message2'] = 'success';
 					header("Location: ../../SIT-CrearAlumno.php");
 				}
-
-
-
-
                  }// fin de else de Consutla1
 
 
@@ -192,11 +194,6 @@ $Mensaje= "La cuál podrás acceder  con tu correo  oficial de  Oportunidades y 
 
 
 		}
-		
-
-
-	
-
 
 
 	}// Fin del if  (isset($_POST['Guardar_Datos']))  

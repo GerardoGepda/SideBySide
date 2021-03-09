@@ -436,11 +436,25 @@ CAMBIAR MENU, CONSULTAR-->
 									</select>	
 									
 								</div>
+								<div class="md-form">
+									<label for="materialRegisterFormFirstName">Estado de certificación</label>
+									<select type="text" id="estadoCerti" name="estadoCerti" class="form-control" required >
+										<option value="" disabled selected >Seleccione la opción</option>
+										<option value="Activo" >Activo</option>
+										<option value="Graduado" >Graduado</option>
+									</select>	
+									
+								</div>
 							</div>
 							<div class="col">
 								<div class="md-form">
 									<label for="materialRegisterFormFirstName">Cantidad de talleres</label>
 									<input type="number" name="cantidaTaller" class="form-control" placeholder="Ingrese la cantida de talleres" min="0" required >
+									
+								</div>
+								<div class="md-form">
+									<label for="materialRegisterFormFirstName">Cantidad de modulos</label>
+									<input type="number" name="cantidadModulos" class="form-control" placeholder="Ingrese la cantida de talleres" min="0" required >
 									
 								</div>
 
