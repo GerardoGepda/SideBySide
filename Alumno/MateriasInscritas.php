@@ -5,11 +5,7 @@
   
   //Manda  allamar plantillas
   require_once 'templates/header.php';
-
-  //require_once 'templates/MenuVertical.php';
-
   require_once 'templates/MenuHorizontal.php';
-
   require '../Conexion/conexion.php';
 
         //Carnet del alumno
@@ -36,9 +32,6 @@
 
 
 ?>
-
-
-
 <!--div principal-->
 <div class="container-fluid text-center">
 <div class="title">
@@ -49,10 +42,6 @@
     <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #2D2D2E">
 
         <!-- Navbar brand -->
-
-
-
-
         <!--///////////////////////////////////////////////-->
         <!--Para ver el nombre del archivo que sube-->
         <script type="text/javascript">
@@ -84,8 +73,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="MateriasInscritas.php">Inscritas</a>
                 </li>
-
-
                 <li class="nav-item">
                     <a class="nav-link" href="MateriasAprobadas.php">Aprobadas</a>
                 </li>
@@ -107,23 +94,12 @@
     <!--/.Navbar-->
 
     <div>
-
         <div>
-
-
             <div class="container" style="background: white; "><br>
-
-                <br>
-                <br>
-
+                <br><br>
                 <div class="row">
-
                     <!--Primera columna-->
                     <div class="col-sm" style="color: #343434;">
-
-
-
-
                         <style type="text/css">
                         .card {
                             background: red;
@@ -190,12 +166,9 @@
                             height: 50px;
                         }
                         </style>
-
-
                         <div class='centerTable '>
                             <table id="makeEditable" class="thead-dark">
                                 <h3 class="card-header h3s bg-light">Lista de materias Inscritas</h3>
-
                                 <thead>
                                     <tr>
                                         <th>Codigo</th>
@@ -204,81 +177,45 @@
                                         <th>Ciclo</th>
                                         <th>Nota</th>
                                         <th>Estado</th>
-
                                     </tr>
                                 </thead>
-
                                 <tbody>
 
                                     <?php
         //consulta que muestra las materias
        $consulMaterias=$pdo->prepare("SELECT IM.nota,IM.idMateria,IM.matricula, M.nombreMateria, IM.estado, IC.cicloU, M.idExpedienteU
-       from materias M
-       INNER JOIN inscripcionmateria IM
-      ON IM.idMateria= M.idMateria
-
-       INNER JOIN inscripcionciclos IC
-      ON IC.Id_InscripcionC=IM.Id_InscripcionC
-
-      WHERE M.idExpedienteU = ? AND IM.estado = 'Inscrita'");
-
+       from materias M INNER JOIN inscripcionmateria IM ON IM.idMateria= M.idMateria INNER JOIN inscripcionciclos IC
+      ON IC.Id_InscripcionC=IM.Id_InscripcionC WHERE M.idExpedienteU = ? AND IM.estado = 'Inscrita'");
        $consulMaterias->execute(array($idExpedienteU));
-
-
-
-        
         if ($consulMaterias->rowCount()>=1)
         {
           while ($fila2=$consulMaterias->fetch())
           { 
-
-
              if ($fila2['estadoM'] !='Inscrita') {
-
                echo "<tr>
                     <td >".$fila2['idMateria']."</td>
-                    <td class='oscuro'>".$fila2['nombreMateria']."</td>
+                    <td class='oscuro'>".utf8_decode($fila2['nombreMateria'])."</td>
                     <td >".$fila2['matricula']."</td>
-                     <td >".$fila2['cicloU']."</td>
-                       <td >".$fila2['nota']."</td>
+                    <td >".$fila2['cicloU']."</td>
+                    <td >".$fila2['nota']."</td>
                     <td >".$fila2['estado']."</td>
                   </tr>";     
-
-        
-         
              }else
                  {
 
                    echo "<tr>
                     <td >".$fila2['idMateria']."</td>
-                    <td class='oscuro'>".$fila2['nombreMateria']."</td>
+                    <td class='oscuro'>".utf8_decode($fila2['nombreMateria'])."</td>
                     <td >".$fila2['nota']."</td>
-                    <td >".$fila2['estadoM']."</td>
-                   
-                    
-
-
-                    
+                    <td >".$fila2['estadoM']."</td>    
                   </tr>";     
-
-       
                   } //fin de else
-
-
-
-           
-                            
                }//fin de while
             }else{
               echo "<tr><td colspan='6'>No hay ninguna asignatura aprobada.</td></tr>";
             }//fin de else-if
-                                       
-
-                                  
+                         
             ?>
-
-
-
                                 </tbody>
 
                                 <tfoot>
@@ -286,36 +223,15 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <br>
-                        <br>
-                        <br><br><br>
-
-
-                        <br>
-
-                        <!--div class="f1-buttons">
-                               <button type="button" class="btn btn-next btn-dark">Enviar</button>
-                          </div-->
-                        <br>
-
-
+                        <br><br><br><br><br><br><br>
                     </div>
-
                     <!-- Fin Primera columna-->
-
                     <br>
-
-
-
                 </div>
                 <!--Fin de row-->
-
-
             </div>
             <!--Fin de container-->
-
         </div>
-
     </div>
 </div>
 <br>
@@ -327,8 +243,4 @@
 </div>
 
 <!-- /#wrapper -->
-<?php
-
-  require_once 'templates/footer.php';
-
-?>
+<?php  require_once 'templates/footer.php'; ?>

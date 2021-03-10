@@ -2,38 +2,36 @@
 <title>Pensum</title>
 <link rel="stylesheet" href="assets1/css1/style.css">
 
-<?php  
-  
-  //Manda  allamar plantillas
-  require_once 'templates/header.php';
+<?php
 
-  //require_once 'templates/MenuVertical.php';
+//Manda  allamar plantillas
+require_once 'templates/header.php';
 
-  require_once 'templates/MenuHorizontal.php';
+//require_once 'templates/MenuVertical.php';
 
-  require '../Conexion/conexion.php';
+require_once 'templates/MenuHorizontal.php';
 
-        //Carnet del alumno
-        $stmt1 =$dbh->prepare("SELECT `ID_Alumno`  FROM `alumnos` WHERE correo='".$_SESSION['Email']."'");
-        $stmt1->execute();
-         while($fila = $stmt1->fetch()){
-           $alumno=$fila["ID_Alumno"];
-         }//Fin de while 
+require '../Conexion/conexion.php';
+
+//Carnet del alumno
+$stmt1 = $dbh->prepare("SELECT `ID_Alumno`  FROM `alumnos` WHERE correo='" . $_SESSION['Email'] . "'");
+$stmt1->execute();
+while ($fila = $stmt1->fetch()) {
+    $alumno = $fila["ID_Alumno"];
+} //Fin de while 
 
 
 
-         // Expediente U
-        $consulta=$pdo->prepare("SELECT idExpedienteU  FROM expedienteu WHERE ID_Alumno = ? AND estado = 'Activo'");
-     
-        $consulta->execute(array($alumno));
-        $idExpedienteU;
-         if ($consulta->rowCount()>=1)
-         {
-           while ($fila=$consulta->fetch())
-           {   
-             $idExpedienteU = $fila['idExpedienteU'];
-           }
-         }//fin de condicion
+// Expediente U
+$consulta = $pdo->prepare("SELECT idExpedienteU  FROM expedienteu WHERE ID_Alumno = ? AND estado = 'Activo'");
+
+$consulta->execute(array($alumno));
+$idExpedienteU;
+if ($consulta->rowCount() >= 1) {
+    while ($fila = $consulta->fetch()) {
+        $idExpedienteU = $fila['idExpedienteU'];
+    }
+} //fin de condicion
 
 
 ?>
@@ -43,16 +41,16 @@
 <!--div principal-->
 <div class="container-fluid text-center">
     <!--Navbar-->
-    
+
     <div class="title">
-	<a href="javascript:history.back();"><img src="../img/proximo.svg" class="icon"></a>
-	<h2 class="main-title" >Pensum</h2>
-</div>
-         <div class="alerta">
-            <?php
-            include "config/Alerta.php";
-            ?>
-          </div>
+        <a href="javascript:history.back();"><img src="../img/proximo.svg" class="icon"></a>
+        <h2 class="main-title">Pensum</h2>
+    </div>
+    <div class="alerta">
+        <?php
+        include "config/Alerta.php";
+        ?>
+    </div>
     <nav class="navbar navbar-expand-sm navbar-dark" style="background-color: #2D2D2E">
 
         <!-- Navbar brand -->
@@ -63,9 +61,9 @@
         <!--///////////////////////////////////////////////-->
         <!--Para ver el nombre del archivo que sube-->
         <script type="text/javascript">
-        $(document).ready(function() {
-            bsCustomFileInput.init()
-        });
+            $(document).ready(function() {
+                bsCustomFileInput.init()
+            });
         </script>
         <br><br>
         <!--Fin de funcion-->
@@ -73,8 +71,7 @@
 
 
         <!-- Collapse button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
-            aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -113,23 +110,16 @@
     <!--/.Navbar-->
 
     <div>
-
         <div>
-
-
             <div class="container" style="background: white; "><br>
-
                 <h2 style="color: #BF3E3E;">Pensum</h2>
-
                 <div class="row">
-
                     <!--Primera columna-->
                     <div class="col-sm" style="color: #343434;">
 
 
                         <span class="float-right">
-                            <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#ModalMateria'
-                                style="border-radius: 20px;
+                            <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#ModalMateria' style="border-radius: 20px;
     border: 2px solid #9d120e;
     width: 100px;height: 50px;
      background-color: #9d120e;
@@ -138,19 +128,19 @@
                             </button>
 
                             <?php
-                                    //consulta para seleccionar el comprobante de pensum
-                                    $PDF=$pdo->prepare("SELECT pensum FROM `expedienteu` WHERE `idExpedienteU` = ? ");
-                                    $PDF->execute(array($idExpedienteU));//ejecute consulta
+                            //consulta para seleccionar el comprobante de pensum
+                            $PDF = $pdo->prepare("SELECT pensum FROM `expedienteu` WHERE `idExpedienteU` = ? ");
+                            $PDF->execute(array($idExpedienteU)); //ejecute consulta
 
 
-                                    if ($PDF->rowCount()>=1) {
-                                      //recorre las filas
-                                      while ($filapdf=$PDF->fetch()) {
-                                        //Validacion de boton finalizar
-                                      //------------------------------
+                            if ($PDF->rowCount() >= 1) {
+                                //recorre las filas
+                                while ($filapdf = $PDF->fetch()) {
+                                    //Validacion de boton finalizar
+                                    //------------------------------
 
-                                      //si comprobante es diferente a vacio
-                                     /* if ($filapdf['pensum'] !=null) {
+                                    //si comprobante es diferente a vacio
+                                    /* if ($filapdf['pensum'] !=null) {
 
                                         echo "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#pensum' disabled style='height: 50px; '><img src='../img/paper.png' width='25px' height='25px'><br><p style='font-size: 10px; '>Subir pensum</p></button>";
                                       }else
@@ -158,10 +148,9 @@
 
                                         echo "<button type='button' class='btn btn-primary' data-toggle='modal' data-target='#pensum' style='height: 50px;'><img src='../img/paper.png' width='25px' height='25px'><br><p style='font-size: 10px;'>Subir pensum</p></button>" ;
                                       } */
-                 
-                                    }//fin while
-                                   }//fin de if
-                           ?>
+                                } //fin while
+                            } //fin de if
+                            ?>
 
 
 
@@ -191,119 +180,83 @@
 
                             <tbody>
 
-                                <?php 
+                                <?php
 
-                            //-------------------------------------------------------------------
-                            //Extraer ID Alumno
-                            //-------------------------------------------------------------------
+                                //-------------------------------------------------------------------
+                                //Extraer ID Alumno
+                                //-------------------------------------------------------------------
 
 
-                              $stmt1 =$dbh->prepare("SELECT `ID_Alumno`  
+                                $stmt1 = $dbh->prepare("SELECT `ID_Alumno`  
                                                      FROM `alumnos`
-                                                     WHERE correo='".$_SESSION['Email']."'");
-                      
-                               $stmt1->execute();
+                                                     WHERE correo='" . $_SESSION['Email'] . "'");
 
-                              while($fila = $stmt1->fetch()){
-                                $alumno=$fila["ID_Alumno"];
-                                
-                               }//fin de while
+                                $stmt1->execute();
 
-                             //-------------------------------------------------------------------
+                                while ($fila = $stmt1->fetch()) {
+                                    $alumno = $fila["ID_Alumno"];
+                                } //fin de while
+
+                                //-------------------------------------------------------------------
 
 
-                            //-------------------------------------------------------------------
-                            //Extraer ID  Expediente U
-                            //-------------------------------------------------------------------
-                             // Consulta que muestra las solicitudes que haga el usuario
-                             //dependiendo del usuario asi se l mostrara los datos
-                              $consulta=$pdo->prepare("SELECT idExpedienteU  
+                                //-------------------------------------------------------------------
+                                //Extraer ID  Expediente U
+                                //-------------------------------------------------------------------
+                                // Consulta que muestra las solicitudes que haga el usuario
+                                //dependiendo del usuario asi se l mostrara los datos
+                                $consulta = $pdo->prepare("SELECT idExpedienteU  
                                                       FROM expedienteu 
                                                       WHERE ID_Alumno = ? AND estado = 'Activo'");
-      
-                              $consulta->execute(array($alumno));
 
-                               $idExpedienteU;
+                                $consulta->execute(array($alumno));
 
-                                      if ($consulta->rowCount()>=1)
-                                      {
-                                          while ($fila=$consulta->fetch())
-                                          {   
-                                            $idExpedienteU = $fila['idExpedienteU'];
-                                          }
-                                      }
-                            //-------------------------------------------------------------------
+                                $idExpedienteU;
 
-                            //-------------------------------------------------------------------
-                            //Extraer Todas las materias 
-                            //-------------------------------------------------------------------
+                                if ($consulta->rowCount() >= 1) {
+                                    while ($fila = $consulta->fetch()) {
+                                        $idExpedienteU = $fila['idExpedienteU'];
+                                    }
+                                }
+                                //-------------------------------------------------------------------
+
+                                //-------------------------------------------------------------------
+                                //Extraer Todas las materias 
+                                //-------------------------------------------------------------------
 
 
 
-                            $consulMaterias=$pdo->prepare("SELECT idMateria, nombreMateria  
-                                                           FROM materias 
-                                                           WHERE idExpedienteU = ? AND estado = 'Activo'");
+                                $consulMaterias = $pdo->prepare("SELECT idMateria, nombreMateria FROM materias WHERE idExpedienteU = ? AND estado = 'Activo'");
 
 
-                             $consulMaterias->execute(array($idExpedienteU));
+                                $consulMaterias->execute(array($idExpedienteU));
 
-                                     if ($consulMaterias->rowCount()>=1)
-                                      {
-                                        //muestra en la tabla
-                                        while ($fila2=$consulMaterias->fetch())
-                                          {   echo "
+                                if ($consulMaterias->rowCount() >= 1) {
+                                    //muestra en la tabla
+                                    while ($fila2 = $consulMaterias->fetch()) {
+                                        echo "
                                         <tr class='table-light'>
-                                        <th>".$fila2['idMateria']."</th>
-                                        
-                                        <th>".$fila2['nombreMateria']."</th>
-                                     
-                                       
-                                        
+                                        <th>" . $fila2['idMateria'] . "</th>  
+                                        <th>" . utf8_decode($fila2['nombreMateria']) . "</th>
                                         <td>
-                                        <center><a href='Modelo/ModeloMaterias/EliminarMaterias.php?id=".$fila2['idMateria']."' class='btn btn-danger'><i class='fas fa-trash'></i></a></center>
+                                        <center><a href='Modelo/ModeloMaterias/EliminarMaterias.php?id=" . $fila2['idMateria'] . "' class='btn btn-danger'><i class='fas fa-trash'></i></a></center>
                                         </td>
                                         </tr>";
+                                    } //fin while
+                                } //fin if
 
-                                       
-
-                                      }//fin while
-                                    }//fin if
-
-                               ?>
-
-
-
+                                ?>
                             </tbody>
                         </table>
-
-                        <br><br><br>
-
-
                         <br>
-
-                        <!--div class="f1-buttons">
-                               <button type="button" class="btn btn-next btn-dark">Enviar</button>
-                          </div-->
-                        <br>
-
-
                     </div>
-
                     <!-- Fin Primera columna-->
-
                     <br>
-
-
-
                 </div>
                 <!--Fin de row-->
-
-
             </div>
             <!--Fin de container-->
-
         </div>
-
     </div>
 </div>
 <br>
@@ -312,28 +265,28 @@
 
 <!-- /#page-content-wrapper -->
 <style type="text/css">
-.modal-content {
-    background-color: white;
-    border-color: black;
-    border-radius: 30px;
-    padding: 20px;
-}
+    .modal-content {
+        background-color: white;
+        border-color: black;
+        border-radius: 30px;
+        padding: 20px;
+    }
 
-.modal-body {
-    text-align: left;
-}
+    .modal-body {
+        text-align: left;
+    }
 
-.form-control {
-    background-color: #ADADB2;
-    color: black;
-    border-radius: 20px;
+    .form-control {
+        background-color: #ADADB2;
+        color: black;
+        border-radius: 20px;
 
-}
+    }
 
-.modal-header {
-    border-color: #ADADB2;
-    border: 3px;
-}
+    .modal-header {
+        border-color: #ADADB2;
+        border: 3px;
+    }
 </style>
 
 
@@ -348,8 +301,7 @@
     <!-- MODAL Materias -->
     <!--******-->
 
-    <div class="modal fade " id="ModalMateria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade " id="ModalMateria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -369,10 +321,9 @@
 
                             <div class="form-group">
                                 <label class="sr-only" for="nombremateria">Nombre de materia</label>
-                                <input type="text" name="nombremateria" placeholder="Nombre de materia"
-                                    class="nombremateria form-control" id="nombremateria">
+                                <input type="text" name="nombremateria" placeholder="Nombre de materia" class="nombremateria form-control" id="nombremateria">
                             </div>
-                            <input type="hidden" name="expedienteu" value="<?php echo $idExpedienteU;?>">
+                            <input type="hidden" name="expedienteu" value="<?php echo $idExpedienteU; ?>">
 
 
                         </div>
@@ -398,8 +349,7 @@
 
 
     <!-- Modal Pensum carrera -->
-    <div class="modal fade" id="pensum" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="pensum" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -412,8 +362,7 @@
                     <br><br>
                     <form action="Modelo/ModeloMaterias/subirPensum.php" method="post" enctype="multipart/form-data">
                         <div class="custom-file">
-                            <input type="file" class="custom-file-input" accept=".pdf" id="customFileLang"
-                                name="archivo" required>
+                            <input type="file" class="custom-file-input" accept=".pdf" id="customFileLang" name="archivo" required>
                             <label class="custom-file-label" for="customFileLang" data-browse="Buscar">Seleccionar
                                 Comprobante</label>
                             <center><small>El archivo no debe pesar más de 5MB</small></center>
@@ -421,33 +370,30 @@
                         <br><br>
                         <div>
 
-                            <?php 
-            $stmt1 =$dbh->prepare("SELECT `ID_Alumno`  FROM `alumnos` WHERE correo='".$_SESSION['Email']."'");
-                      
-            $stmt1->execute();
+                            <?php
+                            $stmt1 = $dbh->prepare("SELECT `ID_Alumno`  FROM `alumnos` WHERE correo='" . $_SESSION['Email'] . "'");
 
-            while($fila = $stmt1->fetch()){
-              $alumno=$fila["ID_Alumno"];
-                                
-            }
-            ?>
+                            $stmt1->execute();
+
+                            while ($fila = $stmt1->fetch()) {
+                                $alumno = $fila["ID_Alumno"];
+                            }
+                            ?>
 
 
                             <!--idalumnos-->
-                            <input type="hidden" name="alumno" value="<?php echo $alumno;?>">
+                            <input type="hidden" name="alumno" value="<?php echo $alumno; ?>">
 
                             <!--id expedente-->
-                            <input type="hidden" name="expediente" value="<?php echo $idExpedienteU;?>">
+                            <input type="hidden" name="expediente" value="<?php echo $idExpedienteU; ?>">
                         </div>
 
                 </div>
                 <div class="modal-footer">
 
 
-                    <input class="btn btn-primary btn-rounded" type="submit" name="actualizar" value="Cerrar "
-                        data-dismiss="modal">
-                    <input class="btn btn-primary btn-rounded" type="submit" name="actualizar" value="Guardar Cambios "
-                        id="actualizar">
+                    <input class="btn btn-primary btn-rounded" type="submit" name="actualizar" value="Cerrar " data-dismiss="modal">
+                    <input class="btn btn-primary btn-rounded" type="submit" name="actualizar" value="Guardar Cambios " id="actualizar">
 
                 </div>
 
@@ -473,6 +419,6 @@
 
 <?php
 
-  require_once 'templates/footer.php';
+require_once 'templates/footer.php';
 
 ?>
