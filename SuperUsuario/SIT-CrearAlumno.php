@@ -285,7 +285,7 @@ CAMBIAR MENU, CONSULTAR-->
 								echo '<option value="" disabled selected >Seleccione la opción</option>';
 								foreach($pdo->query('SELECT Id_Carrera,nombre FROM carrera') as $row) 
 								{
-									echo '<option value="'.$row['Id_Carrera'].'">'.utf8_encode($row['nombre']).'</option>';
+									echo '<option value="'.$row['Id_Carrera'].'">'.$row['nombre'].'</option>';
 								}
 								echo '</select>';
 								?>
@@ -301,7 +301,7 @@ CAMBIAR MENU, CONSULTAR-->
 									echo '<option value="" disabled selected >Seleccione la opción</option>';
 									foreach($pdo->query('SELECT ID_Empresa,Nombre FROM empresas where Tipo = "Universidad"') as $row) 
 									{
-										echo '<option value="'.$row['ID_Empresa'].'">'. utf8_encode($row['Nombre']).'</option>';
+										echo '<option value="'.$row['ID_Empresa'].'">'.$row['Nombre'].'</option>';
 									}
 									echo '</select>';
 									?>
@@ -353,7 +353,7 @@ CAMBIAR MENU, CONSULTAR-->
 											echo '<option value="" disabled selected >Seleccione la opción</option>';
 											foreach($pdo->query('SELECT ID_Sede,Nombre FROM sedes') as $row) 
 											{
-												echo '<option value="'.$row['ID_Sede'].'">'. utf8_encode($row['Nombre']).'</option>';
+												echo '<option value="'.$row['ID_Sede'].'">'. $row['Nombre'].'</option>';
 											}
 											echo '</select>';
 											?>
