@@ -36,10 +36,10 @@ $LugarSAT=$InicialDep . $FinalDep .$Sabatino; //Ejemplo SSSAT
                     echo "
                 <tr class='table-light'>
                 <th>".$fila2['id_alumno']."</th>
-                <th>".$fila2['alumno']."</th>
+                <th>".utf8_decode($fila2['alumno'])."</th>
                 <th>".$fila2['Sexo']."</th>
                 <th><input type='hidden' name='idtaller' id='idtaller' value=>".$fila2['Class']."</th>
-                <th>".utf8_encode($fila2['Nombre'])."</th>
+                <th>".($fila2['Nombre'])."</th>
                 <th>".$fila2['estado']."</th>
                 <th>".$fila2['EstadoCerti']."</th>";
 

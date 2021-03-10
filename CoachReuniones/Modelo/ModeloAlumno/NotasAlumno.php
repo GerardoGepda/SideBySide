@@ -22,7 +22,7 @@ if (isset($_GET['id'])) {
 	{
 		while ($fila3=$consulta2->fetch())
 		{		
-			$NombreAlumno = $fila3['Nombre'];
+			$NombreAlumno = utf8_decode($fila3['Nombre']);
 			$Correo = $fila3['correo'];
 
 		}

@@ -46,8 +46,8 @@ $stmt2 = $dbh->query("SELECT * FROM modulos WHERE estado = 1");
   while ($row = $stmt2->fetch()) {
     echo "<tr class='bg-light'>";
     echo "<th scope='row'>".$row['id_modulo']."</th>";
-    echo "<td>".utf8_encode($row['titulo'])."</td>";
-    echo "<td>".utf8_encode($row['password'])."</td>";
+    echo "<td>".utf8_decode(utf8_encode($row['titulo']))."</td>";
+    echo "<td>".utf8_decode(utf8_encode($row['password']))."</td>";
     echo "<td><form action='actualizarmodulo.php' method='POST'><button type='submit' class='btn btn-warning' value= '".$row['id_modulo']."' name='id' id='btn-desactivar'><img src='../img/desactivar.png' class='icon-img'>Desactivar </button> </form> </td>";
     echo "<td><form action='cambiarpasswd.php' method='POST'><button type='submit' class='btn btn-success' value= '".$row['id_modulo']."' name='id' id='btn-cambiar'><i class='fas fa-key'></i>Cambiar</button></form> </td>";
     echo "</tr>";
@@ -58,8 +58,8 @@ $stmt = $dbh->query("SELECT * FROM modulos WHERE estado = 0");
 while ($row = $stmt->fetch()) {
     echo "<tr class='bg-light'>";
     echo "<th scope='row'>".$row['id_modulo']."</th>";
-    echo "<td>".utf8_encode($row['titulo'])."</td>";
-    echo "<td>".utf8_encode($row['password'])."</td>";
+    echo "<td>".utf8_decode(utf8_encode($row['titulo']))."</td>";
+    echo "<td>".utf8_decode(utf8_encode($row['password']))."</td>";
     echo "<td><form action='actualizarmodulo2.php' method='POST'><button type='submit' class='btn btn-block' value= '".$row['id_modulo']."' name='id' id='btn-activar'><img src='../img/activar.png' class='icon-img-2' >Activar </button> </form> </td>";
     echo "<td><form action='cambiarpasswd.php' method='POST'><button type='submit' class='btn btn-success' value= '".$row['id_modulo']."' name='id' id='btn-cambiar' ><i class='fas fa-key'></i> Cambiar</button> </form> </td>";
     echo "</tr>";

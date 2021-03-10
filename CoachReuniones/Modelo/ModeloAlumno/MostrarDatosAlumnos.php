@@ -40,7 +40,7 @@ $LugarSAT=$InicialDep . $FinalDep .$Sabatino; //Ejemplo SSSAT
 		<tr class='table-light'>
 		
 		<th style='width:13.4%'>".$fila['ID_Alumno']."</th>
-		<th style='width:22.1%'>".$fila['Nombre']."</th>
+		<th style='width:22.1%'>".utf8_decode($fila['Nombre'])."</th>
 		<th style='width:7.3%'>".$fila['Class']."</th>
 		<th style='width:7.9%'>".$fila['ID_Sede']."</th>
 		<th style='width:11.9%'>".$Asistencia."</th>
