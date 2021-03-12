@@ -32,12 +32,7 @@ if ($consulta->rowCount() >= 1) {
         $idExpedienteU = $fila['idExpedienteU'];
     }
 } //fin de condicion
-
-
 ?>
-
-
-
 <!--div principal-->
 <div class="container-fluid text-center">
     <!--Navbar-->
@@ -46,6 +41,17 @@ if ($consulta->rowCount() >= 1) {
         <a href="javascript:history.back();"><img src="../img/proximo.svg" class="icon"></a>
         <h2 class="main-title">Pensum</h2>
     </div>
+    <?php
+    if ($consulta->rowCount() >= 1) {
+    } else {
+        echo "
+           <div class='alert alert-danger' role='alert'>
+           Antes de iniciar con el proceso de creación de pensum debe actualizar la siguiente información: 
+         <a href='expedienteU.php' class='btn btn-danger '>Actualizar</a>
+            </div>";
+    }
+    ?>
+<a href=''></a>
     <div class="alerta">
         <?php
         include "config/Alerta.php";
