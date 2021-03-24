@@ -85,12 +85,32 @@ $query = $pdo->prepare($sql);
 $query->execute();
 $cantidad = $query->rowCount();
 
+
+// devolver datos como json
+$data = array();
+
 // recorrer consultas
 while ($row = $query->fetch()) {
-    $json[] = array(
-        "id" => $row['ID_Empresa'],
-        "name" => $row['Nombre']
-    );
+    $json[] = array( $row['Nombre']);
 }
 
-echo $json;
+
+// resultado consultas 
+
+$data["id"] = $cantidad;
+
+for ($i=0; $i <$cantidad ; $i++) { 
+    $data["name"] = $json[$i];
+}
+
+$data["aprobados"] = $cantidad;
+$data["reprobados"] = $cantidad;
+$data["retirados"] = $cantidad;
+
+/*ahora lo imprimes 
+IMPORTANTE !! IMPORTANTE !! IMPORTANTE !! IMPORTANTE !! 
+No imprimas otra cosa más que la respuesta */
+
+//Convertimos el array a JSON y lo imprimimos para que pueda recuperarlo el JS
+$respuesta = json_encode($data);
+echo $respuesta;
