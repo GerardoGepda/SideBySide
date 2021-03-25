@@ -61,7 +61,7 @@ function ShowSelected(ciclos, clases, financiamiento, sedes) {
         //AGREGA ESTE TIPO DE RETORNO
         dataType: "json",
         error: function(xhr, textStatus, errorMessage) {
-            console.log("ERROR, debe seleccionar valores de todos los filtros\n" + errorMessage + textStatus + xhr);
+            // console.log("ERROR, debe seleccionar valores de todos los filtros\n" + errorMessage + textStatus + xhr);
         },
         success: function(datosRetornados) {
             // console.log(datosRetornados.fragmento1);

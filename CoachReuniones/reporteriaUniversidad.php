@@ -157,11 +157,12 @@ $cantidad = $query->rowCount();
 <div id="universidades">
     <?php
     // contador
-    $contador = 0;
+    $contador = 1;
 
     for ($i = 1; $i < $cantidad; $i++) {
         echo " <div id='u-" . ($contador++) . "' class='uni-content'></div>";
     }
+    
     ?>
 </div>
 <br>

@@ -1,4 +1,6 @@
 //codigo ajax que obtiene los datos de la BD
+let contador = 1;
+let contador2 = 1;
 
 function ObtenerDatos(ciclos, clases, financiamiento, sedes) {
     $.ajax({
@@ -11,7 +13,7 @@ function ObtenerDatos(ciclos, clases, financiamiento, sedes) {
         },
         url: "../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/cargarTabla.php",
         error: function(xhr, textStatus, errorMessage) {
-            alert("ERROR\n" + errorMessage + textStatus + xhr);
+            console.log("ERROR\n" + errorMessage + textStatus + xhr);
         },
         success: function(response) {
             let datos = JSON.stringify(response);
@@ -46,19 +48,14 @@ function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico) {
 }
 
 // proceso de llenado graficas
-function loadUniversity(values) {
-    let contador = 1;
-
-    for (let index = 0; index < values.length; index++) {
-        const element = values['name'];
-        console.log(element);
-
-        Highcharts.chart('u-' + contador + '', {
+function loadUniversity(name, id, aprobados, reprobados, retirados) {
+    for (let index = 0; index < 60; index++) {
+        Highcharts.chart('u-' + (contador++) + '', {
             chart: {
                 styledMode: false,
             },
             title: {
-                text: 'prueba'
+                text: name
             },
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -77,6 +74,7 @@ function loadUniversity(values) {
             credits: {
                 enabled: false
             },
+            colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3']
         });
     }
 }
@@ -94,13 +92,14 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes) {
             "financiamientos": financiamiento,
             "sedes": sedes
         },
-        // dataType: "json",
+        dataType: "json",
 
         error: function(xhr, textStatus, errorMessage) {
             console.log("ERROR, al cargar graficas por universidad\n" + errorMessage + textStatus + xhr);
         },
         success: function(response) {
-            loadUniversity(response);
+            console.log(response.name1);
+            loadUniversity(response.name, response.id, response.aprobados, response.reprobados, response.retirados);
         }
     });
 }
