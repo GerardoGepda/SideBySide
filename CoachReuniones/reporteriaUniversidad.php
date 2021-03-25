@@ -46,7 +46,7 @@ $cantidad = $query->rowCount();
                         <div class="mb-1">
                             <label class="form-label">Ciclo</label>
                             <div class="pl-3 tex-center">
-                                <select class="js-example-basic-single form-control" id="ciclo" multiple="multiple" onchange=" main();">
+                                <select class="js-example-basic-single form-control" id="ciclo" multiple="multiple" onchange=" main(), GraphBarraU()">
                                     <?php
                                     while ($row = $stmt->fetch()) {
                                         echo "<option >" . $row['cicloU'] . "</option>";
@@ -62,7 +62,7 @@ $cantidad = $query->rowCount();
                         <div class="mb-1">
                             <label class="form-label">Class</label>
                             <div class="tex-center">
-                                <select class="js-example-basic-single form-control" id="clase" multiple="multiple" onchange=" main();">
+                                <select class="js-example-basic-single form-control" id="clase" multiple="multiple" onchange=" main(), GraphBarraU()">
                                     <?php
                                     while ($row2 = $stmt2->fetch()) {
                                         echo "<option>" . $row2['Class'] . "</option>";
@@ -77,7 +77,7 @@ $cantidad = $query->rowCount();
                     <fieldset>
                         <div class="mb-1 tex-center">
                             <label class="form-label">Financiamiento</label>
-                            <select class="form-select form-control" id="financiamiento" multiple="" onchange=" main();">
+                            <select class="form-select form-control" id="financiamiento" multiple="" onchange=" main(), GraphBarraU()">
                                 <option value="FGK" class="dropdown-item">FGK</option>
                                 <option value="BORJA" class="dropdown-item">BORJA</option>
                                 <option value="FOM" class="dropdown-item">FOM</option>

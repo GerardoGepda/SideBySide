@@ -40,7 +40,6 @@ function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico) {
         },
         success: function(response) {
             datos = JSON.parse(response);
-            //console.log(datos);
             grafico(datos);
         }
     });
@@ -48,14 +47,32 @@ function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico) {
 }
 
 // proceso de llenado graficas
-function loadUniversity(name, id, aprobados, reprobados, retirados) {
+function loadUniversity(datos) {
+
+    // inicio de declaración de arreglos
+    let nombres = [];
+    let aprobadas = [];
+    let reprobadas = [];
+    let retiradas = [];
+    // fin de declaración de arreglos
+    //------------------------------------------------ 
+
+    // recorrer datos
+    datos.forEach(dato => {
+        nombres.push(dato.name);
+        aprobadas.push(parseInt(dato.aprobadas));
+        reprobadas.push(parseInt(dato.reprobadas));
+        retiradas.push(parseInt(dato.retiradas));
+    });
+
+    // este for sirve para cargar las graficas de todas las universidades
     for (let index = 0; index < 60; index++) {
         Highcharts.chart('u-' + (contador++) + '', {
             chart: {
                 styledMode: false,
             },
             title: {
-                text: name
+                text: nombres[index]
             },
             xAxis: {
                 categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -65,9 +82,9 @@ function loadUniversity(name, id, aprobados, reprobados, retirados) {
                 allowPointSelect: true,
                 keys: ['name', 'y', 'selected', 'sliced'],
                 data: [
-                    ['Aprobadas', 29.9, false],
-                    ['Reprobadas', 71.5, false],
-                    ['Retiradas', 106.4, false]
+                    ['Aprobadas', ((aprobadas[index] * 100) / (aprobadas[index] + reprobadas[index] + retiradas[index])), false],
+                    ['Reprobadas', ((reprobadas[index] * 100) / (aprobadas[index] + reprobadas[index] + retiradas[index])), false],
+                    ['Retiradas', 50.5, false]
                 ],
                 showInLegend: true,
             }],
@@ -82,24 +99,21 @@ function loadUniversity(name, id, aprobados, reprobados, retirados) {
 
 //codigo ajax que obtiene los datos de la BD
 
-function graphicsByUniversity(ciclos, clases, financiamiento, sedes) {
+function graphicsByUniversity(ciclos, clases, financiamiento, sedes, grafico) {
+    let datos;
     $.ajax({
-        url: "../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/cargarUniversidades.php",
         type: "POST",
+        url: "../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/GraphBarUniversidad.php",
         data: {
             "ciclos": ciclos,
             "clases": clases,
             "financiamientos": financiamiento,
             "sedes": sedes
         },
-        dataType: "json",
-
-        error: function(xhr, textStatus, errorMessage) {
-            console.log("ERROR, al cargar graficas por universidad\n" + errorMessage + textStatus + xhr);
-        },
         success: function(response) {
-            console.log(response.name1);
-            loadUniversity(response.name, response.id, response.aprobados, response.reprobados, response.retirados);
+            datos = JSON.parse(response);
+            loadUniversity(datos);
         }
     });
+    return datos;
 }

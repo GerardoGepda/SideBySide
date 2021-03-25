@@ -328,6 +328,10 @@ function MateriasPoruniversidad(datos) {
         }, {
             name: 'Retiradas',
             data: reti
-        }]
+        }],
+        credits: {
+            enabled: false
+        },
+        colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3']
     });
 }
