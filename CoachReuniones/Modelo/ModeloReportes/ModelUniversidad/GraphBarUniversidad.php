@@ -124,6 +124,7 @@ AND a.ID_Empresa  = '$univeridades' ";
     $result3 = $stmt3->fetch();
 
     $json[] = array(
+        "id" => $row['ID_Empresa'],
         "name" => $row['Nombre'],
         "aprobadas" => $result[0],
         "reprobadas" => $result2[0],

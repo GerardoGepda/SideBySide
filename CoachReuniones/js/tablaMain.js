@@ -43,17 +43,22 @@ function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico) {
             grafico(datos);
         }
     });
-    return datos;
 }
 
 // proceso de llenado graficas
 function loadUniversity(datos) {
 
-    // inicio de declaración de arreglos
+    // inicio de declaración de variables
     let nombres = [];
     let aprobadas = [];
     let reprobadas = [];
     let retiradas = [];
+
+
+    total1 = 0;
+    total2 = 0;
+    total3 = 0;
+
     // fin de declaración de arreglos
     //------------------------------------------------ 
 
@@ -65,8 +70,30 @@ function loadUniversity(datos) {
         retiradas.push(parseInt(dato.retiradas));
     });
 
+    aprobadas.forEach(function(numero) {
+        total1 += numero;
+    });
+    reprobadas.forEach(function(numero) {
+        total2 += numero;
+    });
+    retiradas.forEach(function(numero) {
+        total2 += numero;
+    });
+
+
+    // total = total1 + total2 + total3;
+
+    // contadores
+    cont1 = 0;
+    cont2 = 0;
+    cont3 = 0;
+
+    cont4 = 0;
+    cont5 = 0;
+    cont6 = 0;
+
     // este for sirve para cargar las graficas de todas las universidades
-    for (let index = 0; index < 60; index++) {
+    for (let index = 0; index < nombres.length; index++) {
         Highcharts.chart('u-' + (contador++) + '', {
             chart: {
                 styledMode: false,
@@ -82,9 +109,9 @@ function loadUniversity(datos) {
                 allowPointSelect: true,
                 keys: ['name', 'y', 'selected', 'sliced'],
                 data: [
-                    ['Aprobadas', ((aprobadas[index] * 100) / (aprobadas[index] + reprobadas[index] + retiradas[index])), false],
-                    ['Reprobadas', ((reprobadas[index] * 100) / (aprobadas[index] + reprobadas[index] + retiradas[index])), false],
-                    ['Retiradas', 50.5, false]
+                    ['Aprobadas: ' + aprobadas[cont1++] + '', ((aprobadas[cont4++] * 100) / total), true],
+                    ['Reprobadas: ' + reprobadas[cont2++] + '', ((reprobadas[cont5++] * 100) / total), true],
+                    ['Retiradas: ' + retiradas[cont3++] + '', ((retiradas[cont6++] * 100) / total), true]
                 ],
                 showInLegend: true,
             }],
@@ -115,5 +142,4 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes, grafico) {
             loadUniversity(datos);
         }
     });
-    return datos;
 }

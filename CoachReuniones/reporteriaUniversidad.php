@@ -204,7 +204,6 @@ $cantidad = $query->rowCount();
     function GraphBarraU() {
         //MateriasPoruniversidad();
         GetDataGraphBarU(listaCiclos, listaClases, listaFinanciamiento, listaSede, MateriasPoruniversidad);
-        console.log("hola jajajajaj ok ok");
     }
 </script>
 <!-- datatable -->

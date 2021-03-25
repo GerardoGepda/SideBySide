@@ -286,7 +286,7 @@ function MateriasPoruniversidad(datos) {
     let repro = [];
     let reti = [];
     datos.forEach(dato => {
-        uni.push(dato.name);
+        uni.push(dato.id);
         apro.push(parseInt(dato.aprobadas));
         repro.push(parseInt(dato.reprobadas));
         reti.push(parseInt(dato.retiradas));
@@ -304,29 +304,29 @@ function MateriasPoruniversidad(datos) {
             }
         },
         title: {
-            text: 'Aprobadas, reprobadas y retiradas por universidad'
+            text: 'Materias Aprobadas, reprobadas y retiradas por universidad'
         },
         xAxis: {
             title: {
-                text: 'Fruit Number'
+                text: 'Grafica por Universidad'
             },
             tickInterval: 1,
             categories: uni,
         },
         yAxis: {
             title: {
-                text: 'Fruit eaten'
+                text: 'Grafica por Universidad'
             },
             tickInterval: 1
         },
         series: [{
-            name: 'Aprobadas',
+            name: 'Materias Aprobadas',
             data: apro
         }, {
-            name: 'Reprobadas',
+            name: 'Materias Reprobadas',
             data: repro
         }, {
-            name: 'Retiradas',
+            name: 'Materias Retiradas',
             data: reti
         }],
         credits: {
