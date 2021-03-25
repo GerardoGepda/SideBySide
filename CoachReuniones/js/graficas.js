@@ -279,3 +279,55 @@ function principal(aprobadas, reprobadas, retiradas) {
         colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3']
     });
 }
+
+function MateriasPoruniversidad(datos) {
+    let uni = [];
+    let apro = [];
+    let repro = [];
+    let reti = [];
+    datos.forEach(dato => {
+        uni.push(dato.name);
+        apro.push(parseInt(dato.aprobadas));
+        repro.push(parseInt(dato.reprobadas));
+        reti.push(parseInt(dato.retiradas));
+    });
+    console.log(apro);
+    console.log(repro);
+    console.log(reti);
+    Highcharts.chart('Ugraph', {
+        chart: {
+            renderTo: 'container',
+            type: 'column',
+            scrollablePlotArea: {
+                minWidth: 5000,
+                scrollPositionX: 1
+            }
+        },
+        title: {
+            text: 'Aprobadas, reprobadas y retiradas por universidad'
+        },
+        xAxis: {
+            title: {
+                text: 'Fruit Number'
+            },
+            tickInterval: 1,
+            categories: uni,
+        },
+        yAxis: {
+            title: {
+                text: 'Fruit eaten'
+            },
+            tickInterval: 1
+        },
+        series: [{
+            name: 'Aprobadas',
+            data: apro
+        }, {
+            name: 'Reprobadas',
+            data: repro
+        }, {
+            name: 'Retiradas',
+            data: reti
+        }]
+    });
+}

@@ -24,6 +24,27 @@ function ObtenerDatos(ciclos, clases, financiamiento, sedes) {
     });
 }
 
+//función que extrae los datos para las graficas de barra de Aprovados, reprobados, etc. por Universidad
+function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico) {
+    let datos;
+    $.ajax({
+        type: "POST",
+        url: "../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/GraphBarUniversidad.php",
+        data: {
+            "ciclos": ciclos,
+            "clases": clases,
+            "financiamientos": financiamiento,
+            "sedes": sedes
+        },
+        success: function(response) {
+            datos = JSON.parse(response);
+            //console.log(datos);
+            grafico(datos);
+        }
+    });
+    return datos;
+}
+
 // proceso de llenado graficas
 function loadUniversity(values) {
     let contador = 1;

@@ -91,7 +91,7 @@ $cantidad = $query->rowCount();
                     <fieldset>
                         <div class="mb-1 w-75 pl-3">
                             <label class="form-label">Sede</label>
-                            <select class="form-select form-control" id="sede" multiple="" onchange=" main();">
+                            <select class="form-select form-control" id="sede" multiple="" onchange=" main(), GraphBarraU()">
                                 <?php
                                 while ($row3 = $stmt3->fetch()) {
                                     echo "<option>" . $row3['ID_Sede'] . "</option>";
@@ -151,6 +151,9 @@ $cantidad = $query->rowCount();
     <h2 class="main-title">Graphics By University</h2>
 </div>
 <br>
+<br>
+<div id="Ugraph">
+</div>
 <div id="universidades">
     <?php
     // contador
@@ -197,6 +200,11 @@ $cantidad = $query->rowCount();
         // cargar graficas por universidad
         graphicsByUniversity(listaCiclos, listaClases, listaFinanciamiento, listaSede);
     }
+    function GraphBarraU() {
+        //MateriasPoruniversidad();
+        GetDataGraphBarU(listaCiclos, listaClases, listaFinanciamiento, listaSede, MateriasPoruniversidad);
+        console.log("hola jajajajaj ok ok");
+    }
 </script>
 <!-- datatable -->
 <script>
@@ -212,7 +220,11 @@ $cantidad = $query->rowCount();
                 "bAutoWidth": false
             });
         });
+        //MateriasPoruniversidad();
     });
+</script>
+<script>
+    
 </script>
 <script src="../Alumno/JS/datatable.js"></script>
 
