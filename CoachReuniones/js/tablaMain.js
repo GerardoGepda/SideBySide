@@ -45,15 +45,28 @@ function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico) {
     });
 }
 
+function CreatDivs(e) {
+    let templete = '';
+    let contador = 4;
+    for (let index = 0; index < e; index++) {
+        templete += `
+            <div class='uni-content my-1' style='height: 285px;'>
+                <div id='u-${contador++}' style='height: 230px;' ></div>
+                </div>
+            </div>
+        `;
+    }
+    document.getElementById('universidades').innerHTML = templete;
+}
+
 // proceso de llenado graficas
 function loadUniversity(datos) {
-
     // inicio de declaración de variables
     let nombres = [];
     let aprobadas = [];
     let reprobadas = [];
     let retiradas = [];
-
+    
 
     total1 = 0;
     total2 = 0;
@@ -61,7 +74,7 @@ function loadUniversity(datos) {
 
     // fin de declaración de arreglos
     //------------------------------------------------ 
-
+    let contador = 4;
     // recorrer datos
     datos.forEach(dato => {
         nombres.push(dato.name);
@@ -69,6 +82,8 @@ function loadUniversity(datos) {
         reprobadas.push(parseInt(dato.reprobadas));
         retiradas.push(parseInt(dato.retiradas));
     });
+
+    CreatDivs(nombres.length);
 
     aprobadas.forEach(function(numero) {
         total1 += numero;
@@ -79,7 +94,6 @@ function loadUniversity(datos) {
     retiradas.forEach(function(numero) {
         total2 += numero;
     });
-
 
     // total = total1 + total2 + total3;
 

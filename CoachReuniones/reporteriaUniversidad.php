@@ -144,30 +144,7 @@ include 'Modularidad/MenuHorizontal.php';
 <div id="Ugraph">
 </div>
 <div id="universidades">
-    <?php
-    // contador
-    $contador = 4;
-
-    $button1 = 4;
-    $button2 = 4;
-    $button3 = 4;
-
-    $modal1 = 4;
-    $modal2 = 4;
-    $modal3 = 4;
-
-    for ($i = 1; $i < $cantidad; $i++) {
-        echo " <div class='uni-content' style='height: 285px;'>
-                <div id='u-" . ($contador++) . "' style='height: 230px;' ></div>
-                 <div id='listas' style='width: 100px; display: inline-block right; margin-left:80%;margin-top:-20%;' >
-                <button type='button' class='btn btn-success'  data-bs-toggle='modal' data-bs-target='#exampleModal' 
-                  style='width:125%; padding:3%; margin:2%;'>Aprobadas</button>
-                  <button type='button' class='btn btn-danger' style='width:125%; padding:3%;margin:2%;'>Reprobadas</button>
-                  <button type='button' class='btn btn-warning' style='width:125%; padding:3%; margin:2%;'>Retiradas</button>
-                </div>
-        </div>";
-    }
-    ?>
+    
 </div>
 <br>
 <br>
