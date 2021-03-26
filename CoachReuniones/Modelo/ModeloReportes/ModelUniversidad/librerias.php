@@ -2,19 +2,21 @@
     /* inicio de diseño para mapas */
 
     #map1 {
-        height: 235px;
-        min-width: 430px;
+        margin-top:1%;
+        margin-left: 0%;
+        height: 245px;
+        min-width: 300px;
         max-width: 430px;
         display: inline-block;
-        margin: 0% auto;
     }
 
     #map2 {
-        height: 235px;
-        min-width: 430px;
+        margin-top:1%;
+        height: 245px;
+        min-width: 300px;
         max-width: 430px;
         display: inline-block;
-        margin: 0% auto;
+        margin-left: 30%;
     }
 
     .loading {
@@ -26,7 +28,7 @@
     #maps {
         min-width: 100%;
         max-width: 50%;
-        display: inline-block;
+        display: block;
     }
 
     /* fin de diseño para mapas */
@@ -53,7 +55,6 @@
     #generals {
         border: #a29c9c 3px solid;
         border-radius: 20px;
-        clear:both;
     }
     /*
     #content{
@@ -71,16 +72,19 @@
     #content,
     #content2,
     #content3 {
-        padding: 0.5%;
+        padding: 1%;
         margin: 0.4%;
         display: block;
     }
-
+    #content3{
+        max-height:300px;
+        min-height:380px;
+    }
     /* estilo para graficas generales */
     .highcharts-figure {
-        height: 245px;
-        min-width: 300px;
-        max-width: 300px;
+        height: 345px;
+        min-width: 400px;
+        max-width: 400px;
         display: inline-block;
         margin: 0 auto;
         border-radius: 10px;
@@ -92,15 +96,21 @@
     }
 
     #gen {
+        margin-left: -80%;
+        margin-top:1%;
         height: 245px;
         min-width: 300px;
-        max-width: 300px;
+        max-width: 430px;
+        display: inline-block;
     }
 
     #gen2 {
+        margin-left: 45%;
+        margin-top:1%;
         height: 245px;
         min-width: 300px;
-        max-width: 300px;
+        max-width: 430px;
+        display: inline-block;
     }
 
     /* graficas generales */
@@ -114,6 +124,7 @@
         margin-top: 0.5%;
         margin-left: 8%;
         margin-right: 8%;
+        margin-bottom:-40px;
     }
 
     #tablaGeneral{
@@ -122,14 +133,15 @@
         margin: 0% 0%;
     }
     #TableBody th:hover{
-        background-color:#33302E;
+        background-color:#be0032;
         color: white;
     }
     #generalTable{
+        clear: both;
         min-width: 450px;
         max-width: 450px;
         margin-left: 10%;
-        margin-top: 0%;
+        margin-top: 0.5%;
         display: inline-block;
     }
 
@@ -217,11 +229,56 @@
     }
 
     /* responsive design */
-
-    @media only screen and (max-width: 600px) {
+    /* responsive de grafiaca de mapas y grafica de genro*/ 
+    @media only screen and (max-width: 1080px){
+        #content3 {
+            display: inline-block;
+            margin:0 auto;
+            min-width: 100%;
+            max-width: 100%;
+        }
+        #map1,
+        #map2{
+            min-width: 100%;
+            max-width: 100%;
+            margin:0.5% auto;
+        }
+        #middle-pie,
+        #generalTable{
+            margin:0 auto;
+        }
+        #gen,
+        #gen2{
+            min-width: 100%;
+            max-width: 100%;
+            margin: 0% auto;
+        }
         #maps {
             min-width: 100%;
             max-width: 100%;
+            display: inline-block;
+        }
+    }
+    /*Fin del primer responsive*/
+    /*Responsive tabla y filtros de selection*/
+    @media only screen and (max-width: 600px) {
+        #map1,
+        #map2{
+            min-width: 100%;
+            max-width: 100%;
+            margin:0.5% auto;
+        }
+        
+        #gen,
+        #gen2{
+            min-width: 100%;
+            max-width: 100%;
+            margin: 0% auto;
+        }
+        #maps {
+            min-width: 100%;
+            max-width: 100%;
+            display: inline-block;
         }
 
         #universidades {
@@ -266,7 +323,9 @@
             display: block;
         }
 
-        #content3{
+        #content3,
+        #content2,
+        #content{
             min-width: 100%;
             max-width: 100%;
         }
