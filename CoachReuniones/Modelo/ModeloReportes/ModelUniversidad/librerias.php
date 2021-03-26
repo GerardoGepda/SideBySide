@@ -98,7 +98,7 @@
     #gen {
         margin-left: -80%;
         margin-top:1%;
-        height: 245px;
+        height: 275px;
         min-width: 300px;
         max-width: 430px;
         display: inline-block;
@@ -107,7 +107,7 @@
     #gen2 {
         margin-left: 45%;
         margin-top:1%;
-        height: 245px;
+        height: 275px;
         min-width: 300px;
         max-width: 430px;
         display: inline-block;
@@ -132,12 +132,15 @@
         max-width: 450px;
         margin: 0% 0%;
     }
+    #TableBody th{
+        border: solid 1px #111;
+        border-style: groove;
+    }
     #TableBody th:hover{
         background-color:#be0032;
         color: white;
     }
     #generalTable{
-        clear: both;
         min-width: 450px;
         max-width: 450px;
         margin-left: 10%;
@@ -251,6 +254,8 @@
         #gen2{
             min-width: 100%;
             max-width: 100%;
+            min-height: 100%;
+            max-height: 100%;
             margin: 0% auto;
         }
         #maps {
