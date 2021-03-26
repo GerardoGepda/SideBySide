@@ -17,7 +17,7 @@ function mapaGeneral(aprobados, reprobados, retirados) {
         },
 
         title: {
-            text: 'Grafica por Sexo Masculino',
+            text: 'Masculino',
             style: {
                 color: '#be0032',
                 fontWeight: 'bold'

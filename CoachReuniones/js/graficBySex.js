@@ -15,7 +15,7 @@ function graficBySex(aprobados, reprobados, retirados) {
         },
 
         title: {
-            text: 'Grafica por Sexo Fenemino',
+            text: 'Fenemino',
             style: {
                 color: '#be0032',
                 fontWeight: 'bold'

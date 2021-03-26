@@ -2,21 +2,19 @@
     /* inicio de diseño para mapas */
 
     #map1 {
-        height: 245px;
-        min-width: 300px;
-        max-width: 300px;
+        height: 235px;
+        min-width: 430px;
+        max-width: 430px;
         display: inline-block;
-        margin: 0 auto;
-        border-radius: 10px;
+        margin: 0% auto;
     }
 
     #map2 {
-        height: 245px;
-        min-width: 300px;
-        max-width: 300px;
+        height: 235px;
+        min-width: 430px;
+        max-width: 430px;
         display: inline-block;
-        margin: 0 auto;
-        border-radius: 10px;
+        margin: 0% auto;
     }
 
     .loading {
@@ -26,8 +24,8 @@
     }
 
     #maps {
-        min-width: 655px;
-        max-width: 655px;
+        min-width: 100%;
+        max-width: 50%;
         display: inline-block;
     }
 
@@ -55,14 +53,27 @@
     #generals {
         border: #a29c9c 3px solid;
         border-radius: 20px;
+        clear:both;
+    }
+    /*
+    #content{
+        padding: 0.5%;
+        margin: 0.4% auto;
+        display: flex;
     }
 
+    #content2{
+        padding: 0.5%;
+        margin-top: 2%;
+        display: flex;
+    }
+    */
     #content,
     #content2,
     #content3 {
         padding: 0.5%;
         margin: 0.4%;
-        display: flex;
+        display: block;
     }
 
     /* estilo para graficas generales */
@@ -75,39 +86,50 @@
         border-radius: 10px;
         padding: 0.4%;
     }
+    #content2 h3{
+        color:#be0032;
+        font-style: bold;
+    }
 
     #gen {
-        height: 235;
-        min-width: auto;
-        max-width: auto;
+        height: 245px;
+        min-width: 300px;
+        max-width: 300px;
     }
 
     #gen2 {
-        height: 235;
-        min-width: auto;
-        max-width: auto;
+        height: 245px;
+        min-width: 300px;
+        max-width: 300px;
     }
 
     /* graficas generales */
 
     #middle-pie {
-        height: 220px;
+        height: 200px;
         min-width: 300px;
-        max-width: 3000px;
+        max-width: 300px;
         display: inline-block;
         border-radius: 10px;
-        margin-left: 20%;
+        margin-top: 0.5%;
+        margin-left: 8%;
+        margin-right: 8%;
     }
 
-    #tablaGeneral {
+    #tablaGeneral{
         min-width: 450px;
         max-width: 450px;
-        margin: 0% auto;
+        margin: 0% 0%;
     }
-
-    #generalTable {
-        margin-left: 15%;
-        margin-top: 1%;
+    #TableBody th:hover{
+        background-color:#33302E;
+        color: white;
+    }
+    #generalTable{
+        min-width: 450px;
+        max-width: 450px;
+        margin-left: 10%;
+        margin-top: 0%;
         display: inline-block;
     }
 
@@ -198,13 +220,14 @@
 
     @media only screen and (max-width: 600px) {
         #maps {
-            min-width: auto;
-            max-width: auto;
+            min-width: 100%;
+            max-width: 100%;
         }
 
         #universidades {
             min-width: auto;
             max-width: auto;
+            margin: 0 auto;
         }
 
         #content {
@@ -243,7 +266,7 @@
             display: block;
         }
 
-        #content3 {
+        #content3{
             min-width: 100%;
             max-width: 100%;
         }

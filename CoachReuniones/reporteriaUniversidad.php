@@ -136,6 +136,7 @@ $cantidad = $query->rowCount();
     <div id="maps">
         <div id="content2">
             <!-- inicio de contenedores de graficas por sexo -->
+            <h3>Grafica por Género</h3>
             <figure class="highcharts-figure">
                 <div id="gen"></div>
             </figure>
@@ -157,7 +158,7 @@ $cantidad = $query->rowCount();
 <div id="universidades">
     <?php
     // contador
-    $contador = 1;
+    $contador = 4;
 
     for ($i = 1; $i < $cantidad; $i++) {
         echo " <div id='u-" . ($contador++) . "' class='uni-content'></div>";
