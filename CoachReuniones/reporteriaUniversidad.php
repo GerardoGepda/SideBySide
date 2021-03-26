@@ -8,23 +8,11 @@ include 'Modularidad/EnlacesCabecera.php';
 //Incluir el menu horizontal
 include 'Modularidad/MenuHorizontal.php';
 // consulta para obtener los ciclos
-$stmt = $pdo->query("SELECT DISTINCT cicloU FROM inscripcionciclos ORDER BY cicloU ASC");
-$stmt->execute();
 
-// consulta para obtener las clases
-$stmt2 = $pdo->query("SELECT DISTINCT Class FROM alumnos ORDER BY Class ASC");
-$stmt2->execute();
+//INICIO DE  CONSULTAS PARA FILTROS
+ include '../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/consultasFiltros.php';
+// FIN DE CONSULTAS PARA FILTROS
 
-// consulta para obtener las sede
-$stmt3 = $pdo->query("SELECT DISTINCT ID_Sede FROM alumnos ORDER BY Class ASC");
-$stmt3->execute();
-
-$sql = "SELECT * FROM empresas WHERE Tipo = 'Universidad' ";
-
-// ejecucion de consultas
-$query = $pdo->prepare($sql);
-$query->execute();
-$cantidad = $query->rowCount();
 ?>
 <link rel="stylesheet" type="text/css" href="css/Renovacion.css">
 <div class="title mb-2">
@@ -160,10 +148,25 @@ $cantidad = $query->rowCount();
     // contador
     $contador = 4;
 
+    $button1 = 4;
+    $button2 = 4;
+    $button3 = 4;
+
+    $modal1 = 4;
+    $modal2 = 4;
+    $modal3 = 4;
+
     for ($i = 1; $i < $cantidad; $i++) {
-        echo " <div id='u-" . ($contador++) . "' class='uni-content'></div>";
+        echo " <div class='uni-content' style='height: 285px;'>
+                <div id='u-" . ($contador++) . "' style='height: 230px;' ></div>
+                 <div id='listas' style='width: 100px; display: inline-block right; margin-left:80%;margin-top:-20%;' >
+                <button type='button' class='btn btn-success'  data-bs-toggle='modal' data-bs-target='#exampleModal' 
+                  style='width:125%; padding:3%; margin:2%;'>Aprobadas</button>
+                  <button type='button' class='btn btn-danger' style='width:125%; padding:3%;margin:2%;'>Reprobadas</button>
+                  <button type='button' class='btn btn-warning' style='width:125%; padding:3%; margin:2%;'>Retiradas</button>
+                </div>
+        </div>";
     }
-    
     ?>
 </div>
 <br>
@@ -202,6 +205,7 @@ $cantidad = $query->rowCount();
         // cargar graficas por universidad
         graphicsByUniversity(listaCiclos, listaClases, listaFinanciamiento, listaSede);
     }
+
     function GraphBarraU() {
         //MateriasPoruniversidad();
         GetDataGraphBarU(listaCiclos, listaClases, listaFinanciamiento, listaSede, MateriasPoruniversidad);
@@ -225,7 +229,7 @@ $cantidad = $query->rowCount();
     });
 </script>
 <script>
-    
+
 </script>
 <script src="../Alumno/JS/datatable.js"></script>
 
