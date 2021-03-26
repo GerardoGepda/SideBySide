@@ -123,6 +123,12 @@ AND a.ID_Empresa  = '$univeridades' ";
     $stmt3->execute();
     $result3 = $stmt3->fetch();
 
+    
+    $contador++;
+    if ($result[0] == "0" && $result2[0] == "0" && $result3[0] == "0") {
+        continue;
+    }
+
     $json[] = array(
         "id" => $row['ID_Empresa'],
         "name" => $row['Nombre'],
@@ -130,7 +136,6 @@ AND a.ID_Empresa  = '$univeridades' ";
         "reprobadas" => $result2[0],
         "retiradas" => $result3[0]
     );
-    $contador++;
 }
 
 $jsondata = json_encode($json);

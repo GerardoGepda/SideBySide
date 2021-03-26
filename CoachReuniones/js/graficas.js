@@ -285,12 +285,14 @@ function MateriasPoruniversidad(datos) {
     let apro = [];
     let repro = [];
     let reti = [];
+    let respv;
     datos.forEach(dato => {
         uni.push(dato.id);
         apro.push(parseInt(dato.aprobadas));
         repro.push(parseInt(dato.reprobadas));
         reti.push(parseInt(dato.retiradas));
     });
+    respv = (5000 * uni.length) / 60;
     console.log(apro);
     console.log(repro);
     console.log(reti);
@@ -299,7 +301,7 @@ function MateriasPoruniversidad(datos) {
             renderTo: 'container',
             type: 'column',
             scrollablePlotArea: {
-                minWidth: 5000,
+                minWidth: respv,
                 scrollPositionX: 1
             }
         },

@@ -203,7 +203,6 @@ $cantidad = $query->rowCount();
         graphicsByUniversity(listaCiclos, listaClases, listaFinanciamiento, listaSede);
     }
     function GraphBarraU() {
-        //MateriasPoruniversidad();
         GetDataGraphBarU(listaCiclos, listaClases, listaFinanciamiento, listaSede, MateriasPoruniversidad);
     }
 </script>
