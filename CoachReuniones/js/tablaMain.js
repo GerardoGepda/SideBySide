@@ -66,7 +66,7 @@ function loadUniversity(datos) {
     let aprobadas = [];
     let reprobadas = [];
     let retiradas = [];
-    
+
 
     total1 = 0;
     total2 = 0;
