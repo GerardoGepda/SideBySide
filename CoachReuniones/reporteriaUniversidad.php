@@ -4,13 +4,30 @@
 include 'Modularidad/CabeceraInicio.php';
 include "../BaseDatos/conexion.php";
 //Modularaidad para extraere los enlaces en HEAD
-include 'Modularidad/EnlacesCabecera.php';
+include 'Modularidad/CabeceraReporteria.php';
 //Incluir el menu horizontal
 include 'Modularidad/MenuHorizontal.php';
 // consulta para obtener los ciclos
 
 //INICIO DE  CONSULTAS PARA FILTROS
- include '../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/consultasFiltros.php';
+$stmt = $pdo->query("SELECT DISTINCT cicloU FROM inscripcionciclos ORDER BY cicloU ASC");
+$stmt->execute();
+
+// consulta para obtener las clases
+$stmt2 = $pdo->query("SELECT DISTINCT Class FROM alumnos ORDER BY Class ASC");
+$stmt2->execute();
+
+// consulta para obtener las sede
+$stmt3 = $pdo->query("SELECT DISTINCT ID_Sede FROM alumnos ORDER BY Class ASC");
+$stmt3->execute();
+
+$sql = "SELECT * FROM empresas WHERE Tipo = 'Universidad' ";
+
+// ejecucion de consultas
+$query = $pdo->prepare($sql);
+$query->execute();
+$cantidad = $query->rowCount();
+
 // FIN DE CONSULTAS PARA FILTROS
 
 ?>
@@ -144,7 +161,7 @@ include 'Modularidad/MenuHorizontal.php';
 <div id="Ugraph">
 </div>
 <div id="universidades">
-    
+
 </div>
 <br>
 <br>
