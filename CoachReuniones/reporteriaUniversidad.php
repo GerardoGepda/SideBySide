@@ -1,4 +1,3 @@
-<title>Reportería</title>
 <?php
 //Realizamos la conexión con la base de datos
 include 'Modularidad/CabeceraInicio.php';
@@ -37,10 +36,6 @@ $cantidad = $query->rowCount();
     <h2 class="main-title">Reporteria Universidad</h2>
 </div>
 <div class="container-fluid text-center">
-    <!-- inicio de librerias y esitlo -->
-    <?php include "../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/librerias.php"; ?>
-    <!-- fin de librerias y esitlo -->
-
     <!-- **************************************** Inicio de estructura de trabajo **************************** -->
     <!-- inicio de filtros -->
     <div id="filtros">
@@ -169,15 +164,15 @@ $cantidad = $query->rowCount();
 <!-- Select2 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <!-- cargar tabla  -->
-<script async src="./js/tablaMain.js"></script>
+<script src="./js/tablaMain.js"></script>
 <!-- grafica tipo pais  -->
-<script async src="./js/graficas.js"></script>
+<script src="./js/graficas.js"></script>
 <!-- grafica general -->
 <script src="./js/graficaGeneral.js"></script>
 <!-- anclar los id de filtros -->
-<script async src="./js/filtros.js"></script>
+<script src="./js/filtros.js"></script>
 <!-- grafica por sexo -->
-<script async src="./js/graficBySex.js"></script>
+<script src="./js/graficBySex.js"></script>
 <script type="text/javascript">
     // declarar variables
     let listaClases;
