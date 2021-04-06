@@ -115,18 +115,24 @@ AND a.ID_Empresa  = '$univeridades' ";
     $sql5 = "SELECT e.cum AS cum FROM inscripcionmateria IM INNER JOIN 
 inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e
 ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE 
-($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4)
-AND a.ID_Empresa  = '$univeridades' ";
+($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) ";
 
 
 
     // extraer datos por universidad (nombre, nota, estado y materia)
+    // SELECT  ,IM.idMateria  IM.nota, IM.estado
 
-    $sql9 = "SELECT  m.nombreMateria, a.Nombre, IM.nota, IM.estado,  a.ID_Empresa   FROM inscripcionmateria
-     IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e
-ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno INNER JOIN
-materias m on m.idExpedienteU = e.idExpedienteU WHERE ($fragmento1) AND 
-($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
+$sql9 = "SELECT  a.Nombre as alumno, IM.idMateria as id, IM.nota as nota, IM.estado as estado FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON 
+IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU
+INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE (IM.estado = 'Aprobada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
+
+$sql10 = "SELECT  a.Nombre as alumno, IM.idMateria as id, IM.nota as nota, IM.estado as estado FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON 
+IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU
+INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE (IM.estado = 'Reprobada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
+
+$sql11 = "SELECT  a.Nombre as alumno, IM.idMateria as id, IM.nota as nota, IM.estado as estado FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON 
+IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU
+INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE (IM.estado = 'Retirada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
 
 
     // MATERIAS APROBADAS
@@ -151,13 +157,21 @@ materias m on m.idExpedienteU = e.idExpedienteU WHERE ($fragmento1) AND
 
     $stmt8 = $pdo->prepare($sql9);
     $stmt8->execute();
-    $result8 = $stmt8->fetch();
+    $result8 = $stmt8->fetchAll();
+
+    $stmt9 = $pdo->prepare($sql10);
+    $stmt9->execute();
+    $result9 = $stmt9->fetchAll();
+
+    $stmt10 = $pdo->prepare($sql11);
+    $stmt10->execute();
+    $result10 = $stmt10->fetchAll();
 
     $contador++;
     if ($result[0] == "0" && $result2[0] == "0" && $result3[0] == "0") {
         continue;
     }
-    
+
 
     $json[] = array(
         "id" => $row['ID_Empresa'],
@@ -166,7 +180,9 @@ materias m on m.idExpedienteU = e.idExpedienteU WHERE ($fragmento1) AND
         "reprobadas" => $result2[0],
         "retiradas" => $result3[0],
         "cum" => $result4['cum'],
-        "student" => $result8
+        "listaAprobado" => $result8,
+        "listaReprobado" => $result9,
+        "listaRetirado" => $result10
     );
 }
 
