@@ -143,6 +143,14 @@ include 'Modularidad/MenuHorizontal.php';
 <br>
 <div id="Ugraph">
 </div>
+<div class="container d-flex justify-content-center">
+    <div class="form-group w-50">
+        <label for="searchUGraph" class="text-dark">Seleccione universidad</label>
+        <select class="form-control" id="searchUGraph">
+            <option>Mostrar todas</option>
+        </select>
+  </div>
+</div>
 <div id="universidades">
     
 </div>

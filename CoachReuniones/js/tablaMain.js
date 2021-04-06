@@ -74,7 +74,6 @@ function loadUniversity(datos) {
 
     // fin de declaración de arreglos
     //------------------------------------------------ 
-    let contador = 4;
     // recorrer datos
     datos.forEach(dato => {
         nombres.push(dato.name);
@@ -105,6 +104,8 @@ function loadUniversity(datos) {
     cont4 = 0;
     cont5 = 0;
     cont6 = 0;
+
+    let contador = 4;
 
     // este for sirve para cargar las graficas de todas las universidades
     for (let index = 0; index < nombres.length; index++) {
@@ -154,6 +155,19 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes, grafico) {
         success: function(response) {
             datos = JSON.parse(response);
             loadUniversity(datos);
+            console.log(datos);
+
+            const op = document.createElement('option');
+            op.innerHTML = "Mostrar Todas";
+
+            const filtroU = document.querySelector('#searchUGraph');
+            $('#searchUGraph').empty();
+            filtroU.appendChild(op);
+            datos.forEach(dato => {
+                var opt = document.createElement('option');
+                opt.innerHTML = dato.id;
+                filtroU.appendChild(opt);
+            });
         }
     });
 }
