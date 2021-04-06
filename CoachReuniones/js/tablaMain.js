@@ -51,18 +51,65 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
     let contador2 = 4;
     let contador3 = 4;
 
-    student1 = []
-    subject1 = [];
-    grade1 = [];
-    status1 = [];
 
+    $data1 = [];
+    $data2 = [];
+    $data3 = [];
 
-    listaAprobados.forEach(element => {
-        student1.push(element.alumno);
-        subject1.push(element.id);
-        grade1.push(element.nota);
-        status1.push(element.estado);
-    });
+    let final = [];
+    let final2 = [];
+    let final3 = [];
+
+    for (let index = 0; index < listaAprobados.length; index++) {
+        student1 = []
+        subject1 = [];
+        grade1 = [];
+        status1 = [];
+
+        data1 = listaAprobados[index];
+
+        data1.forEach(element => {
+            student1.push(element.alumno);
+            subject1.push(element.id);
+            grade1.push(element.nota);
+            status1.push(element.estado);
+        });
+        final.push(data1)
+    }
+
+    for (let index = 0; index < listaReprobados.length; index++) {
+        student2 = []
+        subject2 = [];
+        grade2 = [];
+        status2 = [];
+
+        data2 = listaReprobados[index];
+
+        data2.forEach(element => {
+            student2.push(element.alumno);
+            subject2.push(element.id);
+            grade2.push(element.nota);
+            status2.push(element.estado);
+        });
+        final2.push(data2)
+    }
+
+    for (let index = 0; index < listaRetirados.length; index++) {
+        student3 = []
+        subject3 = [];
+        grade3 = [];
+        status3 = [];
+
+        data3 = listaRetirados[index];
+
+        data3.forEach(element => {
+            student3.push(element.alumno);
+            subject3.push(element.id);
+            grade3.push(element.nota);
+            status3.push(element.estado);
+        });
+        final3.push(data3)
+    }
 
     for (let index = 0; index < e; index++) {
         template += `
@@ -78,8 +125,8 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
              </center>
             </div>
             <div class="modal-body">
-               <table>
-                    <thead>
+               <table class='table'>
+                    <thead class='table-dark'>
                         <tr>
                             <th>Nombre</th>
                             <th>IdMateria</th>
@@ -87,13 +134,8 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
                             <th>Estado</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>${student1[index]}</td>
-                            <td>${subject1[index]}</td>
-                            <td>${grade1[index]}</td>
-                            <td>${status1[index]}</td>
-                        </tr>
+                    <tbody class='table-light table-bordered table-hover'>
+                    ${JSON.stringify(final[index]) }
                     </tbody>     
                </table>
             </div>
@@ -116,14 +158,19 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
          </center>
         </div>
         <div class="modal-body">
-           <table>
+        <table class='table'>
+        <thead class='table-dark'>
             <tr>
                 <th>Nombre</th>
+                <th>IdMateria</th>
+                <th>Nota</th>
+                <th>Estado</th>
             </tr>
-            <tr>
-            <td></td>
-            </tr>
-           </table>
+        </thead>
+        <tbody class='table-light table-bordered table-hover'>
+        ${JSON.stringify(final2[index]) }
+        </tbody>     
+   </table>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -144,11 +191,19 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
      </center>
     </div>
     <div class="modal-body">
-       <table>
+    <table class='table'>
+    <thead class='table-dark'>
         <tr>
             <th>Nombre</th>
+            <th>IdMateria</th>
+            <th>Nota</th>
+            <th>Estado</th>
         </tr>
-       </table>
+    </thead>
+    <tbody class='table-light table-bordered table-hover'>
+    ${JSON.stringify(final3[index]) }
+    </tbody>     
+</table>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -235,13 +290,9 @@ function loadUniversity(datos) {
         retiradas.push(parseInt(dato.retiradas));
         cum1.push((parseFloat(dato.cum)));
         listaAprobados.push(dato.listaAprobado);
-        listaReprobados.push(datos.listaReprobado);
-        listaRetirados.push(datos.listaRetirado);
+        listaReprobados.push(dato.listaReprobado);
+        listaRetirados.push(dato.listaRetirado);
     });
-
-    console.log(listaAprobados);
-    console.log(listaReprobados);
-    console.log(listaRetirados);
 
     // calcular cum global
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
@@ -333,8 +384,8 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes, grafico) {
             filtroU.appendChild(op);
             datos.forEach(dato => {
                 var opt = document.createElement('option');
-                opt.innerHTML = dato.id.replace(/\s/g,"-");
-                opt.value = dato.id.replace(/\s/g,"-");;
+                opt.innerHTML = dato.id.replace(/\s/g, "-");
+                opt.value = dato.id.replace(/\s/g, "-");;
                 filtroU.appendChild(opt);
             });
         }
