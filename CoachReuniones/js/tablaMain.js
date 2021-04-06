@@ -133,7 +133,7 @@ function CreateModals(e, universidad) {
     document.getElementById('showData').innerHTML = template;
 }
 
-function CreatDivs(e) {
+function CreatDivs(e, ids) {
     let templete = '';
     let contador = 4;
     let cont1 = 4;
@@ -141,7 +141,7 @@ function CreatDivs(e) {
     let cont3 = 4;
     for (let index = 0; index < e; index++) {
         templete += `
-            <div class='uni-content my-1' style='height: 285px;'>
+            <div class='uni-content my-1 ${ids[index].replace(/\s/g,"-")}' style='height: 285px;'>
                 <div id='u-${contador++}' style='height: 220px;'></div>
                 <div style='height: 60px; margin: 0px auto;'>
                     <center>
@@ -175,6 +175,7 @@ function CumGeneral(cum) {
 function loadUniversity(datos) {
     // inicio de declaración de variables
     let nombres = [];
+    let ids = [];
     let aprobadas = [];
     let reprobadas = [];
     let retiradas = [];
@@ -194,6 +195,7 @@ function loadUniversity(datos) {
     //------------------------------------------------ 
     // recorrer datos
     datos.forEach(dato => {
+        ids.push(dato.id);
         nombres.push(dato.name);
         aprobadas.push(parseInt(dato.aprobadas));
         reprobadas.push(parseInt(dato.reprobadas));
@@ -210,7 +212,7 @@ function loadUniversity(datos) {
 
 
     CreateModals(nombres.length, nombres);
-    CreatDivs(nombres.length);
+    CreatDivs(nombres.length, ids);
     CumGeneral(cumGlobal.toFixed(1));
 
 
@@ -285,17 +287,18 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes, grafico) {
         success: function(response) {
             datos = JSON.parse(response);
             loadUniversity(datos);
-            console.log(datos);
 
             const op = document.createElement('option');
             op.innerHTML = "Mostrar Todas";
+            op.value = "all";
 
             const filtroU = document.querySelector('#searchUGraph');
             $('#searchUGraph').empty();
             filtroU.appendChild(op);
             datos.forEach(dato => {
                 var opt = document.createElement('option');
-                opt.innerHTML = dato.id;
+                opt.innerHTML = dato.id.replace(/\s/g,"-");
+                opt.value = dato.id.replace(/\s/g,"-");;
                 filtroU.appendChild(opt);
             });
         }

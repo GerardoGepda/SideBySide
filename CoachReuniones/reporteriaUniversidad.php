@@ -232,6 +232,8 @@ $cantidad = $query->rowCount();
 
 </script>
 <script src="../Alumno/JS/datatable.js"></script>
+<!-- Script del filtro por universidad -->
+<script src="./js/filtroUniversidad.js"></script>
 
 <!-- fin de proceso de  graficas -->
 <!-- **************************************** Fin de estructura de trabajo **************************** -->
