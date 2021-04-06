@@ -45,18 +45,130 @@ function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico) {
     });
 }
 
+function CreateModals(e, universidad) {
+    let template = '';
+    let contador1 = 4;
+    let contador2 = 4;
+    let contador3 = 4;
+    for (let index = 0; index < e; index++) {
+        template += `
+    <div class="modal fade" id="aprobados-${contador1++}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+             <center>
+                <h5 class="modal-title" id="exampleModalLabel">Listado ${universidad[index]} &nbsp;&nbsp;&nbsp;<code>Materias Aprobadas</code></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+             </center>
+            </div>
+            <div class="modal-body">
+               <table>
+                <tr>
+                    <th>Nombre</th>
+                </tr>
+               </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="reprobadas-${contador2++}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div class="modal-header">
+         <center>
+            <h5 class="modal-title" id="exampleModalLabel">Listado ${universidad[index]} &nbsp; &nbsp; &nbsp;<code>Materias Reprobadas </code></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+         </center>
+        </div>
+        <div class="modal-body">
+           <table>
+            <tr>
+                <th>Nombre</th>
+            </tr>
+           </table>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="retiradas-${contador3++}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+    <div class="modal-header">
+     <center>
+        <h5 class="modal-title" id="exampleModalLabel">Listado: ${universidad[index]}&nbsp; &nbsp; &nbsp; <code>Materias Retiradas</code></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        </button>
+     </center>
+    </div>
+    <div class="modal-body">
+       <table>
+        <tr>
+            <th>Nombre</th>
+        </tr>
+       </table>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+    </div>
+    </div>
+</div>
+</div>
+    `;
+    }
+
+    document.getElementById('showData').innerHTML = template;
+}
+
 function CreatDivs(e) {
     let templete = '';
     let contador = 4;
+    let cont1 = 4;
+    let cont2 = 4;
+    let cont3 = 4;
     for (let index = 0; index < e; index++) {
         templete += `
             <div class='uni-content my-1' style='height: 285px;'>
-                <div id='u-${contador++}' style='height: 230px;' ></div>
+                <div id='u-${contador++}' style='height: 220px;'></div>
+                <div style='height: 60px; margin: 0px auto;'>
+                    <center>
+                        <button type="button" class="btn" data-toggle="modal" data-target="#aprobados-${cont1++}" style='background-color: #54E38A;'>Aprobadas</button>
+                        <button type="button" class="btn" data-toggle="modal" data-target="#reprobadas-${cont2++}" style='background-color: #FF8C64;'>Reprobadas</button>
+                        <button type="button" class="btn" data-toggle="modal" data-target="#retiradas-${cont3++}" style='background-color: #FFF587;'>Retiradas</button>
+                    </center>
                 </div>
             </div>
         `;
     }
     document.getElementById('universidades').innerHTML = templete;
+}
+
+
+function CumGeneral(cum) {
+    let template = '';
+    template = ` <div class='text-white details mb-3' style='max-width: 18rem;'>
+                    <div class='card-header'>CUM GLOBAL</div>
+                        <div class='card-body'>
+                            <h5 class='card-title numero text-center'>` + cum + `</h5>
+                            <br><br>
+                        </div>
+                    </div>
+                `;
+
+    document.getElementById('cumGeneral').innerHTML = template;
 }
 
 // proceso de llenado graficas
@@ -68,9 +180,16 @@ function loadUniversity(datos) {
     let retiradas = [];
 
 
+    let cum1 = [];
+    let alumno = [];
+
+
     total1 = 0;
     total2 = 0;
     total3 = 0;
+
+    // cum global 
+    let cumGlobal
 
     // fin de declaración de arreglos
     //------------------------------------------------ 
@@ -81,9 +200,21 @@ function loadUniversity(datos) {
         aprobadas.push(parseInt(dato.aprobadas));
         reprobadas.push(parseInt(dato.reprobadas));
         retiradas.push(parseInt(dato.retiradas));
+        cum1.push((parseFloat(dato.cum)));
+        alumno.push(dato.student);
     });
 
+    console.log(alumno);
+
+    // calcular cum global
+    const reducer = (accumulator, currentValue) => accumulator + currentValue;
+    cumGlobal = (cum1.reduce(reducer)) / cum1.length;
+
+
+    CreateModals(nombres.length, nombres);
     CreatDivs(nombres.length);
+    CumGeneral(cumGlobal);
+
 
     aprobadas.forEach(function(numero) {
         total1 += numero;

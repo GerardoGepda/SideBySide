@@ -109,6 +109,7 @@ $cantidad = $query->rowCount();
     <!-- graficas generales -->
     <div id="content3">
         <div id="middle-pie"></div>
+        <div id="cumGeneral"></div>
         <div id="generalTable">
             <table class="table table-striped table-dark" id="tablaGeneral">
                 <thead>
@@ -160,6 +161,7 @@ $cantidad = $query->rowCount();
 </div>
 <br>
 <br>
+<div id="showData" style="display: hidden;"></div>
 <!-- proceso de graficas -->
 <!-- Select2 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
@@ -173,6 +175,8 @@ $cantidad = $query->rowCount();
 <script src="./js/filtros.js"></script>
 <!-- grafica por sexo -->
 <script src="./js/graficBySex.js"></script>
+
+
 <script type="text/javascript">
     // declarar variables
     let listaClases;

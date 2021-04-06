@@ -1,19 +1,22 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 <link rel="shortcut icon" href="../img/WorkeysIcon.png" />
-
-<title>Reportería</title>
 <!-- Bootstrap core CSS -->
-<!-- <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"> -->
+<link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
 <!--Iconos-->
-<!-- <link rel="stylesheet" href="../icons/css/all.css"> -->
+<link rel="stylesheet" href="../icons/css/all.css">
 
 <!--CSS principal-->
-<!-- <link rel="stylesheet" href="../css/main.css"> -->
+<link rel="stylesheet" href="../css/main.css">
 
 <!--FOOTER-->
-<!-- <link rel="stylesheet" href="../css/footer.css"> -->
+<link rel="stylesheet" href="../css/footer.css">
 
+<!-- Custom styles for this template -->
+<link href="../css/simple-sidebar.css" rel="stylesheet">
+
+<!--Estilo css CrearCuentas-->
+<link rel="stylesheet" type="text/css" href="css/EstiloCrearCuentas.css">
 
 
 <!--ENLACES PARA UTILIZAR DATABLE-->
@@ -132,8 +135,8 @@
     }
 
     #content3 {
-        max-height: 300px;
-        min-height: 380px;
+        max-height: 260px;
+        min-height: 260px;
     }
 
     /* estilo para graficas generales */
@@ -155,7 +158,7 @@
     #gen {
         margin-left: -80%;
         margin-top: 1%;
-        height: 275px;
+        height: 270px;
         min-width: 300px;
         max-width: 430px;
         display: inline-block;
@@ -164,7 +167,7 @@
     #gen2 {
         margin-left: 45%;
         margin-top: 1%;
-        height: 275px;
+        height: 270px;
         min-width: 300px;
         max-width: 430px;
         display: inline-block;
@@ -174,13 +177,25 @@
 
     #middle-pie {
         height: 200px;
-        min-width: 300px;
-        max-width: 300px;
+        min-width: 280px;
+        max-width: 280px;
         display: inline-block;
         border-radius: 10px;
         margin-top: 0.5%;
-        margin-left: 8%;
+        margin-left: 2%;
         margin-right: 8%;
+        margin-bottom: -40px;
+    }
+
+    #cumGeneral {
+        height: 200px;
+        min-width: 200px;
+        max-width: 200px;
+        display: inline-block;
+        border-radius: 10px;
+        margin-top: 0.5%;
+        margin-left: 2%;
+        margin-right: 2%;
         margin-bottom: -40px;
     }
 
@@ -203,8 +218,8 @@
     #generalTable {
         min-width: 450px;
         max-width: 450px;
-        margin-left: 10%;
-        margin-top: 0.5%;
+        margin-left: 9%;
+        margin-top: 2%;
         display: inline-block;
     }
 
@@ -310,6 +325,7 @@
         }
 
         #middle-pie,
+        #cumGeneral,
         #generalTable {
             margin: 0 auto;
         }
@@ -328,6 +344,16 @@
             max-width: 100%;
             display: inline-block;
         }
+
+        .highcharts-figure {
+            height: 345px;
+            min-width: 90%;
+            max-width: 90%;
+            display: inline-block;
+            margin: 0 auto;
+            border-radius: 10px;
+            padding: 0.4%;
+        }
     }
 
     /*Fin del primer responsive*/
@@ -343,8 +369,8 @@
 
         #gen,
         #gen2 {
-            min-width: 100%;
-            max-width: 100%;
+            min-width: 80%;
+            max-width: 80%;
             margin: 0% auto;
         }
 
@@ -408,6 +434,17 @@
             max-width: 100%;
             min-width: 100%;
         }
+
+
+        .highcharts-figure {
+            height: 345px;
+            min-width: 90%;
+            max-width: 90%;
+            display: inline-block;
+            margin: 0 auto;
+            border-radius: 10px;
+            padding: 0.4%;
+        }
     }
 
     tr {
@@ -421,5 +458,17 @@
         font-family: 'Roboto Light', arial;
         font-weight: normal;
     }
+
+
+    /* cum style */
+    .details {
+        background-color: #be0032;
+        color: #f1f7ff;
+    }
+
+    .numero {
+        font-size: 50px;
+    }
+    
 </style>
 </head>

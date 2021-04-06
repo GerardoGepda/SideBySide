@@ -293,9 +293,6 @@ function MateriasPoruniversidad(datos) {
         reti.push(parseInt(dato.retiradas));
     });
     respv = (5000 * uni.length) / 60;
-    console.log(apro);
-    console.log(repro);
-    console.log(reti);
     Highcharts.chart('Ugraph', {
         chart: {
             renderTo: 'container',
