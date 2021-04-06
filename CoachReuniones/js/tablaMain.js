@@ -45,11 +45,25 @@ function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico) {
     });
 }
 
-function CreateModals(e, universidad) {
+function CreateModals(e, universidad, listaAprobados, listaReprobados, listaRetirados) {
     let template = '';
     let contador1 = 4;
     let contador2 = 4;
     let contador3 = 4;
+
+    student1 = []
+    subject1 = [];
+    grade1 = [];
+    status1 = [];
+
+
+    listaAprobados.forEach(element => {
+        student1.push(element.alumno);
+        subject1.push(element.id);
+        grade1.push(element.nota);
+        status1.push(element.estado);
+    });
+
     for (let index = 0; index < e; index++) {
         template += `
     <div class="modal fade" id="aprobados-${contador1++}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -65,9 +79,22 @@ function CreateModals(e, universidad) {
             </div>
             <div class="modal-body">
                <table>
-                <tr>
-                    <th>Nombre</th>
-                </tr>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>IdMateria</th>
+                            <th>Nota</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>${student1[index]}</td>
+                            <td>${subject1[index]}</td>
+                            <td>${grade1[index]}</td>
+                            <td>${status1[index]}</td>
+                        </tr>
+                    </tbody>     
                </table>
             </div>
             <div class="modal-footer">
@@ -92,6 +119,9 @@ function CreateModals(e, universidad) {
            <table>
             <tr>
                 <th>Nombre</th>
+            </tr>
+            <tr>
+            <td></td>
             </tr>
            </table>
         </div>
@@ -181,7 +211,10 @@ function loadUniversity(datos) {
 
 
     let cum1 = [];
-    let alumno = [];
+    let listaAprobados = [];
+    let listaReprobados = [];
+    let listaRetirados = [];
+
 
     total1 = 0;
     total2 = 0;
@@ -200,17 +233,21 @@ function loadUniversity(datos) {
         reprobadas.push(parseInt(dato.reprobadas));
         retiradas.push(parseInt(dato.retiradas));
         cum1.push((parseFloat(dato.cum)));
-        alumno.push(dato.student);
+        listaAprobados.push(dato.listaAprobado);
+        listaReprobados.push(datos.listaReprobado);
+        listaRetirados.push(datos.listaRetirado);
     });
 
-    console.log(alumno);
+    console.log(listaAprobados);
+    console.log(listaReprobados);
+    console.log(listaRetirados);
 
     // calcular cum global
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     cumGlobal = (cum1.reduce(reducer)) / cum1.length;
 
 
-    CreateModals(nombres.length, nombres);
+    CreateModals(nombres.length, nombres, listaAprobados, listaReprobados, listaRetirados);
     CreatDivs(nombres.length);
     CumGeneral(cumGlobal.toFixed(1));
 
