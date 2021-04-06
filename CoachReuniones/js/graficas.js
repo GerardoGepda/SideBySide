@@ -294,7 +294,6 @@ function MateriasPoruniversidad(datos) {
     });
 
     respv = (5000 * uni.length) / 60;
-    
     Highcharts.chart('Ugraph', {
         chart: {
             renderTo: 'container',

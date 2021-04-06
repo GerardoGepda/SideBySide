@@ -20,9 +20,9 @@ $LugarSAT=$InicialDep . $FinalDep .$Sabatino; //Ejemplo SSSAT
 //<td><input type='checkbox' name='ActuaAlumno[]' class='case' value=".$fila['ID_Alumno']."></td>
 
 	// Consulta De La BASE DE DATOS
-	$consulta=$pdo->prepare("SELECT * FROM alumnos WHERE SedeAsistencia =  ? OR  SedeAsistencia  =  ? ");
+	$consulta=$pdo->prepare("SELECT * FROM alumnos ");
 	
-	$consulta->execute(array($LugarFT,$LugarSAT));
+	$consulta->execute();
 
 	if ($consulta->rowCount()>=1)
 	{

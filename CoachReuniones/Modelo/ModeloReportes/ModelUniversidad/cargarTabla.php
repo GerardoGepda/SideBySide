@@ -123,8 +123,14 @@ AND a.ID_Empresa  = '$univeridades' ";
     $stmt3->execute();
     $result3 = $stmt3->fetch();
 
+
+    if ($result[0] == "0" && $result2[0] == "0" && $result3[0] == "0") {
+        continue;
+    }
+
     $json[] = array(
         "name" => $row['Nombre'],
+        "id" => $row['ID_Empresa'],
         "aprobadas" => $result[0],
         "reprobadas" => $result2[0],
         "retiradas" => $result3[0]
@@ -133,7 +139,7 @@ AND a.ID_Empresa  = '$univeridades' ";
 }
 foreach ($json as $key => $value) {
     echo "<tr>
-    <th scope='row'>" . $value['name'] . "</th>
+    <th scope='row' title='".$value['name']."'>" . $value['id'] . "</th>
     <th scope='row'>" . $value['aprobadas'] . "</th>
     <th scope='row'>" . $value['reprobadas'] . "</th>
     <th scope='row'>" . $value['retiradas'] . "</th>

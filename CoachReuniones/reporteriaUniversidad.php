@@ -1,16 +1,32 @@
-<title>Reportería</title>
 <?php
 //Realizamos la conexión con la base de datos
 include 'Modularidad/CabeceraInicio.php';
 include "../BaseDatos/conexion.php";
 //Modularaidad para extraere los enlaces en HEAD
-include 'Modularidad/EnlacesCabecera.php';
+include 'Modularidad/CabeceraReporteria.php';
 //Incluir el menu horizontal
 include 'Modularidad/MenuHorizontal.php';
 // consulta para obtener los ciclos
 
 //INICIO DE  CONSULTAS PARA FILTROS
- include '../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/consultasFiltros.php';
+$stmt = $pdo->query("SELECT DISTINCT cicloU FROM inscripcionciclos ORDER BY cicloU ASC");
+$stmt->execute();
+
+// consulta para obtener las clases
+$stmt2 = $pdo->query("SELECT DISTINCT Class FROM alumnos ORDER BY Class ASC");
+$stmt2->execute();
+
+// consulta para obtener las sede
+$stmt3 = $pdo->query("SELECT DISTINCT ID_Sede FROM alumnos ORDER BY Class ASC");
+$stmt3->execute();
+
+$sql = "SELECT * FROM empresas WHERE Tipo = 'Universidad' ";
+
+// ejecucion de consultas
+$query = $pdo->prepare($sql);
+$query->execute();
+$cantidad = $query->rowCount();
+
 // FIN DE CONSULTAS PARA FILTROS
 
 ?>
@@ -20,10 +36,6 @@ include 'Modularidad/MenuHorizontal.php';
     <h2 class="main-title">Reporteria Universidad</h2>
 </div>
 <div class="container-fluid text-center">
-    <!-- inicio de librerias y esitlo -->
-    <?php include "../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/librerias.php"; ?>
-    <!-- fin de librerias y esitlo -->
-
     <!-- **************************************** Inicio de estructura de trabajo **************************** -->
     <!-- inicio de filtros -->
     <div id="filtros">
@@ -97,6 +109,7 @@ include 'Modularidad/MenuHorizontal.php';
     <!-- graficas generales -->
     <div id="content3">
         <div id="middle-pie"></div>
+        <div id="cumGeneral"></div>
         <div id="generalTable">
             <table class="table table-striped table-dark" id="tablaGeneral">
                 <thead>
@@ -152,23 +165,26 @@ include 'Modularidad/MenuHorizontal.php';
   </div>
 </div>
 <div id="universidades">
-    
+
 </div>
 <br>
 <br>
+<div id="showData" style="display: hidden;"></div>
 <!-- proceso de graficas -->
 <!-- Select2 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <!-- cargar tabla  -->
-<script async src="./js/tablaMain.js"></script>
+<script src="./js/tablaMain.js"></script>
 <!-- grafica tipo pais  -->
-<script async src="./js/graficas.js"></script>
+<script src="./js/graficas.js"></script>
 <!-- grafica general -->
 <script src="./js/graficaGeneral.js"></script>
 <!-- anclar los id de filtros -->
-<script async src="./js/filtros.js"></script>
+<script src="./js/filtros.js"></script>
 <!-- grafica por sexo -->
-<script async src="./js/graficBySex.js"></script>
+<script src="./js/graficBySex.js"></script>
+
+
 <script type="text/javascript">
     // declarar variables
     let listaClases;

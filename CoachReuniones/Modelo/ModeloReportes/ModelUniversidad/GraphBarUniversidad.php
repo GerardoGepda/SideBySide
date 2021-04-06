@@ -6,6 +6,7 @@ error_reporting(0);
 
 // declaracion de variables
 $json = array();
+$json2 = array();
 $contador = 0;
 
 
@@ -110,6 +111,24 @@ ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.I
 IM.estado = 'Retirada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4)
 AND a.ID_Empresa  = '$univeridades' ";
 
+
+    $sql5 = "SELECT e.cum AS cum FROM inscripcionmateria IM INNER JOIN 
+inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e
+ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE 
+($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4)
+AND a.ID_Empresa  = '$univeridades' ";
+
+
+
+    // extraer datos por universidad (nombre, nota, estado y materia)
+
+    $sql9 = "SELECT  m.nombreMateria, a.Nombre, IM.nota, IM.estado,  a.ID_Empresa   FROM inscripcionmateria
+     IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e
+ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno INNER JOIN
+materias m on m.idExpedienteU = e.idExpedienteU WHERE ($fragmento1) AND 
+($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
+
+
     // MATERIAS APROBADAS
     $stmt = $pdo->prepare($sql2);
     $stmt->execute();
@@ -123,18 +142,31 @@ AND a.ID_Empresa  = '$univeridades' ";
     $stmt3->execute();
     $result3 = $stmt3->fetch();
 
-    
+
+
+    // OBTENER CUM
+    $stmt4 = $pdo->prepare($sql5);
+    $stmt4->execute();
+    $result4 = $stmt4->fetch();
+
+    $stmt8 = $pdo->prepare($sql9);
+    $stmt8->execute();
+    $result8 = $stmt8->fetch();
+
     $contador++;
     if ($result[0] == "0" && $result2[0] == "0" && $result3[0] == "0") {
         continue;
     }
+    
 
     $json[] = array(
         "id" => $row['ID_Empresa'],
-        "name" => $row['Nombre'],
+        "name" => ($row['Nombre']),
         "aprobadas" => $result[0],
         "reprobadas" => $result2[0],
-        "retiradas" => $result3[0]
+        "retiradas" => $result3[0],
+        "cum" => $result4['cum'],
+        "student" => $result8
     );
 }
 
