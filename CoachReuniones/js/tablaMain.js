@@ -183,7 +183,6 @@ function loadUniversity(datos) {
     let cum1 = [];
     let alumno = [];
 
-
     total1 = 0;
     total2 = 0;
     total3 = 0;
@@ -213,7 +212,7 @@ function loadUniversity(datos) {
 
     CreateModals(nombres.length, nombres);
     CreatDivs(nombres.length);
-    CumGeneral(cumGlobal);
+    CumGeneral(cumGlobal.toFixed(1));
 
 
     aprobadas.forEach(function(numero) {
