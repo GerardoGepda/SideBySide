@@ -45,6 +45,17 @@ function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico) {
     });
 }
 
+function printPageArea(areaID) {
+    var printContent = document.getElementById(areaID);
+    var WinPrint = window.open('', '', 'width=900,height=650');
+    WinPrint.document.write(printContent.innerHTML);
+    WinPrint.document.close();
+    WinPrint.focus();
+    WinPrint.print();
+    WinPrint.close();
+}
+
+
 function CreateModals(e, universidad, listaAprobados, listaReprobados, listaRetirados) {
     let template = '';
     let contador1 = 4;
@@ -111,8 +122,6 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
         final3.push(data3)
     }
     for (let index = 0; index < e; index++) {
-        console.log(final[index]);
-        
         let data = '';
         for (const dato of final[index]) {
             data += `<tr>
@@ -123,20 +132,39 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
                     </tr>`;
         }
 
+        let data2 = '';
+        for (const dato of final2[index]) {
+            data2 += `<tr>
+                        <td>${dato[0]}</td>
+                        <td>${dato[1]}</td>
+                        <td>${dato[2]}</td>
+                        <td>${dato[3]}</td>
+                    </tr>`;
+        }
+        let data3 = '';
+        for (const e of final3[index]) {
+            data3 += `<tr>
+                        <td>${e[0]}</td>
+                        <td>${e[1]}</td>
+                        <td>${e[2]}</td>
+                        <td>${e[3]}</td>
+                    </tr>`;
+        }
+
         template += `
     <div class="modal fade" id="aprobados-${contador1++}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
              <center>
-                <h5 class="modal-title" id="exampleModalLabel">Listado ${universidad[index]} &nbsp;&nbsp;&nbsp;<code>Materias Aprobadas</code></h5>
+                <h5 class="modal-title" id="exampleModalLabel">Listado: ${universidad[index]} &nbsp;&nbsp;&nbsp;<code>Materias Aprobadas</code></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
              </center>
             </div>
             <div class="modal-body">
-               <table class='table'>
+               <table class='table' id='save-${index}'>
                     <thead class='table-dark'>
                         <tr>
                             <th>Nombre</th>
@@ -145,14 +173,14 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
                             <th>Estado</th>
                         </tr>
                     </thead>
-                    <tbody class='table-light table-bordered table-hover'> 
+                    <tbody class='table-light table-bordered table-striped table-hover'> 
                         ${data}
                     </tbody>     
                </table>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick='printPageArea('save-${index}')')>Save</button>
             </div>
             </div>
         </div>
@@ -162,7 +190,7 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
         <div class="modal-content">
         <div class="modal-header">
          <center>
-            <h5 class="modal-title" id="exampleModalLabel">Listado ${universidad[index]} &nbsp; &nbsp; &nbsp;<code>Materias Reprobadas </code></h5>
+            <h5 class="modal-title" id="exampleModalLabel">Listado: ${universidad[index]} &nbsp; &nbsp; &nbsp;<code>Materias Reprobadas </code></h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
             </button>
@@ -178,8 +206,8 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
                 <th>Estado</th>
             </tr>
         </thead>
-        <tbody class='table-light table-bordered table-hover'>
-        ${JSON.stringify(final2[index]) }
+        <tbody class='table-light table-bordered table-striped table-hover'>
+        ${data2}
         </tbody>     
    </table>
         </div>
@@ -211,8 +239,8 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
             <th>Estado</th>
         </tr>
     </thead>
-    <tbody class='table-light table-bordered table-hover'>
-    ${JSON.stringify(final3[index]) }
+    <tbody class='table-light table-bordered table-striped table-hover'>
+    ${data3}
     </tbody>     
 </table>
     </div>
