@@ -70,6 +70,7 @@ function ShowSelected(ciclos, clases, financiamiento, sedes) {
             mapaGeneral(datosRetornados.result7, datosRetornados.result8, datosRetornados.result9);
             graficBySex(datosRetornados.result10, datosRetornados.result11, datosRetornados.result12);
             principal(datosRetornados.result13, datosRetornados.result14, datosRetornados.result15);
+            console.log(datosRetornados.cumSSFT, datosRetornados.cumSAFT, datosRetornados.cumM, datosRetornados.cumF);
         }
     });
 };

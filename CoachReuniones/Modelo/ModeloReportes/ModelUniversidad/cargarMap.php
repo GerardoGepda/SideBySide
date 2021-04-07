@@ -178,10 +178,25 @@ INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
 WHERE IM.estado = 'Retirada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) ";
 
-$consulta16 = "SELECT e.cum AS cum FROM inscripcionmateria IM INNER JOIN 
+$consulta16 = "SELECT DISTINCT (SUM(e.cum))/COUNT(e.cum) AS cum FROM inscripcionmateria IM INNER JOIN 
 inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e
 ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE 
-($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) ";
+($fragmento1) AND a.ID_Sede = 'SSFT' AND ($fragmento3) AND ($fragmento4) ";
+
+$consulta17 = "SELECT DISTINCT (SUM(e.cum))/COUNT(e.cum) AS cum FROM inscripcionmateria IM INNER JOIN 
+inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e
+ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE 
+($fragmento1) AND a.ID_Sede = 'SAFT' AND ($fragmento3) AND ($fragmento4) ";
+
+$consulta18 = "SELECT DISTINCT (SUM(e.cum))/COUNT(e.cum) AS cum FROM inscripcionmateria IM INNER JOIN 
+inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e
+ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE 
+($fragmento1) AND a.Sexo = 'M' AND ($fragmento3) AND ($fragmento4) ";
+
+$consulta19 = "SELECT DISTINCT (SUM(e.cum))/COUNT(e.cum) AS cum FROM inscripcionmateria IM INNER JOIN 
+inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e
+ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE 
+($fragmento1) AND a.Sexo = 'F' AND ($fragmento3) AND ($fragmento4) ";
 
 
 // ejecutamos para obtener el total de materias aprobadas, reprobadas, retiradas en san salvador
@@ -252,6 +267,22 @@ $stmt15 = $pdo->prepare($consulta15);
 $stmt15->execute();
 $result15 = $stmt15->fetch();
 
+//Ejecución de consultas de Cums
+$stmt16 = $pdo->prepare($consulta16);
+$stmt16->execute();
+$result16 = $stmt16->fetch();
+
+$stmt17 = $pdo->prepare($consulta17);
+$stmt17->execute();
+$result17 = $stmt17->fetch();
+
+$stmt18 = $pdo->prepare($consulta18);
+$stmt18->execute();
+$result18 = $stmt18->fetch();
+
+$stmt19 = $pdo->prepare($consulta19);
+$stmt19->execute();
+$result19 = $stmt19->fetch();
 
 // devolver datos como json
 $respuestaValidacion = array();
@@ -297,6 +328,12 @@ $respuestaValidacion["cantidadSedes"] = $contarSedes;
 // resultado consultas 
 
 $respuestaValidacion["fragmento1"] = $consulta1;
+
+//agregamos los resultados de cum al vector
+$respuestaValidacion["cumSSFT"] = $result16[0];
+$respuestaValidacion["cumSAFT"] = $result17[0];
+$respuestaValidacion["cumM"] = $result18[0];
+$respuestaValidacion["cumF"] = $result19[0];
 
 
 /*ahora lo imprimes 

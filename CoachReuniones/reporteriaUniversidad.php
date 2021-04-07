@@ -129,7 +129,11 @@ $cantidad = $query->rowCount();
     <div id="maps">
         <div id="content">
             <!-- inicio de contenedores de mapas -->
-            <div id="map1" class="loading"></div>
+            <div class="d-flex flex-row">
+                <div id="map1" class="loading"></div>
+                
+            </div>
+            
             <div id="map2" class="loading"></div>
             <!-- fin de contenedores de mapas -->
         </div>
