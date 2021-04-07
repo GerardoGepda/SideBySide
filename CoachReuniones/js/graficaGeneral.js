@@ -1,6 +1,6 @@
 // ************************ inicio de graficas generales *********************************
 // La funcion mapaGeneral recibe 3 parametros que son la cantidad de materias aprobadas, reprobadas y retirdas
-function mapaGeneral(aprobados, reprobados, retirados) {
+function mapaGeneral(aprobados, reprobados, retirados, cumM) {
     total = parseInt(aprobados) + parseInt(reprobados) + parseInt(retirados);
 
     // calcular porcentajes
@@ -23,7 +23,9 @@ function mapaGeneral(aprobados, reprobados, retirados) {
                 fontWeight: 'bold'
             }
         },
-
+        subtitle: {
+            text: 'CUM: ' + cumM,
+        },
         xAxis: {
             categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         },

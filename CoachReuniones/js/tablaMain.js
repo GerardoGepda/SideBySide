@@ -332,7 +332,6 @@ function loadUniversity(datos) {
         listaReprobados.push(dato.listaReprobado);
         listaRetirados.push(dato.listaRetirado);
     });
-
     // calcular cum global
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     cumGlobal = (cum1.reduce(reducer)) / cum1.length;

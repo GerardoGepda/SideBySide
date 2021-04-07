@@ -86,7 +86,6 @@
         max-width: 50%;
         display: block;
     }
-
     /* fin de diseño para mapas */
 
     /* inicio de diseño para filtros */

@@ -1,4 +1,4 @@
-function graficBySex(aprobados, reprobados, retirados) {
+function graficBySex(aprobados, reprobados, retirados, cums) {
     total = parseInt(aprobados) + parseInt(reprobados) + parseInt(retirados);
 
     // calcular porcentajes
@@ -21,7 +21,9 @@ function graficBySex(aprobados, reprobados, retirados) {
                 fontWeight: 'bold'
             }
         },
-
+        subtitle: {
+            text: 'CUM: ' + cums.cumF,
+        },
         xAxis: {
             categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
         },

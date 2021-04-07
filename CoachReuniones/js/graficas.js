@@ -65,19 +65,25 @@ function ShowSelected(ciclos, clases, financiamiento, sedes) {
         },
         success: function(datosRetornados) {
             // console.log(datosRetornados.fragmento1);
-            mapa1(datosRetornados.result1, datosRetornados.result2, datosRetornados.result3, datosRetornados.ciclo, datosRetornados.clase);
-            mapa2(datosRetornados.result4, datosRetornados.result5, datosRetornados.result6, datosRetornados.ciclo, datosRetornados.clase);
-            mapaGeneral(datosRetornados.result7, datosRetornados.result8, datosRetornados.result9);
-            graficBySex(datosRetornados.result10, datosRetornados.result11, datosRetornados.result12);
+            const cums = {
+                cumSSFT: parseFloat(datosRetornados.cumSSFT).toFixed(1),
+                cumSAFT: parseFloat(datosRetornados.cumSAFT).toFixed(1),
+                cumM: parseFloat(datosRetornados.cumM).toFixed(1),
+                cumF: parseFloat(datosRetornados.cumF).toFixed(1)
+            };
+
+            mapa1(datosRetornados.result1, datosRetornados.result2, datosRetornados.result3, datosRetornados.ciclo, datosRetornados.clase, cums.cumSSFT);
+            mapa2(datosRetornados.result4, datosRetornados.result5, datosRetornados.result6, datosRetornados.ciclo, datosRetornados.clase, cums.cumSAFT);
+            mapaGeneral(datosRetornados.result7, datosRetornados.result8, datosRetornados.result9, cums.cumM);
+            graficBySex(datosRetornados.result10, datosRetornados.result11, datosRetornados.result12, cums);
             principal(datosRetornados.result13, datosRetornados.result14, datosRetornados.result15);
-            console.log(datosRetornados.cumSSFT, datosRetornados.cumSAFT, datosRetornados.cumM, datosRetornados.cumF);
         }
     });
 };
 
 
 // funcion para cargar mapa #1
-function mapa1(result1, result2, result3, ciclo) {
+function mapa1(result1, result2, result3, ciclo, clase, cumSSFT) {
     var data = [
         ['sv-ss', 'San Salvador'],
 
@@ -97,7 +103,7 @@ function mapa1(result1, result2, result3, ciclo) {
         },
 
         subtitle: {
-            text: ''
+            text: 'CUM: ' + cumSSFT,
         },
         // propiedad para hacer zoom
         // mapNavigation: {
@@ -156,7 +162,7 @@ function mapa1(result1, result2, result3, ciclo) {
 // result5 es la cantidad de materias reprobadas
 // result6 es la cantidad de materias reprobadas
 // ciclo es el ciclo seleccionado
-function mapa2(result4, result5, result6, ciclo) {
+function mapa2(result4, result5, result6, ciclo, clase, cumSAFT) {
     var data = [
         ['sv-sa', 'Santa Ana'],
 
@@ -176,7 +182,7 @@ function mapa2(result4, result5, result6, ciclo) {
         },
 
         subtitle: {
-            text: ''
+            text: 'CUM: ' + cumSAFT,
         },
         series: [{
                 data: data,
