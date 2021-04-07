@@ -110,7 +110,6 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
         });
         final3.push(data3)
     }
-
     for (let index = 0; index < e; index++) {
         template += `
     <div class="modal fade" id="aprobados-${contador1++}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -134,8 +133,8 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
                             <th>Estado</th>
                         </tr>
                     </thead>
-                    <tbody class='table-light table-bordered table-hover'>
-                    ${JSON.stringify(final[index]) }
+                    <tbody class='table-light table-bordered table-hover'> 
+                        ${(final[index].map(0))}
                     </tbody>     
                </table>
             </div>
