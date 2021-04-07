@@ -111,6 +111,18 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
         final3.push(data3)
     }
     for (let index = 0; index < e; index++) {
+        console.log(final[index]);
+        
+        let data = '';
+        for (const dato of final[index]) {
+            data += `<tr>
+                        <td>${dato[0]}</td>
+                        <td>${dato[1]}</td>
+                        <td>${dato[2]}</td>
+                        <td>${dato[3]}</td>
+                    </tr>`;
+        }
+
         template += `
     <div class="modal fade" id="aprobados-${contador1++}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -134,7 +146,7 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
                         </tr>
                     </thead>
                     <tbody class='table-light table-bordered table-hover'> 
-                        ${(final[index].map(0))}
+                        ${data}
                     </tbody>     
                </table>
             </div>

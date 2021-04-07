@@ -178,7 +178,10 @@ INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
 WHERE IM.estado = 'Retirada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) ";
 
-
+$consulta16 = "SELECT e.cum AS cum FROM inscripcionmateria IM INNER JOIN 
+inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e
+ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE 
+($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) ";
 
 
 // ejecutamos para obtener el total de materias aprobadas, reprobadas, retiradas en san salvador
