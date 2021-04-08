@@ -133,16 +133,11 @@
         display: block;
     }
 
-    #content3 {
-        max-height: 260px;
-        min-height: 260px;
-    }
-
     /* estilo para graficas generales */
     .highcharts-figure {
-        height: 345px;
-        min-width: 400px;
-        max-width: 400px;
+        height: 50%;
+        min-width: 40%;
+        max-width: 40%;
         display: inline-block;
         margin: 0 auto;
         border-radius: 10px;
@@ -155,20 +150,22 @@
     }
 
     #gen {
-        margin-left: -80%;
+        margin-left: -50%;
         margin-top: 1%;
-        height: 270px;
-        min-width: 300px;
-        max-width: 430px;
+        min-height: 90%;
+        max-height: 90%;
+        min-width: 90%;
+        max-width: 90%;
         display: inline-block;
     }
 
     #gen2 {
-        margin-left: 45%;
+        margin-left: 25%;
         margin-top: 1%;
-        height: 270px;
-        min-width: 300px;
-        max-width: 430px;
+        min-height: 90%;
+        max-height: 90%;
+        min-width: 90%;
+        max-width: 90%;
         display: inline-block;
     }
 
@@ -180,22 +177,17 @@
         max-width: 280px;
         display: inline-block;
         border-radius: 10px;
-        margin-top: 0.5%;
-        margin-left: 2%;
-        margin-right: 8%;
-        margin-bottom: -40px;
+        margin: 2px 4%;
     }
 
     #cumGeneral {
-        height: 200px;
+        position: relative;
+        bottom: 20px;
+        right: -40px;
         min-width: 200px;
         max-width: 200px;
         display: inline-block;
-        border-radius: 10px;
-        margin-top: 0.5%;
-        margin-left: 2%;
-        margin-right: 2%;
-        margin-bottom: -40px;
+        margin: 0.5% 4%;
     }
 
     #tablaGeneral {
@@ -205,7 +197,7 @@
     }
 
     #TableBody th {
-        border: solid 1px #111;
+        border: solid 0.5px #111;
         border-style: groove;
     }
 
@@ -215,6 +207,8 @@
     }
 
     #generalTable {
+        position: relative;
+        bottom: 30px;
         min-width: 450px;
         max-width: 450px;
         margin-left: 9%;
@@ -308,12 +302,13 @@
 
     /* responsive design */
     /* responsive de grafiaca de mapas y grafica de genro*/
-    @media only screen and (max-width: 1080px) {
+    @media only screen and (max-width: 1024px) {
         #content3 {
             display: inline-block;
             margin: 0 auto;
             min-width: 100%;
             max-width: 100%;
+            height: auto;
         }
 
         #map1,
@@ -323,18 +318,41 @@
             margin: 0.5% auto;
         }
 
-        #middle-pie,
-        #cumGeneral,
-        #generalTable {
-            margin: 0 auto;
+        #cumGeneral{
+            position: relative;
+            bottom: 20px;
+            right:0;
+            margin: 4px 45px;
+            min-width: 90%;
+            max-width: 90%;
+            display: inline-block;
         }
-
-        #gen,
-        #gen2 {
+        #middle-pie {
+            margin: 1px 50px;
+        }
+        #tablaGeneral{
             min-width: 100%;
             max-width: 100%;
-            min-height: 100%;
-            max-height: 100%;
+        }
+        #tablaGeneral thead{
+            min-width: 100%;
+            max-width: 100%;
+        }
+        #tablaGeneral tbody{
+            min-width: 95%;
+            max-width: 95%;
+        }
+        #generalTable {
+            bottom: 0;
+            margin: 0 15%;
+            display: inline-block;
+        }
+        
+        #gen,
+        #gen2 {
+            background: black;
+            min-width: 40%;
+            max-width: 40%;
             margin: 0% auto;
         }
 
@@ -345,13 +363,18 @@
         }
 
         .highcharts-figure {
-            height: 345px;
+            height: 50%;
             min-width: 90%;
             max-width: 90%;
             display: inline-block;
             margin: 0 auto;
             border-radius: 10px;
             padding: 0.4%;
+        }
+        #universidades {
+            min-width: 100%;
+            max-width: 100%;
+            margin: 0 auto;
         }
     }
 
@@ -368,8 +391,8 @@
 
         #gen,
         #gen2 {
-            min-width: 80%;
-            max-width: 80%;
+            min-width: 40%;
+            max-width: 40%;
             margin: 0% auto;
         }
 
@@ -380,8 +403,8 @@
         }
 
         #universidades {
-            min-width: auto;
-            max-width: auto;
+            min-width: 100%;
+            max-width: 100%;
             margin: 0 auto;
         }
 
@@ -390,6 +413,7 @@
         }
 
         #content2 {
+            height:50%;
             display: inline-block;
         }
 
@@ -405,20 +429,37 @@
             margin: 0%;
             padding: 0%;
         }
-
-        #generalTable {
-            margin: auto;
+        #tablaGeneral{
+            min-width: 100%;
+            max-width: 100%;
+        }
+        #tablaGeneral thead{
+            min-width: 100%;
+            max-width: 100%;
+        }
+        #tablaGeneral tbody{
+            min-width: 95%;
+            max-width: 95%;
+        }
+        #generalTable{
+            margin: 10px auto;
             min-width: 100%;
             max-width: 100%;
             display: inline-block;
         }
-
+        #cumGeneral{
+            min-width: 100%;
+            max-width: 100%;
+            margin: 10px auto;
+            right:0;
+            display: inline-block;
+        }
         #middle-pie {
             min-width: 50%;
             max-width: 50%;
-            margin: auto;
+            margin: 5px auto;
             padding: 0%;
-            display: block;
+            display: inline-block;
         }
 
         #content3,
@@ -436,7 +477,7 @@
 
 
         .highcharts-figure {
-            height: 345px;
+            height: 50%;
             min-width: 90%;
             max-width: 90%;
             display: inline-block;

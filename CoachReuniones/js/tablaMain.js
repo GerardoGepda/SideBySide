@@ -283,9 +283,9 @@ function CreatDivs(e, ids) {
 
 function CumGeneral(cum) {
     let template = '';
-    template = ` <div class='text-white details mb-3' style='max-width: 18rem;'>
+    template = ` <div class='text-white details' style=' border-radius: 10px;'>
                     <div class='card-header'>CUM GLOBAL</div>
-                        <div class='card-body'>
+                        <div class='card-body' style='max-height: 150px; border-bottom-left-radius:10px; border-bottom-right-radius:10px;'>
                             <h5 class='card-title numero text-center'>` + cum + `</h5>
                             <br><br>
                         </div>
