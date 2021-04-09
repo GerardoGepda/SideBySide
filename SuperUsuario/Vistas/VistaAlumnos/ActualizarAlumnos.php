@@ -36,14 +36,14 @@ if (isset($_GET['id'])) {
 
 <body class="container">
 	<br>
-	<div class="modal fade show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" style="display: block; padding-right: 16px;" aria-modal="true">
+	<div class="init" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-modal="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content"  style="border-radius: 30px;">
 				<div class="modal-header">
 					<h5 class="modal-title" id="exampleModalLabel" style="color:black;">Actualizar Usuario</h5>
 				</div>
 				<div class="modal-body">
-				<h6 style="color: white;" class="float-left">Datos Generales</h6><br>
+				<h6 style="color: black; text-align: center;" class="float-left">Datos Generales</h6><br>
 				<hr>
 
 					<!--Creación de empresas-->

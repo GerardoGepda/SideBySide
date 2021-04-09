@@ -85,8 +85,8 @@ error_reporting(0);
 </head>
 <body style="background-color: #2D2D2E;">
   <div class="row mb-5">
-    <div class="col-xs-4 col-sm-6 col-md-6 col-lg-7 ml-lg-3 text-center">
-      <img class="img-fluid" src="img/fondologin.jpg" style="width: 830px; height: 780px;max-width: 100%;" id="Logo">
+    <div class="col-xs-3 col-sm-6 col-md-6 col-lg-7 ml-lg-3 text-center">
+      <img class="img-fluid" src="img/fondologin.jpg" id="Logo">
     </div>
     <div class="col-xs-4 col-sm-8 col-md-6 col-lg-4" style="margin-top: 100px;margin:auto;">
       <form class="login100-form validate-form" action="validar.php" method="POST">
