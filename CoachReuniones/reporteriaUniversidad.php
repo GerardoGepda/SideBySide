@@ -110,7 +110,7 @@ $cantidad = $query->rowCount();
     <div id="content3">
         <div id="middle-pie"></div>
         <div id="cumGeneral"></div>
-        <div id="generalTable">
+        <!-- <div id="generalTable">
             <table class="table table-striped table-dark" id="tablaGeneral">
                 <thead>
                     <tr>
@@ -123,7 +123,7 @@ $cantidad = $query->rowCount();
                 <tbody id="TableBody" class="table-light text-dark table-hover table-striped">
                 </tbody>
             </table>
-        </div>
+        </div> -->
     </div>
     <!-- fin de graficas generales -->
     <div id="maps">

@@ -20,7 +20,7 @@ function ObtenerDatos(ciclos, clases, financiamiento, sedes) {
             let templete;
             templete = datos;
             //añadimos el html con los datos a la tabla
-            $("#TableBody").html(templete);
+            // $("#TableBody").html(templete);
 
         }
     });

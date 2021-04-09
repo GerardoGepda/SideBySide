@@ -122,17 +122,23 @@ AND a.ID_Empresa  = '$univeridades' ";
     // extraer datos por universidad (nombre, nota, estado y materia)
     // SELECT  ,IM.idMateria  IM.nota, IM.estado
 
-$sql9 = "SELECT  a.Nombre as alumno, IM.idMateria as id, IM.nota as nota, IM.estado as estado FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON 
-IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU
-INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE (IM.estado = 'Aprobada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
+$sql9 = "SELECT a.Nombre as alumno, IM.idMateria as id, IM.nota as nota, IM.estado as estado, m.nombreMateria
+ as  nombreMateria
+ FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER
+  JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
+  JOIN materias m ON m.idMateria = IM.idMateria WHERE (IM.estado = 'Aprobada') AND ($fragmento1) AND 
+  ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
 
-$sql10 = "SELECT  a.Nombre as alumno, IM.idMateria as id, IM.nota as nota, IM.estado as estado FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON 
-IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU
-INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE (IM.estado = 'Reprobada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
+$sql10 = "SELECT a.Nombre as alumno, IM.idMateria as id, IM.nota as nota, IM.estado as estado, m.nombreMateria
+ as  nombreMateria
+FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER
+ JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
+ JOIN materias m ON m.idMateria = IM.idMateria WHERE (IM.estado = 'Reprobada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
 
-$sql11 = "SELECT  a.Nombre as alumno, IM.idMateria as id, IM.nota as nota, IM.estado as estado FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON 
-IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU
-INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE (IM.estado = 'Retirada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
+$sql11 = "SELECT a.Nombre as alumno, IM.idMateria as id, IM.nota as nota, IM.estado as estado, m.nombreMateria  as  nombreMateria
+FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER
+ JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
+ JOIN materias m ON m.idMateria = IM.idMateria WHERE (IM.estado = 'Retirada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
 
 
     // MATERIAS APROBADAS
