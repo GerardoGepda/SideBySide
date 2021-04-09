@@ -1,5 +1,5 @@
 <?php require_once 'templates/head.php'; ?>
-<title>Indicaciones transporte</title>
+<title>Indicaciones inscripción</title>
  <link rel="stylesheet" href="assets1/css1/style.css">
 <?php  
   
