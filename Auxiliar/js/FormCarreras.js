@@ -6,7 +6,6 @@ $(document).ready(function(){
         var nombreCarrera =$("#NomCarr").val();
         var faculta =$("#Faculta").val();
         var duracion =$("#duracion").val();
-       
         //Variables Estructura de alerta
         var alertaInicio="<div class='alert alert-success' role='alert'><button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button><strong>Cuidado!</strong>";
         var alertaCierre="</div>"
@@ -15,7 +14,7 @@ $(document).ready(function(){
         
         //Verificar los campos
         
-            if (!nombreCarrera =="") {
+            if (!nombreCarrera=="") {
                 if (!faculta=="") {
                     if (!duracion=="") {
 
