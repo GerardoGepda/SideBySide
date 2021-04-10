@@ -102,7 +102,7 @@ error_reporting(0);
             <img class=" img-fluid" src="img/fondologin.jpg" alt="First slide" style="height: 540px; width: 1000px; ">
           </div>
           <div class="carousel-item">
-            <img class=" img-fluid" src="../SideBySide/SuperUsuario/img/Super1slider.jpg" alt="Second slide" style="height: 540px; width: 1000px; ">
+            <img class=" img-fluid" src="../SideBySide/SuperUsuario/img/foto3.JPG" alt="Second slide" style="height: 540px; width: 1000px; ">
           </div>
           <div class="carousel-item">
             <img class=" img-fluid" src="../SideBySide/SuperUsuario/img/Super2slider.jpg" alt="Third slide" style="height: 540px; width: 1000px;">
