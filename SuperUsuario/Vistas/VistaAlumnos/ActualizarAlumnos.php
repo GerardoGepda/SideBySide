@@ -53,7 +53,7 @@ if (isset($_GET['id'])) {
 							<div class="md-form">
 								<div class="md-form">
 								<label for="materialRegisterFormFirstName">Carnet del Alumno</label>
-								<input style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 35px; background: rgb(172, 172, 172);" type="text" id="CarnetAlumno" name="CarnetAlumno" <?php echo 'value="'.$fila['ID_Alumno'] .'"';  ?> class="form-control">
+								<input style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 30px; background: rgb(172, 172, 172);" type="text" id="CarnetAlumno" name="CarnetAlumno" <?php echo 'value="'.$fila['ID_Alumno'] .'"';  ?> class="form-control">
 								
 							</div>
 						</div>
@@ -61,7 +61,7 @@ if (isset($_GET['id'])) {
 							<!-- Last name -->
 							<div class="md-form">
 								<label for="materialRegisterFormLastName">Nombre del alumno</label>
-								<input style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 35px; background: rgb(172, 172, 172);" type="text" id="NombreAlumno" name="NombreAlumno" class="form-control" <?php echo 'value="'.$fila['Nombre'] .'"';  ?>>
+								<input style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 30px; background: rgb(172, 172, 172);" type="text" id="NombreAlumno" name="NombreAlumno" class="form-control" <?php echo 'value="'.$fila['Nombre'] .'"';  ?>>
 								
 							</div>
 						</div>
@@ -72,7 +72,7 @@ if (isset($_GET['id'])) {
 							<!-- First name   Tema , fecha , la hora y el tipo de taller -->
 							<div class="md-form">
 								<label for="materialRegisterFormFirstName">Carrera</label>
-								<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 35px; background: rgb(172, 172, 172);"  type="text" id="NombreCarrera" name="NombreCarrera" class="form-control">
+								<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 30px; background: rgb(172, 172, 172);"  type="text" id="NombreCarrera" name="NombreCarrera" class="form-control">
 									<?php
 
 									$ResuConulta4= $fila['ID_Carrera'];
@@ -102,7 +102,7 @@ if (isset($_GET['id'])) {
 								<!-- Last name -->
 								<div class="md-form">
 									<label for="materialRegisterFormLastName">Class</label>
-									<input style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 35px; background: rgb(172, 172, 172);" type="text" id="NClass" name="NClass" class="form-control" <?php echo 'value="'.$fila['Class'] .'"';  ?>>
+									<input style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 30px; background: rgb(172, 172, 172);" type="text" id="NClass" name="NClass" class="form-control" <?php echo 'value="'.$fila['Class'] .'"';  ?>>
 									
 								</div>
 							</div>
@@ -113,7 +113,7 @@ if (isset($_GET['id'])) {
 								<!-- First name   Tema , fecha , la hora y el tipo de taller -->
 								<div class="md-form">
 <label for="materialRegisterFormFirstName">Universidad</label>
-									<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 35px; text-align: center; background: rgb(172, 172, 172);" id="idempresa" name="idempresa" class="form-control">
+									<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 30px; text-align: center; background: rgb(172, 172, 172);" id="idempresa" name="idempresa" class="form-control">
 										<?php 
 
 										$ResuConulta3= $fila['ID_Empresa'];
@@ -143,7 +143,7 @@ if (isset($_GET['id'])) {
 									<!-- Last name -->
 									<div class="md-form">
 										<label  for="materialRegisterFormLastName">Sexo</label>
-										<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 35px; text-align: center; background: rgb(172, 172, 172);" 
+										<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 30px; text-align: center; background: rgb(172, 172, 172);" 
 	 id="Sexo" name="Sexo" class="form-control" >
 											<option <?php echo 'value="'.$fila['Sexo'] .'"';?>  selected ><?php echo $fila['Sexo'];?></option>
 											<option value="M">Hombre</option>
@@ -162,7 +162,7 @@ if (isset($_GET['id'])) {
 											<!-- First name   Tema , fecha , la hora y el tipo de taller -->
 											<div class="md-form">
 												<label for="materialRegisterFormFirstName">Correo</label>
-												<input style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 35px; background: rgb(172, 172, 172);"
+												<input style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 30px; background: rgb(172, 172, 172);"
 	 type="text" id="correo" name="correo" class="form-control" <?php echo 'value="'.$fila['correo'] .'"';  }?>>
 												
 											</div>
@@ -172,7 +172,7 @@ if (isset($_GET['id'])) {
 									<!-- Last name -->
 									<div class="md-form">
 									<label for="materialRegisterFormLastName">Proceso</label>
-										<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 35px; text-align: center; background: rgb(172, 172, 172);" 
+										<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 30px; text-align: center; background: rgb(172, 172, 172);" 
 	 id="IDStatus" name="IDStatus" class="form-control">
 											
 											<?php 
@@ -208,7 +208,7 @@ if (isset($_GET['id'])) {
 										<!-- First name   Tema , fecha , la hora y el tipo de taller -->
 										<div class="md-form">
 											<label  for="materialRegisterFormFirstName">Sede</label>
-											<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 35px; text-align: center; background: rgb(172, 172, 172);" 
+											<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 30px; text-align: center; background: rgb(172, 172, 172);" 
 	 type="text" id="sede" name="sede" class="form-control" >
 												<?php 
 
@@ -243,7 +243,7 @@ if (isset($_GET['id'])) {
 											<!-- First name   Tema , fecha , la hora y el tipo de taller -->
 											<div class="md-form">
 												<label for="materialRegisterFormFirstName">Lugar Asistencia</label>
-												<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 35px;background: rgb(172, 172, 172);" 
+												<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 30px;background: rgb(172, 172, 172);" 
 	 type="text" id="Asistencia" name="Asistencia" class="form-control">
 													<?php
 
@@ -275,7 +275,7 @@ if (isset($_GET['id'])) {
 										<!-- Last name -->
 										<div class="md-form">
 											<label for="materialRegisterFormFirstName">Status actual (A LA FECHA)</label>
-											<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 35px; text-align: center; background: rgb(172, 172, 172);" 
+											<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 30px; text-align: center; background: rgb(172, 172, 172);" 
 	 type="text" id="estadoAlumno" name="statusActual" class="form-control" required >
 												<option value="<?php echo $fila['StatusActual'] ?>"selected ><?php echo $fila['StatusActual'] ?></option>
 												<option value="Becado" >Becado</option>
@@ -298,7 +298,7 @@ if (isset($_GET['id'])) {
 									<div class="col">
 										<div class="md-form">
 											<label for="materialRegisterFormFirstName">Fuente de financiamiento</label>
-											<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 35px; text-align: center; background: rgb(172, 172, 172);" 
+											<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 30px; text-align: center; background: rgb(172, 172, 172);" 
 	 type="text" id="financiamiento" name="financiamiento" class="form-control" required >
 												<option value="<?php echo $fila['FuenteFinacimiento']?>" selected ><?php echo $fila['FuenteFinacimiento']?></option>
 												<option value="Beca Externa con Apoyo Adicional" >Beca Externa con Apoyo Adicional</option>
@@ -319,7 +319,7 @@ if (isset($_GET['id'])) {
 										<div class="col">
 											<div class="md-form">
 												<label for="materialRegisterFormFirstName">Estado</label>
-												<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 35px;background: rgb(172, 172, 172);"  type="text" id="estadoAlumno" name="estadoAlumno" class="form-control" >
+												<select style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 30px;background: rgb(172, 172, 172);"  type="text" id="estadoAlumno" name="estadoAlumno" class="form-control" >
 													<option <?php echo 'value="'.$fila['Estado'] .'"';  ?>  selected ><?php echo $fila['Estado'] ;  ?></option>
 													<option value="Activo" >Activo</option>
 													<option value="Graduado" >Graduado</option>
@@ -332,7 +332,7 @@ if (isset($_GET['id'])) {
 										<div class="col">
 											<div class="md-form">
 												<label for="materialRegisterFormFirstName">Cantidad de talleres</label>
-												<input style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 35px; background: rgb(172, 172, 172);"
+												<input style="color: rgb(55, 55, 55); font-size: 18px; border: solid 1px; border-radius: 30px; background: rgb(172, 172, 172);"
 	 type="number" name="cantidaTaller" class="form-control" placeholder="Ingrese la cantida de talleres" min="0" required  value="<?php echo $fila['TotalTalleres'] ?>">
 												
 											</div>
@@ -347,7 +347,7 @@ if (isset($_GET['id'])) {
 
 									
 
-										<input style="color: white; font-size: 18px; border: solid 1px; border-radius: 35px;" type="hidden" name="id"  <?php echo 'value="'.$fila['ID_Alumno'].'"';  ?> >
+										<input style="color: white; font-size: 18px; border: solid 1px; border-radius: 30px;" type="hidden" name="id"  <?php echo 'value="'.$fila['ID_Alumno'].'"';  ?> >
 
 						<center><button style="border-radius: 20px;
     border: 2px solid #9d120e;
