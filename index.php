@@ -36,7 +36,10 @@ error_reporting(0);
   <script src="SuperUsuario/js/alerta.js" ></script>
 
   <style type="text/css" media="screen">
-    
+    *{
+      margin: 0;
+      padding: 0;
+    }
 #EstiloAlerta
 {
     margin: 0 auto; 
@@ -70,25 +73,49 @@ error_reporting(0);
 }
 
 }
-@media screen and (max-width: 760px) {
+@media screen and (max-width: 980px) {
   #Logo
   {
     display: none;
+    position: relative;
+    bottom: 30px;
+    width: 100%;
   }
 
 }
-
   </style>
 
 <!--===============================================================================================-->
 
 </head>
 <body style="background-color: #2D2D2E;">
-  <div class="row mb-5">
-    <div class="col-xs-3 col-sm-6 col-md-6 col-lg-7 ml-lg-3 text-center">
-      <img class="img-fluid" src="img/fondologin.jpg" id="Logo">
+  <div class="row mb-5 col-md-12">
+    <div class="col-xs-0 col-sm-0 col-md-0 col-lg-7" id="Logo">
+      <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" >
+        <ol class="carousel-indicators">
+          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+          <div class="carousel-item active ">
+            <img class=" img-fluid" src="img/fondologin.jpg" alt="First slide" style="height: 540px; width: 1000px; ">
+          </div>
+          <div class="carousel-item">
+            <img class=" img-fluid" src="../SideBySide/SuperUsuario/img/Super1slider.jpg" alt="Second slide" style="height: 540px; width: 1000px; ">
+          </div>
+          <div class="carousel-item">
+            <img class=" img-fluid" src="../SideBySide/SuperUsuario/img/Super2slider.jpg" alt="Third slide" style="height: 540px; width: 1000px;">
+          </div>
+        </div>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Next</span>
+        </a>
+      </div
+      <img class="img-fluid" src="" >
     </div>
-    <div class="col-xs-4 col-sm-8 col-md-6 col-lg-4" style="margin-top: 100px;margin:auto;">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-lg-3" style="margin-top: 100px;margin:auto;">
       <form class="login100-form validate-form" action="validar.php" method="POST">
          
           <img class="img-fluid" src="img/SideBySideWhiteVersion.png" alt="IMG" height="90px" style="max-width: 100%;">
@@ -243,11 +270,11 @@ if( $_SESSION['ValidaEntrada'] == 'fallo')
   <script src="login/js/main.js"></script>
 
 
-        <div class="footer-copyright text-center py-3" style="background: black;">
-          <img class="img-fluid" src="img/funda.png" width="60px">
+        <div class="footer-copyright py-3" style="background: black; margin-top: -98px; width: 100%;">
+          <img class="img-fluid" src="img/funda.png" width="60px" style="margin-left: 100px;">
           </img>
           <img class="img-fluid" src="img/logoblanco2.png" style="margin-left:30px;"></img>
-          <span style="margin-right:50px; margin-left:50px; color:white; font-size: 18px;">© 2020 Copyright: Pograma Oportunidades</span>
+          <span style="margin-right:50px; margin-left:50px; color:white; font-size: 18px;">©2020 Copyright: Pograma Oportunidades</span>
           <span style="color: white; font-weight: bold; font-size: 18px;">Contáctanos:</span><a href="https://www.facebook.com/exalumnos.ccgk"><img class="img-fluid" src="img/facebook.png" style="margin-left:30px; width:60px;"></img></a>
           <a href="https://instagram.com/bk2oportunidades?igshid=4rmcd55eld5h"><img class="img-fluid" src="img/instagram.png" style="margin-left:30px; width:60px;"></a></img>
   </div>
