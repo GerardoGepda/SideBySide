@@ -53,6 +53,7 @@ $cantidad = $query->rowCount();
                                     }
                                     ?>
                                 </select>
+                                <input class="form-check-input" type="checkbox" id="checkbox1" >Select All</input>
                             </div>
                         </div>
                     </fieldset>
@@ -69,6 +70,7 @@ $cantidad = $query->rowCount();
                                     }
                                     ?>
                                 </select>
+                                <input class="form-check-input" type="checkbox" id="checkbox2" >Select All</input>
                             </div>
                         </div>
                     </fieldset>
@@ -84,6 +86,7 @@ $cantidad = $query->rowCount();
                                 <option value="Financiamiento Propio" class="dropdown-item">Financiamiento propio
                                 </option>
                             </select>
+                            <input class="form-check-input" type="checkbox" id="checkbox3" >Select All</input>
                         </div>
                     </fieldset>
                 </div>
@@ -98,6 +101,7 @@ $cantidad = $query->rowCount();
                                 }
                                 ?>
                             </select>
+                            <input class="form-check-input" type="checkbox" id="checkbox4" >Select All</input>
                         </div>
                     </fieldset>
                 </div>

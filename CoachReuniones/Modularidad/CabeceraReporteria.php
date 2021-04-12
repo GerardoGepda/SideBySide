@@ -21,7 +21,8 @@
 
 <!--ENLACES PARA UTILIZAR DATABLE-->
 <link rel="stylesheet" type="text/css" href="DataTable/css/jquery.dataTables.min.css">
-<script src="DataTable/js/jquery-3.4.1.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.8.3.js" integrity="sha256-dW19+sSjW7V1Q/Z3KD1saC6NcE5TUIhLJzJbrdKzxKc=" crossorigin="anonymous"></script>
+
 <script src="DataTable/js/jquery.dataTables.min.js"></script>
 
 
