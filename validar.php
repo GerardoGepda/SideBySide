@@ -12,7 +12,7 @@ if (isset($_POST['iniciar']))
     if(isset($_POST['correo']) && isset($_POST['contrasena']))
     {
   //Asignar Variables 
-  $Correo =strtolower( $_POST['correo']);
+  $Correo =strtolower(trim($_POST['correo']));
   $Clave = $_POST['contrasena'];
 
   		//Consulta en la base
