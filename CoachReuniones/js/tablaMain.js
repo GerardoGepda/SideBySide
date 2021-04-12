@@ -12,10 +12,10 @@ function ObtenerDatos(ciclos, clases, financiamiento, sedes) {
             "sedes": sedes
         },
         url: "../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/cargarTabla.php",
-        error: function(xhr, textStatus, errorMessage) {
+        error: function (xhr, textStatus, errorMessage) {
             console.log("ERROR\n" + errorMessage + textStatus + xhr);
         },
-        success: function(response) {
+        success: function (response) {
             let datos = JSON.stringify(response);
             let templete;
             templete = datos;
@@ -38,7 +38,7 @@ function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico) {
             "financiamientos": financiamiento,
             "sedes": sedes
         },
-        success: function(response) {
+        success: function (response) {
             datos = JSON.parse(response);
             grafico(datos);
         }
@@ -55,48 +55,75 @@ function printPageArea(areaID) {
     WinPrint.close();
 }
 
-
-function CreateModals(e, universidad, listaAprobados, listaReprobados, listaRetirados) {
+function CreateModals(e, universidad, listaAprobados, listaReprobados, listaRetirados, l1, l2, l3) {
     let template = '';
-    let contador1 = 4;
-    let contador2 = 4;
-    let contador3 = 4;
+    let contador1 = 4, contador2 = 4, contador3 = 4;
+    data1 = [], data2 = [], data3 = [];
+    // resultados de listas extendidas (aprobados,reprodados y retirados)
+    let final = [], final2 = [], final3 = [];
+    let f1 = [], f2 = [], f3 = [];
+    lista1 = [], lista2 = [], lista3 = [], text1 = [], text2 = [], text3 = [];
 
+    // lista DISTINCT aprobados
+    for (let index = 0; index < l1.length; index++) {
+        photo = [];
+        nombre = [];
+        text1 = l1[index];
 
-    $data1 = [];
-    $data2 = [];
-    $data3 = [];
+        text1.forEach(e => {
+            nombre.push(e.alumno);
+            photo.push(e.imagen);
+        });
+        f1.push(text1);
+    }
+    // lista DISTINCT reprobados
+    for (let index = 0; index < l2.length; index++) {
+        photo = [];
+        nombre = [];
+        text2 = l2[index];
 
-    let final = [];
-    let final2 = [];
-    let final3 = [];
+        text2.forEach(e => {
+            nombre.push(e.alumno);
+            photo.push(e.imagen);
+        });
+        f2.push(text2);
+    }
+    for (let index = 0; index < l3.length; index++) {
+        photo = [];
+        nombre = [];
+        text3 = l3[index];
+
+        text3.forEach(e => {
+            nombre.push(e.alumno);
+            photo.push(e.imagen);
+        });
+        f3.push(text3);
+    }
+
 
     for (let index = 0; index < listaAprobados.length; index++) {
-        student1 = []
-        subject1 = [];
-        grade1 = [];
-        status1 = [];
-
+        // inicio de declaración de arrays
+        student1 = [], student2 = [], subject1 = [], grade1 = [], status1 = [], img1 = []
+        // fin de declaración de arrays;
         data1 = listaAprobados[index];
 
-        data1.forEach(element => {
-            student1.push(element.alumno);
-            subject1.push(element.id);
-            grade1.push(element.nota);
-            status1.push(element.estado);
+        data1.forEach(e => {
+            img1.push(e.imagen);
+            student2.push(e.nombreMateria);
+            student1.push(e.alumno);
+            subject1.push(e.id);
+            grade1.push(e.nota);
+            status1.push(e.estado);
         });
-        final.push(data1)
+        final.push(data1);
     }
 
     for (let index = 0; index < listaReprobados.length; index++) {
-        student2 = []
-        subject2 = [];
-        grade2 = [];
-        status2 = [];
-
+        student2 = [], subject2 = [], grade2 = [], status2 = [], student3 = [], img2 = []
         data2 = listaReprobados[index];
-
         data2.forEach(element => {
+            img2.push(element.imagen);
+            student3.push(element.nombreMateria);
             student2.push(element.alumno);
             subject2.push(element.id);
             grade2.push(element.nota);
@@ -110,10 +137,13 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
         subject3 = [];
         grade3 = [];
         status3 = [];
-
+        student4 = [];
+        img3 = [];
         data3 = listaRetirados[index];
 
         data3.forEach(element => {
+            img3.push(element.imagen);
+            student4.push(element.nombreMateria);
             student3.push(element.alumno);
             subject3.push(element.id);
             grade3.push(element.nota);
@@ -122,37 +152,80 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
         final3.push(data3)
     }
     for (let index = 0; index < e; index++) {
+        let table1 = '';
+        let table2 = '';
+        let table3 = '';
         let data = '';
+        let c1 = 1;
+        let c2 = 1;
+        let c3 = 1;
+
         for (const dato of final[index]) {
             data += `<tr>
+                        <td>${c++}</td>
+                        <td><img src='../img/imgUser/${dato[5]}' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
                         <td>${dato[0]}</td>
-                        <td>${dato[1]}</td>
+                        <td>${dato[4]}</td>
                         <td>${dato[2]}</td>
                         <td>${dato[3]}</td>
                     </tr>`;
         }
 
         let data2 = '';
+        c = 1;
         for (const dato of final2[index]) {
             data2 += `<tr>
+                        <td>${c++}</td>
+                        <td><img src='../img/imgUser/${dato[5]}' alt='Alumno' style='width:60px; height:60px; border-radius: 45px; '></td>
                         <td>${dato[0]}</td>
-                        <td>${dato[1]}</td>
+                        <td>${dato[4]}</td>
                         <td>${dato[2]}</td>
                         <td>${dato[3]}</td>
                     </tr>`;
         }
         let data3 = '';
+        c = 1;
         for (const e of final3[index]) {
             data3 += `<tr>
+                        <td>${c++}</td>
+                        <td><img src='../img/imgUser/${e[5]}' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
                         <td>${e[0]}</td>
-                        <td>${e[1]}</td>
+                        <td>${e[4]}</td>
                         <td>${e[2]}</td>
                         <td>${e[3]}</td>
                     </tr>`;
         }
 
+
+        for (const dato of f1[index]) {
+            table1 += `<tr>
+                        <td>${c1++}</td>
+                        <td><img src='../img/imgUser/${dato[1]}' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
+                        <td>${dato[0]}</td>
+                        <td>
+                        <button type='button' class='btn btn-primary' data-bs-toggle='tooltip' data-bs-placement='right' title='lista de materias inscritas:'>Detalles</button>
+                        </td>
+                    </tr>`;
+        }
+
+        for (const dato of f2[index]) {
+            table2 += `<tr>
+                        <td>${c2++}</td>
+                        <td><img src='../img/imgUser/${dato[1]}' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
+                        <td>${dato[0]}</td>
+                    </tr>`;
+        }
+        for (const dato of f3[index]) {
+            table3 += `<tr>
+                        <td>${c3++}</td>
+                        <td><img src='../img/imgUser/${dato[1]}' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
+                        <td>${dato[0]}</td>
+                    </tr>`;
+        }
+
+
         template += `
-    <div class="modal fade" id="aprobados-${contador1++}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade " id="aprobados-${contador1++}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
@@ -164,17 +237,31 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
              </center>
             </div>
             <div class="modal-body">
-               <table class='table' id='save-${index}'>
+               <table class='table ' id='save-${index}' >
                     <thead class='table-dark'>
                         <tr>
+                            <th>#</th>
+                            <th>img</th>
                             <th>Nombre</th>
-                            <th>IdMateria</th>
+                            <th>Nombre Materia</th>
                             <th>Nota</th>
                             <th>Estado</th>
                         </tr>
                     </thead>
                     <tbody class='table-light table-bordered table-striped table-hover'> 
                         ${data}
+                    </tbody>     
+               </table>
+               <table class='table' >
+                    <thead class='table-dark'>
+                        <tr>
+                            <th>#</th>
+                            <th>img</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody class='table-light table-bordered table-striped table-hover'> 
+                        ${table1}
                     </tbody>     
                </table>
             </div>
@@ -197,11 +284,13 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
          </center>
         </div>
         <div class="modal-body">
-        <table class='table'>
+        <table class='table' id='s-${index}'>
         <thead class='table-dark'>
             <tr>
+                <th>#</th>
+                <th>img</th>
                 <th>Nombre</th>
-                <th>IdMateria</th>
+                <th>Nombre Materia</th>
                 <th>Nota</th>
                 <th>Estado</th>
             </tr>
@@ -210,6 +299,18 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
         ${data2}
         </tbody>     
    </table>
+   <table class='table' >
+                    <thead class='table-dark'>
+                        <tr>
+                            <th>#</th>
+                            <th>img</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody class='table-light table-bordered table-striped table-hover'> 
+                        ${table2}
+                    </tbody>     
+               </table>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -230,11 +331,13 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
      </center>
     </div>
     <div class="modal-body">
-    <table class='table'>
+    <table class='table' id='sa-${index}'>
     <thead class='table-dark'>
         <tr>
-            <th>Nombre</th>
-            <th>IdMateria</th>
+            <th>#</th>
+            <th>img</th>
+            <th>Nombre</th>           
+            <th>Nombre Materia</th>
             <th>Nota</th>
             <th>Estado</th>
         </tr>
@@ -243,6 +346,18 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
     ${data3}
     </tbody>     
 </table>
+<table class='table' >
+                    <thead class='table-dark'>
+                        <tr>
+                            <th>#</th>
+                            <th>img</th>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody class='table-light table-bordered table-striped table-hover'> 
+                        ${table3}
+                    </tbody>     
+               </table>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -253,7 +368,6 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
 </div>
     `;
     }
-
     document.getElementById('showData').innerHTML = template;
 }
 
@@ -265,7 +379,7 @@ function CreatDivs(e, ids) {
     let cont3 = 4;
     for (let index = 0; index < e; index++) {
         templete += `
-            <div class='uni-content my-1 ${ids[index].replace(/\s/g,"-")}' style='height: 285px;'>
+            <div class='uni-content my-1 ${ids[index].replace(/\s/g, "-")}' style='height: 285px;'>
                 <div id='u-${contador++}' style='height: 220px;'></div>
                 <div style='height: 60px; margin: 0px auto;'>
                     <center>
@@ -310,6 +424,9 @@ function loadUniversity(datos) {
     let listaReprobados = [];
     let listaRetirados = [];
 
+    let lista1 = [];
+    let lista2 = [];
+    let lista3 = [];
 
     total1 = 0;
     total2 = 0;
@@ -331,23 +448,28 @@ function loadUniversity(datos) {
         listaAprobados.push(dato.listaAprobado);
         listaReprobados.push(dato.listaReprobado);
         listaRetirados.push(dato.listaRetirado);
+        lista1.push(dato.l1);
+        lista2.push(dato.l2);
+        lista3.push(dato.l3);
     });
     // calcular cum global
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     cumGlobal = (cum1.reduce(reducer)) / cum1.length;
-
-    CreateModals(nombres.length, nombres, listaAprobados, listaReprobados, listaRetirados);
+    // console.log(lista1);
+    // console.log(lista2);
+    // console.log(lista3);
+    CreateModals(nombres.length, nombres, listaAprobados, listaReprobados, listaRetirados, lista1, lista2, lista3);
     CreatDivs(nombres.length, ids);
     CumGeneral(cumGlobal.toFixed(1));
 
 
-    aprobadas.forEach(function(numero) {
+    aprobadas.forEach(function (numero) {
         total1 += numero;
     });
-    reprobadas.forEach(function(numero) {
+    reprobadas.forEach(function (numero) {
         total2 += numero;
     });
-    retiradas.forEach(function(numero) {
+    retiradas.forEach(function (numero) {
         total2 += numero;
     });
 
@@ -409,7 +531,7 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes, grafico) {
             "financiamientos": financiamiento,
             "sedes": sedes
         },
-        success: function(response) {
+        success: function (response) {
             datos = JSON.parse(response);
             loadUniversity(datos);
 

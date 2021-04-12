@@ -122,23 +122,43 @@ AND a.ID_Empresa  = '$univeridades' ";
     // extraer datos por universidad (nombre, nota, estado y materia)
     // SELECT  ,IM.idMateria  IM.nota, IM.estado
 
-$sql9 = "SELECT a.Nombre as alumno, IM.idMateria as id, IM.nota as nota, IM.estado as estado, m.nombreMateria
- as  nombreMateria
+    $sql9 = "SELECT a.Nombre as alumno, IM.idMateria as id, IM.nota as nota, IM.estado as estado, m.nombreMateria
+ as  nombreMateria , u.imagen as imagen
  FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER
   JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-  JOIN materias m ON m.idMateria = IM.idMateria WHERE (IM.estado = 'Aprobada') AND ($fragmento1) AND 
+  JOIN materias m ON m.idMateria = IM.idMateria INNER JOIN usuarios u ON u.correo = a.correo  WHERE (IM.estado = 'Aprobada') AND ($fragmento1) AND 
   ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
 
-$sql10 = "SELECT a.Nombre as alumno, IM.idMateria as id, IM.nota as nota, IM.estado as estado, m.nombreMateria
- as  nombreMateria
+    $sql10 = "SELECT a.Nombre as alumno, IM.idMateria as id, IM.nota as nota, IM.estado as estado, m.nombreMateria
+ as  nombreMateria , u.imagen as imagen
 FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER
  JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
- JOIN materias m ON m.idMateria = IM.idMateria WHERE (IM.estado = 'Reprobada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
+ JOIN materias m ON m.idMateria = IM.idMateria INNER JOIN usuarios u ON u.correo = a.correo WHERE (IM.estado = 'Reprobada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
 
-$sql11 = "SELECT a.Nombre as alumno, IM.idMateria as id, IM.nota as nota, IM.estado as estado, m.nombreMateria  as  nombreMateria
+    $sql11 = "SELECT a.Nombre as alumno, IM.idMateria as id, IM.nota as nota, IM.estado as estado, m.nombreMateria
+as  nombreMateria , u.imagen as imagen
 FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER
  JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
- JOIN materias m ON m.idMateria = IM.idMateria WHERE (IM.estado = 'Retirada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
+ JOIN materias m ON m.idMateria = IM.idMateria INNER JOIN usuarios u ON u.correo = a.correo WHERE (IM.estado = 'Retirada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
+
+    // seleccionar solo nombres
+    //  count(IM.idMateria) as total, (SUM(IM.nota)/COUNT(IM.nota) as promedio,
+    $sql12 = "SELECT DISTINCT a.Nombre as alumno, u.imagen as imagen FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
+    = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON
+    a.ID_Alumno = e.ID_Alumno  JOIN materias m ON m.idMateria = IM.idMateria INNER JOIN usuarios u ON u.correo =
+    a.correo  WHERE (IM.estado = 'Aprobada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND 
+    ($fragmento4) AND a.ID_Empresa  = '$univeridades'  ";
+    // count(IM.idMateria) as total, (SUM(IM.nota)/COUNT(IM.nota) as promedio, 
+    $sql13 = "SELECT DISTINCT a.Nombre as alumno, u.imagen as imagen FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
+    = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON
+    a.ID_Alumno = e.ID_Alumno  JOIN materias m ON m.idMateria = IM.idMateria INNER JOIN usuarios u ON u.correo =
+    a.correo  WHERE (IM.estado = 'Reprobada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
+// count(IM.idMateria) as total, (SUM(IM.nota)/COUNT(IM.nota) as promedio, 
+    $sql14 = "SELECT DISTINCT a.Nombre as alumno, u.imagen as imagen FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
+    = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON
+    a.ID_Alumno = e.ID_Alumno  JOIN materias m ON m.idMateria = IM.idMateria INNER JOIN usuarios u ON u.correo =
+    a.correo  WHERE (IM.estado = 'Retirada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
+
 
 
     // MATERIAS APROBADAS
@@ -173,6 +193,21 @@ FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
     $stmt10->execute();
     $result10 = $stmt10->fetchAll();
 
+
+    // obtener lista alumnos
+
+    $stmt11 = $pdo->prepare($sql12);
+    $stmt11->execute();
+    $result11 = $stmt11->fetchAll();
+
+    $stmt12 = $pdo->prepare($sql13);
+    $stmt12->execute();
+    $result12 = $stmt12->fetchAll();
+
+    $stmt13 = $pdo->prepare($sql14);
+    $stmt13->execute();
+    $result13 = $stmt13->fetchAll();
+
     $contador++;
     if ($result[0] == "0" && $result2[0] == "0" && $result3[0] == "0") {
         continue;
@@ -188,7 +223,11 @@ FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
         "cum" => $result4['cum'],
         "listaAprobado" => $result8,
         "listaReprobado" => $result9,
-        "listaRetirado" => $result10
+        "listaRetirado" => $result10,
+        "l1" => $result11,
+        "l2" => $result12,
+        "l3" => $result13,
+
     );
 }
 
