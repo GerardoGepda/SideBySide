@@ -41,11 +41,6 @@ include 'Modularidad/MenuVertical.php';
 <?php
 
 require_once '../Alumno/templates/header.php';
-
-
-
-//require_once '../Alumno/templates/MenuHorizontal.php';
-
 require '../Conexion/conexion.php';
 
 $id = $_GET['id'];
@@ -210,15 +205,22 @@ $stmt16584->execute(array($idExpedienteU));
 
 
 ?>
-<div class="container-fluid text-center">
-
-  <div class="row">
-    <div class="title" style="margin-left: -9px;">
-      <a href="javascript:history.back();"><img src="../img/proximo.svg" class="icon"></a>
-      <h2 class="main-title">Expediente Universidad</h2>
-
+<link rel="stylesheet" type="text/css" href="css/Menu.css">
+<nav class="navbar navbar-expand-lg navbar-light" id="row">
+    <a href="javascript:history.back();"><img src="../img/back.png" class="icon" style="transform:rotate(0deg);"></a>
+    <a class="navbar-brand" href="#" id="T1">Expediente</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item" id="bloque">
+                <a class="nav-link" href="pensum.php?id=<?php echo $id ?>">Pensum<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
     </div>
-  </div>
+</nav>
+<div class="container-fluid text-center">
   <div class="row">
     <div class="text-center align-self-center " id="carnet" style="background-color:  #c7c7c7;">
       <br>
@@ -419,52 +421,52 @@ $stmt16584->execute(array($idExpedienteU));
           </tr>
         </thead>
         <tbody>
-        <?php
-                    // idExpedienteU
+          <?php
+          // idExpedienteU
 
-                    $numero = 0;
-                    $numero++;
-                    $num = 0;
-                    $num++;
-                    $num88 = 1;
+          $numero = 0;
+          $numero++;
+          $num = 0;
+          $num++;
+          $num88 = 1;
 
 
-                    while ($fila9 = $stmt9->fetch()) {
+          while ($fila9 = $stmt9->fetch()) {
 
-                        $pdfCiclo = $fila9['comprobante'];
-                        $prueba = $fila9["cicloU"];
-                        $ciclou = $fila9["Id_InscripcionC"];
-                        $nota = $fila[""];
-                        //consulta para obtener nota de materia
-                        $stmt1658484 = $dbh->prepare("SELECT * FROM `inscripcionmateria` WHERE  `Id_InscripcionC` = ?");
-                        $stmt1658484->execute(array($ciclou));
+            $pdfCiclo = $fila9['comprobante'];
+            $prueba = $fila9["cicloU"];
+            $ciclou = $fila9["Id_InscripcionC"];
+            $nota = $fila[""];
+            //consulta para obtener nota de materia
+            $stmt1658484 = $dbh->prepare("SELECT * FROM `inscripcionmateria` WHERE  `Id_InscripcionC` = ?");
+            $stmt1658484->execute(array($ciclou));
 
-                        $stmt16584842 = $dbh->prepare("SELECT * FROM `inscripcionmateria` WHERE  `Id_InscripcionC` = ?");
-                        $stmt16584842->execute(array($ciclou));
+            $stmt16584842 = $dbh->prepare("SELECT * FROM `inscripcionmateria` WHERE  `Id_InscripcionC` = ?");
+            $stmt16584842->execute(array($ciclou));
 
-                        echo " <tr class='table-dark' style ='color: black;'>";
-                        echo "<td scope=\"row\">" . $fila9["Id_InscripcionC"] . "</td>";
-                        echo "<td>" . $fila9["cicloU"] . "</td>";
+            echo " <tr class='table-dark' style ='color: black;'>";
+            echo "<td scope=\"row\">" . $fila9["Id_InscripcionC"] . "</td>";
+            echo "<td>" . $fila9["cicloU"] . "</td>";
 
-                        if ($pdfCiclo == null) {
-                            echo "
+            if ($pdfCiclo == null) {
+              echo "
             <th><button type='button' class='btn btn-danger'  disabled> 
             <img src='../img/PDF.png' width='25px' height='25px'></button></th>";
-                        } else {
-                            echo "<th><a href='../pdfCicloInscripcion/$pdfCiclo' target='_blank' class='btn btn-danger '><img src='../img/PDF.png' width='25px' height='25px>'</a> </th>";
-                        }
+            } else {
+              echo "<th><a href='../pdfCicloInscripcion/$pdfCiclo' target='_blank' class='btn btn-danger '><img src='../img/PDF.png' width='25px' height='25px>'</a> </th>";
+            }
 
-                        $num2 = 1;
-                        //echo "<td><a class=\"btn btn-danger\" href=\"../pdfInscripCiclos/?id=".$fila9["comprobante"]."\"><i class=\"fas fa-file-pdf\"></i></a></td>";
-                        echo "<td>";
-                        echo "<button type='button' class='btn btn-info' data-toggle='modal' data-target='#exampleModalCenter" . ($numero++) . "'><i class=\"fas fa-info-circle\"></i></button></td>";
+            $num2 = 1;
+            //echo "<td><a class=\"btn btn-danger\" href=\"../pdfInscripCiclos/?id=".$fila9["comprobante"]."\"><i class=\"fas fa-file-pdf\"></i></a></td>";
+            echo "<td>";
+            echo "<button type='button' class='btn btn-info' data-toggle='modal' data-target='#exampleModalCenter" . ($numero++) . "'><i class=\"fas fa-info-circle\"></i></button></td>";
 
-                        echo "</tr>";
+            echo "</tr>";
 
-                        $stmt123456 = $pdo->query("SELECT m.nombreMateria  FROM inscripcionmateria i INNER JOIN materias m
+            $stmt123456 = $pdo->query("SELECT m.nombreMateria  FROM inscripcionmateria i INNER JOIN materias m
       ON m.idMateria = i.idMateria INNER JOIN inscripcionciclos n ON n.Id_InscripcionC = i.Id_InscripcionC 
       WHERE n.Id_InscripcionC = '$ciclou' ");
-                        echo "<!-- Modal -->
+            echo "<!-- Modal -->
       <div class='modal fade' id='exampleModalCenter" . ($num++) . "' tabindex='-1' role='dialog'
        aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
         <div class='modal-dialog modal-dialog-centered modal-lg' role='document' >
@@ -476,70 +478,70 @@ $stmt16584->execute(array($idExpedienteU));
               </button>
             </div>
             <div class='modal-body ' width='auto'>";
-                        //inicio de modal-body
+            //inicio de modal-body
 
-                        //inicio de row
-                        echo "
+            //inicio de row
+            echo "
         <div class='row'>
         <div class='col-sm-6' >";
 
-                        echo "<div class='card' style='width: 20rem; >";
-                        echo "<ul class='list-group list-group-flush'>";
-                        echo "<li class='list-group-item'> &nbsp; &nbsp;" . "Materia" . "&nbsp;" . "</li> ";
-                        while ($row = $stmt123456->fetch()) {
-                            echo " <li class='list-group-item'>" . "<p class=''></p>" . utf8_decode($row['nombreMateria']) . "&nbsp;" . "</li> ";
-                        }
-                        echo "</ul>";
-                        echo "</div>";
-                        echo "</div>";
+            echo "<div class='card' style='width: 20rem; >";
+            echo "<ul class='list-group list-group-flush'>";
+            echo "<li class='list-group-item'> &nbsp; &nbsp;" . "Materia" . "&nbsp;" . "</li> ";
+            while ($row = $stmt123456->fetch()) {
+              echo " <li class='list-group-item'>" . "<p class=''></p>" . utf8_decode($row['nombreMateria']) . "&nbsp;" . "</li> ";
+            }
+            echo "</ul>";
+            echo "</div>";
+            echo "</div>";
 
 
-                        echo "<div class='col-sm-3' >";
-                        echo "<div class='card' style='width: 10rem; >
+            echo "<div class='col-sm-3' >";
+            echo "<div class='card' style='width: 10rem; >
                  <ul class='list-group list-group-flush'>";
-                        echo "   <li class='list-group-item'> &nbsp; &nbsp;" . "Estado" . "&nbsp;" . "  </li> ";
-                        while ($row2 = $stmt1658484->fetch()) {
-                            if ($row2["estado"] != null) {
-                                echo " <li class='list-group-item'>" . trim($row2["estado"])
-                                    . "<p class=''></p> " . "</li> ";
-                            }
-                        }
-                        echo "</ul>";
-                        echo "</div>";
-                        echo "</div>
+            echo "   <li class='list-group-item'> &nbsp; &nbsp;" . "Estado" . "&nbsp;" . "  </li> ";
+            while ($row2 = $stmt1658484->fetch()) {
+              if ($row2["estado"] != null) {
+                echo " <li class='list-group-item'>" . trim($row2["estado"])
+                  . "<p class=''></p> " . "</li> ";
+              }
+            }
+            echo "</ul>";
+            echo "</div>";
+            echo "</div>
 
         <div class='col-sm-3' >";
-                        echo "<div class='card' style='width: 10rem; >
+            echo "<div class='card' style='width: 10rem; >
                  <ul class='list-group list-group-flush'>";
-                        echo "   <li class='list-group-item'> &nbsp; &nbsp;" . "Nota" . "&nbsp;" . "  </li> ";
-                        while ($row2 = $stmt16584842->fetch()) {
-                            echo " <li class='list-group-item'>" . "<p class=''></p> " . trim($row2["nota"])
-                                . "&nbsp;" . "</li> ";
-                        }
-                        echo "</ul>";
-                        echo "</div>";
-                        echo "</div>
+            echo "   <li class='list-group-item'> &nbsp; &nbsp;" . "Nota" . "&nbsp;" . "  </li> ";
+            while ($row2 = $stmt16584842->fetch()) {
+              echo " <li class='list-group-item'>" . "<p class=''></p> " . trim($row2["nota"])
+                . "&nbsp;" . "</li> ";
+            }
+            echo "</ul>";
+            echo "</div>";
+            echo "</div>
       </div>";
 
-                        // fin de modal-body
-                        echo "</div>";
+            // fin de modal-body
+            echo "</div>";
 
 
-                        echo "
+            echo "
             <div class='modal-footer'>
               <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
             </div>
           </div>
         </div>
       </div>";
-                    }
-                    ?>
-                </tbody>
-            </table>
-        </div>
+          }
+          ?>
+        </tbody>
+      </table>
     </div>
-    <br>
-    <br>
+  </div>
+  <br>
+  <br>
 </div><!-- /#page-content-wrapper -->
 
 
