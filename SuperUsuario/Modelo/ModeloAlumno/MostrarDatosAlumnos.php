@@ -46,7 +46,7 @@ $LugarSAT=$InicialDep . $FinalDep .$Sabatino; //Ejemplo SSSAT
 		<th>".$Asistencia."</th>
 		<th>".$fila['StatusActual']."</th>
 		<th>".$fila['Estado']."</th>
-		<td><a href='Vistas/VistaAlumnos/ActualizarAlumnos.php?id=".$fila['ID_Alumno']."' class='fas fa-pencil-alt  btn btn-success'></a> </td>
+		<td><a href='ActualizarAlumnos.php?id=".$fila['ID_Alumno']."' class='fas fa-pencil-alt  btn btn-success'></a> </td>
 		<td><a href='AlumnoInicio.php?id=".$fila['correo']."' class='fas fa-user  btn btn-warning'></a> </td>
 		
 		</tr>";
