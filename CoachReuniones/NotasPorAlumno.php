@@ -11,7 +11,7 @@ include_once "Modelo/ModeloAlumno/NotasAlumno.php";
 include 'Modularidad/EnlacesCabecera.php';
 //Incluir el menu horizontal
 include 'Modularidad/MenuHorizontal.php';
-include 'Modularidad/MenuVertical.php';
+// include 'Modularidad/MenuVertical.php';
 ?>
 <title>Inicio</title>
 <style>
@@ -39,8 +39,7 @@ include 'Modularidad/MenuVertical.php';
 </style>
 
 <?php
-
-require_once '../Alumno/templates/header.php';
+// require_once '../Alumno/templates/header.php';
 require '../Conexion/conexion.php';
 
 $id = $_GET['id'];
@@ -192,11 +191,6 @@ if ($stmt7->rowCount() >= 0) {
 
 $PorcetaCarrera = (($Aprobado * 100) / $Inscrita);
 
-
-
-
-
-
 $stmt9 = $dbh->prepare("SELECT * FROM `inscripcionciclos` WHERE `idExpedienteU` = ?");
 $stmt9->execute(array($idExpedienteU));
 
@@ -207,18 +201,18 @@ $stmt16584->execute(array($idExpedienteU));
 ?>
 <link rel="stylesheet" type="text/css" href="css/Menu.css">
 <nav class="navbar navbar-expand-lg navbar-light" id="row">
-    <a href="javascript:history.back();"><img src="../img/back.png" class="icon" style="transform:rotate(0deg);"></a>
-    <a class="navbar-brand" href="#" id="T1">Expediente</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-            <li class="nav-item" id="bloque">
-                <a class="nav-link" href="pensum.php?id=<?php echo $id ?>">Pensum<span class="sr-only">(current)</span></a>
-            </li>
-        </ul>
-    </div>
+  <a href="javascript:history.back();"><img src="../img/back.png" class="icon" style="transform:rotate(0deg);"></a>
+  <a class="navbar-brand" href="#" id="T1">Expediente</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item" id="bloque">
+        <a class="nav-link" href="pensum.php?id=<?php echo $id ?>">Pensum<span class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+  </div>
 </nav>
 <div class="container-fluid text-center">
   <div class="row">
@@ -231,14 +225,9 @@ $stmt16584->execute(array($idExpedienteU));
       background-size: 100% auto;">
       <h4 style="color: white; text-align: center; font-weight: bold;"><?php echo utf8_encode($univerisdad)  ?>
       </h4>
-
-
     </div>
-
     <div class="col text-center">
       <br><br><br>
-
-
       <h3 style="text-align: left; color: #555555; font-weight: bold;"><?php echo $Nombre_Alumno; ?> </h3>
       <h5 style="color: #555555; text-align: left;">Carnet Universidad: <?php echo $carnet; ?></h5>
       <table class="table table-responsive-lg float-left">
@@ -277,20 +266,11 @@ $stmt16584->execute(array($idExpedienteU));
           ?>
         </tbody>
       </table>
-
-
     </div>
-
-
-
   </div>
-
   <br>
   <div class="card text-center" style=" border-color: white;border-width: 3px;border-style: solid;">
-
     <h3 style="text-align: left; font-weight: bold;">Detalles del Estudio</h3>
-
-
     <div class="card-body" style="background-color: white; ">
       <div class="row">
         <table class="table table-responsive-lg float-left">
@@ -301,9 +281,7 @@ $stmt16584->execute(array($idExpedienteU));
               <th scope="col">Cum</th>
               <th scope="col">Estado</th>
               <th scope="col">Subir Pensum</th>
-
               <th scope="col">Ver Pensum</th>
-
             </tr>
           </thead>
           <tbody>
@@ -410,6 +388,10 @@ $stmt16584->execute(array($idExpedienteU));
       <br>
 
       <h3 style="text-align: left; font-weight: bold;">Inscripciones de Ciclos</h3>
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
+
+      <br>
       <table class="table table-responsive-lg float-left">
         <thead style="background-color: #2D2D2E; color: white; ">
           <tr>
@@ -566,22 +548,15 @@ $stmt16584->execute(array($idExpedienteU));
           </div>
           <br><br>
           <div>
-
             <?php
             $stmt1 = $dbh->prepare("SELECT `ID_Alumno`  FROM `alumnos` WHERE correo='" . $_SESSION['Email'] . "'");
-
             $stmt1->execute();
-
             while ($fila = $stmt1->fetch()) {
               $alumno = $fila["ID_Alumno"];
             }
-
             ?>
-
-
             <!--idalumnos-->
             <input type="hidden" name="alumno" value="<?php echo $alumno; ?>">
-
             <!--id expedente-->
             <input type="hidden" name="expediente" value="<?php echo $idExpedienteU; ?>">
           </div>
@@ -599,17 +574,9 @@ $stmt16584->execute(array($idExpedienteU));
     </div>
   </div>
 </div>
-
-
-
-
 </div>
-
 </div>
-
 <!-- /#wrapper -->
-
-
 <!-- Modal -->
 <div class="modal fade" id="notas" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -623,11 +590,9 @@ $stmt16584->execute(array($idExpedienteU));
       <div class="modal-body">
         <ul>
           <?php
-
           while ($row = $stmt9945246->fetch()) {
             echo "<li>" . utf8_encode(utf8_decode($row['nombreMateria'])) . "</li>";
           }
-
           ?>
         </ul>
       </div>
@@ -652,11 +617,9 @@ $stmt16584->execute(array($idExpedienteU));
       <div class="modal-body">
         <ul>
           <?php
-
           while ($row = $stmt99452462->fetch()) {
             echo "<li>" . utf8_encode(utf8_decode($row['nombreMateria'])) . "</li>";
           }
-
           ?>
         </ul>
       </div>
@@ -724,10 +687,33 @@ $stmt16584->execute(array($idExpedienteU));
   </div>
 </div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Recipient:</label>
+            <input type="text" class="form-control" id="recipient-name">
+          </div>
+          <div class="form-group">
+            <label for="message-text" class="col-form-label">Message:</label>
+            <textarea class="form-control" id="message-text"></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Send message</button>
+      </div>
+    </div>
+  </div>
+</div>
 
-
-<?php
-
-require_once '../Alumno/templates/footer.php';
-
-?>
+<?php require_once '../Alumno/templates/footer.php'; ?>

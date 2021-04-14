@@ -60,10 +60,10 @@ function ShowSelected(ciclos, clases, financiamiento, sedes) {
         type: "POST",
         //AGREGA ESTE TIPO DE RETORNO
         dataType: "json",
-        error: function(xhr, textStatus, errorMessage) {
+        error: function (xhr, textStatus, errorMessage) {
             // console.log("ERROR, debe seleccionar valores de todos los filtros\n" + errorMessage + textStatus + xhr);
         },
-        success: function(datosRetornados) {
+        success: function (datosRetornados) {
             // console.log(datosRetornados.fragmento1);
             const cums = {
                 cumSSFT: parseFloat(datosRetornados.cumSSFT).toFixed(1),
@@ -114,44 +114,44 @@ function mapa1(result1, result2, result3, ciclo, clase, cumSSFT) {
         // },
         // ejemplo de como mostrar datos
         series: [{
-                data: data,
-                name: 'Cantidad de materias aprobadas: ' + result1 + ' ',
-                states: {
-                    hover: {
-                        color: '#ffc107',
-                        borderWidth: 1
-                    }
-                },
-                dataLabels: {
-                    enabled: true,
-                    format: data.subtitle
-                }
-            }, {
-                data: data,
-                name: 'Cantidad de materias reprobadas: ' + result2 + ' ',
-                states: {
-                    hover: {
-                        color: '#ffc107'
-                    }
-                },
-                dataLabels: {
-                    enabled: true,
-                    format: data.subtitle
+            data: data,
+            name: 'Cantidad de materias aprobadas: ' + result1 + ' ',
+            states: {
+                hover: {
+                    color: '#ffc107',
+                    borderWidth: 1
                 }
             },
-            {
-                data: data,
-                name: 'Cantidad de materias retiradas: ' + result3 + '',
-                states: {
-                    hover: {
-                        color: '#ffc107'
-                    }
-                },
-                dataLabels: {
-                    enabled: true,
-                    format: data.subtitle
-                }
+            dataLabels: {
+                enabled: true,
+                format: data.subtitle
             }
+        }, {
+            data: data,
+            name: 'Cantidad de materias reprobadas: ' + result2 + ' ',
+            states: {
+                hover: {
+                    color: '#ffc107'
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                format: data.subtitle
+            }
+        },
+        {
+            data: data,
+            name: 'Cantidad de materias retiradas: ' + result3 + '',
+            states: {
+                hover: {
+                    color: '#ffc107'
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                format: data.subtitle
+            }
+        }
         ],
         credits: {
             enabled: false
@@ -185,43 +185,43 @@ function mapa2(result4, result5, result6, ciclo, clase, cumSAFT) {
             text: 'CUM: ' + cumSAFT,
         },
         series: [{
-                data: data,
-                name: 'Cantidad de materias aprobadas:  ' + result4 + ' ',
-                states: {
-                    hover: {
-                        color: '#ffc107'
-                    }
-                },
-                dataLabels: {
-                    enabled: true,
-                    format: data.subtitle
-                }
-            }, {
-                data: data,
-                name: 'Cantidad de materias reprobadas:  ' + result5 + ' ',
-                states: {
-                    hover: {
-                        color: '#ffc107'
-                    }
-                },
-                dataLabels: {
-                    enabled: true,
-                    format: data.subtitle
+            data: data,
+            name: 'Cantidad de materias aprobadas:  ' + result4 + ' ',
+            states: {
+                hover: {
+                    color: '#ffc107'
                 }
             },
-            {
-                data: data,
-                name: 'Cantidad de materias retiradas:  ' + result6 + ' ',
-                states: {
-                    hover: {
-                        color: '#ffc107'
-                    }
-                },
-                dataLabels: {
-                    enabled: true,
-                    format: data.subtitle
-                }
+            dataLabels: {
+                enabled: true,
+                format: data.subtitle
             }
+        }, {
+            data: data,
+            name: 'Cantidad de materias reprobadas:  ' + result5 + ' ',
+            states: {
+                hover: {
+                    color: '#ffc107'
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                format: data.subtitle
+            }
+        },
+        {
+            data: data,
+            name: 'Cantidad de materias retiradas:  ' + result6 + ' ',
+            states: {
+                hover: {
+                    color: '#ffc107'
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                format: data.subtitle
+            }
+        }
         ],
         credits: {
             enabled: false
@@ -238,47 +238,31 @@ function principal(aprobadas, reprobadas, retiradas) {
     PorcentajeReprobados = (parseInt(reprobadas) * 100) / total;
     PorcentajeRetirados = (parseInt(retiradas) * 100) / total;
 
-    Highcharts.chart('middle-pie', {
-        chart: {
-            plotBackgroundColor: '#343A40',
-            plotBorderWidth: 0,
-            plotShadow: true
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        accessibility: {
-            point: {
-                valueSuffix: '%'
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var data = google.visualization.arrayToDataTable([
+            ['Task', 'Hours per Day'],
+            ['Aprobados: ' + parseInt(aprobadas), PorcentajeAprobados],
+            ['Reprobados: ' + parseInt(reprobadas), PorcentajeReprobados],
+            ['Retirados: ' + parseInt(retiradas), PorcentajeRetirados],
+        ]);
+
+        var options = {
+            colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3'],
+            backgroundColor: { fill: "#343A40" },
+            titleTextStyle: {
+                color: '#ffff'
+            },
+            hAxis: {
+                textStyle: { color: '#FFF' }
             }
-        },
-        plotOptions: {
-            pie: {
-                dataLabels: {
-                    enabled: true,
-                    distance: 0,
-                },
-                startAngle: -90,
-                endAngle: 90,
-                center: ['50%', '75%'],
-                size: '130%'
-            }
-        },
-        series: [{
-            type: 'pie',
-            name: 'text',
-            innerSize: '50%',
-            data: [
-                ['Aprobados', PorcentajeAprobados],
-                ['Reprobados', PorcentajeReprobados],
-                ['Retirados', PorcentajeRetirados],
-            ]
-        }],
-        credits: {
-            enabled: false
-        },
-        colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3']
-    });
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('middle-pie'));
+        chart.draw(data, options);
+    }
 }
 
 function MateriasPoruniversidad(datos) {
