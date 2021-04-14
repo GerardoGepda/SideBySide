@@ -112,8 +112,15 @@ $cantidad = $query->rowCount();
 
     <!-- graficas generales -->
     <div id="content3">
+        <div id="content-middle-pie">
+        <h4><span>G</span>rafica General</h4>
         <div id="middle-pie"></div>
+        </div>
+        <div id="cum1">
+        <h4><span>C</span>um Global</h4>
         <div id="cumGeneral"></div>
+        </div>
+        
         <!-- <div id="generalTable">
             <table class="table table-striped table-dark" id="tablaGeneral">
                 <thead>
@@ -152,15 +159,16 @@ $cantidad = $query->rowCount();
         </div>
     </div>
 </div>
-<div class="title ">
+<div id="content-grafic">
+    <h3>Graphics By University</h3>
+<div id="Ugraph"></div>
+</div>
+<div class="title" >
     <a href="javascript:history.back();"><i class="fas fa-university icon text-dark fs-1"></i></a>
     <h2 class="main-title">Graphics By University</h2>
 </div>
-<br>
-<br>
-<div id="Ugraph">
-</div>
-<div class="container d-flex justify-content-center">
+
+<div class="container d-flex justify-content-center" style="margin-top: -65px;">
     <div class="form-group w-50">
         <label for="searchUGraph" class="text-dark">Seleccione universidad</label>
         <select class="form-control" id="searchUGraph">
@@ -168,9 +176,7 @@ $cantidad = $query->rowCount();
         </select>
   </div>
 </div>
-<div id="universidades">
-
-</div>
+<div id="universidades"> </div>
 <br>
 <br>
 <div id="showData" style="display: hidden;"></div>

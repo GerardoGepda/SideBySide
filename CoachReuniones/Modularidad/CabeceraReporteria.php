@@ -44,7 +44,6 @@
 <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/mapdata/countries/sv/sv-all.js"></script>
 <!-- librerias para graficas de pastel -->
-<script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
@@ -54,7 +53,7 @@
 <!-- Select2 CSS -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
-
+<!--
 <style>
     /* inicio de diseño para mapas */
 
@@ -511,5 +510,378 @@
         font-size: 50px;
     }
     
+</style>
+-->
+<!--Estilo nuevo de reporteriaUniversidad-->
+<style>
+    .form-label {
+        color: #be0032;
+        font-weight: bold;
+    }
+
+    .form-control {
+        background-color: #d9d2d2;
+        border-radius: 20px;
+        border-color: white;
+    }
+
+    #generals {
+        border: #a29c9c 3px solid;
+        border-radius: 20px;
+    }
+    #content3{
+        padding: 1%;
+        margin: 0.4%;
+        display: block;
+        max-width: 100%;
+        min-width: 100%;
+    }
+    /*Estilo del CUM*/
+    #cum1{
+        position: relative;
+        bottom: 130px;
+        left: 46%;
+        margin: 0 5%;
+        max-height: 130px;
+        min-height: 130px;
+        min-width: 48.5%;
+        max-width: 48.5%;
+        background: #343A40;
+        border-left: solid 15px #B01D33;
+    }
+    #cum1 #cum2{
+        position: relative;
+        left: 280px;
+        bottom: 35px;
+        padding: 5px;
+        max-height: 80px;
+        min-height: 80px;
+        max-width: 40%;
+        min-width: 40%;
+    }
+    #cum2 h5{
+        font-size: 65px;
+        color: white;
+        text-align: center;
+    }
+    #cum1 span{
+        position: relative;
+        bottom: 7px;
+        background:#B01D33;
+        color: white;
+        padding: 7px 17px;
+        border-radius: 30px;
+        font-size: 35px;
+    }
+    #cum1 h4{
+        position: relative;
+        top: 30px;
+        left: 8px;
+        color: white;
+        text-align: left;
+        font-size: 30px;
+        max-width: 40%;
+        min-width: 40%;
+    }
+    /* FIn del estilo del CUM*/
+    /* Estilo de Grafica general*/
+    #content-middle-pie{
+        max-height: 130px;
+        min-height: 130px;
+        margin: 0 0;
+        min-width: 48.5%;
+        max-width: 48.5%;
+        background: #343A40;
+        border-left: solid 15px #B01D33;
+    }
+    #middle-pie{
+        position: relative;
+        left: 268px;
+        bottom: 95px;
+        max-height: 185px;
+        min-height: 185px;
+        max-width: 50%;
+        min-width: 50%;
+    }
+    #content-middle-pie span{
+        position: relative;
+        bottom: 7px;
+        background:#54E38A;
+        color: white;
+        padding: 7px 17px;
+        border-radius: 30px;
+        font-size: 35px;
+    }
+    #content-middle-pie h4{
+        position: relative;
+        top: 30px;
+        left: 8px;
+        color: white;
+        text-align: left;
+        font-size: 30px;
+        max-width: 47%;
+        min-width: 47%;
+    }
+    /* FIn del estilo de la grafica general*/
+    /*Estilo de las del contendor de los mapas y graficas de genero*/
+    #maps{
+        position: relative;
+        left: 52%;
+        bottom: 170px;
+        margin: 3% 0 0 0;
+        border: solid 1px black;
+        border-radius: 30px;
+        max-width: 47%;
+        min-width: 47%;
+        max-height: 248px;
+        min-height: 248px;
+    }
+    /*Fin estilo contendor mapas y graficas de genero*/
+    /*Estilo del contededor de los mapas sedes*/
+    #content{
+        display: block;
+    }
+    #map1{
+        display: inline-block;
+        max-height: 234px;
+        min-height: 234px;
+        max-width: 40%;
+        min-width: 40%;
+        margin-right: 5%;
+    }
+    #map2{
+        display: inline-block;
+        max-height: 234px;
+        min-height: 234px;
+        max-width: 35%;
+        min-width: 35%;
+        margin-right: 3%;
+    }
+    /*Fin estilo contededor de los mapas sedes*/
+    /*Estilo del contededor de graficas de genero*/
+    #content2{
+        display: block;
+    }
+    #content2 h3{
+        color:#be0032;
+        margin-bottom: 1%;
+        font-size: 20px;
+    }
+    .highcharts-figure{
+        padding: 2px;
+        margin: -1.7% 2%;
+        display: inline-block;
+        max-width: 40%;
+        min-width: 40%;
+        border-radius: 30px;
+    }
+    #gen{
+        position: relative;
+        max-width: 100%;
+        min-width: 100%;
+        max-height: 250px;
+        min-height: 250px;
+    }
+    #gen2{
+        position: relative;
+        max-width: 100%;
+        min-width: 100%;
+        max-height: 250px;
+        min-height: 250px;
+    }
+    
+    /*Fin estilo contededor de graficas de genero*/
+    /*Estilo grafica de universidades*/
+    #content-grafic{
+        position: absolute;
+        padding: 20px;
+        top: 360px;
+        left: 2%;
+        max-width: 47%;
+        min-width: 47%;
+        max-height: 530px ;
+        min-height: 530px;
+        border: solid 1px black;
+        border-radius: 30px;
+    }
+    #content-grafic h3{
+        text-align: center;
+        color: #be0032;
+    }
+    /*Diseño de grafica de universidades*/
+    #universidades {
+        padding: 0.3%;
+        margin: 0.5%;
+        border-radius: 20px;
+        display: flex;
+        min-width: 100%;
+        max-width: 100%;
+        display: inline-block;
+
+    }
+
+    .uni-content {
+        border: #a29c9c 3px solid;
+        border-radius: 10px;
+        display: inline-block;
+        min-width: 650px;
+        max-width: 650px;
+        height: 245px;
+        margin-left: 1%;
+    }
+    /* fin de diseño para graficas universitarias */
+    .title{
+        position: absolute;
+        margin-top: -150px;
+        width:100%; 
+    }
+    /*inicio del primer responsive*/
+    @media only screen and (max-width: 1024px){
+        #filtro1,
+        #filtro2,
+        #filtro3,
+        #filtro4 {
+            display: inline-block;
+            margin: 0;
+            padding: 0 2%;
+        }
+        #content3{
+        padding: 1%;
+        margin: 0;
+        display: block;
+        max-width: 100%;
+        min-width: 100%;
+    }
+    #cum1{
+        position: initial;
+        display: block;
+        margin: 0 auto;
+        min-width: 100%;
+        max-width: 100%;
+    }
+   
+   
+    #content-middle-pie{
+        display: block;
+        margin: 2% auto;
+        min-width: 100%;
+        max-width: 100%;
+    }
+    #maps{
+        position: initial;
+        margin: 2% auto;
+        max-width: 100%;
+        min-width: 100%;
+    }
+    #gen{
+        max-width: 88%;
+        min-width: 88%;
+    }
+    #gen2{
+        max-width: 88%;
+        min-width: 88%;
+    }
+    #content-grafic{
+        position: initial;
+        max-width: 100%;
+        min-width: 100%;
+    }
+    .title{
+        position: initial;
+        margin-top: 1%;
+    }
+    .uni-content{
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+        min-width: 100%;
+    }
+    }
+    /*Fin del primer responsive*/
+    /* Segundo responsive*/
+    @media only screen and (max-width: 600px){
+        #filtro1,
+        #filtro2,
+        #filtro3,
+        #filtro4 {
+            display: inline-block;
+            margin: 0%;
+            padding: 0%;
+        }
+        #content3{
+        padding: 1%;
+        margin: 0;
+        display: block;
+        max-width: 102%;
+        min-width: 102%;
+    }
+    #cum1{
+        position: initial;
+        display: block;
+        margin: 0 auto;
+        min-width: 100%;
+        max-width: 100%;
+    }
+    #cum1 #cum2{
+        left: 250px;
+        bottom: 15px;
+        padding: 5px;
+        max-height: 70px;
+        min-height: 70px;
+    }
+    #cum2 h5{
+        font-size: 45px;
+    }
+    #cum1 span{
+        padding: 7px 13px;
+        font-size: 25px;
+    }
+    #cum1 h4{
+        font-size: 20px;
+        max-width: 40%;
+        min-width: 40%;
+    }
+   
+    #content-middle-pie{
+        display: block;
+        margin: 2% auto;
+        min-width: 100%;
+        max-width: 100%;
+    }
+    #middle-pie{
+        left: 200px;
+        bottom: 90px;
+        max-height: 185px;
+        min-height: 185px;
+        max-width: 50%;
+        min-width: 50%;
+    }
+    #content-middle-pie span{
+        padding: 7px 13px;
+        font-size: 25px;
+    }
+    #content-middle-pie h4{
+        font-size: 20px;
+        max-width: 47%;
+        min-width: 47%;
+    }
+    #maps{
+        position: initial;
+        margin: 1% auto;
+        max-width: 102%;
+        min-width: 102%;
+    }
+    .highcharts-figure{
+        padding: 0;
+        max-width: 45%;
+        min-width: 45%;
+        max-height: 300px;
+        min-height: 300px;
+    }
+    #content-grafic{
+        max-width: 100%;
+        min-width: 100%;
+    }
+    }
 </style>
 </head>

@@ -240,15 +240,9 @@ function principal(aprobadas, reprobadas, retiradas) {
 
     Highcharts.chart('middle-pie', {
         chart: {
-            plotBackgroundColor: null,
+            plotBackgroundColor: '#343A40',
             plotBorderWidth: 0,
-            plotShadow: false
-        },
-        title: {
-            text: 'Grafica General',
-            align: 'center',
-            verticalAlign: 'middle',
-            y: 80
+            plotShadow: true
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -300,7 +294,7 @@ function MateriasPoruniversidad(datos) {
         reti.push(parseInt(dato.retiradas));
     });
 
-    respv = (5000 * uni.length) / 60;
+    respv = (300 * uni.length) / 60;
     Highcharts.chart('Ugraph', {
         chart: {
             renderTo: 'container',
