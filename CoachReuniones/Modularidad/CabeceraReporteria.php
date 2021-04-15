@@ -74,7 +74,10 @@
 
     #content3 {
         padding: 1%;
-        margin: 0.4%;
+        margin-bottom: -130px;
+        margin-right: 0.4%;
+        margin-left: 0.4%;
+        margin-top: 0.4%;
         display: block;
         max-width: 100%;
         min-width: 100%;
@@ -88,10 +91,11 @@
         margin: 0 5%;
         max-height: 130px;
         min-height: 130px;
-        min-width: 48.5%;
-        max-width: 48.5%;
+        min-width: 48%;
+        max-width: 48%;
         background: #343A40;
         border-left: solid 15px #B01D33;
+        border-radius: 3px;
     }
 
     #cum1 #cum2 {
@@ -138,10 +142,11 @@
         max-height: 130px;
         min-height: 130px;
         margin: 0 0;
-        min-width: 48.5%;
-        max-width: 48.5%;
+        min-width: 48%;
+        max-width: 48%;
         background: #343A40;
         border-left: solid 15px #B01D33;
+        border-radius: 3px;
     }
 
     .highcharts-container {
@@ -152,12 +157,12 @@
 
     #middle-pie {
         position: relative;
-        left: 268px;
+        left: 264px;
         bottom: 50px;
         max-height: 150px;
         min-height: 130px;
-        max-width: 57%;
-        min-width: 57%;
+        max-width: 55%;
+        min-width: 55%;
         padding: 0%;
         margin: 0%;
         background-color: #343A40;
@@ -186,18 +191,22 @@
     }
 
     /* FIn del estilo de la grafica general*/
+    /*contenedor de mapas y grafica de universidades*/
+    .content-content{
+        margin: 0% 0;
+    }
     /*Estilo de las del contendor de los mapas y graficas de genero*/
     #maps {
-        position: relative;
-        left: 52%;
-        bottom: 170px;
-        margin: 3% 0 0 0;
-        border: solid 1px black;
-        border-radius: 30px;
+        clear: both;
+        float: right;
+        border: solid 1px #343A40;
+        border-left: solid 15px #B01D33;
+        border-radius: 3px;
         max-width: 47%;
         min-width: 47%;
-        max-height: 248px;
-        min-height: 248px;
+        margin: 0.5% 1.7%;
+        max-height: 265px;
+        min-height: 265px;
     }
 
     /*Fin estilo contendor mapas y graficas de genero*/
@@ -235,7 +244,15 @@
         margin-bottom: 1%;
         font-size: 20px;
     }
-
+    /*
+    #content2 span {
+        background: #FF665A;
+        color: white;
+        padding: 1px 7px;
+        border-radius: 30px;
+        font-size: 20px;
+    }
+    */
     .highcharts-figure {
         padding: 2px;
         margin: -1.7% 2%;
@@ -262,23 +279,30 @@
     /*Fin estilo contededor de graficas de genero*/
     /*Estilo grafica de universidades*/
     #content-grafic {
-        position: absolute;
-        padding: 20px;
-        top: 360px;
-        left: 2%;
-        max-width: 47%;
-        min-width: 47%;
-        max-height: 530px;
-        min-height: 530px;
-        border: solid 1px black;
-        border-radius: 30px;
+        clear: both;
+        float: left;
+        margin-top: -41.5%;
+        margin-left: 1.5%;
+        max-width: 47.5%;
+        min-width: 47.5%;
+        max-height: 538px;
+        min-height: 538px;
+        border-radius: 3px;
+        border: solid 1px #343A40;
+        border-left: solid 15px #B01D33;
     }
 
     #content-grafic h3 {
         text-align: center;
         color: #be0032;
     }
-
+    #content-grafic span {
+        position: relative;
+        background: #FF665A;
+        color: white;
+        padding: 1px 8px;
+        border-radius: 30px;
+    }
     /*Diseño de grafica de universidades*/
     #universidades {
         padding: 0.3%;
@@ -303,8 +327,8 @@
 
     /* fin de diseño para graficas universitarias */
     .title {
-        position: absolute;
-        margin-top: -150px;
+        clear: both;
+        position: relative;
         width: 100%;
     }
 
@@ -380,8 +404,11 @@
 
         #content-grafic {
             position: initial;
-            max-width: 100%;
-            min-width: 100%;
+            margin-top: 2%;
+            margin-left: -0.5%;
+            margin-bottom: 2%;
+            max-width: 101%;
+            min-width: 101%;
         }
 
         .title {
@@ -508,8 +535,11 @@
         min-height: 135px;
     }
         #content-grafic {
-            max-width: 100%;
-            min-width: 100%;
+            margin-top: 2%;
+            margin-left: -1.4%;
+            margin-bottom: 2%;
+            max-width: 102%;
+            min-width: 102%;
         }
     }
     /*Fin del segundo responsive*/

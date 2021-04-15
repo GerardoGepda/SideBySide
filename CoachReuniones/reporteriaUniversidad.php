@@ -137,6 +137,7 @@ $cantidad = $query->rowCount();
         </div> -->
     </div>
     <!-- fin de graficas generales -->
+    <div class="content-content">
     <div id="maps">
         <div id="content">
             <!-- inicio de contenedores de mapas -->
@@ -160,9 +161,10 @@ $cantidad = $query->rowCount();
     </div>
 </div>
 <div id="content-grafic">
-    <h3>Graphics By University</h3>
+    <h3><span>G</span>raphics By University</h3>
 <div id="Ugraph"></div>
 </div>
+    </div>
 <div class="title" >
     <a href="javascript:history.back();"><i class="fas fa-university icon text-dark fs-1"></i></a>
     <h2 class="main-title">Graphics By University</h2>
