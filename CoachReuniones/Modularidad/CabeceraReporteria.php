@@ -486,23 +486,26 @@
         }
 
         .highcharts-figure {
-        max-width: 55%;
-        min-width: 55%;
+            position: relative;
+            left: 20%;
+        margin: 0;
+        max-width: 200%;
+        min-width: 200%;
+        
     }
 
     #gen {
-        
-        max-width: 87%;
-        min-width: 87%;
-        max-height: 380px;
-        min-height: 380px;
+        max-width: 28%;
+        min-width: 28%;
+        max-height: 135px;
+        min-height: 135px;
     }
 
     #gen2 {
-        max-width: 87%;
-        min-width: 87%;
-        max-height: 380px;
-        min-height: 380px;
+        max-width: 28%;
+        min-width: 28%;
+        max-height: 135px;
+        min-height: 135px;
     }
         #content-grafic {
             max-width: 100%;
