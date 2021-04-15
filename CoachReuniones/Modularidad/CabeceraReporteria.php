@@ -246,7 +246,6 @@
     }
 
     #gen {
-        position: relative;
         max-width: 100%;
         min-width: 100%;
         max-height: 250px;
@@ -254,7 +253,6 @@
     }
 
     #gen2 {
-        position: relative;
         max-width: 100%;
         min-width: 100%;
         max-height: 250px;
@@ -351,17 +349,34 @@
             margin: 2% auto;
             max-width: 100%;
             min-width: 100%;
+            max-height: 350px;
+            min-height: 350px;
         }
 
-        #gen {
-            max-width: 88%;
-            min-width: 88%;
-        }
+    .highcharts-figure {
+        max-width: 45%;
+        min-width: 45%;
+    }
 
-        #gen2 {
-            max-width: 88%;
-            min-width: 88%;
-        }
+    #gen {
+        
+        max-width: 87%;
+        min-width: 87%;
+        max-height: 280px;
+        min-height: 280px;
+    }
+
+    #gen2 {
+        max-width: 87%;
+        min-width: 87%;
+        max-height: 280px;
+        min-height: 280px;
+    }
+    #map2,
+    #map1 {
+        max-height: 274px;
+        min-height: 274px;
+    }
 
         #content-grafic {
             position: initial;
@@ -412,11 +427,11 @@
         }
 
         #cum1 #cum2 {
-            left: 250px;
+            left: 130px;
             bottom: 15px;
             padding: 5px;
-            max-height: 70px;
-            min-height: 70px;
+            max-height: 60px;
+            min-height: 60px;
         }
 
         #cum2 h5 {
@@ -443,14 +458,13 @@
 
         #middle-pie {
             left: 200px;
-            bottom: 60px;
-            max-height: 140px;
-            min-height: 140px;
-            max-width: 50%;
-            min-width: 50%;
+            bottom: 38px;
+            max-height: 120px;
+            min-height: 120px;
+            max-width: 52%;
+            min-width: 52%;
             padding: 0%;
             margin: 0%;
-            background-color: #343A40;
         }
 
         #content-middle-pie span {
@@ -472,17 +486,43 @@
         }
 
         .highcharts-figure {
-            padding: 0;
-            max-width: 45%;
-            min-width: 45%;
-            max-height: 300px;
-            min-height: 300px;
-        }
+        max-width: 55%;
+        min-width: 55%;
+    }
 
+    #gen {
+        
+        max-width: 87%;
+        min-width: 87%;
+        max-height: 380px;
+        min-height: 380px;
+    }
+
+    #gen2 {
+        max-width: 87%;
+        min-width: 87%;
+        max-height: 380px;
+        min-height: 380px;
+    }
         #content-grafic {
             max-width: 100%;
             min-width: 100%;
         }
     }
+    /*Fin del segundo responsive*/
+    @media only screen and (max-width: 300px){
+        #middle-pie {
+            right: 150px;
+            bottom: 65px;
+            max-width: 30%;
+            min-width: 30%;
+            max-height: 130px;
+            min-height: 130px;
+            padding: 0%;
+            margin: 0%;
+        }
+
+    }
+    /*Fin del nuevo diseño */
 </style>
 </head>
