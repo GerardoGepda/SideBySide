@@ -366,7 +366,7 @@ $stmt9->execute(array($idExpedienteU));
             <br>
 
             <h3 style="text-align: left; font-weight: bold;">Inscripciones de Ciclos</h3>
-            <table class="table table-responsive-lg float-left">
+            <table class="table table-responsive-lg float-left" id="inscripciones">
                 <thead style="background-color: #2D2D2E; color: white; ">
                     <tr>
                         <th scope="col">ID</th>
@@ -670,7 +670,45 @@ $stmt9->execute(array($idExpedienteU));
         </div>
     </div>
 </div>
-
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+<script src="//cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#inscripciones').DataTable({
+            "pageLength": 5,
+            "lengthMenu": [
+                [5, 25, 50, -1],
+                [5, 25, 50, "All"]
+            ],
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sSearch": "Buscar:",
+                "sInfoThousands": ",",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                },
+                "buttons": {
+                    "copy": "Copiar",
+                    "colvis": "Visibilidad"
+                }
+            }
+        });
+    });
+</script>
 <?php
 
 require_once 'templates/footer.php';
