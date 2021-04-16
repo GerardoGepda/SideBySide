@@ -43,6 +43,7 @@ include 'Modularidad/MenuHorizontal.php';
 require '../Conexion/conexion.php';
 
 $id = $_GET['id'];
+$expediente = $_GET['id'];
 $stmt1 = $dbh->prepare("SELECT `ID_Alumno` , A.Nombre , A.ID_Empresa AS 'idem' , E.Nombre AS 'Universidad', 
  A.Id_Carrera AS 'idUni' FROM alumnos A INNER JOIN empresas E ON A.ID_Empresa = E.ID_Empresa
   WHERE ID_Alumno='" . $id . "'");
@@ -214,8 +215,11 @@ $stmt16584->execute(array($idExpedienteU));
     </ul>
   </div>
 </nav>
+<div class="float-right"> <?php include 'Modularidad/Alerta.php' ?></div>
+<div class="float-right"> <?php include 'Modularidad/AlertaCorreo.php' ?></div>
+
 <div class="container-fluid text-center">
-  <div class="row">
+  <div class="row ml-5 mt-2">
     <div class="text-center align-self-center " id="carnet" style="background-color:  #c7c7c7;">
       <br>
       <img src="../img/imgUser/<?php echo $FotoAlumno ?>" alt="img de usuario" style="height: 170px;
@@ -245,24 +249,21 @@ $stmt16584->execute(array($idExpedienteU));
           <?php
           if (isset($carnet)) {
             while ($fila2 = $stmt2->fetch()) {
-              echo " <tr class='table-dark' style='color: black;'>";
-              echo "<td scope=\"row\">" . $fila2["Universidad"] . "</td>";
-              echo utf8_encode("<td>" . $fila2["CARRERA"] . "</td>");
-              echo utf8_encode("<td>" . $fila2["Facultad"] . "</td>");
-              echo "<td>" . $fila2["estado"] . "</td>";
-              //  echo "<td><a class=\"btn btn-warning\"  href=\"ActualizarexpedienteU.php?Universidad=$iduniverisdad&alumno=$alumno&id=$IDempresa\"><i class='fas fa-pen'></i></a></td>";
+              echo " <tr class='table-dark' style='color: black;'>
+                        <td scope=\"row\">" . $fila2["Universidad"] . "</td>"
+                . utf8_encode("<td>" . $fila2["CARRERA"] . "</td>")
+                . utf8_encode("<td>" . $fila2["Facultad"] . "</td>")
+                . "<td>" . $fila2["estado"] . "</td>";
               echo "</tr>";
             }
           } else {
-            echo " <tr class='table-dark' style='color: black;'>";
-            echo "<td scope=\"row\">Debe actualizar </td>";
-            echo utf8_encode("<td>Debe actualizar </td>");
-            echo utf8_encode("<td>Debe actualizar </td>");
-            echo "<td>Debe actualizar</td>";
-            //  echo "<td><a class=\"btn btn-warning\" href=\"ActualizarexpedienteU.php?Universidad=$iduniverisdad&alumno=$alumno&id=$IDempresa\"><i class='fas fa-pen'></i></a></td>";
-            echo "</tr>";
+            echo " <tr class='table-dark' style='color: black;'>
+                             <td scope=\"row\">Debe actualizar </td>".
+                utf8_encode("<td>Debe actualizar </td>").
+                utf8_encode("<td>Debe actualizar </td>").
+                            "<td>Debe actualizar</td>
+                  </tr>";
           }
-
           ?>
         </tbody>
       </table>
@@ -290,13 +291,11 @@ $stmt16584->execute(array($idExpedienteU));
               <th scope="col"> <?php echo utf8_encode($Carrera) ?> </th>
               <th scope="col"> <?php echo $cum ?></th>
               <th scope="col"> <?php echo $EstadoCarrera ?> </th>
-              <th scope="col"> <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#pensum' style="border-radius: 20px;
-    border: 2px solid #9d120e;
-    width: 100px;height: 50px;
-     background-color: #9d120e;
-     color:white;"><img src="../img/add.png" width="25px" height="25px"><br>
-                  <p style="font-size: 10px;">Subir pensum</p>
-                </button> </th>
+              <th scope="col"> 
+                <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#pensum' style="border-radius: 20px; border: 2px solid #9d120e; width: 100px;height: 50px; background-color: #9d120e; color:white;"><img src="../img/add.png" width="25px" height="25px"><br>
+                    <p style="font-size: 10px;">Subir pensum</p>
+                </button> 
+              </th>
               <?php
               if ($Pensum == null) {
                 echo "
@@ -305,14 +304,9 @@ $stmt16584->execute(array($idExpedienteU));
                 echo "<th><a href='../pdfPensum/$Pensum' target='_blank' class='btn btn-danger '><img src='../img/PDF.png' width='25px' height='25px>'</a> </th>";
               }
               ?>
-
-
-
             </tr>
           </tbody>
         </table>
-
-
         <br>
         <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
           <div class="row">
@@ -386,11 +380,10 @@ $stmt16584->execute(array($idExpedienteU));
       </div>
 
       <br>
-
       <h3 style="text-align: left; font-weight: bold;">Inscripciones de Ciclos</h3>
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Open modal for @mdo</button>
-
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Agregar inscripción</button>
+      <br>
       <br>
       <table class="table table-responsive-lg float-left">
         <thead style="background-color: #2D2D2E; color: white; ">
@@ -399,7 +392,6 @@ $stmt16584->execute(array($idExpedienteU));
             <th scope="col">Ciclo Universidad</th>
             <th scope="col">Comprobante</th>
             <th scope="col">Detalles</th>
-
           </tr>
         </thead>
         <tbody>
@@ -426,91 +418,86 @@ $stmt16584->execute(array($idExpedienteU));
             $stmt16584842 = $dbh->prepare("SELECT * FROM `inscripcionmateria` WHERE  `Id_InscripcionC` = ?");
             $stmt16584842->execute(array($ciclou));
 
-            echo " <tr class='table-dark' style ='color: black;'>";
-            echo "<td scope=\"row\">" . $fila9["Id_InscripcionC"] . "</td>";
-            echo "<td>" . $fila9["cicloU"] . "</td>";
-
+            echo " <tr class='table-dark' style ='color: black;'>
+                      <td scope=\"row\">" . $fila9["Id_InscripcionC"] . "</td>
+                      <td>" . $fila9["cicloU"] . "</td>";
             if ($pdfCiclo == null) {
               echo "
             <th><button type='button' class='btn btn-danger'  disabled> 
             <img src='../img/PDF.png' width='25px' height='25px'></button></th>";
             } else {
-              echo "<th><a href='../pdfCicloInscripcion/$pdfCiclo' target='_blank' class='btn btn-danger '><img src='../img/PDF.png' width='25px' height='25px>'</a> </th>";
+              echo "<th><a href='../pdfCicloInscripcion/$pdfCiclo' target='_blank' class='btn btn-danger '>
+              <img src='../img/PDF.png' width='25px' height='25px>'</a> </th>";
             }
-
             $num2 = 1;
-            //echo "<td><a class=\"btn btn-danger\" href=\"../pdfInscripCiclos/?id=".$fila9["comprobante"]."\"><i class=\"fas fa-file-pdf\"></i></a></td>";
-            echo "<td>";
-            echo "<button type='button' class='btn btn-info' data-toggle='modal' data-target='#exampleModalCenter" . ($numero++) . "'><i class=\"fas fa-info-circle\"></i></button></td>";
-
-            echo "</tr>";
-
-            $stmt123456 = $pdo->query("SELECT m.nombreMateria  FROM inscripcionmateria i INNER JOIN materias m
-      ON m.idMateria = i.idMateria INNER JOIN inscripcionciclos n ON n.Id_InscripcionC = i.Id_InscripcionC 
-      WHERE n.Id_InscripcionC = '$ciclou' ");
-            echo "<!-- Modal -->
-      <div class='modal fade' id='exampleModalCenter" . ($num++) . "' tabindex='-1' role='dialog'
-       aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
-        <div class='modal-dialog modal-dialog-centered modal-lg' role='document' >
-          <div class='modal-content' >
-            <div class='modal-header' >
-              <h5 class='modal-title' id='exampleModalLongTitle'>Materias Inscritas: $prueba </h5>
-              <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                <span aria-hidden='true'>&times;</span>
-              </button>
-            </div>
-            <div class='modal-body ' width='auto'>";
-            //inicio de modal-body
-
-            //inicio de row
+            echo "<td>
+            <button type='button' class='btn btn-info' data-toggle='modal' data-target='#exampleModalCenter" . ($numero++) . "'>
+          <i class=\"fas fa-info-circle\"></i>
+            </button>
+             <div class='btn-group' role='group' aria-label='Button group with nested dropdown'>
+              <div class='btn-group' role='group'>
+                <button id='btnGroupDrop1' type='button' class='btn btn-secondary ' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                <i class='fas fa-ellipsis-v'></i>
+                </button>
+                <div class='dropdown-menu' aria-labelledby=btnGroupDrop1'>
+                  <a class='dropdown-item' href='Modelo/ModeloMaterias/eliminarInscripcion.php?id=$ciclou&idAlumno=$idExpedienteU&expediente=$expediente' ><button class='btn btn-danger'>Eliminar</button></a>
+                  <a class='dropdown-item' href='ModificarInscripcio.php?id=$ciclou&idAlumno=$idExpedienteU&expediente=$expediente' ><button class='btn btn-warning'>Modificar</button></a>
+                </div>
+              </div>
+           </div>
+            </td>
+        </tr>";
+            $stmt123456 = $pdo->query("SELECT m.nombreMateria  FROM inscripcionmateria i INNER JOIN materias m ON m.idMateria = i.idMateria INNER JOIN inscripcionciclos n ON n.Id_InscripcionC = i.Id_InscripcionC  WHERE n.Id_InscripcionC = '$ciclou' ");
             echo "
-        <div class='row'>
-        <div class='col-sm-6' >";
-
-            echo "<div class='card' style='width: 20rem; >";
-            echo "<ul class='list-group list-group-flush'>";
-            echo "<li class='list-group-item'> &nbsp; &nbsp;" . "Materia" . "&nbsp;" . "</li> ";
+                  <div class='modal fade' id='exampleModalCenter" . ($num++) . "' tabindex='-1' role='dialog'
+                  aria-labelledby='exampleModalCenterTitle' aria-hidden='true'>
+                    <div class='modal-dialog modal-dialog-centered modal-lg' role='document' >
+                      <div class='modal-content' >
+                        <div class='modal-header' >
+                          <h5 class='modal-title' id='exampleModalLongTitle'>Materias Inscritas: $prueba </h5>
+                          <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                            <span aria-hidden='true'>&times;</span>
+                          </button>
+                        </div>
+                        <div class='modal-body ' width='auto'>
+                        <div class='row'>
+                        <div class='col-sm-6' >
+                        <div class='card' style='width: 20rem; >
+                        <ul class='list-group list-group-flush'>
+                          <li class='list-group-item'> &nbsp; &nbsp;" . "Materia" . "&nbsp;" . "</li> ";
             while ($row = $stmt123456->fetch()) {
               echo " <li class='list-group-item'>" . "<p class=''></p>" . utf8_decode($row['nombreMateria']) . "&nbsp;" . "</li> ";
             }
-            echo "</ul>";
-            echo "</div>";
-            echo "</div>";
-
-
-            echo "<div class='col-sm-3' >";
-            echo "<div class='card' style='width: 10rem; >
-                 <ul class='list-group list-group-flush'>";
-            echo "   <li class='list-group-item'> &nbsp; &nbsp;" . "Estado" . "&nbsp;" . "  </li> ";
+            echo "</ul>
+            </div>
+        </div>
+        <div class='col-sm-3' >
+        <div class='card' style='width: 10rem; >
+                 <ul class='list-group list-group-flush'>
+                 <li class='list-group-item'> &nbsp; &nbsp;" . "Estado" . "&nbsp;" . "  </li> ";
             while ($row2 = $stmt1658484->fetch()) {
               if ($row2["estado"] != null) {
                 echo " <li class='list-group-item'>" . trim($row2["estado"])
                   . "<p class=''></p> " . "</li> ";
               }
             }
-            echo "</ul>";
-            echo "</div>";
-            echo "</div>
-
-        <div class='col-sm-3' >";
-            echo "<div class='card' style='width: 10rem; >
-                 <ul class='list-group list-group-flush'>";
-            echo "   <li class='list-group-item'> &nbsp; &nbsp;" . "Nota" . "&nbsp;" . "  </li> ";
+            echo "</ul>
+            </div>
+            </div>
+        <div class='col-sm-3' >
+        <div class='card' style='width: 10rem; >
+                 <ul class='list-group list-group-flush'>
+                 <li class='list-group-item'> &nbsp; &nbsp;" . "Nota" . "&nbsp;" . "  </li> ";
             while ($row2 = $stmt16584842->fetch()) {
               echo " <li class='list-group-item'>" . "<p class=''></p> " . trim($row2["nota"])
                 . "&nbsp;" . "</li> ";
             }
-            echo "</ul>";
-            echo "</div>";
-            echo "</div>
-      </div>";
-
-            // fin de modal-body
-            echo "</div>";
-
-
-            echo "
-            <div class='modal-footer'>
+            echo "</ul>
+            </div>
+          </div>
+      </div>
+   </div>
+   <div class='modal-footer'>
               <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
             </div>
           </div>
@@ -563,13 +550,9 @@ $stmt16584->execute(array($idExpedienteU));
 
       </div>
       <div class="modal-footer">
-
-
         <input class="btn btn-primary btn-rounded" type="submit" name="actualizar" value="Cerrar " data-dismiss="modal">
         <input class="btn btn-primary btn-rounded" type="submit" name="actualizar" value="Guardar Cambios " id="actualizar">
-
       </div>
-
       </form>
     </div>
   </div>
@@ -602,7 +585,6 @@ $stmt16584->execute(array($idExpedienteU));
     </div>
   </div>
 </div>
-
 
 <!-- Modal -->
 <div class="modal fade" id="notas2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -691,26 +673,76 @@ $stmt16584->execute(array($idExpedienteU));
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Comprobante | Ciclo</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <div class="alert alert-danger" role="alert">
+          Para que su solicitud sea terminada con exito agregue los siguientes datos que se le solicitan.
+        </div>
+
+        <form action="../CoachReuniones/Modelo/ModeloMaterias/subirPdfCiclo.php" method="post" enctype="multipart/form-data">
+
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Recipient:</label>
-            <input type="text" class="form-control" id="recipient-name">
+            <label class="" for="ciclo">Ciclo:</label>
+            <select name="ciclo" id="ciclo" class="ciclo form-control">
+              <!-- año 2015 -->
+              <option disabled>2015</option>
+              <option value="Ciclo 01-2017">Ciclo 01-2015</option>
+              <option value="Ciclo 02-2017">Ciclo 02-2015</option>
+              <option value="Ciclo 03-2017">Ciclo 03-2015</option>
+              <!-- año 2016 -->
+              <option disabled>2016</option>
+              <option value="Ciclo 01-2017">Ciclo 01-2016</option>
+              <option value="Ciclo 02-2017">Ciclo 02-2016</option>
+              <option value="Ciclo 03-2017" title="Interciclo">Ciclo 03-2016</option>
+              <!-- año 2017 -->
+              <option disabled>2017</option>
+              <option value="Ciclo 01-2017">Ciclo 01-2017</option>
+              <option value="Ciclo 02-2017">Ciclo 02-2017</option>
+              <option value="Ciclo 03-2017" title="Interciclo">Ciclo 03-2017</option>
+              <!-- año 2018 -->
+              <option disabled>2018</option>
+              <option value="Ciclo 01-2018">Ciclo 01-2018</option>
+              <option value="Ciclo 02-2018">Ciclo 02-2018</option>
+              <option value="Ciclo 03-2018" title="Interciclo">Ciclo 03-2018</option>
+              <!-- año 2019 -->
+              <option disabled>2019</option>
+              <option value="Ciclo 01-2019">Ciclo 01-2019</option>
+              <option value="Ciclo 02-2019">Ciclo 02-2019</option>
+              <option value="Ciclo 03-2019" title="Interciclo">Ciclo 03-2019</option>
+              <!-- año 2020 -->
+              <option disabled>2020</option>
+              <option value='Ciclo 01-2020'>Ciclo 01-2020</option>
+              <option value='Ciclo 02-2020'>Ciclo 02-2020</option>
+              <option value='Ciclo 03-2020' title="Interciclo">Ciclo 03-2020</option>
+              <!-- año 2021 -->
+              <option disabled>2021</option>
+              <option value='Ciclo 01-2021'>Ciclo 01-2021</option>
+              <option value='Ciclo 02-2021'>Ciclo 02-2021</option>
+              <option value='Ciclo 03-2021' title="Interciclo">Ciclo 03-2021</option>
+            </select>
           </div>
-          <div class="form-group">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
+          <div class="custom-file">
+            <input type="file" class="custom-file-input" accept=".pdf" id="customFileLang" name="archivo" required>
+            <label class="custom-file-label" for="customFileLang" data-browse="Buscar">Seleccionar
+              Comprobante</label>
+            <center><small>El archivo no debe pesar más de 5MB</small></center>
           </div>
-        </form>
+          <br><br>
+          <div>
+            <!--idalumnos-->
+            <input type="hidden" name="alumno" value="<?php echo $id; ?>">
+            <!--id expedente-->
+            <input type="hidden" name="expediente" value="<?php echo $idExpedienteU; ?>">
+          </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Send message</button>
+        <input style="border-radius: 20px;  border: 2px solid #9d120e; width: 100px;height: 38px;  background-color: #9d120e; color:white;" type="submit" name="actualizar" value="Cerrar " data-dismiss="modal">
+        <input style="border-radius: 20px; border: 2px solid #9d120e; width: 200px;height: 38px;  background-color: #9d120e;   color:white;" type="submit" name="comprobante_Ciclo" value="Guardar Cambios " id="comprobante_Ciclo">
+        </form>
       </div>
     </div>
   </div>
