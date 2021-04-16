@@ -3,12 +3,6 @@ require_once "../../../BaseDatos/conexion.php";
 setlocale(LC_TIME, 'es_SV.UTF-8');
 date_default_timezone_set("America/El_Salvador"); 
 
-var_dump($_POST);
-var_dump($_FILES["archivo"]);
-echo $_FILES["archivo"]["name"];
-echo $_FILES["archivo"]["size"];
-echo $_FILES["archivo"]["tmp_name"];
-
 function InscribirCiclo($idCiclo, $idExpediente, $ciclo, $filename, PDO $pdo)
 {
 	//consulta para insertar solicitud de transporte
@@ -63,7 +57,7 @@ if(isset($_POST['Guardar_InscriCiclo']))
 				//creamos una cookie con los datos de la inscripcion
 				setcookie("InscrpCiclo[idInscrip]", $idCicloInscripcion, time() + 604800, "/");
 				setcookie("InscrpCiclo[idExpdt]", $expediente, time() + 604800, "/");
-				setcookie("InscrpCiclo[ciclo]", $ciclo, time() + 60, "/");
+				setcookie("InscrpCiclo[ciclo]", $ciclo, time() + 604800, "/");
 				setcookie("InscrpCiclo[alumnoCarnet]", $iduser, time() + 604800, "/");
 				//Redirigimos a la pantalla de materias
 				header("Location: ../../InscripcionMateriasCiclo.php");
@@ -78,7 +72,7 @@ if(isset($_POST['Guardar_InscriCiclo']))
 			header("Location: ../../IndicacionesMaterias.php");
 		}
 	}else {
-		$_SESSION['message'] = 'El tamaño de su archivo PDF sobrepasa el limite permitido (50 MB)';
+		$_SESSION['message'] = 'El tamaño de su archivo PDF sobrepasa el limite permitido (5 MB)';
 		$_SESSION['message2'] = 'warning';
 		header("Location: ../../IndicacionesMaterias.php");
 	}
