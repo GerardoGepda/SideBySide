@@ -160,7 +160,7 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
                             <th>#</th>
                             <th>img</th>
                             <th>Nombre</th>
-                            <th>Materias inscritas</th>
+                            <th>Materias aprobadas</th>
                             <th>Promedio materias aprobadas</th>
                         </tr>
                     </thead>
@@ -194,7 +194,7 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
                             <th>#</th>
                             <th>img</th>
                             <th>Nombre</th>
-                            <th>Materias inscritas</th>
+                            <th>Materias reprobadas</th>
                             <th>Promedio materias reprobadas</th>
                         </tr>
                     </thead>
@@ -228,7 +228,7 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
                             <th>#</th>
                             <th>img</th>
                             <th>Nombre</th>
-                            <th>Materias inscritas</th>
+                            <th>Materias retiradas</th>
                             <th>Promedio Materias aprobadas</th>
                         </tr>
                     </thead>
