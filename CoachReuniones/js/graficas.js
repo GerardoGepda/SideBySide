@@ -115,7 +115,7 @@ function mapa1(result1, result2, result3, ciclo, clase, cumSSFT) {
         // ejemplo de como mostrar datos
         series: [{
             data: data,
-            name: 'Cantidad de materias aprobadas: ' + result1 + ' ',
+            name: 'Aprobadas: ' + result1 + ' ',
             states: {
                 hover: {
                     color: '#ffc107',
@@ -128,7 +128,7 @@ function mapa1(result1, result2, result3, ciclo, clase, cumSSFT) {
             }
         }, {
             data: data,
-            name: 'Cantidad de materias reprobadas: ' + result2 + ' ',
+            name: 'Reprobadas: ' + result2 + ' ',
             states: {
                 hover: {
                     color: '#ffc107'
@@ -141,7 +141,7 @@ function mapa1(result1, result2, result3, ciclo, clase, cumSSFT) {
         },
         {
             data: data,
-            name: 'Cantidad de materias retiradas: ' + result3 + '',
+            name: 'Retiradas: ' + result3 + '',
             states: {
                 hover: {
                     color: '#ffc107'
@@ -186,7 +186,7 @@ function mapa2(result4, result5, result6, ciclo, clase, cumSAFT) {
         },
         series: [{
             data: data,
-            name: 'Cantidad de materias aprobadas:  ' + result4 + ' ',
+            name: 'Aprobadas:  ' + result4 + ' ',
             states: {
                 hover: {
                     color: '#ffc107'
@@ -198,7 +198,7 @@ function mapa2(result4, result5, result6, ciclo, clase, cumSAFT) {
             }
         }, {
             data: data,
-            name: 'Cantidad de materias reprobadas:  ' + result5 + ' ',
+            name: 'Reprobadas:  ' + result5 + ' ',
             states: {
                 hover: {
                     color: '#ffc107'
@@ -211,7 +211,7 @@ function mapa2(result4, result5, result6, ciclo, clase, cumSAFT) {
         },
         {
             data: data,
-            name: 'Cantidad de materias retiradas:  ' + result6 + ' ',
+            name: 'Retiradas:  ' + result6 + ' ',
             states: {
                 hover: {
                     color: '#ffc107'
@@ -256,6 +256,8 @@ function principal(aprobadas, reprobadas, retiradas) {
             titleTextStyle: {
                 color: '#ffff'
             },
+            legendTextStyle: { color: '#FFF' },
+            titleTextStyle: { color: '#FFF' },
             hAxis: {
                 textStyle: { color: '#FFF' }
             }
