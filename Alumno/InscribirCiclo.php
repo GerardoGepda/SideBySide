@@ -1,3 +1,6 @@
+<?php
+  
+?>
 <?php require_once 'templates/head.php'; ?>
 <title>Indicaciones transporte</title>
  <link rel="stylesheet" href="assets1/css1/style.css">

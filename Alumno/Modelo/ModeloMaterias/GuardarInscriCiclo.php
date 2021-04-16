@@ -1,56 +1,92 @@
 <?php
 require_once "../../../BaseDatos/conexion.php";
+setlocale(LC_TIME, 'es_SV.UTF-8');
+date_default_timezone_set("America/El_Salvador"); 
 
+var_dump($_POST);
+var_dump($_FILES["archivo"]);
+echo $_FILES["archivo"]["name"];
+echo $_FILES["archivo"]["size"];
+echo $_FILES["archivo"]["tmp_name"];
 
+function InscribirCiclo($idCiclo, $idExpediente, $ciclo, $filename, PDO $pdo)
+{
+	//consulta para insertar solicitud de transporte
+    $consulta = $pdo->prepare("INSERT INTO inscripcionciclos (Id_InscripcionC, idExpedienteU, cicloU, comprobante) VALUES(:Id_InscrpC, :idExpdtU, :ciclo, :comprobante)");
 
+	$consulta->bindParam(':Id_InscrpC', $idCiclo);
+	$consulta->bindParam(':idExpdtU', $idExpediente);
+	$consulta->bindParam(':ciclo', $ciclo);
+	$consulta->bindParam(':comprobante', $filename);
+	$result = $consulta->execute();
+
+	return $result;
+}
 
 
 //Guardar solicitud
 if(isset($_POST['Guardar_InscriCiclo']))
 {	
 	
-//variables de campos soli transporte
-$expediente=$_POST['expediente'];
-$idCicloInscripcion=$_POST['inscriCiclo'];
+	//variables del form para inscribir ciclo
+	$expediente = $_POST['expediente'];
+	$idCicloInscripcion = $_POST['inscriCiclo'];
+	$ciclo = $_POST['ciclo'];
+	$iduser = $_POST['alumno'];
 
+	$nombrearchivo = $_FILES["archivo"]["name"];
+	$tipoarchivo = $_FILES["archivo"]["type"];
+	$tamanioarchivo = $_FILES["archivo"]["size"];
+	$rutaarchivo = $_FILES["archivo"]["tmp_name"];
+	$destino = "../../../pdfCicloInscripcion/";
 
+	//Variable que contendra el archivo
+	$ArchivoPDF;
 
- //consulta para insertar solicitud de transporte
-    $consulta=$pdo->prepare("INSERT INTO inscripcionciclos (Id_InscripcionC,idExpedienteU, cicloU, comprobante) VALUES(:Id_InscripcionC,:idExpedienteU,'','')");
-
-
-		$consulta->bindParam(':Id_InscripcionC',$idCicloInscripcion);
-		$consulta->bindParam(':idExpedienteU',$expediente);
+	//Verificando tamanio de archivo
+	if ($tamanioarchivo <= 5000000) {
 		
+		//creamos el destino si no se encuentra
+		if(!file_exists($destino)){
+            mkdir($destino);
+        }
 
+		$filename = $iduser. "-" .$ciclo.".pdf";
+		$destino .= $filename;
 
-
-
-	if (!$consulta->execute()) 
-	   {
-	   		header("Location: ../../InscripcionMateriasCiclo.php?id=".$idCicloInscripcion);
-	   		echo "No se puedo guardar el dato";
-
-	   		
-	    }
-		else
-		{			 	
-		header("Location: ../../InscripcionMateriasCiclo.php?id=".$idCicloInscripcion);
-
-		echo "Funciona";
+		//agregamos el archivo a su carpeta de destino y evaluamos el exito
+		if (copy($rutaarchivo, $destino)) {
+			
+			//hacemos la consulta de insercion y evaluamos el resultado
+			$result = InscribirCiclo($idCicloInscripcion, $expediente, $ciclo, $filename, $pdo);
+			if ($result) {
+				//creamos una cookie con los datos de la inscripcion
+				setcookie("InscrpCiclo[idInscrip]", $idCicloInscripcion, time() + 604800, "/");
+				setcookie("InscrpCiclo[idExpdt]", $expediente, time() + 604800, "/");
+				setcookie("InscrpCiclo[ciclo]", $ciclo, time() + 60, "/");
+				setcookie("InscrpCiclo[alumnoCarnet]", $iduser, time() + 604800, "/");
+				//Redirigimos a la pantalla de materias
+				header("Location: ../../InscripcionMateriasCiclo.php");
+			}else {
+				$_SESSION['message'] = 'Error al guardar su ciclo en la DB, contacte con un administrador';
+				$_SESSION['message2'] = 'danger';
+				header("Location: ../../IndicacionesMaterias.php");
+			}
+		}else {
+			$_SESSION['message'] = 'Error al guardar su archivo PDF en el host, contacte con un administrador';
+			$_SESSION['message2'] = 'danger';
+			header("Location: ../../IndicacionesMaterias.php");
 		}
-
-
-
-
-
-
+	}else {
+		$_SESSION['message'] = 'El tamaño de su archivo PDF sobrepasa el limite permitido (50 MB)';
+		$_SESSION['message2'] = 'warning';
+		header("Location: ../../IndicacionesMaterias.php");
+	}
 }
 else
 {
-	echo "dATOS NO RECIBIDO";
+	header("location: ../../IndicacionesMaterias.php");
 }
-
 
 
 

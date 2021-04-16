@@ -11,7 +11,7 @@ error_reporting(0);
 
     $nombrearchivo = $_FILES["archivo"]["name"];
     $tipoarchivo = $_FILES["archivo"]["type"];
-    $tama«Ðoarchivo = $_FILES["archivo"]["size"];
+    $tamanioarchivo = $_FILES["archivo"]["size"];
     $rutaarchivo = $_FILES["archivo"]["tmp_name"];
     $destino = "../../../pdfCicloInscripcion/";
 
@@ -32,7 +32,7 @@ error_reporting(0);
 }
 
 
-if ($tama«Ðoarchivo <= 5000000 ) {
+if ($tamanioarchivo <= 5000000 ) {
 
 
 

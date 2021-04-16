@@ -16,15 +16,15 @@ if ($response = $q->execute()) {
       //Si todo fue correcto muestra el resultado con exito;
 	    $_SESSION['message'] = 'materia desinscrita';
 	    $_SESSION['message2'] = 'success';
-      header("Location: ../../InscripcionMateriasCiclo.php?id=".$idInscripcionCiclo);
+      header("Location: ../../InscripcionMateriasCiclo.php");
   }else{
     $_SESSION['message'] = 'Error, No se pudo actualizar el estado de la materia: '.$iddescripcion;
     $_SESSION['message2'] = 'danger';
-    header("Location: ../../InscripcionMateriasCiclo.php?id=".$idInscripcionCiclo);
+    header("Location: ../../InscripcionMateriasCiclo.php");
   }
 }else{
   $_SESSION['message'] = 'Error, No se pudo desincribir la materia: '.$iddescripcion;
   $_SESSION['message2'] = 'danger';
-  header("Location: ../../InscripcionMateriasCiclo.php?id=".$idInscripcionCiclo);
+  header("Location: ../../InscripcionMateriasCiclo.php");
 }
 ?>

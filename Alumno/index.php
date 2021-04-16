@@ -2,6 +2,12 @@
 
   require_once 'templates/head.php';
 
+  //verificamos si hay inscripción activa
+  if (!empty($_COOKIE['InscrpCiclo'])) {
+    $_SESSION['message'] = 'Tienes una inscripción de ciclo en proceso, da click <a href="InscripcionMateriasCiclo.php">aquí</a> para terminar tu inscripción';
+	  $_SESSION['message2'] = 'warning';   
+  }
+
 ?>
 
 <title>InicioAlumno</title>
@@ -141,7 +147,11 @@ left: 10px;
 
   <div class="container-fluid text-center" style="background-color: white; ">
 
-
+    <div class="alerta my-2">
+      <?php
+        include "config/Alerta.php";
+      ?>
+    </div>
     <div class="text-center"">
     
     <div>
@@ -185,7 +195,7 @@ left: 10px;
     </div>
     <br>
     <br>
-        <div class="row" style="">
+        <div class="row">
         <div class="col-lg-11 col-md-8 col-sm-8 col-xs-12">
         <div id="novedades">
         <h3 style="text-align: left; font-weight: bold;">Novedades<h3>
