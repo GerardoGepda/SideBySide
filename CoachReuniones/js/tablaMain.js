@@ -46,7 +46,7 @@ function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico) {
 }
 
 
-function CreateModals(e, universidad, listaAprobados, listaReprobados, listaRetirados, l1, l2, l3) {
+function CreateModals(e, universidad, l1, l2, l3) {
     let template = '';
     let contador1 = 4, contador2 = 4, contador3 = 4;
     data1 = [], data2 = [], data3 = [];
@@ -59,15 +59,16 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
     for (let index = 0; index < l1.length; index++) {
         photo = [];
         nombre = [];
-        totalMaterias= [];
+        totalMaterias = [];
         media = [];
         text1 = l1[index];
-
+        c = [];
         text1.forEach(e => {
             nombre.push(e.alumno);
             photo.push(e.imagen);
             totalMaterias.push(e.total);
             media.push(parseFloat(e.promedio).toFixed(1));
+            c.push(e.correo);
         });
         f1.push(text1);
     }
@@ -75,30 +76,33 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
     for (let index = 0; index < l2.length; index++) {
         photo = [];
         nombre = [];
-        totalMaterias= [];
+        totalMaterias = [];
         media = [];
         text2 = l2[index];
+        c = [];
 
         text2.forEach(e => {
             nombre.push(e.alumno);
             photo.push(e.imagen);
             totalMaterias.push(e.total);
             media.push(parseFloat(e.promedio).toFixed(1));
+            c.push(e.correo);
         });
         f2.push(text2);
     }
     for (let index = 0; index < l3.length; index++) {
         photo = [];
         nombre = [];
-        totalMaterias= [];
+        totalMaterias = [];
         media = [];
         text3 = l3[index];
-
+        c = [];
         text3.forEach(e => {
             nombre.push(e.alumno);
             photo.push(e.imagen);
             totalMaterias.push(e.total);
             media.push(parseFloat(e.promedio).toFixed(1));
+            c.push(e.correo);
         });
         f3.push(text3);
     }
@@ -118,6 +122,7 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
                         <td>${dato[0]}</td>
                         <td>${dato[2]}</td>
                         <td>${dato[3]}</td>
+                        <td> <a class='btn btn-info' href='AlumnoInicio.php?id=${dato[4]}'>ver</a></td>
                     </tr>`;
         }
 
@@ -128,6 +133,7 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
                         <td>${dato[0]}</td>
                         <td>${dato[2]}</td>
                         <td>${dato[3]}</td>
+                        <td> <a class='btn btn-info' href='AlumnoInicio.php?id=${dato[4]}'>ver</a></td>
                     </tr>`;
         }
         for (const dato of f3[index]) {
@@ -137,6 +143,7 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
                         <td>${dato[0]}</td>
                         <td>${dato[2]}</td>
                         <td>${dato[3]}</td>
+                        <td> <a class='btn btn-info' href='AlumnoInicio.php?id=${dato[4]}'>ver</a></td>
                     </tr>`;
         }
 
@@ -162,6 +169,7 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
                             <th>Nombre</th>
                             <th>Materias aprobadas</th>
                             <th>Promedio materias aprobadas</th>
+                            <th>Expediente</th>
                         </tr>
                     </thead>
                     <tbody class='table-light table-bordered table-striped table-hover'> 
@@ -196,6 +204,7 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
                             <th>Nombre</th>
                             <th>Materias reprobadas</th>
                             <th>Promedio materias reprobadas</th>
+                            <th>Expediente</th>
                         </tr>
                     </thead>
                     <tbody class='table-light table-bordered table-striped table-hover'> 
@@ -230,6 +239,7 @@ function CreateModals(e, universidad, listaAprobados, listaReprobados, listaReti
                             <th>Nombre</th>
                             <th>Materias retiradas</th>
                             <th>Promedio Materias aprobadas</th>
+                            <th>Expediente</th>
                         </tr>
                     </thead>
                     <tbody class='table-light table-bordered table-striped table-hover'> 
@@ -332,10 +342,7 @@ function loadUniversity(datos) {
     // calcular cum global
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     cumGlobal = (cum1.reduce(reducer)) / cum1.length;
-    // console.log(lista1);
-    // console.log(lista2);
-    // console.log(lista3);
-    CreateModals(nombres.length, nombres, listaAprobados, listaReprobados, listaRetirados, lista1, lista2, lista3);
+    CreateModals(nombres.length, nombres, lista1, lista2, lista3);
     CreatDivs(nombres.length, ids);
     CumGeneral(cumGlobal.toFixed(1));
 
@@ -392,6 +399,7 @@ function loadUniversity(datos) {
             colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3']
         });
     }
+    console.clear();
 }
 
 
