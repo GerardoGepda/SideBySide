@@ -40,7 +40,7 @@ $consulta5->execute(array($idExpedienteU));
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item" id="bloque">
-                <a class="nav-link" href="pensum.php?id=<?php echo $id ?>">Pensum<span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="pensum.php?id=<?php echo $expediente ?>">Pensum<span class="sr-only">(current)</span></a>
             </li>
         </ul>
     </div>

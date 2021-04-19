@@ -1,7 +1,7 @@
 <?php
 include "../../../Conexion/conexion.php";
 $expediente = $_POST['alumno'];
-$idMateria = utf8_encode($_POST['idMateria']);
+$idMateria = ($_POST['idMateria']);
 $idinscripcion = $_POST['idInscripcion'];
 $idexpedienteU = $_POST['idalumno'];
 session_start();

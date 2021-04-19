@@ -227,7 +227,7 @@ $stmt16584->execute(array($idExpedienteU));
       background-position: 50%;
       border-radius: 50%;
       background-size: 100% auto;">
-      <h4 style="color: white; text-align: center; font-weight: bold;"><?php echo utf8_encode($univerisdad)  ?>
+      <h4 style="color: white; text-align: center; font-weight: bold;"><?php echo ($univerisdad)  ?>
       </h4>
     </div>
     <div class="col text-center">
@@ -252,16 +252,16 @@ $stmt16584->execute(array($idExpedienteU));
               echo " <tr class='table-dark' style='color: black;'>
                         <td scope=\"row\">" . $fila2["Universidad"] . "</td>"
                 . utf8_encode("<td>" . $fila2["CARRERA"] . "</td>")
-                . utf8_encode("<td>" . $fila2["Facultad"] . "</td>")
+                . ("<td>" . $fila2["Facultad"] . "</td>")
                 . "<td>" . $fila2["estado"] . "</td>";
               echo "</tr>";
             }
           } else {
             echo " <tr class='table-dark' style='color: black;'>
-                             <td scope=\"row\">Debe actualizar </td>".
-                utf8_encode("<td>Debe actualizar </td>").
-                utf8_encode("<td>Debe actualizar </td>").
-                            "<td>Debe actualizar</td>
+                             <td scope=\"row\">Debe actualizar </td>" .
+              utf8_encode("<td>Debe actualizar </td>") .
+              utf8_encode("<td>Debe actualizar </td>") .
+              "<td>Debe actualizar</td>
                   </tr>";
           }
           ?>
@@ -291,10 +291,10 @@ $stmt16584->execute(array($idExpedienteU));
               <th scope="col"> <?php echo utf8_encode($Carrera) ?> </th>
               <th scope="col"> <?php echo $cum ?></th>
               <th scope="col"> <?php echo $EstadoCarrera ?> </th>
-              <th scope="col"> 
+              <th scope="col">
                 <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#pensum' style="border-radius: 20px; border: 2px solid #9d120e; width: 100px;height: 50px; background-color: #9d120e; color:white;"><img src="../img/add.png" width="25px" height="25px"><br>
-                    <p style="font-size: 10px;">Subir pensum</p>
-                </button> 
+                  <p style="font-size: 10px;">Subir pensum</p>
+                </button>
               </th>
               <?php
               if ($Pensum == null) {
@@ -688,16 +688,21 @@ $stmt16584->execute(array($idExpedienteU));
           <div class="form-group">
             <label class="" for="ciclo">Ciclo:</label>
             <select name="ciclo" id="ciclo" class="ciclo form-control">
+              <!-- año 2014 -->
+              <option disabled>2014</option>
+              <option value="Ciclo 01-2014">Ciclo 01-2014</option>
+              <option value="Ciclo 02-2014">Ciclo 02-2014</option>
+              <option value="Ciclo 03-2014">Ciclo 03-2014</option>
               <!-- año 2015 -->
               <option disabled>2015</option>
-              <option value="Ciclo 01-2017">Ciclo 01-2015</option>
-              <option value="Ciclo 02-2017">Ciclo 02-2015</option>
-              <option value="Ciclo 03-2017">Ciclo 03-2015</option>
+              <option value="Ciclo 01-2015">Ciclo 01-2015</option>
+              <option value="Ciclo 02-2015">Ciclo 02-2015</option>
+              <option value="Ciclo 03-2015">Ciclo 03-2015</option>
               <!-- año 2016 -->
               <option disabled>2016</option>
-              <option value="Ciclo 01-2017">Ciclo 01-2016</option>
-              <option value="Ciclo 02-2017">Ciclo 02-2016</option>
-              <option value="Ciclo 03-2017" title="Interciclo">Ciclo 03-2016</option>
+              <option value="Ciclo 01-2016">Ciclo 01-2016</option>
+              <option value="Ciclo 02-2016">Ciclo 02-2016</option>
+              <option value="Ciclo 03-2016" title="Interciclo">Ciclo 03-2016</option>
               <!-- año 2017 -->
               <option disabled>2017</option>
               <option value="Ciclo 01-2017">Ciclo 01-2017</option>
