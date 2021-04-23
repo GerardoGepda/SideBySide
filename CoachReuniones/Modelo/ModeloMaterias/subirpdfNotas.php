@@ -44,16 +44,12 @@ if (isset($_POST['pdfNotas'])) {
 
     //--------------------------------------------
 
-
-
-
     if ($tama«Ðoarchivo <= 5000000) {
 
 
         //Buscammos el archivo con el nombre que se encuentra en la base 
         $RutaArchivo = "../../../pdfNotas/" . $ArchivoPDF;
-
-        //unlink($RutaArchivo);  // Eliminanos el archivo
+        unlink($RutaArchivo);  // Eliminanos el archivo
 
         //condicion que verifica si existe archivo en el path
         if (!file_exists($destino)) {
@@ -61,14 +57,9 @@ if (isset($_POST['pdfNotas'])) {
             //crea directorio
             mkdir($destino);
         } //fin if
-
-
         //nombre que tendra el archivo
-        $nombrearchivo = $iduser . "-" . "notas" . ".pdf";
-
+        $nombrearchivo = $iduser . "-" . "notas" . "$IdCiclo" . ".pdf";
         $destino .= $nombrearchivo;
-
-
 
         if (copy($rutaarchivo, $destino)) {
 
