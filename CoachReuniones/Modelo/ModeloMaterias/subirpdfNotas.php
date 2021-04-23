@@ -58,7 +58,7 @@ if (isset($_POST['pdfNotas'])) {
             mkdir($destino);
         } //fin if
         //nombre que tendra el archivo
-        $nombrearchivo = $iduser . "-" . "notas" . "$IdCiclo" . ".pdf";
+        $nombrearchivo = $iduser . "-notas-" . $IdCiclo . ".pdf";
         $destino .= $nombrearchivo;
 
         if (copy($rutaarchivo, $destino)) {
