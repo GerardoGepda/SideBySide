@@ -60,7 +60,7 @@ error_reporting(0);
         //Buscammos el archivo con el nombre que se encuentra en la base 
          $RutaArchivo = "../../../pdfNotas/".$ArchivoPDF; 
 
-          //unlink($RutaArchivo);  // Eliminanos el archivo
+        unlink($RutaArchivo);  // Eliminanos el archivo
         
       //condicion que verifica si existe archivo en el path
         if(!file_exists($destino)){
@@ -71,7 +71,7 @@ error_reporting(0);
 
 
       //nombre que tendra el archivo
-        $nombrearchivo = $iduser."-"."notas".".pdf";
+        $nombrearchivo = $iduser . "-notas-" . $IdCiclo . ".pdf";
         
         $destino .= $nombrearchivo;
       

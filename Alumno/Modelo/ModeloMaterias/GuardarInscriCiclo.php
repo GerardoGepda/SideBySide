@@ -1,7 +1,8 @@
 <?php
 require_once "../../../BaseDatos/conexion.php";
 setlocale(LC_TIME, 'es_SV.UTF-8');
-date_default_timezone_set("America/El_Salvador"); 
+date_default_timezone_set("America/El_Salvador");
+session_start();
 
 function InscribirCiclo($idCiclo, $idExpediente, $ciclo, $filename, PDO $pdo)
 {
@@ -13,6 +14,24 @@ function InscribirCiclo($idCiclo, $idExpediente, $ciclo, $filename, PDO $pdo)
 	$consulta->bindParam(':ciclo', $ciclo);
 	$consulta->bindParam(':comprobante', $filename);
 	$result = $consulta->execute();
+
+	return $result;
+}
+
+function CreateNoti(PDO $pdo, $expdt){
+	//preparamos receptor
+	$mailReceptor = $_SESSION['Email'];
+	echo $_SESSION['Email'];
+	$exctReceptor = $pdo->prepare("SELECT IDUsuario, nombre, correo FROM usuarios WHERE correo = '$mailReceptor'");
+	$exctReceptor->execute();
+
+	while ($fila = $exctReceptor->fetch()) {
+		$idReceptor = $fila['IDUsuario'];
+	}
+
+	//Insertamos notificacion
+	$queryNoti = $pdo->prepare("INSERT INTO notificaciones (`Id_Remitente`, `Id_Receptor`, `Tipo`,`idSolicitud`) VALUES (:idRemitente, :idReceptor,'Proceso de inscripción', :idSoli)");
+	$result = $queryNoti->execute(array(":idRemitente" => '969' ,":idReceptor" => $idReceptor, ":idSoli" => $expdt));
 
 	return $result;
 }
@@ -59,6 +78,10 @@ if(isset($_POST['Guardar_InscriCiclo']))
 				setcookie("InscrpCiclo[idExpdt]", $expediente, time() + 604800, "/");
 				setcookie("InscrpCiclo[ciclo]", $ciclo, time() + 604800, "/");
 				setcookie("InscrpCiclo[alumnoCarnet]", $iduser, time() + 604800, "/");
+
+				//creamos la notificacion del proceso de inscipción
+				//CreateNoti($pdo, $expediente);
+
 				//Redirigimos a la pantalla de materias
 				header("Location: ../../InscripcionMateriasCiclo.php");
 			}else {
@@ -81,9 +104,6 @@ else
 {
 	header("location: ../../IndicacionesMaterias.php");
 }
-
-
-
 
 
 

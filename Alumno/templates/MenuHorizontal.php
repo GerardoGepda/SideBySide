@@ -231,6 +231,14 @@ $correo = $_SESSION['Email'];
                     <?php 
 $correo = $_SESSION['Email'];
   $stmt =$pdo->prepare("SELECT `ID_Alumno` , `TotalTalleres`, `CantidadModulos` FROM `alumnos` WHERE correo = '$correo' ");
+  
+     //Query porvicional para extraer el iduser
+    $query = $pdo->prepare("SELECT IDUsuario FROM usuarios WHERE correo = ?");
+    $query->execute(array($_SESSION['Email']));
+    $tmp = $query->fetch();
+    $idUser = $tmp[0];
+     //
+
   $stmt->execute();
   while($row = $stmt->fetch()){
       $IDalumno = $row["ID_Alumno"];
@@ -309,6 +317,7 @@ $correo = $_SESSION['Email'];
 
                             $(".notificacion").remove();
                             notificacion = $.parseJSON(response);
+                            console.log(notificacion);
                             for (var i = 0; i < notificacion.length; i++) {
 
                                 var nombre = notificacion[i].nombreUsuario;
