@@ -251,7 +251,7 @@ $stmt16584->execute(array($idExpedienteU));
             while ($fila2 = $stmt2->fetch()) {
               echo " <tr class='table-dark' style='color: black;'>
                         <td scope=\"row\">" . $fila2["Universidad"] . "</td>"
-                . utf8_encode("<td>" . $fila2["CARRERA"] . "</td>")
+                . ("<td>" . $fila2["CARRERA"] . "</td>")
                 . ("<td>" . $fila2["Facultad"] . "</td>")
                 . "<td>" . $fila2["estado"] . "</td>";
               echo "</tr>";
@@ -259,8 +259,8 @@ $stmt16584->execute(array($idExpedienteU));
           } else {
             echo " <tr class='table-dark' style='color: black;'>
                              <td scope=\"row\">Debe actualizar </td>" .
-              utf8_encode("<td>Debe actualizar </td>") .
-              utf8_encode("<td>Debe actualizar </td>") .
+              ("<td>Debe actualizar </td>") .
+              ("<td>Debe actualizar </td>") .
               "<td>Debe actualizar</td>
                   </tr>";
           }
@@ -288,7 +288,7 @@ $stmt16584->execute(array($idExpedienteU));
           <tbody>
             <tr class='table-dark' style="color: black;">
               <th scope="col"> <?php echo $Universi ?> </th>
-              <th scope="col"> <?php echo utf8_encode($Carrera) ?> </th>
+              <th scope="col"> <?php echo ($Carrera) ?> </th>
               <th scope="col"> <?php echo $cum ?></th>
               <th scope="col"> <?php echo $EstadoCarrera ?> </th>
               <th scope="col">
@@ -574,7 +574,7 @@ $stmt16584->execute(array($idExpedienteU));
         <ul>
           <?php
           while ($row = $stmt9945246->fetch()) {
-            echo "<li>" . utf8_encode(utf8_decode($row['nombreMateria'])) . "</li>";
+            echo "<li>" . (utf8_decode($row['nombreMateria'])) . "</li>";
           }
           ?>
         </ul>
@@ -600,7 +600,7 @@ $stmt16584->execute(array($idExpedienteU));
         <ul>
           <?php
           while ($row = $stmt99452462->fetch()) {
-            echo "<li>" . utf8_encode(utf8_decode($row['nombreMateria'])) . "</li>";
+            echo "<li>" . utf8_decode(($row['nombreMateria'])) . "</li>";
           }
           ?>
         </ul>
@@ -628,7 +628,7 @@ $stmt16584->execute(array($idExpedienteU));
           <?php
 
           while ($row = $stmt99452463->fetch()) {
-            echo "<li>" . utf8_encode(utf8_decode($row['nombreMateria'])) . "</li>";
+            echo "<li>" . utf8_decode(($row['nombreMateria'])) . "</li>";
           }
 
           ?>
@@ -656,7 +656,7 @@ $stmt16584->execute(array($idExpedienteU));
           <?php
 
           while ($row = $stmt99452464->fetch()) {
-            echo "<li>" . utf8_encode(utf8_decode($row['nombreMateria'])) . "</li>";
+            echo "<li>" . utf8_decode(($row['nombreMateria'])) . "</li>";
           }
 
           ?>

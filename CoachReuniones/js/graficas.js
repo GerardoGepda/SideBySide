@@ -95,7 +95,7 @@ function mapa1(result1, result2, result3, ciclo, clase, cumSSFT) {
         },
 
         title: {
-            text: 'Reporte San Salvador ',
+            text: 'Reporte San Salvador FT ',
             style: {
                 color: '#be0032',
                 fontWeight: 'bold'
@@ -174,7 +174,7 @@ function mapa2(result4, result5, result6, ciclo, clase, cumSAFT) {
         },
 
         title: {
-            text: 'Reporte Santa Ana',
+            text: 'Reporte Santa Ana FT',
             style: {
                 color: '#be0032',
                 fontWeight: 'bold'

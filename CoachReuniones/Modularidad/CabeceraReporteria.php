@@ -484,8 +484,8 @@
         }
 
         #middle-pie {
-            left: 200px;
-            bottom: 38px;
+            left: 150px;
+            bottom: 60px;
             max-height: 120px;
             min-height: 120px;
             max-width: 52%;
