@@ -291,7 +291,7 @@ function MateriasPoruniversidad(datos) {
             }
         },
         title: {
-            text: 'Materias Aprobadas, reprobadas y retiradas por universidad'
+            text: 'Materias Aprobadas por universidad'
         },
         xAxis: {
             title: {
@@ -300,25 +300,73 @@ function MateriasPoruniversidad(datos) {
             tickInterval: 1,
             categories: uni,
         },
-        yAxis: {
-            title: {
-                text: 'Grafica por Universidad'
-            },
-            tickInterval: 1
-        },
         series: [{
             name: 'Materias Aprobadas',
             data: apro
-        }, {
+        }],
+        credits: {
+            enabled: false
+        },
+        colors: ['#54E38A']
+    });
+
+
+    Highcharts.chart('graphicTwo', {
+        chart: {
+            renderTo: 'container',
+            type: 'column',
+            scrollablePlotArea: {
+                minWidth: respv,
+                scrollPositionX: 1
+            }
+        },
+        title: {
+            text: 'Materias Reprobadas por universidad'
+        },
+        xAxis: {
+            title: {
+                text: 'Grafica por Universidad'
+            },
+            tickInterval: 1,
+            categories: uni,
+        },
+        series: [{
             name: 'Materias Reprobadas',
             data: repro
-        }, {
+        }],
+        credits: {
+            enabled: false
+        },
+        colors: [ '#FF8C64']
+    });
+
+    Highcharts.chart('graphicThree', {
+        chart: {
+            renderTo: 'container',
+            type: 'column',
+            scrollablePlotArea: {
+                minWidth: respv,
+                scrollPositionX: 1
+            }
+        },
+        title: {
+            text: 'Materias Retiradas por universidad'
+        },
+        xAxis: {
+            title: {
+                text: 'Grafica por Universidad'
+            },
+            tickInterval: 1,
+            categories: uni,
+        },
+        series: [{
             name: 'Materias Retiradas',
             data: reti
         }],
         credits: {
             enabled: false
         },
-        colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3']
+        colors: ['#FFF587']
     });
 }
+

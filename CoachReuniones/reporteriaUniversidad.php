@@ -53,7 +53,7 @@ $cantidad = $query->rowCount();
                                     }
                                     ?>
                                 </select>
-                                <input class="form-check-input" type="checkbox" id="checkbox1" >Select All</input>
+                                <input class="form-check-input" type="checkbox" id="checkbox1">Select All</input>
                             </div>
                         </div>
                     </fieldset>
@@ -70,7 +70,7 @@ $cantidad = $query->rowCount();
                                     }
                                     ?>
                                 </select>
-                                <input class="form-check-input" type="checkbox" id="checkbox2" >Select All</input>
+                                <input class="form-check-input" type="checkbox" id="checkbox2">Select All</input>
                             </div>
                         </div>
                     </fieldset>
@@ -86,7 +86,7 @@ $cantidad = $query->rowCount();
                                 <option value="Financiamiento Propio" class="dropdown-item">Financiamiento propio
                                 </option>
                             </select>
-                            <input class="form-check-input" type="checkbox" id="checkbox3" >Select All</input>
+                            <input class="form-check-input" type="checkbox" id="checkbox3">Select All</input>
                         </div>
                     </fieldset>
                 </div>
@@ -101,7 +101,7 @@ $cantidad = $query->rowCount();
                                 }
                                 ?>
                             </select>
-                            <input class="form-check-input" type="checkbox" id="checkbox4" >Select All</input>
+                            <input class="form-check-input" type="checkbox" id="checkbox4">Select All</input>
                         </div>
                     </fieldset>
                 </div>
@@ -113,59 +113,48 @@ $cantidad = $query->rowCount();
     <!-- graficas generales -->
     <div id="content3">
         <div id="content-middle-pie">
-        <h4><span>G</span>rafica General</h4>
-        <div id="middle-pie"></div>
+            <h4><span>G</span>rafica General</h4>
+            <div id="middle-pie"></div>
         </div>
         <div id="cum1">
-        <h4><span>C</span>um Global</h4>
-        <div id="cumGeneral"></div>
+            <h4><span>C</span>um Global</h4>
+            <div id="cumGeneral"></div>
         </div>
-        
-        <!-- <div id="generalTable">
-            <table class="table table-striped table-dark" id="tablaGeneral">
-                <thead>
-                    <tr>
-                        <th scope="col">Universidad</th>
-                        <th scope="col">Materias Aprobados</th>
-                        <th scope="col">Materias Reprobados</th>
-                        <th scope="col">Materias Retiradas</th>
-                    </tr>
-                </thead>
-                <tbody id="TableBody" class="table-light text-dark table-hover table-striped">
-                </tbody>
-            </table>
-        </div> -->
     </div>
     <!-- fin de graficas generales -->
     <div class="content-content">
-    <div id="maps">
-        <div id="content">
-            <!-- inicio de contenedores de mapas -->
-            <div id="map1" class="loading"></div>
-            <div id="map2" class="loading"></div>
-            <!-- fin de contenedores de mapas -->
+        <div id="maps">
+            <div id="content">
+                <h3>Grafica por Sede</h3>
+                <!-- inicio de contenedores de mapas -->
+                <div id="map1" class="loading"></div>
+                <div id="map2" class="loading"></div>
+                <!-- fin de contenedores de mapas -->
+            </div>
+        </div>
+        <div id="maps">
+            <div id="content2">
+                <!-- inicio de contenedores de graficas por sexo -->
+                <h3>Grafica por Género</h3>
+                <figure class="highcharts-figure">
+                    <div id="gen"></div>
+                </figure>
+                <figure class="highcharts-figure">
+                    <div id="gen2"></div>
+                </figure>
+                <!-- fin de contenedores de graficas por sexo -->
+            </div>
         </div>
     </div>
-    <div id="maps">
-        <div id="content2">
-            <!-- inicio de contenedores de graficas por sexo -->
-            <h3>Grafica por Género</h3>
-            <figure class="highcharts-figure">
-                <div id="gen"></div>
-            </figure>
-            <figure class="highcharts-figure">
-                <div id="gen2"></div>
-            </figure>
-            <!-- fin de contenedores de graficas por sexo -->
-        </div>
+    <br>
+    <div class="graficas">
+        <div id="Ugraph"></div>
+        <div id="graphicTwo"></div>
+        <div id="graphicThree"></div>
     </div>
 </div>
-<div id="content-grafic">
-    <h3><span>G</span>raphics By University</h3>
-<div id="Ugraph"></div>
-</div>
-    </div>
-<div class="title" >
+
+<div class="title">
     <a href="javascript:history.back();"><i class="fas fa-university icon text-dark fs-1"></i></a>
     <h2 class="main-title">Graphics By University</h2>
 </div>
@@ -176,7 +165,7 @@ $cantidad = $query->rowCount();
         <select class="form-control" id="searchUGraph">
             <option>Mostrar todas</option>
         </select>
-  </div>
+    </div>
 </div>
 <div id="universidades"> </div>
 <br>

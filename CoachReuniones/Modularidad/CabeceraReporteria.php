@@ -98,6 +98,29 @@
         border-radius: 3px;
     }
 
+    .graficas {
+        clear: both;
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+
+    #Ugraph,
+    #graphicTwo,
+    #graphicThree {
+        display: inline-block;
+        border: solid 1px #343A40;
+        border-left: solid 15px #B01D33;
+        max-height: 200px;
+        min-height: 200px;
+        max-width: 33%;
+        min-width: 33%;
+    }
+
+    #graphicThree {
+        left: 50%;
+    }
+
     #cum1 #cum2 {
         position: relative;
         left: 280px;
@@ -166,7 +189,7 @@
         padding: 0%;
         margin: 0%;
         background-color: #343A40;
-        color:#d9d2d2
+        color: #d9d2d2
     }
 
     #content-middle-pie span {
@@ -192,18 +215,19 @@
 
     /* FIn del estilo de la grafica general*/
     /*contenedor de mapas y grafica de universidades*/
-    .content-content{
+    .content-content {
         margin: 0% 0;
     }
+
     /*Estilo de las del contendor de los mapas y graficas de genero*/
     #maps {
+        display: inline-block;
         clear: both;
-        float: right;
         border: solid 1px #343A40;
         border-left: solid 15px #B01D33;
         border-radius: 3px;
         max-width: 47%;
-        min-width: 47%;
+        min-width: 46%;
         margin: 0.5% 1.7%;
         max-height: 265px;
         min-height: 265px;
@@ -211,10 +235,7 @@
 
     /*Fin estilo contendor mapas y graficas de genero*/
     /*Estilo del contededor de los mapas sedes*/
-    #content {
-        display: block;
-    }
-
+   
     #map1 {
         display: inline-block;
         max-height: 234px;
@@ -236,7 +257,10 @@
     /*Fin estilo contededor de los mapas sedes*/
     /*Estilo del contededor de graficas de genero*/
     #content2 {
-        display: block;
+        clear: both;
+        position: relative;
+        width: 100%;
+        height: 100%;
     }
 
     #content2 h3 {
@@ -244,15 +268,13 @@
         margin-bottom: 1%;
         font-size: 20px;
     }
-    /*
-    #content2 span {
-        background: #FF665A;
-        color: white;
-        padding: 1px 7px;
-        border-radius: 30px;
+    #content h3{
+        color: #be0032;
+        margin-bottom: 1%;
         font-size: 20px;
+
     }
-    */
+
     .highcharts-figure {
         padding: 2px;
         margin: -1.7% 2%;
@@ -296,6 +318,7 @@
         text-align: center;
         color: #be0032;
     }
+
     #content-grafic span {
         position: relative;
         background: #FF665A;
@@ -303,6 +326,7 @@
         padding: 1px 8px;
         border-radius: 30px;
     }
+
     /*Diseño de grafica de universidades*/
     #universidades {
         padding: 0.3%;
@@ -377,30 +401,31 @@
             min-height: 350px;
         }
 
-    .highcharts-figure {
-        max-width: 45%;
-        min-width: 45%;
-    }
+        .highcharts-figure {
+            max-width: 45%;
+            min-width: 45%;
+        }
 
-    #gen {
-        
-        max-width: 87%;
-        min-width: 87%;
-        max-height: 280px;
-        min-height: 280px;
-    }
+        #gen {
 
-    #gen2 {
-        max-width: 87%;
-        min-width: 87%;
-        max-height: 280px;
-        min-height: 280px;
-    }
-    #map2,
-    #map1 {
-        max-height: 274px;
-        min-height: 274px;
-    }
+            max-width: 87%;
+            min-width: 87%;
+            max-height: 280px;
+            min-height: 280px;
+        }
+
+        #gen2 {
+            max-width: 87%;
+            min-width: 87%;
+            max-height: 280px;
+            min-height: 280px;
+        }
+
+        #map2,
+        #map1 {
+            max-height: 274px;
+            min-height: 274px;
+        }
 
         #content-grafic {
             position: initial;
@@ -515,25 +540,26 @@
         .highcharts-figure {
             position: relative;
             left: 20%;
-        margin: 0;
-        max-width: 200%;
-        min-width: 200%;
-        
-    }
+            margin: 0;
+            max-width: 200%;
+            min-width: 200%;
 
-    #gen {
-        max-width: 28%;
-        min-width: 28%;
-        max-height: 135px;
-        min-height: 135px;
-    }
+        }
 
-    #gen2 {
-        max-width: 28%;
-        min-width: 28%;
-        max-height: 135px;
-        min-height: 135px;
-    }
+        #gen {
+            max-width: 28%;
+            min-width: 28%;
+            max-height: 135px;
+            min-height: 135px;
+        }
+
+        #gen2 {
+            max-width: 28%;
+            min-width: 28%;
+            max-height: 135px;
+            min-height: 135px;
+        }
+
         #content-grafic {
             margin-top: 2%;
             margin-left: -1.4%;
@@ -542,8 +568,9 @@
             min-width: 102%;
         }
     }
+
     /*Fin del segundo responsive*/
-    @media only screen and (max-width: 300px){
+    @media only screen and (max-width: 300px) {
         #middle-pie {
             right: 150px;
             bottom: 65px;
@@ -556,6 +583,7 @@
         }
 
     }
+
     /*Fin del nuevo diseño */
 </style>
 </head>
