@@ -294,9 +294,6 @@ function MateriasPoruniversidad(datos) {
             text: 'Materias Aprobadas por universidad'
         },
         xAxis: {
-            title: {
-                text: 'Grafica por Universidad'
-            },
             tickInterval: 1,
             categories: uni,
         },
@@ -324,9 +321,6 @@ function MateriasPoruniversidad(datos) {
             text: 'Materias Reprobadas por universidad'
         },
         xAxis: {
-            title: {
-                text: 'Grafica por Universidad'
-            },
             tickInterval: 1,
             categories: uni,
         },
@@ -353,9 +347,6 @@ function MateriasPoruniversidad(datos) {
             text: 'Materias Retiradas por universidad'
         },
         xAxis: {
-            title: {
-                text: 'Grafica por Universidad'
-            },
             tickInterval: 1,
             categories: uni,
         },
