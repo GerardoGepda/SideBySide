@@ -51,8 +51,8 @@ while ($fila = $stmt1->fetch()) {
         echo "<td>" . $fila2["Titulo"] . "</td>";
         $fechaReunion = strftime("%A, %d de %B de %Y", strtotime($fila2["Fecha"]));
         echo "<td>" . $fechaReunion . "</td>";
-        echo "<td>" . utf8_decode($fila2["encargado"]). "</td>";
-        echo "<td>" . utf8_decode($fila2["Tipo"])."</td>";
+        echo "<td>" . ($fila2["encargado"]). "</td>";
+        echo "<td>" . ($fila2["Tipo"])."</td>";
         echo "<td><a class=\"btn btn-info\" href=\"HorariosReunion.php?id=" . $fila2["id"] . "\"><i class=\"fas fa-calendar-week\"></i> Ver horarios</a></td>";
         echo "</tr>";
       }

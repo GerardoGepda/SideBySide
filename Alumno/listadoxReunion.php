@@ -1,123 +1,155 @@
 <?php
-  require_once 'templates/head.php';
+require_once 'templates/head.php';
 ?>
 <title>Listado de horario</title>
 <?php
-  require_once 'templates/header.php';
-  //require_once 'templates/MenuVertical.php';
-  require_once 'templates/MenuHorizontal.php';
-  require '../Conexion/conexion.php';
+require_once 'templates/header.php';
+require_once 'templates/MenuHorizontal.php';
+require '../Conexion/conexion.php';
 
-  setlocale(LC_TIME, 'es_SV.UTF-8');
-  $taller=$_GET["id"];
+setlocale(LC_TIME, 'es_SV.UTF-8');
+$taller = $_GET["reunion"];
 
-  //Extraemos el carnet del estudiante
-  $stmt1 =$dbh->prepare("SELECT `ID_Alumno` FROM `alumnos` WHERE correo='".$_SESSION['Email']."'");
-  // Ejecutamos
-  $stmt1->execute();
+//Extraemos el carnet del estudiante
+$stmt1 = $dbh->prepare("SELECT * FROM `alumnos` WHERE correo='" . $_SESSION['Email'] . "'");
+// Ejecutamos
+$stmt1->execute();
 
-  while($fila = $stmt1->fetch()){
-      $alumno=$fila["ID_Alumno"];
-  }
+while ($fila = $stmt1->fetch()) {
+  $alumno = $fila["ID_Alumno"];
+  $name = $fila["Nombre"];
+}
+
+$mesActual = date("m");
+$numero = 1;
+$stmt2 = $dbh->query("SELECT * FROM inscripcionreunion i INNER JOIN alumnos a on a.ID_Alumno = i.id_alumno WHERE i.id_reunion = $taller  and i.estado = 'lleno'");
+$stmt3 = $dbh->query("SELECT * FROM inscripcionreunion i WHERE i.id_reunion = $taller  and i.estado = 'disponible'");
 
 
-  $mesActual=date("m");
+// consulta para saber si un alumno se ha inscrito a más de un cupo
+$stmt4 = $dbh->query("SELECT COUNT(*) FROM `inscripcionreunion` WHERE id_alumno = '$alumno' ");
+
+$stmt5 = $dbh->query("SELECT * FROM inscripcionreunion i  INNER JOIN alumnos a on a.ID_Alumno = i.id_alumno WHERE i.id_alumno = '$alumno' ");
+
+while ($row = $stmt4->fetch()) {
+  $cantidad  = $row[0];
+}
+
 ?>
 
 <div class="container-fluid text-center">
+  <br>
+  <h1 class="h1">Listado por el horario </h1>
+  <br>
+  <br>
+  <div>
+    <?php include "config/Alerta.php"; ?>
+  </div>
 
-
-
-    <br>
-    <h1 class="h1">Listado por el horario </h1>
-    <br>
-    <br>
-    <div>
+  <div class="col">
+    <table id="data" class="table table-hover table-striped table-bordered table-responsive-lg w-75 mx-auto float-center">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Hora inicio</th>
+          <th scope="col">Hora Final</th>
+          <th scope="col">inscribir</th>
+        </tr>
+      </thead>
+      <tbody>
         <?php
-    include "config/Alerta.php";
-      ?>
-    </div>
 
-    <div class="col">
-        <table id="data" class="table table-hover table-striped table-bordered table-responsive-lg w-75 mx-auto float-center">
-            <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Orden a seguir</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Hora inicio</th>
-                    <th scope="col">Hora Final</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-            $numero = 0;
-             $date = date("Y-m-d");
-             $stmt2 = $dbh->query("SELECT * FROM horariosreunion WHERE IDHorRunion = '".$taller."' ");
-            
-            
-            $stmt = $dbh->query("SELECT * FROM inscripcionreunion i INNER JOIN alumnos a ON i.id_alumno = a.ID_Alumno INNER JOIN horariosreunion h ON h.IDHorRunion = i.Horario WHERE h.IDHorRunion = '".$taller."' ");
-            while ($row = $stmt->fetch()) {
-              //`HorarioInicio`, `HorarioFinalizado`, `Canitdad` FROM `horariosreunion`IDHorRunion`, `HorarioInicio`, `HorarioFinalizado`, `Canitdad`
-                 $nombre = $row['Nombre'];
-                 $horaInicio=$row['HorarioInicio'];
-                 $horaInicio2=$row['HorarioInicio'];
-                 $horaFinal= $row['HorarioFinalizado'];
-                 $tiempo = $row['TiempoReunion'];
-                 $tiempo2 = $row['TiempoReunion'];
-                 $numero ++;
-                 $numero2 ++;
-                 echo "<tr>";
-                 echo "<td>".($numero = $numero)."</td>";                 
-                 $mifecha = new DateTime($date." ".$horaInicio);
-                 $mifecha2 = new DateTime($date2." ".$horaInicio2);
-                 for ($i=0; $i <$numero ; $i++) { 
-                  $mifecha =  $mifecha->modify('+'.$tiempo.' minute');
-                 }  
-                 for ($i=1; $i <$numero2 ; $i++) { 
-                  $mifecha2 =  $mifecha2->modify('+'.$tiempo2.' minute');
-                 }  
-                 $horaFin =  $mifecha->format('H:i:s'); 
-                 $hora =  $mifecha2->format('H:i:s'); 
-                 
-                 echo "<td>$nombre</td>";
-                 echo "<td>".$hora."</td>";
-                 echo "<td>".$horaFin." </td>";
-                 echo "</tr>";
-            }
-            $indice = ($numero+1);
-          
-            while ($row = $stmt2->fetch()) {
-              $new =new DateTime($date." ".$hora);
-              $new2 =new DateTime($date." ".$horaFin);            
-              $cantidad1 = $row['Canitdad'];
-              for ($i=0; $i < $cantidad1 ; $i++) { 
-              $hour = ($new->modify('+'.$tiempo2.' minute'));
-              $hour2 = $hour->format('H:i:s');
+        while ($row = $stmt2->fetch()) {
+          if ($name == $row['Nombre']) {
+            continue;
+          }
+          echo "<tr>";
+          echo "<td>" . ($numero++) . "</td>";
+          echo "<td>" . $row['Nombre'] . "</td>";
+          echo "<td>" . $row['horainicio'] . "</td>";
+          echo "<td>" . $row['horafin'] . " </td>";
+          echo "<td><button class='btn btn-warning' disabled >Cupo Lleno </button></td>";
+          echo "</tr>";
+        }
 
-              $hour1 = ($new2->modify('+'.$tiempo2.' minute'));
-              $hour3 = $hour1->format('H:i:s');
-  
-                echo "<tr>";
-                echo "<td>".$indice++."</td>";
-                   echo "<td><b>Cupo Disponible</b></td>";
-                   echo "<td>".$hour2."</td>";
-                   echo "<td>".$hour3." </td>";
-                     echo "</tr>";
-              }
-            }
-            ?>
-            </tbody>
-        </table>
-    </div>
+        while ($row = $stmt5->fetch()) {
+          $horaInicio = $row['horainicio'];
+          $horaFinal = $row['horafin'];
+          $nombre = $row['Nombre'];
+          $idhorario = $row['id'];
+
+          echo "<tr>";
+          echo "<td>" . ($numero++) . "</td>";
+          echo "<td>" . $nombre . "</td>";
+          echo "<td>" . $horaInicio . "</td>";
+          echo "<td>" . $horaFinal . " </td>";
+          echo "<td><a href='Modelo/cancelar.php?id= " . $_GET["id"] . " &reunion=$taller&horario=$idhorario' class='btn btn-danger' >Cancelar</a></td>";
+          echo "</tr>";
+        }
+
+        if ($cantidad >= 1) {
+          while ($row = $stmt3->fetch()) {
+            echo "<tr>";
+            echo "<td>" . ($numero++) . "</td>";
+            echo "<td>Cupo Disponible</td>";
+            echo "<td>" . $row['horainicio'] . "</td>";
+            echo "<td>" . $row['horafin'] . " </td>";
+            echo "<td> <button class='btn btn-success'  value='' disabled >Inscribir</button> </td>";
+            echo "</tr>";
+          }
+        } else {
+          while ($row = $stmt3->fetch()) {
+            echo "<tr>";
+            echo "<td>" . ($numero++) . "</td>";
+            echo "<td>Cupo Disponible</td>";
+            echo "<td>" . $row['horainicio'] . "</td>";
+            echo "<td>" . $row['horafin'] . " </td>";
+            echo "<td> <button class='btn btn-warning' data-toggle='modal' data-target='#exampleModal-" . $cont++ . "' value=''>Inscribir</button> </td>";
+            echo "</tr>";
+
+            echo "<div class='modal fade' id='exampleModal-" . $cont2++ . "' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+            <div class='modal-dialog' role='document'>
+              <div class='modal-content'>
+                <div class='modal-header'>
+                  <h5 class='modal-title' id='exampleModalLabel'>Ingrese su número de telefono para finalizar</h5>
+                  <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                    <span aria-hidden='true'>&times;</span>
+                  </button>
+                </div>
+                <div class='modal-body'>
+                  <form action='Modelo/inscribir.php' method='post'>
+                    <label for='telefono'>telefono:</label>
+                    <input type='hidden' name='id' value='" . $row['id'] . "'>
+                    <input type='hidden' name='horario' value='" . $_GET["id"] . "'> 
+                    <input type='hidden' name='reunion' value='" . $_GET["reunion"] . "'>   
+                    <input type='hidden' name='alumno' value='$alumno'>    
+                    <input type='text' class='form-control' name='telefono' placeholder='0000-0000' pattern='[0-9]{4}-[0-9]{4}' title='El teleono debe ser en el formato 0000-0000' required>
+                </div>
+                <div class='modal-footer'>
+                  <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+                  <button type='submit' class='btn btn-primary' name ='inscribir' value='Inscribir' >Inscribir</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          ";
+          }
+        }
+
+        ?>
+      </tbody>
+    </table>
+  </div>
 </div>
 <!-- /#page-content-wrapper -->
-<br><br><br><br><br><br><br><br><br><br>
+<br><br><br>
 
 </div>
 </div>
 <!-- /#wrapper -->
 
-
 <?php
-  require_once 'templates/footer.php';
+require_once 'templates/footer.php';
 ?>
