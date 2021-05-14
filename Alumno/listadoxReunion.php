@@ -84,7 +84,7 @@ while ($row = $stmt4->fetch()) {
           echo "<td>" . $nombre . "</td>";
           echo "<td>" . $horaInicio . "</td>";
           echo "<td>" . $horaFinal . " </td>";
-          echo "<td><a href='Modelo/cancelar.php?id= " . $_GET["id"] . " &reunion=$taller&horario=$idhorario' class='btn btn-danger' >Cancelar</a></td>";
+          echo "<td><a href='Modelo/ModeloReunion/cancelar.php?id= " . $_GET["id"] . " &reunion=$taller&horario=$idhorario' class='btn btn-danger' >Cancelar</a></td>";
           echo "</tr>";
         }
 
@@ -118,7 +118,7 @@ while ($row = $stmt4->fetch()) {
                   </button>
                 </div>
                 <div class='modal-body'>
-                  <form action='Modelo/inscribir.php' method='post'>
+                  <form action='Modelo/ModeloReunion/inscribir.php' method='post'>
                     <label for='telefono'>telefono:</label>
                     <input type='hidden' name='id' value='" . $row['id'] . "'>
                     <input type='hidden' name='horario' value='" . $_GET["id"] . "'> 
@@ -141,6 +141,22 @@ while ($row = $stmt4->fetch()) {
         ?>
       </tbody>
     </table>
+
+    <div>
+      <table class="table">
+        <thead>
+          <th>#</th>
+          <th>Nombre</th>
+          <th>Hora inicio</th>
+          <th>Hora Final</th>
+          <th>inscribir</th>
+        </thead>
+        <tbody>
+          <tr id="app">
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 <!-- /#page-content-wrapper -->
@@ -149,6 +165,28 @@ while ($row = $stmt4->fetch()) {
 </div>
 </div>
 <!-- /#wrapper -->
+
+<script>
+  var app = new Vue({
+    el: "#app",
+    data: {
+      all_data: []
+    },
+    created: function() {
+      console.log("Iniciando ...");
+      this.get_contacts();
+    },
+    methods: {
+      get_contacts: function() {
+        fetch("Modelo/ModeloReunion/select.php")
+          .then(response => response.json())
+          .then(json => {
+            this.all_data = json.contactos
+          })
+      }
+    }
+  });
+</script>
 
 <?php
 require_once 'templates/footer.php';
