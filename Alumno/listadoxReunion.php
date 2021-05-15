@@ -1,12 +1,9 @@
-<?php
-require_once 'templates/head.php';
-?>
+<?php require_once 'templates/head.php'; ?>
 <title>Listado de horario</title>
 <?php
 require_once 'templates/header.php';
 require_once 'templates/MenuHorizontal.php';
 require '../Conexion/conexion.php';
-
 setlocale(LC_TIME, 'es_SV.UTF-8');
 $taller = $_GET["reunion"];
 
@@ -22,20 +19,17 @@ while ($fila = $stmt1->fetch()) {
 
 $mesActual = date("m");
 $numero = 1;
-$stmt2 = $dbh->query("SELECT * FROM inscripcionreunion i INNER JOIN alumnos a on a.ID_Alumno = i.id_alumno WHERE i.id_reunion = $taller  and i.estado = 'lleno'");
-$stmt3 = $dbh->query("SELECT * FROM inscripcionreunion i WHERE i.id_reunion = $taller  and i.estado = 'disponible'");
 
 
 // consulta para saber si un alumno se ha inscrito a más de un cupo
 $stmt4 = $dbh->query("SELECT COUNT(*) FROM `inscripcionreunion` WHERE id_alumno = '$alumno' ");
-
-$stmt5 = $dbh->query("SELECT * FROM inscripcionreunion i  INNER JOIN alumnos a on a.ID_Alumno = i.id_alumno WHERE i.id_alumno = '$alumno' ");
 
 while ($row = $stmt4->fetch()) {
   $cantidad  = $row[0];
 }
 
 ?>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 
 <div class="container-fluid text-center">
   <br>
@@ -47,113 +41,82 @@ while ($row = $stmt4->fetch()) {
   </div>
 
   <div class="col">
-    <table id="data" class="table table-hover table-striped table-bordered table-responsive-lg w-75 mx-auto float-center">
-      <thead class="thead-dark">
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Nombre</th>
-          <th scope="col">Hora inicio</th>
-          <th scope="col">Hora Final</th>
-          <th scope="col">inscribir</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php
-
-        while ($row = $stmt2->fetch()) {
-          if ($name == $row['Nombre']) {
-            continue;
-          }
-          echo "<tr>";
-          echo "<td>" . ($numero++) . "</td>";
-          echo "<td>" . $row['Nombre'] . "</td>";
-          echo "<td>" . $row['horainicio'] . "</td>";
-          echo "<td>" . $row['horafin'] . " </td>";
-          echo "<td><button class='btn btn-warning' disabled >Cupo Lleno </button></td>";
-          echo "</tr>";
-        }
-
-        while ($row = $stmt5->fetch()) {
-          $horaInicio = $row['horainicio'];
-          $horaFinal = $row['horafin'];
-          $nombre = $row['Nombre'];
-          $idhorario = $row['id'];
-
-          echo "<tr>";
-          echo "<td>" . ($numero++) . "</td>";
-          echo "<td>" . $nombre . "</td>";
-          echo "<td>" . $horaInicio . "</td>";
-          echo "<td>" . $horaFinal . " </td>";
-          echo "<td><a href='Modelo/ModeloReunion/cancelar.php?id= " . $_GET["id"] . " &reunion=$taller&horario=$idhorario' class='btn btn-danger' >Cancelar</a></td>";
-          echo "</tr>";
-        }
-
-        if ($cantidad >= 1) {
-          while ($row = $stmt3->fetch()) {
-            echo "<tr>";
-            echo "<td>" . ($numero++) . "</td>";
-            echo "<td>Cupo Disponible</td>";
-            echo "<td>" . $row['horainicio'] . "</td>";
-            echo "<td>" . $row['horafin'] . " </td>";
-            echo "<td> <button class='btn btn-success'  value='' disabled >Inscribir</button> </td>";
-            echo "</tr>";
-          }
-        } else {
-          while ($row = $stmt3->fetch()) {
-            echo "<tr>";
-            echo "<td>" . ($numero++) . "</td>";
-            echo "<td>Cupo Disponible</td>";
-            echo "<td>" . $row['horainicio'] . "</td>";
-            echo "<td>" . $row['horafin'] . " </td>";
-            echo "<td> <button class='btn btn-warning' data-toggle='modal' data-target='#exampleModal-" . $cont++ . "' value=''>Inscribir</button> </td>";
-            echo "</tr>";
-
-            echo "<div class='modal fade' id='exampleModal-" . $cont2++ . "' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
-            <div class='modal-dialog' role='document'>
-              <div class='modal-content'>
-                <div class='modal-header'>
-                  <h5 class='modal-title' id='exampleModalLabel'>Ingrese su número de telefono para finalizar</h5>
-                  <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
-                    <span aria-hidden='true'>&times;</span>
-                  </button>
-                </div>
-                <div class='modal-body'>
-                  <form action='Modelo/ModeloReunion/inscribir.php' method='post'>
-                    <label for='telefono'>telefono:</label>
-                    <input type='hidden' name='id' value='" . $row['id'] . "'>
-                    <input type='hidden' name='horario' value='" . $_GET["id"] . "'> 
-                    <input type='hidden' name='reunion' value='" . $_GET["reunion"] . "'>   
-                    <input type='hidden' name='alumno' value='$alumno'>    
-                    <input type='text' class='form-control' name='telefono' placeholder='0000-0000' pattern='[0-9]{4}-[0-9]{4}' title='El teleono debe ser en el formato 0000-0000' required>
-                </div>
-                <div class='modal-footer'>
-                  <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
-                  <button type='submit' class='btn btn-primary' name ='inscribir' value='Inscribir' >Inscribir</button>
-                  </form>
-                </div>
-              </div>
-            </div>
-          </div>
-          ";
-          }
-        }
-
-        ?>
-      </tbody>
-    </table>
 
     <div>
-      <table class="table">
-        <thead>
+      <table class="table table-bordered">
+        <thead class="table thead-dark">
           <th>#</th>
           <th>Nombre</th>
           <th>Hora inicio</th>
           <th>Hora Final</th>
           <th>inscribir</th>
         </thead>
-        <tbody>
-          <tr id="app">
+        <tbody id="app">
+          <tr v-for="data in all_data ">
+            <td>{{contador}}</td>
+            <td>{{data.Nombre}}</td>
+            <td>{{data.horainicio}}</td>
+            <td>{{data.horafin}}</td>
+            <td><button class='btn btn-warning' disabled>Cupo Lleno </button></td>
           </tr>
+          <tr v-for="e in all_data2 ">
+            <td>{{contador}}</td>
+            <td>{{e.Nombre}}</td>
+            <td>{{e.horainicio}}</td>
+            <td>{{e.horafin}}</td>
+            <td><a v-bind:href="'Modelo/ModeloReunion/cancelar.php?id=<?php echo $_GET["id"] ?>&reunion=<?php echo $taller ?>&horario='+e.id" class='btn btn-danger'>Cancelar</a></td>
+            </td>
+          </tr>
+          <?php
+          if ($cantidad >= 1) { ?>
+            <tr v-for="e in all_data3 ">
+              <td>{{contador}}</td>
+              <td>Disponible</td>
+              <td>{{e.horainicio}}</td>
+              <td>{{e.horafin}}</td>
+              <td><button class='btn btn-success' disabled>Inscribir</button> </td>
+              </td>
+            </tr>
+          <?php } else { ?>
+            <tr v-for="e in all_data3 ">
+              <td>{{contador}}</td>
+              <td>Disponible</td>
+              <td>{{e.horainicio}}</td>
+              <td>{{e.horafin}}</td>
+              <td><button class='btn btn-warning' data-toggle='modal' v-bind:data-target="'#exampleModal'+e.id">Inscribir</button></td>
+              <td style="border:0;padding:0; margin:0">
+                <div class='modal fade' v-bind:id="'exampleModal'+e.id" tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+                  <div class='modal-dialog' role='document'>
+                    <div class='modal-content'>
+                      <div class='modal-header'>
+                        <h5 class='modal-title' id='exampleModalLabel'>Ingrese su número de telefono para finalizar</h5>
+                        <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                          <span aria-hidden='true'>&times;</span>
+                        </button>
+                      </div>
+                      <div class='modal-body'>
+                        <form action='Modelo/ModeloReunion/inscribir.php' method='post'>
+                          <label for='telefono'>telefono:</label>
+                          <input type='hidden' name='id' :value="e.id">
+                          <input type='hidden' name='horario' value='<?php echo $_GET["id"] ?>'>
+                          <input type='hidden' name='reunion' value='<?php echo $_GET["reunion"] ?>'>
+                          <input type='hidden' name='alumno' value='<?php echo $alumno ?>'>
+
+                          <input type='text' class='form-control' name='telefono' placeholder='0000-0000' pattern='[0-9]{4}-[0-9]{4}' title='El teleono debe ser en el formato 0000-0000' required>
+                          <button type='submit' class='btn btn-primary' name='inscribir' value='Inscribir'>Inscribir</button>
+                        </form>
+                      </div>
+                      <div class='modal-footer'>
+                        <button type='button' class='btn btn-secondary' data-dismiss='modal'>Close</button>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          <?php
+          } ?>
         </tbody>
       </table>
     </div>
@@ -167,25 +130,72 @@ while ($row = $stmt4->fetch()) {
 <!-- /#wrapper -->
 
 <script>
-  var app = new Vue({
-    el: "#app",
-    data: {
-      all_data: []
-    },
-    created: function() {
-      console.log("Iniciando ...");
-      this.get_contacts();
-    },
-    methods: {
-      get_contacts: function() {
-        fetch("Modelo/ModeloReunion/select.php")
-          .then(response => response.json())
-          .then(json => {
-            this.all_data = json.contactos
-          })
+  const taller = <?php echo $taller ?>;
+
+  var data2 = {
+    id: taller
+  };
+
+    var app = new Vue({
+      el: "#app",
+      data: {
+        all_data: [],
+        all_data2: [],
+        all_data3: [],
+        contador: 1,
+      },
+
+      created: function() {
+        console.log("Iniciando ...");
+        this.get_contacts();
+        this.cancelarInscripcion();
+        this.disponibles();
+      },
+      methods: {
+        get_contacts: function() {
+          fetch(
+              "Modelo/ModeloReunion/select.php", {
+                method: 'POST', // or 'PUT'
+                body: JSON.stringify(data2),
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
+            .then(response => response.json())
+            .then(json => {
+              this.all_data = json.reuniones
+            })
+        },
+        cancelarInscripcion: function() {
+          fetch(
+              "Modelo/ModeloReunion/select_inscripcion.php", {
+                method: 'POST',
+                body: JSON.stringify(data2),
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
+            .then(response => response.json())
+            .then(json => {
+              this.all_data2 = json.lista1
+            })
+        },
+        disponibles: function() {
+          fetch(
+              "Modelo/ModeloReunion/select_disponible.php", {
+                method: 'POST',
+                body: JSON.stringify(data2),
+                headers: {
+                  'Content-Type': 'application/json'
+                }
+              })
+            .then(response => response.json())
+            .then(json => {
+              this.all_data3 = json.disponibles
+            })
+        }
       }
-    }
-  });
+    })
 </script>
 
 <?php
