@@ -10,6 +10,7 @@ require '../Conexion/conexion.php';
 
 setlocale(LC_TIME, 'es_SV.UTF-8');
 $taller = $_GET["id"];
+$tipoReunion = $_GET["typereu"];
 
 //Extraemos el carnet del estudiante
 $stmt1 = $dbh->prepare("SELECT `ID_Alumno` FROM `alumnos` WHERE correo='" . $_SESSION['Email'] . "'");
@@ -22,6 +23,9 @@ while ($fila = $stmt1->fetch()) {
 
 
 $mesActual = date("m");
+$idHorario;
+$horainicio;
+$horafin;
 $stmt = $dbh->prepare("SELECT `IDHorRunion`, `HorarioInicio`, `HorarioFinalizado`, `Canitdad`, `TiempoReunion` FROM `horariosreunion` WHERE `ID_Reunion`='" . $taller . "'");
 // Ejecutamos
 $stmt->execute();
@@ -47,7 +51,14 @@ $stmt->execute();
             <th>Hora final</th>
             <th>Cupo</th>
             <th>Duración por sesión</th>
-            <th>Horarios</th>
+            <?php
+              if ($tipoReunion != "Sesión individual" && $tipoReunion != "Otro") {
+                echo "<th>Teléfono</th>";
+                echo "<th>Inscribir</th>";
+              }else {
+                echo "<th>Horarios</th>";
+              }
+            ?>
           </tr>
         </thead>
 
@@ -56,14 +67,27 @@ $stmt->execute();
           <?php
           $vuelta = 0;
           while ($row = $stmt->fetch()) {
+            //extraemos el id horario hinicio hfin para usarlo después
+            $idHorario = $row['IDHorRunion'];
+            $horainicio = $row["HorarioInicio"];
+            $horafin = $row["HorarioFinalizado"];
             $vuelta++;
             echo "<tr>";
             echo "<td>" . $row["HorarioInicio"] . "</td>";
             echo "<td>" . $row["HorarioFinalizado"] . "</td>";
-            echo "<td>" . $row["Canitdad"] . "</td>";
+            if ($tipoReunion != "Sesión individual" && $tipoReunion != "Otro") {
+              echo "<td>Ilimitado</td>"; 
+            }else {
+              echo "<td>" . $row["Canitdad"] . "</td>";
+            }
             echo "<td>" . $row["TiempoReunion"] . " Minutos" . "</td>";
-            // echo "<td><input type=\"text\" class=\"form-control-sm\" form=\"formulario" . $vuelta . "\" name=\"telefono\" placeholder=\"0000-0000\" pattern=\"[0-9]{4}-[0-9]{4}\" title=\"El teleono debe ser en el formato '0000-0000'\" required></td>";
-            echo "<td><a href='listadoxReunion.php?id=" . $row['IDHorRunion'] . "&reunion=".$taller."' class='fas fa-user  btn btn-warning'></a></td>";
+            if ($tipoReunion != "Sesión individual" && $tipoReunion != "Otro") {
+              echo "<td><input type=\"text\" id='txttel' class=\"form-control-sm\" form=\"formulario" . $vuelta . "\" name=\"telefono\" placeholder=\"0000-0000\" maxlength='9' pattern=\"[0-9]{4}-[0-9]{4}\" title=\"El teleono debe ser en el formato '0000-0000'\" required></td>";
+              
+              echo "<td><button class=' btn btn-warning' id='btninscribir'><i class='fas fa-pen'></i></button></td>";
+            }else {
+              echo "<td><a href='listadoxReunion.php?id=" . $row['IDHorRunion'] . "&reunion=".$taller."' class='fas fa-user  btn btn-warning'></a></td>";
+            }
             // echo "<td>";
             $verificar = "SELECT COUNT(`id_reunion`) as total FROM `inscripcionreunion` WHERE `id_alumno`='" . $alumno . "' AND `id_reunion`='" . $taller . "' AND `Horario`=" . $row["IDHorRunion"] . "";
             $stmt2 = $dbh->prepare($verificar);
@@ -144,15 +168,42 @@ $stmt->execute();
           ?>
         </tbody>
       </table>
-
+        <div>
+          <input type="hidden" id="idreunion" value="<?php echo $taller;?>"> 
+          <input type="hidden" id="idalumno" value="<?php echo $alumno;?>"> 
+          <input type="hidden" id="idhorario" value="<?php echo $idHorario;?>">
+          <input type="hidden" id="hinicio" value="<?php echo $horainicio;?>">
+          <input type="hidden" id="hfin" value="<?php echo $horafin;?>">
+        </div>
     </div>
   </div>
 
 </div>
 <!-- /#page-content-wrapper -->
 <br><br><br><br><br><br><br><br><br><br>
-
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalAlerta" tabindex="-1" aria-labelledby="TmodalAlerta" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TmodalAlerta">Mensaje</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalAlerta-content">
+        Debes rellenar el campo del número de teléfono, siguiendo el patrón 0000-0000
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   $(document).ready(function() {
     var table = $('#data').DataTable({
@@ -222,6 +273,10 @@ $stmt->execute();
   });
 </script>
 </div>
+
+<!-- Enlace con el JS para mandar datos de inscripción por Ajax -->
+<script src="JS/SaveCupo.js"></script>
+
 <!-- /#wrapper -->
 
 
