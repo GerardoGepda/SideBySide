@@ -20,7 +20,7 @@ $input = json_decode(file_get_contents("php://input"), true);
 $data = array();
 
 $sql = "SELECT * FROM inscripcionreunion i  INNER JOIN alumnos 
-a on a.ID_Alumno = i.id_alumno WHERE i.id_alumno = '$id' ";
+a on a.ID_Alumno = i.id_alumno WHERE i.id_alumno = '$id' and Horario =" . $input['horario'] . " ";
 
 $query = $pdo->query($sql);
 
