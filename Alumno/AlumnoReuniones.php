@@ -53,7 +53,7 @@ while ($fila = $stmt1->fetch()) {
         echo "<td>" . $fechaReunion . "</td>";
         echo "<td>" . ($fila2["encargado"]). "</td>";
         echo "<td>" . ($fila2["Tipo"])."</td>";
-        echo "<td><a class=\"btn btn-info\" href=\"HorariosReunion.php?id=" . $fila2["id"] . "\"><i class=\"fas fa-calendar-week\"></i> Ver horarios</a></td>";
+        echo "<td><a class=\"btn btn-info\" href=\"HorariosReunion.php?id=" . $fila2["id"] . "&typereu=" . $fila2["Tipo"] . "\"><i class=\"fas fa-calendar-week\"></i> Ver horarios</a></td>";
         echo "</tr>";
       }
       ?>
