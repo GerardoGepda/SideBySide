@@ -81,11 +81,11 @@ while ($row = $stmt4->fetch()) {
                   <input type='hidden' name='horario' value='<?php echo $_GET["id"] ?>'>
                   <input type='hidden' name='reunion' value='<?php echo $_GET["reunion"] ?>'>
                   <input type='hidden' name='alumno' value='<?php echo $alumno ?>'>
-                  <input type='text' class='form-control w-50 d-inline example' name='telefono' placeholder='0000-0000' pattern='[0-9]{4}-[0-9]{4}' title='El teleono debe ser en el formato 0000-0000' required>
-                  <button type='submit' class='btn btn-primary d-inline ml-5' name='inscribir' value='Inscribir'>Inscribir</button>
+                  <input type='text'   class='form-control w-50 d-inline example' name='telefono' placeholder='0000-0000' pattern='[0-9]{4}-[0-9]{4}' title='El teleono debe ser en el formato 0000-0000' required>
+                  <button type='submit' @click="desactive(e.id)" class='btn btn-primary d-inline ml-5' name='inscribir' value='Inscribir'>Inscribir</button>
                 </form>
               </td>
-              <td :class="['yes', ( e.is_typing == 'yes' ? 'no' : 'error' )] " id="info">escribiendo...</td>
+              <td :class="['yes', ( e.is_typing == 'yes' && e.estado == 'disponible' ? 'no' : 'error' )] " id="info">escribiendo...</td>
             </tr>
           <?php
           } ?>

@@ -20,9 +20,11 @@ var app = new Vue({
     },
     created: function () {
         this.polling = setInterval(() => {
+            this.contador =1;
             this.get_contacts();
             this.cancelarInscripcion();
             this.disponibles();
+            console.clear();
         }, 3000)
     },
 
@@ -74,6 +76,21 @@ var app = new Vue({
             this.active_el = el;
             fetch(
                 "Modelo/ModeloReunion/is_typping.php", {
+                method: 'POST',
+                body: JSON.stringify({ id: el }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => {
+                    this.all_data4 = response.status;
+                    this.op = el
+                })
+        },
+        desactive:function (el) {
+            this.active_el = el;
+            fetch(
+                "Modelo/ModeloReunion/no_is_typping.php", {
                 method: 'POST',
                 body: JSON.stringify({ id: el }),
                 headers: {
