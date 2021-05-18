@@ -12,16 +12,21 @@ var app = new Vue({
         all_data2: [],
         all_data3: [],
         all_data4: 0,
-        op:0,
+        op: 0,
         contador: 1,
-        active_el: 0
+        active_el: 0,
+        timer: '',
+        polling: null
     },
     created: function () {
-        console.log("Iniciando ...");
-        this.get_contacts();
-        this.cancelarInscripcion();
-        this.disponibles();
+        this.polling = setInterval(() => {
+            this.get_contacts();
+            this.cancelarInscripcion();
+            this.disponibles();
+        }, 3000)
     },
+
+
     methods: {
         get_contacts: function () {
             fetch(
@@ -79,6 +84,6 @@ var app = new Vue({
                     this.all_data4 = response.status;
                     this.op = el
                 })
-        }
+        },
     }
 });

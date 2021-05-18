@@ -46,14 +46,14 @@ while ($row = $stmt4->fetch()) {
         </thead>
         <tbody id="app">
           <tr v-for="data in all_data ">
-            <td>{{contador}}</td>
+            <td>{{contador++}}</td>
             <td>{{data.Nombre}}</td>
             <td>{{data.horainicio}}-{{data.horafin}}</td>
             <td></td>
             <td><button class='btn btn-warning' disabled>Cupo Lleno </button></td>
           </tr>
           <tr v-for="e in all_data2 ">
-            <td>{{contador}}</td>
+            <td>{{contador++}}</td>
             <td>{{e.Nombre}}</td>
             <td>{{e.horainicio}}-{{e.horafin}}</td>
             <td></td>
@@ -63,7 +63,7 @@ while ($row = $stmt4->fetch()) {
           <?php
           if ($cantidad >= 1) { ?>
             <tr v-for="e in all_data3 ">
-              <td>{{contador}}</td>
+              <td>{{contador++}}</td>
               <td>Disponible</td>
               <td>{{e.horainicio}}-{{e.horafin}}</td>
               <td></td>
@@ -72,7 +72,7 @@ while ($row = $stmt4->fetch()) {
             </tr>
           <?php } else { ?>
             <tr @click="activate(e.id)" :class="{ active : active_el == e.id }" v-for="e in all_data3 ">
-              <td>{{contador}}</td>
+              <td>{{contador++}}</td>
               <td>Disponible</td>
               <td>{{e.horainicio}}-{{e.horafin}}</td>
               <td colspan="2">
@@ -85,7 +85,7 @@ while ($row = $stmt4->fetch()) {
                   <button type='submit' class='btn btn-primary d-inline ml-5' name='inscribir' value='Inscribir'>Inscribir</button>
                 </form>
               </td>
-              <td :class="['yes', ( e.is_typing == 'yes' ? 'no' : 'error' )] " id="info">is typing</td>
+              <td :class="['yes', ( e.is_typing == 'yes' ? 'no' : 'error' )] " id="info">escribiendo...</td>
             </tr>
           <?php
           } ?>
