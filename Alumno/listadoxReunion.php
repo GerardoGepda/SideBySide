@@ -27,33 +27,7 @@ while ($row = $stmt4->fetch()) {
 
 ?>
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-<style>
-  tr>td:hover {
-    cursor: pointer;
-  }
-
-  .active {
-    color: green;
-    font-weight: bold;
-    border-style: solid;
-    border-color: green;
-  }
-
-  #info:nth-child(1) {
-    color: green;
-  }
-
-  @media only screen and (max-width: 600px) {
-    .example {
-      margin-left: -80px
-    }
-
-    .example {
-      margin-left: 0px;
-      float: left;
-    }
-  }
-</style>
+<link rel="stylesheet" href="CSS/reunion.css">
 <div class="container-fluid text-center p-4">
   <h1 class="h1 p-2">Listado por el horario </h1>
   <div>
@@ -111,8 +85,7 @@ while ($row = $stmt4->fetch()) {
                   <button type='submit' class='btn btn-primary d-inline ml-5' name='inscribir' value='Inscribir'>Inscribir</button>
                 </form>
               </td>
-              <td v-if="all_data4 == 200 && op == e.id" id="info" style="padding:0; margin:0; ">is typping</td>
-              <td v-else style="border: 0; padding:0; margin:0"></td>
+              <td :class="['yes', ( e.is_typing == 'yes' ? 'no' : 'error' )] " id="info">is typing</td>
             </tr>
           <?php
           } ?>

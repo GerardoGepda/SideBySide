@@ -1,0 +1,56 @@
+
+  tr>td:hover {
+    cursor: pointer;
+  }
+ 
+
+  .active {
+    color: green;
+    font-weight: bold;
+    border-style: solid;
+    border-color: green;
+  }
+
+  .yes {
+    font-weight: bold;
+    color: transparent;
+  }
+
+  .no {
+    color:red;
+    font-family: monospace; /* Ensures the content is not revealed until the animation */
+    border-right: .3em solid red;
+    animation: 
+      typing 3.5s steps(30, end),
+      blink-caret .5s step-end infinite;
+  }
+  /* The typing effect */
+@keyframes typing {
+    from { width: 0 }
+    to { width: 20% }
+  }
+  
+  /* The typewriter cursor effect */
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: red }
+  }
+  
+@keyframes type{ 
+    from { width: 0; } 
+  } 
+
+  #info:nth-child(1) {
+    color: green;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .example {
+      margin-left: -80px
+    }
+
+    .example {
+      margin-left: 0px;
+      float: left;
+    }
+  }
