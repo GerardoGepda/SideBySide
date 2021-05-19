@@ -32,8 +32,8 @@ var reunion = new Vue({
         inscribir: function () {
             console.log("iniciando");
            
-            const field = document.querySelector("input[name=txttel]").value
-            console.log(telefono.value+"hola");
+            const field = document.querySelector("input[name=txttel]");
+            console.log(field.value+"hola");
             if (exprs.test((telefono.value))) {
                 GuardarCupo(telefono.value);
             } else {
