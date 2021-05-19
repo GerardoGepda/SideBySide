@@ -2,7 +2,7 @@ var datareu = {
     idreunion: taller,
 };
 
-let exprs = new RegExp("([0-9]){4}-([0-9]){4}");
+let exprs = new RegExp("([0-9]){8}");
 let telefono = document.getElementById("txttel");
 
 var reunion = new Vue({
@@ -10,6 +10,7 @@ var reunion = new Vue({
     data: {
         dinscrito: [],
         dnoinscrito: [],
+        valor: ''
     },
     created: function () {
         this.reuniones();
@@ -31,26 +32,21 @@ var reunion = new Vue({
         },
         inscribir: function () {
             console.log("iniciando");
-           
-            const field = document.querySelector("input[name=txttel]");
-            console.log(field.value+"hola");
-            if (exprs.test((telefono.value))) {
-                GuardarCupo(telefono.value);
+            if (exprs.test((this.valor))) {
+                const telefono = this.valor.substring(0, 4) + "-" + this.valor.substring(4, 8);
+                this.GuardarCupo(telefono);
             } else {
                 $("#TmodalAlerta").html("¡Advertencia!");
-                $("#modalAlerta-content").html("Debes rellenar el campo del número de teléfono, siguiendo el patrón 0000-0000.");
+                $("#modalAlerta-content").html("Debes rellenar el campo del número de teléfono,    siguiendo el patrón 00000000.");
                 $('#modalAlerta').modal('show');
             }
         },
         validarTelefono: function (e) {
-            if (RegExp("([0-9])").test(e.key)) {
-                if (telefono.length == 4) {
-                    telefono.value += "-";
-                }
-            } else {
+            if (!RegExp("([0-9])").test(e.key)) {
                 e.preventDefault();
             }
-        }, GuardarCupo: function (telefono) {
+        },
+        GuardarCupo: function (telefono) {
 
             const reunion = document.getElementById("idreunion").value;
             const alumno = document.getElementById("idalumno").value;

@@ -72,23 +72,19 @@ $result = (int)$rowInscrito[0];
             ?>
           </tr>
         </thead>
-
-
         <tbody class="bg-light table-bordered" id="tbody-reunion">
           <tr v-for="e in dinscrito">
             <td>{{e.HorarioInicio}}</td>
             <td>{{e.HorarioFinalizado}}</td>
-            <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'">
-              Ilimitado
-            </td>
-            <td v-else="">
-              {{e.Canitdad}}
-            </td>
+            <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'">Ilimitado</td>
+            <td v-else="">{{e.Canitdad}} </td>
             <td>{{e.TiempoReunion}} Minutos</td>
             <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'">
-              <input type="text" id='txttel' name="txttel" class="form-control-sm" v-on:keypress='validarTelefono($event)' placeholder="0000-0000" maxlength='9' required>
+              <input type="text" id='txttel' name="txttel" class="form-control-sm"
+               v-on:keypress='validarTelefono($event)' v-model="valor" value="valor"
+               placeholder="00000000" maxlength='8' required>
             </td>
-            <td>
+            <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'">
               <?php
               if ($result == 0) {
                 echo "<button class='btn btn-warning' id='btninscribir'  v-on:click='inscribir' title='Inscribir' value='btninscribir'>
@@ -101,6 +97,9 @@ $result = (int)$rowInscrito[0];
                 echo "<button style='display: none' id='btninscribir' v-on:click='inscribir' value='btninscribir'></button>";
               }
               ?>
+            </td>
+            <td v-else="">
+              <a v-bind:href="'listadoxReunion.php?id='+e.IDHorRunion+'&reunion='+e.ID_Reunion" class="btn btn-warning"><i class="fas fa-user-edit"></i></a>
             </td>
           </tr>
         </tbody>
