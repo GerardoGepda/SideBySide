@@ -63,6 +63,22 @@ if (isset($_POST['inscribir'])) {
     $jsnResponse = json_encode($respuesta);
     echo $jsnResponse;
 
+} else if (isset($_POST["verificar"])) {
+    //validando si ya se inscribio el alumno. 
+    $vAlumno = $_POST["alumno"];
+    $vReunion = $_POST["reunion"];
+    try {
+        $query = $pdo->prepare("SELECT COUNT(id_alumno) FROM inscripcionreunion WHERE id_alumno = ? AND id_reunion = ?");
+        $query->execute([$vAlumno, $vReunion]);
+        $rowInscrito = $query->fetch();
+        $result = (int)$rowInscrito[0];
+    } catch (PDOException $e) {
+        $errmnsj = 'Error: ' . $e->getMessage();
+        $respuesta = array("estado"=>"ok", "mensaje"=>$errmnsj);
+        $jsnResponse = json_encode($respuesta);
+        echo $jsnResponse;
+    }
+    echo $result;
 } else {
     $respuesta = array("estado"=>"err", "mensaje"=>"Error en el envio de datos.");
     $jsnResponse = json_encode($respuesta);

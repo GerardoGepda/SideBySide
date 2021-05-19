@@ -29,12 +29,6 @@ $horafin;
 $stmt = $dbh->prepare("SELECT `IDHorRunion`, `HorarioInicio`, `HorarioFinalizado`, `Canitdad`, `TiempoReunion` FROM `horariosreunion` WHERE `ID_Reunion`='" . $taller . "'");
 // Ejecutamos
 $stmt->execute();
-
-//validando si ya se inscribio el alumno.
-$query = $dbh->prepare("SELECT COUNT(id_alumno) FROM inscripcionreunion WHERE id_alumno = ? AND id_reunion = ?");
-$rowInscrito = $query->execute([$alumno, $taller]);
-$rowInscrito = $query->fetch();
-$result = (int)$rowInscrito[0];
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
@@ -80,11 +74,15 @@ $result = (int)$rowInscrito[0];
             <td v-else="">{{e.Canitdad}} </td>
             <td>{{e.TiempoReunion}} Minutos</td>
             <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'">
-              <input type="text" id='txttel' name="txttel" class="form-control-sm"
-               v-on:keypress='validarTelefono($event)' v-model="valor" value="valor"
-               placeholder="00000000" maxlength='8' required>
+              <input type="text" id='txttel' name="txttel" class="form-control-sm" v-on:keypress='validarTelefono($event)' v-model="valor" value="valor" placeholder="00000000" maxlength='8' required>
             </td>
             <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'">
+            <div v-if="verificado == 0">
+              no inscrito
+            </div>
+            <div v-else>
+              inscrito
+            </div>
               <?php
               if ($result == 0) {
                 echo "<button class='btn btn-warning' id='btninscribir'  v-on:click='inscribir' title='Inscribir' value='btninscribir'>
@@ -104,19 +102,22 @@ $result = (int)$rowInscrito[0];
           </tr>
         </tbody>
       </table>
-      <div>
-        <input type="hidden" id="idreunion" value="<?php echo $taller; ?>">
-        <input type="hidden" id="idalumno" value="<?php echo $alumno; ?>">
-        <input type="hidden" id="idhorario" value="<?php echo $idHorario; ?>">
-        <input type="hidden" id="hinicio" value="<?php echo $horainicio; ?>">
-        <input type="hidden" id="hfin" value="<?php echo $horafin; ?>">
-      </div>
     </div>
   </div>
 
 </div>
 <!-- /#page-content-wrapper -->
 <br><br><br><br><br><br><br><br><br><br>
+</div>
+
+<div id="dReunionDiv">
+  <div v-for="e in infoReunion">
+    <input type="hidden" id="idreunion" v-bind:value="valReu == e.ID_Reunion" v-model="valReu">
+    <input type="hidden" id="idalumno" value="<?php echo $alumno;?>">
+    <input type="hidden" id="idhorario" v-bind:value="e.IDHorRunion" v-model="valHorario">
+    <input type="hidden" id="hinicio" v-bind:value="e.HorarioInicio" v-model="valHinicio">
+    <input type="hidden" id="hfin" v-bind:value="e.HorarioFinalizado" v-model="valHfin">
+  </div>
 </div>
 
 <!-- Modal -->
