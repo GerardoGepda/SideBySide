@@ -38,7 +38,7 @@ $result = (int)$rowInscrito[0];
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-
+<script async src="JS/AdmCupo.js"></script>
 <div class="container-fluid text-center">
   <br>
   <h1 class="h1">Inscripción reuniones</h1>
@@ -86,19 +86,20 @@ $result = (int)$rowInscrito[0];
             </td>
             <td>{{e.TiempoReunion}} Minutos</td>
             <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'">
-              <input type="text" id='txttel' class="form-control-sm" form="formulario" name="telefono" placeholder="0000-0000" maxlength='9' pattern="[0-9]{4}-[0-9]{4}" title="El teleono debe ser en el formato '0000-0000'" required>
+              <input type="text" id='txttel' name="txttel" class="form-control-sm" v-on:keypress='validarTelefono($event)' placeholder="0000-0000" maxlength='9' required>
             </td>
             <td>
               <?php
-                if ($result == 0) {
-                  echo "<button class='btn btn-warning' id='btninscribir' title='Inscribir'><i class='fas fa-pen'></i></button>";
-                  //añadimos el boton desinscribir pero oculto para evitar errores en JS
-                  echo "<button style='display: none' id='btndesinscribir'></button>";
-                }else {
-                  echo "<button class='btn btn-danger' id='btndesinscribir' title='Desinscribir'><i class='fas fa-ban'></i></button>";
-                  //añadimos el boton inscribir pero oculto para evitar errores en JS
-                  echo "<button style='display: none' id='btninscribir'></button>";
-                }
+              if ($result == 0) {
+                echo "<button class='btn btn-warning' id='btninscribir'  v-on:click='inscribir' title='Inscribir' value='btninscribir'>
+                <i class='fas fa-pen'></i></button>";
+                //añadimos el boton desinscribir pero oculto para evitar errores en JS
+                echo "<button style='display: none' id='btndesinscribir' value='btndesinscribir'></button>";
+              } else {
+                echo "<button class='btn btn-danger' id='btndesinscribir' value='btndesinscribir'  title='Desinscribir'><i class='fas fa-ban'></i></button>";
+                //añadimos el boton inscribir pero oculto para evitar errores en JS
+                echo "<button style='display: none' id='btninscribir' v-on:click='inscribir' value='btninscribir'></button>";
+              }
               ?>
             </td>
           </tr>
@@ -162,8 +163,6 @@ $result = (int)$rowInscrito[0];
 </div>
 </div>
 
-
-
 <!-- Enlace con el JS para mandar datos de inscripción por Ajax -->
 <script async>
   const taller = <?php echo $taller; ?>;
@@ -175,123 +174,6 @@ $result = (int)$rowInscrito[0];
 </script>
 
 <script async src="JS/CrearHorario.js"></script>
-<!-- <script src="JS/AdmCupo.js"></script> -->
-<script>
-const btnInscribir = document.getElementById("btninscribir");
-const btnDes = document.getElementById("btndesinscribir");
-const btnDesinscribir = document.getElementById("btnModalDesinscribir");
-const telefono = document.getElementById("txttel");
-let exprs = new RegExp("([0-9]){4}-([0-9]){4}");
-
-console.log("ok");
-
-//evento del boton inscribir
-btnInscribir.addEventListener("click", () => {
-    if (exprs.test(telefono.value)) {
-        GuardarCupo(telefono.value);
-    }else{
-        $("#TmodalAlerta").html("¡Advertencia!");
-        $("#modalAlerta-content").html("Debes rellenar el campo del número de teléfono, siguiendo el patrón 0000-0000.");
-        $('#modalAlerta').modal('show');
-    }
-});
-
-//evento del campo telefono
-telefono.addEventListener('keypress', (e) => { 
-    if (RegExp("([0-9])").test(e.key)) {
-        if (telefono.value.length == 4) {
-            telefono.value += "-";
-        }
-    }else{
-        e.preventDefault();
-    }
-});
-
-//funcion que guarda la inscripcion o cupo
-function GuardarCupo(telefono) {
-
-    const reunion = document.getElementById("idreunion").value;
-    const alumno = document.getElementById("idalumno").value;
-    const horario = document.getElementById("idhorario").value;
-    const horaIn = document.getElementById("hinicio").value;
-    const horaFin = document.getElementById("hfin").value;
-
-    const datos = {
-        idalumno: alumno,
-        idreunion: reunion,
-        horario: horario,
-        telefono: telefono,
-        hinicio: horaIn,
-        hfin: horaFin,
-        inscribir: true
-    };
-
-    $.ajax({
-        type: "POST",
-        url: "./Modelo/ModeloReunion/inscrSinCupo.php",
-        data: datos,
-        success: function (response) {
-            const result = JSON.parse(response);
-            if (result.estado == "ok") {
-                $("#TmodalAlerta").html("Respuesta");
-                $("#modalAlerta-content").html(result.mensaje);
-                $('#modalAlerta').modal('show');
-                setTimeout(function(){
-                    window.location = "AlumnoReuniones.php";
-                },2000);  
-            }else {
-                $("#TmodalAlerta").html("Respuesta");
-                $("#modalAlerta-content").html(result.mensaje);
-                $('#modalAlerta').modal('show');
-            }
-        }
-    });
-}
-
-//evento del boton para mostrar el modal de desinscribir
-btnDes.addEventListener("click", () => {
-    console.log();
-    $('#modalDes').modal('show');
-});
-
-btnDesinscribir.addEventListener("click", () => {
-    const reunion = document.getElementById("idreunion").value;
-    const alumno = document.getElementById("idalumno").value;
-
-    const datos = {
-        idalumno: alumno,
-        idreunion: reunion,
-        desinscribir: true
-    };
-
-    console.log("des", datos);
-
-    $.ajax({
-        type: "POST",
-        url: "./Modelo/ModeloReunion/inscrSinCupo.php",
-        data: datos,
-        success: function (response) {
-            const result = JSON.parse(response);
-            if (result.estado == "ok") {
-                $("#TmodalAlerta").html("Respuesta");
-                $("#modalAlerta-content").html(result.mensaje);
-                $('#modalAlerta').modal('show');
-                setTimeout(function(){
-                    window.location = "AlumnoReuniones.php";
-                },2000);    
-            }else {
-                $("#TmodalAlerta").html("Respuesta");
-                $("#modalAlerta-content").html(result.mensaje);
-                $('#modalAlerta').modal('show');
-            }
-        }
-    });
-    
-});
-</script>
-<!-- /#wrapper -->
 
 
-<?php
-require_once 'templates/footer.php';
-?>
+<?php require_once 'templates/footer.php'; ?>
