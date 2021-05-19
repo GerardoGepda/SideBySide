@@ -30,7 +30,14 @@ $stmt = $dbh->prepare("SELECT `IDHorRunion`, `HorarioInicio`, `HorarioFinalizado
 // Ejecutamos
 $stmt->execute();
 
+//validando si ya se inscribio el alumno.
+$query = $dbh->prepare("SELECT COUNT(id_alumno) FROM inscripcionreunion WHERE id_alumno = ? AND id_reunion = ?");
+$rowInscrito = $query->execute([$alumno, $taller]);
+$rowInscrito = $query->fetch();
+$result = (int)$rowInscrito[0];
 ?>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 
 <div class="container-fluid text-center">
   <br>
@@ -52,129 +59,58 @@ $stmt->execute();
             <th>Cupo</th>
             <th>Duración por sesión</th>
             <?php
-              if ($tipoReunion != "Sesión individual" && $tipoReunion != "Otro") {
-                echo "<th>Teléfono</th>";
+            if ($tipoReunion != "Sesión individual" && $tipoReunion != "Otro") {
+              echo "<th>Teléfono</th>";
+              if ($result == 0) {
                 echo "<th>Inscribir</th>";
-              }else {
-                echo "<th>Horarios</th>";
+              } else {
+                echo "<th>Desinscribir</th>";
               }
+            } else {
+              echo "<th>Horarios</th>";
+            }
             ?>
           </tr>
         </thead>
 
 
-        <tbody class="bg-light table-bordered">
-          <?php
-          $vuelta = 0;
-          while ($row = $stmt->fetch()) {
-            //extraemos el id horario hinicio hfin para usarlo después
-            $idHorario = $row['IDHorRunion'];
-            $horainicio = $row["HorarioInicio"];
-            $horafin = $row["HorarioFinalizado"];
-            $vuelta++;
-            echo "<tr>";
-            echo "<td>" . $row["HorarioInicio"] . "</td>";
-            echo "<td>" . $row["HorarioFinalizado"] . "</td>";
-            if ($tipoReunion != "Sesión individual" && $tipoReunion != "Otro") {
-              echo "<td>Ilimitado</td>"; 
-            }else {
-              echo "<td>" . $row["Canitdad"] . "</td>";
-            }
-            echo "<td>" . $row["TiempoReunion"] . " Minutos" . "</td>";
-            if ($tipoReunion != "Sesión individual" && $tipoReunion != "Otro") {
-              echo "<td><input type=\"text\" id='txttel' class=\"form-control-sm\" form=\"formulario" . $vuelta . "\" name=\"telefono\" placeholder=\"0000-0000\" maxlength='9' pattern=\"[0-9]{4}-[0-9]{4}\" title=\"El teleono debe ser en el formato '0000-0000'\" required></td>";
-              
-              echo "<td><button class=' btn btn-warning' id='btninscribir'><i class='fas fa-pen'></i></button></td>";
-            }else {
-              echo "<td><a href='listadoxReunion.php?id=" . $row['IDHorRunion'] . "&reunion=".$taller."' class='fas fa-user  btn btn-warning'></a></td>";
-            }
-            // echo "<td>";
-            $verificar = "SELECT COUNT(`id_reunion`) as total FROM `inscripcionreunion` WHERE `id_alumno`='" . $alumno . "' AND `id_reunion`='" . $taller . "' AND `Horario`=" . $row["IDHorRunion"] . "";
-            $stmt2 = $dbh->prepare($verificar);
-            $stmt2->execute();
-
-            $verificar2 = "SELECT `Canitdad` FROM `horariosreunion` WHERE `IDHorRunion`='" . $row["IDHorRunion"] . "'";
-            $stmt3 = $dbh->prepare($verificar2);
-            $stmt3->execute();
-
-            $verificar3 = "SELECT COUNT(`id_reunion`) as total2 FROM `inscripcionreunion` WHERE `id_alumno`='" . $alumno . "' AND `id_reunion`='" . $taller . "'";
-            $stmt4 = $dbh->prepare($verificar3);
-            $stmt4->execute();
-
-            while ($fila4 = $stmt4->fetch()) {
-              $total2 = $fila4["total2"];
-            }
-
-            while ($fila2 = $stmt2->fetch()) {
-              $total = $fila2["total"];
-            }
-            while ($fila3 = $stmt3->fetch()) {
-              $cantidad = $fila3["Canitdad"];
-            }
-
-
-
-            // if ($cantidad > 0) {
-
-
-            //   if ($total2 == 1) {
-            //     if ($total > 0) {
-            //       echo "<form action=\"inscribirReunion.php\" method=\"POST\" id=\"formulario2" . $vuelta . "\">";
-            //       echo "<input type=\"text\" name=\"reunion\" value='" . $taller . "' hidden>
-            //             <input type=\"text\"  name=\"horario\" value='" . $row["IDHorRunion"] . "' hidden>
-            //             <input type=\"text\" name=\"alumno\" value='" . $alumno . "' hidden>
-            //             <input type=\"number\" name=\"inscribir\" value=\"0\" hidden>";
-
-            //       echo "<button type=\"submit\" form=\"formulario2" . $vuelta . "\" class=\"btn btn-warning\"><i class=\"fas fa-times\"></i> Desinscribir</button>";
-            //       echo "</form>";
-            //     }
-            //   } else {
-            //     if ($total == 0) {
-            //       echo "<form action=\"inscribirReunion.php\" method=\"POST\" id=\"formulario" . $vuelta . "\">";
-            //       echo "<input type=\"text\" name=\"reunion\" value='" . $taller . "' hidden>
-            //             <input type=\"text\" name=\"horario\" value='" . $row["IDHorRunion"] . "' hidden>
-            //             <input type=\"text\" name=\"alumno\" value='" . $alumno . "' hidden>
-            //             <input type=\"number\" name=\"inscribir\" value=\"1\" hidden>";
-
-            //       echo "<button type=\"submit\" form=\"formulario" . $vuelta . "\" class=\"btn btn-primary\"><i class=\"fas fa-check\"></i> Inscribir</button>";
-            //       echo "</form>";
-            //     } elseif ($total > 0) {
-            //       echo "<form action=\"inscribirReunion.php\" method=\"POST\" id=\"formulario2" . $vuelta . "\">";
-            //       echo "<input type=\"text\" name=\"reunion\" value='" . $taller . "' hidden>
-            //             <input type=\"text\" name=\"alumno\" value='" . $alumno . "' hidden>
-            //             <input type=\"number\" name=\"inscribir\" value=\"0\" hidden>";
-
-            //       echo "<button type=\"submit\" form=\"formulario2" . $vuelta . "\" class=\"btn btn-warning\"><i class=\"fas fa-times\"></i> Desinscribir</button>";
-            //       echo "</form>";
-            //     }
-            //   }
-            // } else {
-            //   if ($total > 0) {
-            //     echo "<form action=\"inscribirReunion.php\" method=\"POST\" id=\"formulario2" . $vuelta . "\">";
-            //     echo "<input type=\"text\" name=\"reunion\" value='" . $taller . "' hidden>
-            //           <input type=\"text\"  name=\"horario\" value='" . $row["IDHorRunion"] . "' hidden>
-            //           <input type=\"text\" name=\"alumno\" value='" . $alumno . "' hidden>
-            //           <input type=\"number\" name=\"inscribir\" value=\"0\" hidden>";
-
-            //     echo "<button type=\"submit\" form=\"formulario2" . $vuelta . "\" class=\"btn btn-warning\"><i class=\"fas fa-times\"></i> Desinscribir</button>";
-            //     echo "</form>";
-            //   } else {
-            //     echo "El cupo se encuentra lleno";
-            //   }
-            // }
-            // echo "</td>";
-            echo "</tr>";
-          }
-          ?>
+        <tbody class="bg-light table-bordered" id="tbody-reunion">
+          <tr v-for="e in dinscrito">
+            <td>{{e.HorarioInicio}}</td>
+            <td>{{e.HorarioFinalizado}}</td>
+            <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'">
+              Ilimitado
+            </td>
+            <td v-else="">
+              {{e.Canitdad}}
+            </td>
+            <td>{{e.TiempoReunion}} Minutos</td>
+            <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'">
+              <input type="text" id='txttel' class="form-control-sm" form="formulario" name="telefono" placeholder="0000-0000" maxlength='9' pattern="[0-9]{4}-[0-9]{4}" title="El teleono debe ser en el formato '0000-0000'" required>
+            </td>
+            <td>
+              <?php
+                if ($result == 0) {
+                  echo "<button class='btn btn-warning' id='btninscribir' title='Inscribir'><i class='fas fa-pen'></i></button>";
+                  //añadimos el boton desinscribir pero oculto para evitar errores en JS
+                  echo "<button style='display: none' id='btndesinscribir'></button>";
+                }else {
+                  echo "<button class='btn btn-danger' id='btndesinscribir' title='Desinscribir'><i class='fas fa-ban'></i></button>";
+                  //añadimos el boton inscribir pero oculto para evitar errores en JS
+                  echo "<button style='display: none' id='btninscribir'></button>";
+                }
+              ?>
+            </td>
+          </tr>
         </tbody>
       </table>
-        <div>
-          <input type="hidden" id="idreunion" value="<?php echo $taller;?>"> 
-          <input type="hidden" id="idalumno" value="<?php echo $alumno;?>"> 
-          <input type="hidden" id="idhorario" value="<?php echo $idHorario;?>">
-          <input type="hidden" id="hinicio" value="<?php echo $horainicio;?>">
-          <input type="hidden" id="hfin" value="<?php echo $horafin;?>">
-        </div>
+      <div>
+        <input type="hidden" id="idreunion" value="<?php echo $taller; ?>">
+        <input type="hidden" id="idalumno" value="<?php echo $alumno; ?>">
+        <input type="hidden" id="idhorario" value="<?php echo $idHorario; ?>">
+        <input type="hidden" id="hinicio" value="<?php echo $horainicio; ?>">
+        <input type="hidden" id="hfin" value="<?php echo $horafin; ?>">
+      </div>
     </div>
   </div>
 
@@ -204,79 +140,155 @@ $stmt->execute();
   </div>
 </div>
 
-<script>
-  $(document).ready(function() {
-    var table = $('#data').DataTable({
-
-      "scrollX": true,
-      "scrollY": "50vh",
-      //Esto sirve que se auto ajuste la tabla al aplicar un filtro
-      "scrollCollapse": true,
-
-      language: {
-        "decimal": "",
-        "emptyTable": "No hay información",
-        "info": "Mostrando _START_ a _END_ de _TOTAL_ Entradas",
-        "infoEmpty": "Mostrando 0 to 0 of 0 Entradas",
-        "infoFiltered": "(Filtrado de _MAX_ total entradas)",
-        "infoPostFix": "",
-        "thousands": ",",
-        "lengthMenu": "Mostrar _MENU_ Entradas",
-        "loadingRecords": "Cargando...",
-        "processing": "Procesando...",
-        "search": "Buscar:",
-        "zeroRecords": "Sin resultados encontrados",
-        "paginate": {
-          "first": "Primero",
-          "last": "Ultimo",
-          "next": "Siguiente",
-          "previous": "Anterior"
-        }
-      },
-
-      initComplete: function() {
-        //En el columns especificamos las columnas que queremos que tengan filtro
-        this.api().columns([1, 2, 3]).every(function() {
-          var column = this;
-
-          var select = $('<select><option value=""></option></select>')
-            .appendTo($(column.header()))
-            .on('change', function() {
-              var val = $.fn.dataTable.util.escapeRegex(
-                $(this).val().trim()
-              );
-              column
-                .search(val ? '^' + val + '$' : '', true, false)
-                .draw();
-            });
-          //Este codigo sirve para que no se active el ordenamiento junto con el filtro
-          $(select).click(function(e) {
-            e.stopPropagation();
-          });
-          //===================
-
-          column.data().unique().sort().each(function(d, j) {
-            // select.append('<option value="' + d + '">' + d + '</option>')
-
-            select.append('<option value="' + d + '">' + d + '</option>')
-
-          });
-        });
-      },
-      "aoColumnDefs": [{
-        "bSearchable": false
-        //"aTargets": [ 1] sirve para indicar que columna no queremos que funcione el filtro
-      }]
-    });
-    //********Esta bendita linea hace la magia, adjusta el header de la tabla con el body
-    table.columns.adjust();
-  });
-</script>
+<!-- Modal Desinscribir -->
+<div class="modal fade" id="modalDes" tabindex="-1" aria-labelledby="TmodalDes" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="TmodalDes">Advertencia</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalAlerta-content">
+        ¿Realmente desea borrar su inscripción de la reunión?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-danger" id="btnModalDesinscribir" data-dismiss="modal">Aceptar</button>
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 
-<!-- Enlace con el JS para mandar datos de inscripción por Ajax -->
-<script src="JS/SaveCupo.js"></script>
 
+
+<!-- Enlace con el JS para mandar datos de inscripción por Ajax -->
+<script async>
+  const taller = <?php echo $taller; ?>;
+</script>
+
+<script async>
+  const tiporeunion = <?php echo $tipoReunion; ?>;
+  console.log(tiporeunion);
+</script>
+
+<script async src="JS/CrearHorario.js"></script>
+<!-- <script src="JS/AdmCupo.js"></script> -->
+<script>
+const btnInscribir = document.getElementById("btninscribir");
+const btnDes = document.getElementById("btndesinscribir");
+const btnDesinscribir = document.getElementById("btnModalDesinscribir");
+const telefono = document.getElementById("txttel");
+let exprs = new RegExp("([0-9]){4}-([0-9]){4}");
+
+console.log("ok");
+
+//evento del boton inscribir
+btnInscribir.addEventListener("click", () => {
+    if (exprs.test(telefono.value)) {
+        GuardarCupo(telefono.value);
+    }else{
+        $("#TmodalAlerta").html("¡Advertencia!");
+        $("#modalAlerta-content").html("Debes rellenar el campo del número de teléfono, siguiendo el patrón 0000-0000.");
+        $('#modalAlerta').modal('show');
+    }
+});
+
+//evento del campo telefono
+telefono.addEventListener('keypress', (e) => { 
+    if (RegExp("([0-9])").test(e.key)) {
+        if (telefono.value.length == 4) {
+            telefono.value += "-";
+        }
+    }else{
+        e.preventDefault();
+    }
+});
+
+//funcion que guarda la inscripcion o cupo
+function GuardarCupo(telefono) {
+
+    const reunion = document.getElementById("idreunion").value;
+    const alumno = document.getElementById("idalumno").value;
+    const horario = document.getElementById("idhorario").value;
+    const horaIn = document.getElementById("hinicio").value;
+    const horaFin = document.getElementById("hfin").value;
+
+    const datos = {
+        idalumno: alumno,
+        idreunion: reunion,
+        horario: horario,
+        telefono: telefono,
+        hinicio: horaIn,
+        hfin: horaFin,
+        inscribir: true
+    };
+
+    $.ajax({
+        type: "POST",
+        url: "./Modelo/ModeloReunion/inscrSinCupo.php",
+        data: datos,
+        success: function (response) {
+            const result = JSON.parse(response);
+            if (result.estado == "ok") {
+                $("#TmodalAlerta").html("Respuesta");
+                $("#modalAlerta-content").html(result.mensaje);
+                $('#modalAlerta').modal('show');
+                setTimeout(function(){
+                    window.location = "AlumnoReuniones.php";
+                },2000);  
+            }else {
+                $("#TmodalAlerta").html("Respuesta");
+                $("#modalAlerta-content").html(result.mensaje);
+                $('#modalAlerta').modal('show');
+            }
+        }
+    });
+}
+
+//evento del boton para mostrar el modal de desinscribir
+btnDes.addEventListener("click", () => {
+    console.log();
+    $('#modalDes').modal('show');
+});
+
+btnDesinscribir.addEventListener("click", () => {
+    const reunion = document.getElementById("idreunion").value;
+    const alumno = document.getElementById("idalumno").value;
+
+    const datos = {
+        idalumno: alumno,
+        idreunion: reunion,
+        desinscribir: true
+    };
+
+    console.log("des", datos);
+
+    $.ajax({
+        type: "POST",
+        url: "./Modelo/ModeloReunion/inscrSinCupo.php",
+        data: datos,
+        success: function (response) {
+            const result = JSON.parse(response);
+            if (result.estado == "ok") {
+                $("#TmodalAlerta").html("Respuesta");
+                $("#modalAlerta-content").html(result.mensaje);
+                $('#modalAlerta').modal('show');
+                setTimeout(function(){
+                    window.location = "AlumnoReuniones.php";
+                },2000);    
+            }else {
+                $("#TmodalAlerta").html("Respuesta");
+                $("#modalAlerta-content").html(result.mensaje);
+                $('#modalAlerta').modal('show');
+            }
+        }
+    });
+    
+});
+</script>
 <!-- /#wrapper -->
 
 
