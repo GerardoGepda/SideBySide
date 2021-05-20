@@ -58,7 +58,7 @@ while ($row = $stmt4->fetch()) {
             <td>{{e.horainicio}}-{{e.horafin}}</td>
             <td></td>
             <td><a v-bind:href="'Modelo/ModeloReunion/cancelar.php?id=<?php echo $_GET["id"] ?>&reunion=<?php echo $taller ?>&horario='+e.id" class='btn btn-danger'>Cancelar</a></td>
-            </td>
+            <td :class="['yes', ( e.is_typing == 'yes' && e.estado == 'disponible' ? 'no' : 'error' )] " id="info">escribiendo...</td>
           </tr>
           <?php
           if ($cantidad >= 1) { ?>
@@ -69,6 +69,7 @@ while ($row = $stmt4->fetch()) {
               <td></td>
               <td><button class='btn btn-success' disabled>Inscribir</button> </td>
               </td>
+              <td :class="['yes', ( e.is_typing == 'yes' && e.estado == 'disponible' ? 'no' : 'error' )] " id="info">escribiendo...</td>
             </tr>
           <?php } else { ?>
             <tr @click="activate(e.id)" @focusout="desactive(e.id)" :class="{ active : active_el == e.id }" v-for="e in all_data3 ">
