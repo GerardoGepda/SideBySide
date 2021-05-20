@@ -15,17 +15,15 @@ var app = new Vue({
         op: 0,
         contador: 1,
         active_el: 0,
-        timer: '',
         polling: null
     },
     created: function () {
         this.polling = setInterval(() => {
-            this.contador =1;
             this.get_contacts();
             this.cancelarInscripcion();
             this.disponibles();
-            console.clear();
-        }, 3000)
+        }, 3000);
+
     },
 
 

@@ -1,10 +1,7 @@
-<?php
-require_once 'templates/head.php';
-?>
+<?php require_once 'templates/head.php'; ?>
 <title>Horarios Disponibles</title>
 <?php
 require_once 'templates/header.php';
-//require_once 'templates/MenuVertical.php';
 require_once 'templates/MenuHorizontal.php';
 require '../Conexion/conexion.php';
 
@@ -31,9 +28,7 @@ while ($fila = $stmt1->fetch()) {
   <br>
   <br>
   <div>
-    <?php
-    include "config/Alerta.php";
-    ?>
+    <?php  include "config/Alerta.php";  ?>
   </div>
   <div class="row">
     <div class="col">

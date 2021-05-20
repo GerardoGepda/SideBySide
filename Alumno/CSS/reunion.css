@@ -27,18 +27,15 @@
   /* The typing effect */
 @keyframes typing {
     from { width: 0 }
-    to { width: 20% }
+    to { width: 0% }
   }
   
   /* The typewriter cursor effect */
   @keyframes blink-caret {
     from, to { border-color: transparent }
-    50% { border-color: red }
+    0% { border-color: red }
   }
-  
-@keyframes type{ 
-    from { width: 0; } 
-  } 
+ 
 
   #info:nth-child(1) {
     color: green;
