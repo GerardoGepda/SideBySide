@@ -21,14 +21,6 @@ while ($fila = $stmt1->fetch()) {
   $alumno = $fila["ID_Alumno"];
 }
 
-
-$mesActual = date("m");
-$idHorario;
-$horainicio;
-$horafin;
-$stmt = $dbh->prepare("SELECT `IDHorRunion`, `HorarioInicio`, `HorarioFinalizado`, `Canitdad`, `TiempoReunion` FROM `horariosreunion` WHERE `ID_Reunion`='" . $taller . "'");
-// Ejecutamos
-$stmt->execute();
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
@@ -77,24 +69,17 @@ $stmt->execute();
               <input type="text" id='txttel' name="txttel" class="form-control-sm" v-on:keypress='validarTelefono($event)' v-model="valor" value="valor" placeholder="00000000" maxlength='8' required>
             </td>
             <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'">
-            <div v-if="verificado == 0">
-              no inscrito
-            </div>
-            <div v-else>
-              inscrito
-            </div>
-              <?php
-              if ($result == 0) {
-                echo "<button class='btn btn-warning' id='btninscribir'  v-on:click='inscribir' title='Inscribir' value='btninscribir'>
-                <i class='fas fa-pen'></i></button>";
-                //añadimos el boton desinscribir pero oculto para evitar errores en JS
-                echo "<button style='display: none' id='btndesinscribir' value='btndesinscribir'></button>";
-              } else {
-                echo "<button class='btn btn-danger' id='btndesinscribir' value='btndesinscribir'  title='Desinscribir'><i class='fas fa-ban'></i></button>";
-                //añadimos el boton inscribir pero oculto para evitar errores en JS
-                echo "<button style='display: none' id='btninscribir' v-on:click='inscribir' value='btninscribir'></button>";
-              }
-              ?>
+              <div v-if="verificado == 0">
+                <button class='btn btn-warning' id='btninscribir' v-on:click='inscribir' title='Inscribir' value='btninscribir'>
+                  <i class='fas fa-pen'></i></button>
+                <!-- añadimos el boton desinscribir pero oculto para evitar errores en JS -->
+                <button style='display: none' id='btndesinscribir' v-on:click='cancelar' value='btndesinscribir'></button>
+              </div>
+              <div v-else="">
+                <button class='btn btn-danger' id='btndesinscribir' value='btndesinscribir' v-on:click='cancelar' title='Desinscribir'><i class='fas fa-ban'></i></button>
+                <!-- añadimos el boton inscribir pero oculto para evitar errores en JS -->
+                <button style='display: none' id='btninscribir' v-on:click='inscribir' value='btninscribir'></button>
+              </div>
             </td>
             <td v-else="">
               <a v-bind:href="'listadoxReunion.php?id='+e.IDHorRunion+'&reunion='+e.ID_Reunion" class="btn btn-warning"><i class="fas fa-user-edit"></i></a>
@@ -112,11 +97,11 @@ $stmt->execute();
 
 <div id="dReunionDiv">
   <div v-for="e in infoReunion">
-    <input type="hidden" id="idreunion" v-bind:value="valReu == e.ID_Reunion" v-model="valReu">
-    <input type="hidden" id="idalumno" value="<?php echo $alumno;?>">
-    <input type="hidden" id="idhorario" v-bind:value="e.IDHorRunion" v-model="valHorario">
-    <input type="hidden" id="hinicio" v-bind:value="e.HorarioInicio" v-model="valHinicio">
-    <input type="hidden" id="hfin" v-bind:value="e.HorarioFinalizado" v-model="valHfin">
+    <input type="hidden" id="idreunion" v-bind:value="e.ID_Reunion">
+    <input type="hidden" id="idalumno" value="<?php echo $alumno; ?>">
+    <input type="hidden" id="idhorario" v-bind:value="e.IDHorRunion">
+    <input type="hidden" id="hinicio" v-bind:value="e.HorarioInicio">
+    <input type="hidden" id="hfin" v-bind:value="e.HorarioFinalizado">
   </div>
 </div>
 
@@ -156,7 +141,7 @@ $stmt->execute();
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-danger" id="btnModalDesinscribir" data-dismiss="modal">Aceptar</button>
+        <button type="button" class="btn btn-danger" id="btnModalDesinscribir" v-on:click='eliminar' data-dismiss="modal">Aceptar</button>
       </div>
     </div>
   </div>
@@ -174,6 +159,4 @@ $stmt->execute();
 </script>
 
 <script async src="JS/CrearHorario.js"></script>
-
-
 <?php require_once 'templates/footer.php'; ?>

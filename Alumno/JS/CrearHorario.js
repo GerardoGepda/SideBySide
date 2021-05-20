@@ -2,6 +2,10 @@ var datareu = {
     idreunion: taller,
 };
 
+const alumno = document.getElementById("idalumno").value;
+const reunion2 = document.getElementById("idreunion").value;
+
+
 let exprs = new RegExp("([0-9]){8}");
 let telefono = document.getElementById("txttel");
 
@@ -13,20 +17,36 @@ var reunion = new Vue({
         valor: '',
         tmp: [],
         refresh: null,
-        verificado: 0,
-        valReu: '',
-        valHorario: '',
-        valHinicio: '',
-        valHfin: '',
+        verificado: null,
+        tester: null
     },
     created: function () {
-        //this.VerificarInscripcion();
         this.refresh = setInterval(() => {
             this.reuniones();
             this.VerificarInscripcion();
         }, 3000);
     },
     methods: {
+        VerificarInscripcion: function () {
+            const r = document.getElementById("idreunion").value;
+            const datos = {
+                verificar: true,
+                alumno: alumno,
+                reunion: r
+            }
+            fetch(
+                "Modelo/ModeloReunion/verificar.php", {
+                method: 'POST', // or 'PUT'
+                body: JSON.stringify(datos),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(json => {
+                    this.verificado = json.verify[0];
+                })
+        },
         reuniones: function () {
             fetch(
                 "Modelo/ModeloReunion/selectreuniones.php", {
@@ -44,6 +64,7 @@ var reunion = new Vue({
                 })
             return this.tmp;
         },
+
         inscribir: function () {
             console.log("iniciando");
             if (exprs.test((this.valor))) {
@@ -55,29 +76,18 @@ var reunion = new Vue({
                 $('#modalAlerta').modal('show');
             }
         },
-        validarTelefono: function (e) {
-            if (!RegExp("([0-9])").test(e.key)) {
-                e.preventDefault();
-            }
+        cancelar: function () {
+            $('#modalDes').modal('show');
         },
-        GuardarCupo: function (telefono) {
-
-            console.log(this.valReu);
-            const reunion = document.getElementById("idreunion").value;
-            const alumno = document.getElementById("idalumno").value;
-            const horario = document.getElementById("idhorario").value;
-            const horaIn = document.getElementById("hinicio").value;
-            const horaFin = document.getElementById("hfin").value;
-
+        eliminar: function () {
+            const re = document.getElementById("idreunion").value;
             const datos = {
                 idalumno: alumno,
-                idreunion: reunion,
-                horario: horario,
-                telefono: telefono,
-                hinicio: horaIn,
-                hfin: horaFin,
-                inscribir: true
+                idreunion: re,
+                desinscribir: true
             };
+
+            console.log("des", datos);
 
             $.ajax({
                 type: "POST",
@@ -97,25 +107,47 @@ var reunion = new Vue({
                 }
             });
         },
-        VerificarInscripcion: function() {
-            const alumno = document.getElementById("idalumno").value;
-            const reunion = document.getElementById("idreunion").value;
-            const datos = {
-                verificar: true,
-                alumno: alumno,
-                reunion: reunion
+        validarTelefono: function (e) {
+            if (!RegExp("([0-9])").test(e.key)) {
+                e.preventDefault();
             }
+        },
+        GuardarCupo: function (telefono) {
+            const horario = document.getElementById("idhorario").value;
+            const horaIn = document.getElementById("hinicio").value;
+            const horaFin = document.getElementById("hfin").value;
+            const r = document.getElementById("idreunion").value;
 
+            const datos = {
+                idalumno: alumno,
+                idreunion: r,
+                horario: horario,
+                telefono: telefono,
+                hinicio: horaIn,
+                hfin: horaFin,
+                inscribir: true
+            };
+
+            console.log(datos);
             $.ajax({
                 type: "POST",
                 url: "./Modelo/ModeloReunion/inscrSinCupo.php",
                 data: datos,
                 success: function (response) {
-                    this.verificado = parseInt(response);
-                    console.log(this.verificado);
+                    const result = JSON.parse(response);
+                    if (result.estado == "ok") {
+                        $("#TmodalAlerta").html("Respuesta");
+                        $("#modalAlerta-content").html(result.mensaje);
+                        $('#modalAlerta').modal('show');
+                    } else {
+                        $("#TmodalAlerta").html("Respuesta");
+                        $("#modalAlerta-content").html(result.mensaje);
+                        $('#modalAlerta').modal('show');
+                    }
                 }
             });
         },
+
     },
 });
 
@@ -124,7 +156,7 @@ var dReunion = new Vue({
     data: {
         infoReunion: [],
     },
-    created: function() {
+    created: function () {
         this.infoReunion;
     }
 });
