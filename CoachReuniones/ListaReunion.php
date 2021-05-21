@@ -189,7 +189,6 @@ include 'Modularidad/MenuVertical.php';
                                 </div>
 
                                 <?php
-
                                 if ($consulta2->rowCount() >= 1) {
                                     while ($fila2 = $consulta2->fetch()) {
                                         $tipo = $fila2['Tipo'];
@@ -206,6 +205,10 @@ include 'Modularidad/MenuVertical.php';
                                     </div>
 
                                     ";
+                                } else if($tipo == "Reunión General" || $tipo == "Charla Informativa") {
+                                    echo "
+                                        <input type ='text' name ='tipo' id='tipo' hidden value='$tipo'/>
+                                    ";
                                 } else {
                                     echo "<div class='col'>
                                     <div class='md-form'>
@@ -216,6 +219,7 @@ include 'Modularidad/MenuVertical.php';
                                             <option value='60'>1 Hora</option>
                                         </select>
                                         <label for='materialRegisterFormFirstName' style='color: black'>Duración por sesión</label>
+                                        <input type ='text' name ='tipo' id='tipo' hidden value='$tipo'/>
                                     </div>
                                 </div>";
                                 }
