@@ -68,8 +68,9 @@ var reunion = new Vue({
         inscribir: function () {
             console.log("iniciando");
             if (exprs.test((this.valor))) {
-                const telefono = this.valor.substring(0, 4) + "-" + this.valor.substring(4, 8);
-                this.GuardarCupo(telefono);
+                //const telefono = this.valor.substring(0, 4) + "-" + this.valor.substring(4, 8);
+                //this.GuardarCupo(telefono);
+                console.log(this.valor);
             } else {
                 $("#TmodalAlerta").html("¡Advertencia!");
                 $("#modalAlerta-content").html("Debes rellenar el campo del número de teléfono,    siguiendo el patrón 00000000.");
@@ -108,7 +109,12 @@ var reunion = new Vue({
             });
         },
         validarTelefono: function (e) {
-            if (!RegExp("([0-9])").test(e.key)) {
+            const tel = document.querySelector('#txttel');
+            if (RegExp("([0-9])").test(e.key)) {
+                if (tel.value.length == 4) {
+                    tel.value += "-";
+                }
+            }else{
                 e.preventDefault();
             }
         },

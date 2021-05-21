@@ -66,7 +66,7 @@ while ($fila = $stmt1->fetch()) {
             <td v-else="">{{e.Canitdad}} </td>
             <td>{{e.TiempoReunion}} Minutos</td>
             <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'">
-              <input type="text" id='txttel' name="txttel" class="form-control-sm" v-on:keypress='validarTelefono($event)' v-model="valor" value="valor" placeholder="00000000" maxlength='8' required>
+              <input type="text" id='txttel' name="txttel" class="form-control-sm" v-on:keypress='validarTelefono($event)' v-model="valor" value="valor" placeholder="0000-0000" maxlength='9' required>
             </td>
             <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'">
               <div v-if="verificado == 0">
