@@ -19,7 +19,7 @@ while ($fila = $stmt1->fetch()) {
 
 
 // consulta para saber si un alumno se ha inscrito a más de un cupo
-$stmt4 = $dbh->query("SELECT COUNT(*) FROM `inscripcionreunion` WHERE id_alumno = '$alumno' ");
+$stmt4 = $dbh->query("SELECT COUNT(*) FROM `inscripcionreunion` WHERE id_alumno = '$alumno' AND  id_reunion  = " . $_GET["reunion"] . " ");
 
 while ($row = $stmt4->fetch()) {
   $cantidad  = $row[0];
@@ -45,34 +45,35 @@ while ($row = $stmt4->fetch()) {
           <th>inscribir</th>
         </thead>
         <tbody id="app">
-          <tr v-for="data in all_data ">
-            <td>{{contador++}}</td>
+          <tr v-for="data in all_data " :class="{ active : active_el == e.id }">
+            <td>{{data.id}}</td>
             <td>{{data.Nombre}}</td>
             <td>{{data.horainicio}}-{{data.horafin}}</td>
             <td></td>
             <td><button class='btn btn-warning' disabled>Cupo Lleno </button></td>
           </tr>
-          <tr v-for="e in all_data2 ">
-            <td>{{contador++}}</td>
+          <tr v-for="e in all_data2 " :class="{ active : active_el == e.id }">
+            <td>{{e.id}}</td>
             <td>{{e.Nombre}}</td>
             <td>{{e.horainicio}}-{{e.horafin}}</td>
             <td></td>
             <td><a v-bind:href="'Modelo/ModeloReunion/cancelar.php?id=<?php echo $_GET["id"] ?>&reunion=<?php echo $taller ?>&horario='+e.id" class='btn btn-danger'>Cancelar</a></td>
-            </td>
+            <td :class="['yes', ( e.is_typing == 'yes' && e.estado == 'disponible' ? 'no' : 'error' )] " id="info">escribiendo...</td>
           </tr>
           <?php
           if ($cantidad >= 1) { ?>
             <tr v-for="e in all_data3 ">
-              <td>{{contador++}}</td>
+              <td>{{e.id}}</td>
               <td>Disponible</td>
               <td>{{e.horainicio}}-{{e.horafin}}</td>
               <td></td>
               <td><button class='btn btn-success' disabled>Inscribir</button> </td>
               </td>
+              <td :class="['yes', ( e.is_typing == 'yes' && e.estado == 'disponible' ? 'no' : 'error' )] " id="info">escribiendo...</td>
             </tr>
           <?php } else { ?>
-            <tr @click="activate(e.id)" :class="{ active : active_el == e.id }" v-for="e in all_data3 ">
-              <td>{{contador++}}</td>
+            <tr @click="activate(e.id)" @focusout="desactive(e.id)" :class="{ active : active_el == e.id }" v-for="e in all_data3 ">
+              <td>{{e.id}}</td>
               <td>Disponible</td>
               <td>{{e.horainicio}}-{{e.horafin}}</td>
               <td colspan="2">
@@ -81,8 +82,8 @@ while ($row = $stmt4->fetch()) {
                   <input type='hidden' name='horario' value='<?php echo $_GET["id"] ?>'>
                   <input type='hidden' name='reunion' value='<?php echo $_GET["reunion"] ?>'>
                   <input type='hidden' name='alumno' value='<?php echo $alumno ?>'>
-                  <input type='text'   class='form-control w-50 d-inline example' name='telefono' placeholder='0000-0000' pattern='[0-9]{4}-[0-9]{4}' title='El teleono debe ser en el formato 0000-0000' required>
-                  <button type='submit' @click="desactive(e.id)" class='btn btn-primary d-inline ml-5' name='inscribir' value='Inscribir'>Inscribir</button>
+                  <input type='text' class='form-control w-50 d-inline example' name='telefono' placeholder='0000-0000' pattern='[0-9]{4}-[0-9]{4}' title='El teleono debe ser en el formato 0000-0000' required>
+                  <button type='submit' class='btn btn-primary d-inline ml-5' name='inscribir' value='Inscribir'>Inscribir</button>
                 </form>
               </td>
               <td :class="['yes', ( e.is_typing == 'yes' && e.estado == 'disponible' ? 'no' : 'error' )] " id="info">escribiendo...</td>
@@ -103,8 +104,5 @@ while ($row = $stmt4->fetch()) {
 </script>
 <!-- consultas para reuniones -->
 <script async src="JS/vue.js"></script>
-
-<!-- datatable -->
-<script src="./JS/datatable.js"></script>
 
 <?php require_once 'templates/footer.php'; ?>

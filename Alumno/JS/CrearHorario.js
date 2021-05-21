@@ -87,9 +87,6 @@ var reunion = new Vue({
                 idreunion: re,
                 desinscribir: true
             };
-
-            console.log("des", datos);
-
             $.ajax({
                 type: "POST",
                 url: "./Modelo/ModeloReunion/inscrSinCupo.php",
@@ -133,8 +130,6 @@ var reunion = new Vue({
                 hfin: horaFin,
                 inscribir: true
             };
-
-            console.log(datos);
             $.ajax({
                 type: "POST",
                 url: "./Modelo/ModeloReunion/inscrSinCupo.php",
