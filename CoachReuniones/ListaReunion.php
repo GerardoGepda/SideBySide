@@ -188,17 +188,38 @@ include 'Modularidad/MenuVertical.php';
                                     </div>
                                 </div>
 
-                                <div class="col">
-                                    <div class="md-form">
-                                        <select name="cantidad" id="cantidad" class="form-control" require>
-                                            <option value="10">10 Minutos</option>
-                                            <option value="15">15 Minutos</option>
-                                            <option value="30">30 Minutos</option>
-                                        </select>
-                                        <label for="materialRegisterFormFirstName" style="color: black">Duración por sesión</label>
-                                    </div>
-                                </div>
+                                <?php
 
+                                if ($consulta2->rowCount() >= 1) {
+                                    while ($fila2 = $consulta2->fetch()) {
+                                        $tipo = $fila2['Tipo'];
+                                    }
+                                }
+                                if ($tipo == 'Sesión Grupal') {
+                                    echo "
+                                    <div class='col'>
+                                        <div class='md-form'>
+                                            <input type='number' min='0' max='500' name='cupo' id='cupo' class='form-control' />
+                                            <input type ='text' name ='tipo' id='tipo' hidden value='$tipo'/>
+                                            <label for='materialRegisterFormFirstName' style='color: black'>Cantidad de cupos:</label>
+                                        </div>
+                                    </div>
+
+                                    ";
+                                } else {
+                                    echo "<div class='col'>
+                                    <div class='md-form'>
+                                        <select name='cantidad' id='cantidad' class='form-control' require>
+                                            <option value='10'>10 Minutos</option>
+                                            <option value='15'>15 Minutos</option>
+                                            <option value='30'>30 Minutos</option>
+                                            <option value='60'>1 Hora</option>
+                                        </select>
+                                        <label for='materialRegisterFormFirstName' style='color: black'>Duración por sesión</label>
+                                    </div>
+                                </div>";
+                                }
+                                ?>
 
                         </div>
                         <div class="modal-footer">

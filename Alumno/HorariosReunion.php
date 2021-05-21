@@ -40,7 +40,7 @@ while ($fila = $stmt1->fetch()) {
             <th>Cupo</th>
             <th>Duración por sesión</th>
             <?php
-            if ($tipoReunion != "Sesión individual" && $tipoReunion != "Otro") {
+           if ($tipoReunion != "Sesión individual" && $tipoReunion != "Otro" && $tipoReunion != "Sesión Grupal" ) {
               echo "<th>Teléfono</th>";
               if ($result == 0) {
                 echo "<th>Inscribir</th>";
@@ -57,13 +57,13 @@ while ($fila = $stmt1->fetch()) {
           <tr v-for="e in dinscrito">
             <td>{{e.HorarioInicio}}</td>
             <td>{{e.HorarioFinalizado}}</td>
-            <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'">Ilimitado</td>
+            <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro' && e.Tipo  != 'Sesión Grupal' ">Ilimitado</td>
             <td v-else="">{{e.Canitdad}} </td>
             <td>{{e.TiempoReunion}} Minutos</td>
-            <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'">
+            <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'  && e.Tipo  != 'Sesión Grupal' ">
               <input type="text" id='txttel' name="txttel" class="form-control-sm" v-on:keypress='validarTelefono($event)' v-model="valor" value="valor" placeholder="0000-0000" maxlength='9' required>
             </td>
-            <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'">
+            <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro' && e.Tipo != 'Sesión Grupal' ">
               <div v-if="verificado == 0">
                 <button class='btn btn-warning' id='btninscribir' v-on:click='inscribir' title='Inscribir' value='btninscribir'>
                   <i class='fas fa-pen'></i></button>

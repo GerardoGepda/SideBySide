@@ -3,8 +3,6 @@ var data2 = {
     horario: horas
 };
 
-
-
 var app = new Vue({
     el: "#app",
     data: {
@@ -18,6 +16,11 @@ var app = new Vue({
         polling: null
     },
     created: function () {
+
+        this.get_contacts();
+        this.cancelarInscripcion();
+        this.disponibles();
+
         this.polling = setInterval(() => {
             this.get_contacts();
             this.cancelarInscripcion();
