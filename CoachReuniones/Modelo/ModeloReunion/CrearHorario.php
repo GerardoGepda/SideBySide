@@ -8,10 +8,9 @@ $varLugar = $_SESSION['Lugar'];
 error_reporting(0);
 
 if ($varsesion == null || $varsesion = "") {
-	header("Location: ../login.php");
+	header("Location: ../../../index.php");
 	die();
 }
-
 date_default_timezone_set('America/El_Salvador');
 
 $fecha =  date('Y-m-d');
@@ -34,15 +33,15 @@ if (isset($_POST['Guardar_Datos'])) {
 	if ($tipo == 'Sesión Grupal') {
 		$cupos = $_POST['cupo'];
 		$tiempoN = minutosTranscurridos($HoraInicio, $HoraFinal);
-	} else if($tipo == "Reunión General" || $tipo == "Charla Informativa") {
+	} else if ($tipo == "Reunión General" || $tipo == "Charla Informativa") {
 		$tiempoN = minutosTranscurridos($HoraInicio, $HoraFinal);
 		$cupos = 0;
 	} else {
 		$fecha1 = new DateTime($fecha . ' ' . $HoraInicio . ':00');
 		$fecha2 = new DateTime($fecha . ' ' . $HoraFinal . ':00');
 		$intervalo = $fecha1->diff($fecha2);
-		$cupos = $intervalo->format('%h') * 3600 / 60 / $tiempoN; //00 años 0 meses 0 días 08 horas 0 minutos 0 segundos
 		$tiempoN = $_POST['cantidad'];
+		$cupos = $intervalo->format('%h') * 3600 / 60 / $tiempoN; //00 años 0 meses 0 días 08 horas 0 minutos 0 segundos
 	}
 
 

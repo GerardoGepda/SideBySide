@@ -225,7 +225,6 @@ include 'Modularidad/MenuVertical.php';
                                             <option value='60'>1 Hora</option>
                                         </select>
                                         <label for='materialRegisterFormFirstName' style='color: black'>Duración por sesión</label>
-                                        <input type ='text' name ='tipo' id='tipo' hidden value='$typeReunion'/>
                                     </div>
                                 </div>";
                                 }
