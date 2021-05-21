@@ -6,7 +6,7 @@ const alumno = document.getElementById("idalumno").value;
 const reunion2 = document.getElementById("idreunion").value;
 
 
-let exprs = new RegExp("([0-9]){8}");
+let exprs = new RegExp("([0-9]){4}-([0-9]){4}");
 let telefono = document.getElementById("txttel");
 
 var reunion = new Vue({
@@ -21,6 +21,7 @@ var reunion = new Vue({
         tester: null
     },
     created: function () {
+        this.reuniones();
         this.refresh = setInterval(() => {
             this.reuniones();
             this.VerificarInscripcion();
@@ -68,9 +69,7 @@ var reunion = new Vue({
         inscribir: function () {
             console.log("iniciando");
             if (exprs.test((this.valor))) {
-                //const telefono = this.valor.substring(0, 4) + "-" + this.valor.substring(4, 8);
-                //this.GuardarCupo(telefono);
-                console.log(this.valor);
+                this.GuardarCupo(this.valor);
             } else {
                 $("#TmodalAlerta").html("¡Advertencia!");
                 $("#modalAlerta-content").html("Debes rellenar el campo del número de teléfono,    siguiendo el patrón 00000000.");
@@ -79,31 +78,6 @@ var reunion = new Vue({
         },
         cancelar: function () {
             $('#modalDes').modal('show');
-        },
-        eliminar: function () {
-            const re = document.getElementById("idreunion").value;
-            const datos = {
-                idalumno: alumno,
-                idreunion: re,
-                desinscribir: true
-            };
-            $.ajax({
-                type: "POST",
-                url: "./Modelo/ModeloReunion/inscrSinCupo.php",
-                data: datos,
-                success: function (response) {
-                    const result = JSON.parse(response);
-                    if (result.estado == "ok") {
-                        $("#TmodalAlerta").html("Respuesta");
-                        $("#modalAlerta-content").html(result.mensaje);
-                        $('#modalAlerta').modal('show');
-                    } else {
-                        $("#TmodalAlerta").html("Respuesta");
-                        $("#modalAlerta-content").html(result.mensaje);
-                        $('#modalAlerta').modal('show');
-                    }
-                }
-            });
         },
         validarTelefono: function (e) {
             const tel = document.querySelector('#txttel');
@@ -160,4 +134,43 @@ var dReunion = new Vue({
     created: function () {
         this.infoReunion;
     }
+});
+
+var ObjDelteInscr = new Vue({
+    el: "#modalDes",
+    data: {
+        infoReunion: [],
+    },
+    created: function () {
+        this.infoReunion;
+    },
+    methods: {
+        eliminar: function () {
+            const re = document.getElementById("idreunion").value;
+            const datos = {
+                idalumno: alumno,
+                idreunion: re,
+                desinscribir: true
+            };
+            console.log(datos);
+            $.ajax({
+                type: "POST",
+                url: "Modelo/ModeloReunion/inscrSinCupo.php",
+                data: datos,
+                success: function (response) {
+                    console.log("success");
+                    const result = JSON.parse(response);
+                    if (result.estado == "ok") {
+                        $("#TmodalAlerta").html("Respuesta");
+                        $("#modalAlerta-content").html(result.mensaje);
+                        $('#modalAlerta').modal('show');
+                    } else {
+                        $("#TmodalAlerta").html("Respuesta");
+                        $("#modalAlerta-content").html(result.mensaje);
+                        $('#modalAlerta').modal('show');
+                    }
+                }
+            });
+        },
+    },
 });
