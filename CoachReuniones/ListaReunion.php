@@ -22,7 +22,18 @@ if (isset($_GET['id'])) {
      INNER JOIN alumnos alu on IR.id_alumno = alu.ID_Alumno LEFT JOIN reuniones reu 
      on IR.id_reunion = reu.ID_Reunion LEFT JOIN horariosreunion HR ON IR.Horario = 
      HR.IDHorRunion WHERE IR.id_reunion = ? ORDER BY `HR`.`HorarioInicio` DESC ");
+
+
+    $consultaN = $pdo->prepare("SELECT Tipo   FROM reuniones  WHERE ID_Reunion  = ? ");
+
+
     $consulta2->execute(array($id));
+    $consultaN->execute(array($id));
+
+    while ($row = $consultaN->fetch()) {
+        $typeReunion = $row['Tipo'];
+    }
+
 
     $consulta3 = $pdo->prepare("SELECT * FROM horariosreunion h INNER JOIN reuniones r on r.ID_Reunion = h.ID_Reunion  WHERE h.ID_Reunion = ? ");
     $consulta3->execute(array($id));
@@ -189,25 +200,20 @@ include 'Modularidad/MenuVertical.php';
                                 </div>
 
                                 <?php
-                                if ($consulta2->rowCount() >= 1) {
-                                    while ($fila2 = $consulta2->fetch()) {
-                                        $tipo = $fila2['Tipo'];
-                                    }
-                                }
-                                if ($tipo == 'Sesión Grupal') {
+                                if ($typeReunion == 'Sesión Grupal') {
                                     echo "
                                     <div class='col'>
                                         <div class='md-form'>
                                             <input type='number' min='0' max='500' name='cupo' id='cupo' class='form-control' />
-                                            <input type ='text' name ='tipo' id='tipo' hidden value='$tipo'/>
+                                            <input type ='text' name ='tipo' id='tipo' hidden value='$typeReunion'/>
                                             <label for='materialRegisterFormFirstName' style='color: black'>Cantidad de cupos:</label>
                                         </div>
                                     </div>
 
                                     ";
-                                } else if($tipo == "Reunión General" || $tipo == "Charla Informativa") {
+                                } else if ($typeReunion == "Reunión General" || $typeReunion == "Charla Informativa") {
                                     echo "
-                                        <input type ='text' name ='tipo' id='tipo' hidden value='$tipo'/>
+                                        <input type ='text' name ='tipo' id='tipo' hidden value='$typeReunion'/>
                                     ";
                                 } else {
                                     echo "<div class='col'>
@@ -219,7 +225,7 @@ include 'Modularidad/MenuVertical.php';
                                             <option value='60'>1 Hora</option>
                                         </select>
                                         <label for='materialRegisterFormFirstName' style='color: black'>Duración por sesión</label>
-                                        <input type ='text' name ='tipo' id='tipo' hidden value='$tipo'/>
+                                        <input type ='text' name ='tipo' id='tipo' hidden value='$typeReunion'/>
                                     </div>
                                 </div>";
                                 }
@@ -617,7 +623,7 @@ include 'Modularidad/MenuVertical.php';
                                                 <th>" . $fila3['HorarioInicio'] . "</th>
                                                 <th>" . $fila3['HorarioFinalizado'] . "</th> ";
 
-                                                        if ($fila3['Tipo'] == 'Reunión General') {
+                                                        if ($fila3['Tipo'] == 'Reunión General' || $fila3['Tipo'] == 'Charla Informativa') {
                                                             echo "<th>Ilimitado</th>";
                                                         } else {
                                                             echo "<th>" . $fila3['Canitdad'] . "</th>";

@@ -34,7 +34,7 @@ if (isset($_POST['Guardar_Datos'])) {
 	if ($tipo == 'Sesión Grupal') {
 		$cupos = $_POST['cupo'];
 		$tiempoN = minutosTranscurridos($HoraInicio, $HoraFinal);
-	} else if($tipo == "Reunión General" && $tipo == "Charla Informativa") {
+	} else if($tipo == "Reunión General" || $tipo == "Charla Informativa") {
 		$tiempoN = minutosTranscurridos($HoraInicio, $HoraFinal);
 		$cupos = 0;
 	} else {
