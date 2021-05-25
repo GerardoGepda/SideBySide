@@ -302,6 +302,12 @@ function CumGeneral(cum) {
     document.getElementById('cumGeneral').innerHTML = template;
 }
 
+
+function graficasByAlumno(n1 , n2, n3) {
+    console.log(n1);
+    console.log(n2);
+    console.log(n3);
+}
 // proceso de llenado graficas
 function loadUniversity(datos) {
     // inicio de declaración de variables
@@ -325,8 +331,15 @@ function loadUniversity(datos) {
     total2 = 0;
     total3 = 0;
 
+    let cum = [];
+
     // cum global 
     let cumGlobal
+
+
+    let one = [];
+    let two = [];
+    let three = [];
 
     // fin de declaración de arreglos
     //------------------------------------------------ 
@@ -344,7 +357,16 @@ function loadUniversity(datos) {
         lista1.push(dato.l1);
         lista2.push(dato.l2);
         lista3.push(dato.l3);
+        cum.push(dato.globalInfo);
+        one.push(dato.alumnosAprobados);
+        two.push(dato.alumnosReprobados);
+        three.push(dato.alumnosRetirados);
     });
+
+
+    graficasByAlumno(one, two, three);
+
+    
     // calcular cum global
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     cumGlobal = (cum1.reduce(reducer)) / cum1.length;
@@ -375,15 +397,26 @@ function loadUniversity(datos) {
     cont6 = 0;
 
     let contador = 4;
+    let show = [];
 
+
+    cum.forEach(e => {
+        show.push(parseFloat(e.cum).toFixed(1));
+    });
     // este for sirve para cargar las graficas de todas las universidades
     for (let index = 0; index < nombres.length; index++) {
+
         Highcharts.chart('u-' + (contador++) + '', {
             chart: {
                 styledMode: false,
             },
             title: {
                 text: nombres[index]
+            },
+            subtitle: {
+                text: '* CUM: ' + show[index],
+                align: 'right',
+                x: -10
             },
             xAxis: {
                 categories: ['Universidad', 'Aprobados', 'Reprobados', 'Retirados']
@@ -405,7 +438,6 @@ function loadUniversity(datos) {
             colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3']
         });
     }
-    console.clear();
 }
 
 

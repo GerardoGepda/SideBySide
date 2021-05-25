@@ -146,12 +146,19 @@ $cantidad = $query->rowCount();
             </div>
         </div>
     </div>
-    <br>
+    <h3 class="materia">Estadística por materia</h3>
     <div class="graficas">
         <div id="Ugraph"></div>
         <div id="graphicTwo"></div>
         <div id="graphicThree"></div>
     </div>
+    <h3 class="materia">Estadística por alumno</h3>
+    <div class="graficas">
+        <div id="one"></div>
+        <div id="two"></div>
+        <div id="three"></div>
+    </div>
+
 </div>
 
 <div class="title">

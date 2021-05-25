@@ -105,6 +105,7 @@
         height: 100%;
     }
 
+    #one, #two,#three,
     #Ugraph,
     #graphicTwo,
     #graphicThree {
@@ -264,6 +265,11 @@
     }
 
     #content2 h3 {
+        color: #be0032;
+        margin-bottom: 1%;
+        font-size: 20px;
+    }
+    .materia{
         color: #be0032;
         margin-bottom: 1%;
         font-size: 20px;
