@@ -267,7 +267,7 @@ function CreatDivs(e, ids) {
     let cont3 = 4;
     for (let index = 0; index < e; index++) {
         templete += `
-            <div class='uni-content my-1 ${ids[index].replace(/\s/g, "-")}' style='height: 285px;'>
+            <div class='uni-content my-1 ${ids[index].replace(/\s/g, "-")}' style='height: 285px; position:relative; z-index:1;'>
                 <div id='u-${contador++}' style='height: 220px;'></div>
                 <div style='height: 60px; margin: 0px auto;'>
                     <center>
@@ -275,6 +275,12 @@ function CreatDivs(e, ids) {
                         <button type="button" class="btn" data-toggle="modal" data-target="#reprobadas-${cont2++}" style='background-color: #FF8C64;'>Reprobadas</button>
                         <button type="button" class="btn" data-toggle="modal" data-target="#retiradas-${cont3++}" style='background-color: #FFF587;'>Retiradas</button>
                     </center>
+                </div>
+
+                <div style='position:absolute; z-index:2; left:590px; top:20%;'>
+                    <a class='btn btn-danger  d-block p-3' href='#'><i class="fas fa-file-pdf"></i></a>
+                <br/>
+                    <a class='btn btn-success d-block p-3' href='#'><i class="fas fa-file-excel"></i></a>
                 </div>
             </div>
         `;
@@ -380,7 +386,7 @@ function loadUniversity(datos) {
                 text: nombres[index]
             },
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                categories: ['Universidad', 'Aprobados', 'Reprobados', 'Retirados']
             },
             series: [{
                 type: 'pie',
