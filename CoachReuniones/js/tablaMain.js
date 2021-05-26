@@ -39,8 +39,15 @@ function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico) {
             "sedes": sedes
         },
         success: function (response) {
-            datos = JSON.parse(response);
-            grafico(datos);
+            try {
+                datos = JSON.parse(response);
+                grafico(datos);
+            } catch (error) {
+                console.log("Error al momento de parseo de datos" + "\n" + error);
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log("some error in ajax" + "\n" + XMLHttpRequest + "\n" + textStatus + "\n" + errorThrown);
         }
     });
 }
@@ -288,7 +295,6 @@ function CreatDivs(e, ids) {
     document.getElementById('universidades').innerHTML = templete;
 }
 
-
 function CumGeneral(cum) {
     let template = '';
     template = ` <div class='text-white details' id='cum2'>
@@ -303,11 +309,104 @@ function CumGeneral(cum) {
 }
 
 
-function graficasByAlumno(n1 , n2, n3) {
-    console.log(n1);
-    console.log(n2);
-    console.log(n3);
+function graficasByAlumno(n1, n2, n3, universidades) {
+
+    let Aaprobados = [];
+    let Areprobados = [];
+    let Aretirados = [];
+
+    n1.forEach(e => {
+        Aaprobados.push(parseInt(e.alumno));
+    });
+    n2.forEach(e => {
+        Areprobados.push(parseInt(e.alumno));
+    });
+    n3.forEach(e => {
+        Aretirados.push(parseInt(e.alumno));
+    });
+
+    respv = (300 * universidades.length) / 60;
+
+    Highcharts.chart('one', {
+        chart: {
+            renderTo: 'container',
+            type: 'column',
+            scrollablePlotArea: {
+                minWidth: respv,
+                scrollPositionX: 1
+            }
+        },
+        title: {
+            text: 'Alumnos aprobados por universidad'
+        },
+        xAxis: {
+            tickInterval: 1,
+            categories: universidades,
+        },
+        series: [{
+            name: 'Cantidad de alumnos que han aprobado materias',
+            data: Aaprobados
+        }],
+        credits: {
+            enabled: false
+        },
+        colors: ['#54E38A']
+    });
+
+    Highcharts.chart('two', {
+        chart: {
+            renderTo: 'container',
+            type: 'column',
+            scrollablePlotArea: {
+                minWidth: respv,
+                scrollPositionX: 1
+            }
+        },
+        title: {
+            text: 'Alumnos reprobados por universidad'
+        },
+        xAxis: {
+            tickInterval: 1,
+            categories: universidades,
+        },
+        series: [{
+            name: 'Cantidad de alumnos que han reprobado materias',
+            data: Areprobados
+        }],
+        credits: {
+            enabled: false
+        },
+        colors: ['#FF8C64']
+    });
+
+    Highcharts.chart('three', {
+        chart: {
+            renderTo: 'container',
+            type: 'column',
+            scrollablePlotArea: {
+                minWidth: respv,
+                scrollPositionX: 1
+            }
+        },
+        title: {
+            text: 'Alumnos retirados por universidad'
+        },
+        xAxis: {
+            tickInterval: 1,
+            categories: universidades,
+        },
+        series: [{
+            name: 'Cantidad de alumnos que han retirado materias',
+            data: Aretirados
+        }],
+        credits: {
+            enabled: false
+        },
+        colors: ['#FFF587']
+    });
 }
+
+
 // proceso de llenado graficas
 function loadUniversity(datos) {
     // inicio de declaración de variables
@@ -364,9 +463,9 @@ function loadUniversity(datos) {
     });
 
 
-    graficasByAlumno(one, two, three);
+    graficasByAlumno(one, two, three, ids);
 
-    
+
     // calcular cum global
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     cumGlobal = (cum1.reduce(reducer)) / cum1.length;
@@ -455,22 +554,31 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes, grafico) {
             "sedes": sedes
         },
         success: function (response) {
-            datos = JSON.parse(response);
-            loadUniversity(datos);
 
-            const op = document.createElement('option');
-            op.innerHTML = "Mostrar Todas";
-            op.value = "all";
+            try {
+                datos = JSON.parse(response);
+                loadUniversity(datos);
 
-            const filtroU = document.querySelector('#searchUGraph');
-            $('#searchUGraph').empty();
-            filtroU.appendChild(op);
-            datos.forEach(dato => {
-                var opt = document.createElement('option');
-                opt.innerHTML = dato.id.replace(/\s/g, "-");
-                opt.value = dato.id.replace(/\s/g, "-");;
-                filtroU.appendChild(opt);
-            });
+                const op = document.createElement('option');
+                op.innerHTML = "Mostrar Todas";
+                op.value = "all";
+
+                const filtroU = document.querySelector('#searchUGraph');
+                $('#searchUGraph').empty();
+                filtroU.appendChild(op);
+                datos.forEach(dato => {
+                    var opt = document.createElement('option');
+                    opt.innerHTML = dato.id.replace(/\s/g, "-");
+                    opt.value = dato.id.replace(/\s/g, "-");;
+                    filtroU.appendChild(opt);
+                });
+            } catch (error) {
+                console.log("Error al momento de parseo de datos" + "\n" + error);
+            }
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log("some error in ajax" + "\n" + XMLHttpRequest + "\n" + textStatus + "\n" + errorThrown);
         }
     });
 }
