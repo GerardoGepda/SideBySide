@@ -284,7 +284,7 @@ function CreatDivs(e, ids) {
                     </center>
                 </div>
 
-                <div style='position:absolute; z-index:2; left:590px; top:20%;'>
+                <div class='exporting'>
                     <a class='btn btn-danger  d-block p-3' href='#'><i class="fas fa-file-pdf"></i></a>
                 <br/>
                     <a class='btn btn-success d-block p-3' href='#'><i class="fas fa-file-excel"></i></a>
@@ -308,6 +308,44 @@ function CumGeneral(cum) {
     document.getElementById('cumGeneral').innerHTML = template;
 }
 
+function GraficaCUM(id, cums) {
+
+    let a = [];
+    let b = [];
+
+    cums.forEach(e => {
+        a.push(parseFloat(e.cum));
+    });
+    respv = (300 * id.length) / 60;
+
+    Highcharts.chart('cum', {
+        chart: {
+            renderTo: 'container',
+            type: 'column',
+            height: 195,
+            scrollablePlotArea: {
+                minWidth: respv,
+                scrollPositionX: 1
+            }
+        },
+        title: {
+            text: 'CUM por Universidad'
+        },
+        xAxis: {
+            tickInterval: 1,
+            categories: id,
+        },
+        series: [{
+            name: 'CUM por Universidad',
+            data: a
+        }],
+        credits: {
+            enabled: false
+        },
+        colors: ['#54E38A']
+    });
+
+}
 
 function graficasByAlumno(n1, n2, n3, universidades) {
 
@@ -464,6 +502,7 @@ function loadUniversity(datos) {
 
 
     graficasByAlumno(one, two, three, ids);
+    GraficaCUM(ids, cum);
 
 
     // calcular cum global

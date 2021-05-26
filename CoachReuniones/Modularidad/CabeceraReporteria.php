@@ -105,7 +105,10 @@
         height: 100%;
     }
 
-    #one, #two,#three,
+    .content,
+    #one,
+    #two,
+    #three,
     #Ugraph,
     #graphicTwo,
     #graphicThree {
@@ -220,61 +223,41 @@
         margin: 0% 0;
     }
 
-    /*Estilo de las del contendor de los mapas y graficas de genero*/
-    #maps {
-        display: inline-block;
-        clear: both;
-        border: solid 1px #343A40;
-        border-left: solid 15px #B01D33;
-        border-radius: 3px;
-        max-width: 47%;
-        min-width: 46%;
-        margin: 0.5% 1.7%;
-        max-height: 265px;
-        min-height: 265px;
-    }
 
-    /*Fin estilo contendor mapas y graficas de genero*/
     /*Estilo del contededor de los mapas sedes*/
-   
+
     #map1 {
         display: inline-block;
-        max-height: 234px;
-        min-height: 234px;
+        max-height: 50%;
+        min-height: 50%;
         max-width: 40%;
         min-width: 40%;
         margin-right: 5%;
+        clear: both;
+        overflow: inherit;
     }
 
     #map2 {
         display: inline-block;
-        max-height: 234px;
-        min-height: 234px;
-        max-width: 35%;
-        min-width: 35%;
+        max-height: 50%;
+        min-height: 50%;
+        max-width: 40%;
+        min-width: 40%;
         margin-right: 3%;
+        clear: both;
+        overflow: inherit;
     }
 
     /*Fin estilo contededor de los mapas sedes*/
     /*Estilo del contededor de graficas de genero*/
-    #content2 {
-        clear: both;
-        position: relative;
-        width: 100%;
-        height: 100%;
+
+    .materia {
+        color: #be0032;
+        margin-bottom: 1%;
+        font-size: 20px;
     }
 
-    #content2 h3 {
-        color: #be0032;
-        margin-bottom: 1%;
-        font-size: 20px;
-    }
-    .materia{
-        color: #be0032;
-        margin-bottom: 1%;
-        font-size: 20px;
-    }
-    #content h3{
+    #content h3 {
         color: #be0032;
         margin-bottom: 1%;
         font-size: 20px;
@@ -282,26 +265,24 @@
     }
 
     .highcharts-figure {
-        padding: 2px;
-        margin: -1.7% 2%;
         display: inline-block;
-        max-width: 40%;
-        min-width: 40%;
+        max-width: 49%;
+        min-width: 49%;
         border-radius: 30px;
     }
 
     #gen {
         max-width: 100%;
         min-width: 100%;
-        max-height: 250px;
-        min-height: 250px;
+        max-height: max-content;
+        min-height: max-content;
     }
 
     #gen2 {
         max-width: 100%;
         min-width: 100%;
-        max-height: 250px;
-        min-height: 250px;
+        max-height: max-content;
+        min-height: max-content;
     }
 
     /*Fin estilo contededor de graficas de genero*/
@@ -398,15 +379,6 @@
             max-width: 100%;
         }
 
-        #maps {
-            position: initial;
-            margin: 2% auto;
-            max-width: 100%;
-            min-width: 100%;
-            max-height: 350px;
-            min-height: 350px;
-        }
-
         .highcharts-figure {
             max-width: 45%;
             min-width: 45%;
@@ -455,10 +427,39 @@
         }
     }
 
+    .exporting {
+        position: absolute;
+        z-index: 2;
+        left: 590px;
+        top: 20%;
+    }
+
     /*Fin del primer responsive*/
     /* Segundo responsive*/
     @media only screen and (max-width: 600px) {
 
+        .exporting {
+            position: absolute;
+            z-index: 2;
+            left: 335px;
+            top: 39%;
+        }
+
+        /*Estilo de las del contendor de los mapas y graficas de genero*/
+        .content,
+        #Ugraph,
+        #graphicTwo,
+        #graphicThree,
+        #one,
+        #two,
+        #three {
+            display: block;
+            clear: both;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /*Fin estilo contendor mapas y graficas de genero*/
         #filtro1,
         #filtro2,
         #filtro3,
@@ -534,13 +535,6 @@
             font-size: 20px;
             max-width: 47%;
             min-width: 47%;
-        }
-
-        #maps {
-            position: initial;
-            margin: 1% auto;
-            max-width: 102%;
-            min-width: 102%;
         }
 
         .highcharts-figure {

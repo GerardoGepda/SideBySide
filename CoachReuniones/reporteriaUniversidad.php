@@ -122,28 +122,24 @@ $cantidad = $query->rowCount();
         </div>
     </div>
     <!-- fin de graficas generales -->
-    <div class="content-content">
-        <div id="maps">
-            <div id="content">
-                <h3>Grafica por Sede</h3>
-                <!-- inicio de contenedores de mapas -->
-                <div id="map1" class="loading"></div>
-                <div id="map2" class="loading"></div>
-                <!-- fin de contenedores de mapas -->
-            </div>
+    <div class="graficas">
+        <div class="content">
+            <!-- <h3 class="materia">Grafica por Sede</h3> -->
+            <div id="map1" class="loading"></div>
+            <div id="map2" class="loading"></div>
         </div>
-        <div id="maps">
-            <div id="content2">
-                <!-- inicio de contenedores de graficas por sexo -->
-                <h3>Grafica por Género</h3>
-                <figure class="highcharts-figure">
-                    <div id="gen"></div>
-                </figure>
-                <figure class="highcharts-figure">
-                    <div id="gen2"></div>
-                </figure>
-                <!-- fin de contenedores de graficas por sexo -->
-            </div>
+        <div class="content">
+            <!-- <h3 class="materia">Grafica por Género</h3> -->
+            <figure class="highcharts-figure">
+                <div id="gen"></div>
+            </figure>
+            <figure class="highcharts-figure">
+                <div id="gen2"></div>
+            </figure>
+        </div>
+        <div class="content">
+            <!-- <h3 class="materia">Grafica de CUM por Universidad</h3> -->
+            <div id="cum"></div>
         </div>
     </div>
     <h3 class="materia">Estadística por materia</h3>

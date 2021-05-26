@@ -91,14 +91,17 @@ function mapa1(result1, result2, result3, ciclo, clase, cumSSFT) {
     // Create the chart
     Highcharts.mapChart('map1', {
         chart: {
-            map: 'countries/sv/sv-all'
+            map: 'countries/sv/sv-all',
+            height: 195
         },
+        
 
         title: {
             text: 'Reporte San Salvador FT ',
             style: {
                 color: '#be0032',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                fontSize: '10px' 
             }
         },
 
@@ -170,14 +173,16 @@ function mapa2(result4, result5, result6, ciclo, clase, cumSAFT) {
     // Create the chart
     Highcharts.mapChart('map2', {
         chart: {
-            map: 'countries/sv/sv-all'
+            map: 'countries/sv/sv-all',
+            height: 195,
         },
 
         title: {
             text: 'Reporte Santa Ana FT',
             style: {
                 color: '#be0032',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                fontSize: '10px' 
             }
         },
 
@@ -194,7 +199,7 @@ function mapa2(result4, result5, result6, ciclo, clase, cumSAFT) {
             },
             dataLabels: {
                 enabled: true,
-                format: data.subtitle
+                format: data.subtitle,
             }
         }, {
             data: data,
