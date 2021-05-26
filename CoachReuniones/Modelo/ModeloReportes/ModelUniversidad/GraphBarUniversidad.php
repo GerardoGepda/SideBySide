@@ -118,6 +118,12 @@ AND a.ID_Empresa  = '$univeridades' ";
 ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) ";
 
 
+    $sql15 = "SELECT (SUM(e.cum))/COUNT(e.cum) AS cum
+    FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER
+     JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
+     JOIN materias m ON m.idMateria = IM.idMateria INNER JOIN usuarios u ON u.correo = a.correo  WHERE (IM.estado = 'Aprobada') AND ($fragmento1) AND 
+     ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.ID_Empresa  = '$univeridades'";
+
 
     // extraer datos por universidad (nombre, nota, estado y materia)
     // SELECT  ,IM.idMateria  IM.nota, IM.estado
@@ -157,7 +163,7 @@ FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
     a.ID_Alumno = e.ID_Alumno  JOIN materias m ON m.idMateria = IM.idMateria INNER JOIN usuarios u ON u.correo =
     a.correo  WHERE (IM.estado = 'Reprobada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND
      ($fragmento4) AND a.ID_Empresa  = '$univeridades' GROUP BY a.Nombre ";
-// count(IM.idMateria) as total, (SUM(IM.nota)/COUNT(IM.nota) as promedio, 
+    // count(IM.idMateria) as total, (SUM(IM.nota)/COUNT(IM.nota) as promedio, 
 
     $sql14 = "SELECT DISTINCT a.Nombre as alumno,  u.imagen as imagen,  COUNT(IM.idMateria) as total,  TRUNCATE((SUM(IM.nota)/COUNT(IM.idMateria)),2)  as promedio
     , a.correo as correo FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
@@ -166,6 +172,26 @@ FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
     a.correo  WHERE (IM.estado = 'Retirada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND 
     ($fragmento4) AND a.ID_Empresa  = '$univeridades' GROUP BY a.Nombre ";
 
+
+
+    //INICIO  DE OBTENER CANTIDAD DE ALUMNOS QUE HAN APROBADO MATERIAS
+
+    $sql16 = "SELECT COUNT(DISTINCT a.Nombre) as alumno FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
+    = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON
+    a.ID_Alumno = e.ID_Alumno  JOIN materias m ON m.idMateria = IM.idMateria  WHERE (IM.estado = 'Aprobada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND 
+    ($fragmento4) AND a.ID_Empresa  = '$univeridades'";
+
+    $sql17 = "SELECT COUNT(DISTINCT a.Nombre) as alumno FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
+    = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON
+    a.ID_Alumno = e.ID_Alumno  JOIN materias m ON m.idMateria = IM.idMateria   WHERE (IM.estado = 'Reprobada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND 
+    ($fragmento4) AND a.ID_Empresa  = '$univeridades'" ;
+
+    $sql18 = "SELECT COUNT(DISTINCT a.Nombre) as alumno FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
+    = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON
+    a.ID_Alumno = e.ID_Alumno  JOIN materias m ON m.idMateria = IM.idMateria  WHERE (IM.estado = 'Retirada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND 
+    ($fragmento4) AND a.ID_Empresa  = '$univeridades' ";
+
+    // FIN DE OBTENER CANTIDAD DE ALUMNOS QUE HAN APROBADO MATERIAS
 
 
     // MATERIAS APROBADAS
@@ -182,6 +208,13 @@ FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
     $result3 = $stmt3->fetch();
 
 
+    // INICIO DE CUM POR UNIVERSIDAD
+
+    $stmt188 = $pdo->prepare($sql15);
+    $stmt188->execute();
+    $globalInfo = $stmt188->fetchAll();
+
+    // FIM DE CUM POR UNIVERSIDAD
 
     // OBTENER CUM
     $stmt4 = $pdo->prepare($sql5);
@@ -201,7 +234,7 @@ FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
     $result10 = $stmt10->fetchAll();
 
 
-    // obtener lista alumnos
+    // INICIO DE obtener lista alumnos
 
     $stmt11 = $pdo->prepare($sql12);
     $stmt11->execute();
@@ -214,6 +247,23 @@ FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
     $stmt13 = $pdo->prepare($sql14);
     $stmt13->execute();
     $result13 = $stmt13->fetchAll();
+
+    //FIN  DE obtener lista alumnos
+
+    //INICIO DE GRAFICAS POR ALUMNO
+    $stmt1888 = $pdo->prepare($sql16);
+    $stmt1888->execute();
+    $alumnosAprobados = $stmt1888->fetchAll();
+
+    $stmt1889 = $pdo->prepare($sql17);
+    $stmt1889->execute();
+    $alumnosReprobados = $stmt1889->fetchAll();
+
+    $stmt18810 = $pdo->prepare($sql18);
+    $stmt18810->execute();
+    $alumnosRetirados = $stmt18810->fetchAll();
+
+    // FIN DE GRAFICAS POR ALUMNO
 
     $contador++;
     if ($result[0] == "0" && $result2[0] == "0" && $result3[0] == "0") {
@@ -234,7 +284,10 @@ FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
         "l1" => $result11,
         "l2" => $result12,
         "l3" => $result13,
-
+        "globalInfo" => $globalInfo[0],
+        "alumnosAprobados" => $alumnosAprobados[0],
+        "alumnosReprobados" => $alumnosReprobados[0],
+        "alumnosRetirados" => $alumnosRetirados[0]
     );
 }
 

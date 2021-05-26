@@ -39,8 +39,15 @@ function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico) {
             "sedes": sedes
         },
         success: function (response) {
-            datos = JSON.parse(response);
-            grafico(datos);
+            try {
+                datos = JSON.parse(response);
+                grafico(datos);
+            } catch (error) {
+                console.log("Error al momento de parseo de datos" + "\n" + error);
+            }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log("some error in ajax" + "\n" + XMLHttpRequest + "\n" + textStatus + "\n" + errorThrown);
         }
     });
 }
@@ -267,7 +274,7 @@ function CreatDivs(e, ids) {
     let cont3 = 4;
     for (let index = 0; index < e; index++) {
         templete += `
-            <div class='uni-content my-1 ${ids[index].replace(/\s/g, "-")}' style='height: 285px;'>
+            <div class='uni-content my-1 ${ids[index].replace(/\s/g, "-")}' style='height: 285px; position:relative; z-index:1;'>
                 <div id='u-${contador++}' style='height: 220px;'></div>
                 <div style='height: 60px; margin: 0px auto;'>
                     <center>
@@ -276,12 +283,17 @@ function CreatDivs(e, ids) {
                         <button type="button" class="btn" data-toggle="modal" data-target="#retiradas-${cont3++}" style='background-color: #FFF587;'>Retiradas</button>
                     </center>
                 </div>
+
+                <div style='position:absolute; z-index:2; left:590px; top:20%;'>
+                    <a class='btn btn-danger  d-block p-3' href='#'><i class="fas fa-file-pdf"></i></a>
+                <br/>
+                    <a class='btn btn-success d-block p-3' href='#'><i class="fas fa-file-excel"></i></a>
+                </div>
             </div>
         `;
     }
     document.getElementById('universidades').innerHTML = templete;
 }
-
 
 function CumGeneral(cum) {
     let template = '';
@@ -295,6 +307,105 @@ function CumGeneral(cum) {
 
     document.getElementById('cumGeneral').innerHTML = template;
 }
+
+
+function graficasByAlumno(n1, n2, n3, universidades) {
+
+    let Aaprobados = [];
+    let Areprobados = [];
+    let Aretirados = [];
+
+    n1.forEach(e => {
+        Aaprobados.push(parseInt(e.alumno));
+    });
+    n2.forEach(e => {
+        Areprobados.push(parseInt(e.alumno));
+    });
+    n3.forEach(e => {
+        Aretirados.push(parseInt(e.alumno));
+    });
+
+    respv = (300 * universidades.length) / 60;
+
+    Highcharts.chart('one', {
+        chart: {
+            renderTo: 'container',
+            type: 'column',
+            scrollablePlotArea: {
+                minWidth: respv,
+                scrollPositionX: 1
+            }
+        },
+        title: {
+            text: 'Alumnos aprobados por universidad'
+        },
+        xAxis: {
+            tickInterval: 1,
+            categories: universidades,
+        },
+        series: [{
+            name: 'Cantidad de alumnos que han aprobado materias',
+            data: Aaprobados
+        }],
+        credits: {
+            enabled: false
+        },
+        colors: ['#54E38A']
+    });
+
+    Highcharts.chart('two', {
+        chart: {
+            renderTo: 'container',
+            type: 'column',
+            scrollablePlotArea: {
+                minWidth: respv,
+                scrollPositionX: 1
+            }
+        },
+        title: {
+            text: 'Alumnos reprobados por universidad'
+        },
+        xAxis: {
+            tickInterval: 1,
+            categories: universidades,
+        },
+        series: [{
+            name: 'Cantidad de alumnos que han reprobado materias',
+            data: Areprobados
+        }],
+        credits: {
+            enabled: false
+        },
+        colors: ['#FF8C64']
+    });
+
+    Highcharts.chart('three', {
+        chart: {
+            renderTo: 'container',
+            type: 'column',
+            scrollablePlotArea: {
+                minWidth: respv,
+                scrollPositionX: 1
+            }
+        },
+        title: {
+            text: 'Alumnos retirados por universidad'
+        },
+        xAxis: {
+            tickInterval: 1,
+            categories: universidades,
+        },
+        series: [{
+            name: 'Cantidad de alumnos que han retirado materias',
+            data: Aretirados
+        }],
+        credits: {
+            enabled: false
+        },
+        colors: ['#FFF587']
+    });
+}
+
 
 // proceso de llenado graficas
 function loadUniversity(datos) {
@@ -319,8 +430,15 @@ function loadUniversity(datos) {
     total2 = 0;
     total3 = 0;
 
+    let cum = [];
+
     // cum global 
     let cumGlobal
+
+
+    let one = [];
+    let two = [];
+    let three = [];
 
     // fin de declaración de arreglos
     //------------------------------------------------ 
@@ -338,7 +456,16 @@ function loadUniversity(datos) {
         lista1.push(dato.l1);
         lista2.push(dato.l2);
         lista3.push(dato.l3);
+        cum.push(dato.globalInfo);
+        one.push(dato.alumnosAprobados);
+        two.push(dato.alumnosReprobados);
+        three.push(dato.alumnosRetirados);
     });
+
+
+    graficasByAlumno(one, two, three, ids);
+
+
     // calcular cum global
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     cumGlobal = (cum1.reduce(reducer)) / cum1.length;
@@ -369,9 +496,15 @@ function loadUniversity(datos) {
     cont6 = 0;
 
     let contador = 4;
+    let show = [];
 
+
+    cum.forEach(e => {
+        show.push(parseFloat(e.cum).toFixed(1));
+    });
     // este for sirve para cargar las graficas de todas las universidades
     for (let index = 0; index < nombres.length; index++) {
+
         Highcharts.chart('u-' + (contador++) + '', {
             chart: {
                 styledMode: false,
@@ -379,8 +512,13 @@ function loadUniversity(datos) {
             title: {
                 text: nombres[index]
             },
+            subtitle: {
+                text: '* CUM: ' + show[index],
+                align: 'right',
+                x: -10
+            },
             xAxis: {
-                categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+                categories: ['Universidad', 'Aprobados', 'Reprobados', 'Retirados']
             },
             series: [{
                 type: 'pie',
@@ -399,7 +537,6 @@ function loadUniversity(datos) {
             colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3']
         });
     }
-    console.clear();
 }
 
 
@@ -417,22 +554,31 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes, grafico) {
             "sedes": sedes
         },
         success: function (response) {
-            datos = JSON.parse(response);
-            loadUniversity(datos);
 
-            const op = document.createElement('option');
-            op.innerHTML = "Mostrar Todas";
-            op.value = "all";
+            try {
+                datos = JSON.parse(response);
+                loadUniversity(datos);
 
-            const filtroU = document.querySelector('#searchUGraph');
-            $('#searchUGraph').empty();
-            filtroU.appendChild(op);
-            datos.forEach(dato => {
-                var opt = document.createElement('option');
-                opt.innerHTML = dato.id.replace(/\s/g, "-");
-                opt.value = dato.id.replace(/\s/g, "-");;
-                filtroU.appendChild(opt);
-            });
+                const op = document.createElement('option');
+                op.innerHTML = "Mostrar Todas";
+                op.value = "all";
+
+                const filtroU = document.querySelector('#searchUGraph');
+                $('#searchUGraph').empty();
+                filtroU.appendChild(op);
+                datos.forEach(dato => {
+                    var opt = document.createElement('option');
+                    opt.innerHTML = dato.id.replace(/\s/g, "-");
+                    opt.value = dato.id.replace(/\s/g, "-");;
+                    filtroU.appendChild(opt);
+                });
+            } catch (error) {
+                console.log("Error al momento de parseo de datos" + "\n" + error);
+            }
+
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            console.log("some error in ajax" + "\n" + XMLHttpRequest + "\n" + textStatus + "\n" + errorThrown);
         }
     });
 }
