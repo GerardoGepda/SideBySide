@@ -436,3 +436,21 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes, grafico) {
         }
     });
 }
+
+function GetDataUniversity(ciclos, clases, financiamiento, sedes) {
+    let datos;
+    $.ajax({
+        type: "POST",
+        url: "../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/GraphBarUniversidad.php",
+        data: {
+            "ciclos": ciclos,
+            "clases": clases,
+            "financiamientos": financiamiento,
+            "sedes": sedes
+        },
+        success: function (response) {
+            datos = JSON.parse(response);
+            return datos;
+        }
+    });
+}

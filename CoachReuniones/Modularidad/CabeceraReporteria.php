@@ -53,6 +53,12 @@
 <!-- Select2 CSS -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js" integrity="sha512-VKjwFVu/mmKGk0Z0BxgDzmn10e590qk3ou/jkmRugAkSTMSIRkd4nEnk+n7r5WBbJquusQEQjBidrBD3IQQISQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!-- jsPDF Autotable -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.14/jspdf.plugin.autotable.min.js" integrity="sha512-m4dz/cB+GDbGitRXh/Ppt8vsDpD2nqhviX1eoD7wgu3xSO2B9EUKjZKsZLbmyUS0d43vLzakJcPFzxi7eHlmBw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <!--Estilo nuevo de reporteriaUniversidad-->
 <style>
