@@ -335,9 +335,18 @@ function GraficaCUM(id, cums) {
             tickInterval: 1,
             categories: id,
         },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y:.1f}%'
+                }
+            }
+        },
         series: [{
             name: 'CUM por Universidad',
-            data: a
+            data: a,
+            y: a,
         }],
         credits: {
             enabled: false
@@ -381,6 +390,13 @@ function graficasByAlumno(n1, n2, n3, universidades) {
             tickInterval: 1,
             categories: universidades,
         },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                }
+            }
+        },
         series: [{
             name: 'Cantidad de alumnos que han aprobado materias',
             data: Aaprobados
@@ -407,6 +423,13 @@ function graficasByAlumno(n1, n2, n3, universidades) {
             tickInterval: 1,
             categories: universidades,
         },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                }
+            }
+        },
         series: [{
             name: 'Cantidad de alumnos que han reprobado materias',
             data: Areprobados
@@ -432,6 +455,13 @@ function graficasByAlumno(n1, n2, n3, universidades) {
         xAxis: {
             tickInterval: 1,
             categories: universidades,
+        },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                }
+            }
         },
         series: [{
             name: 'Cantidad de alumnos que han retirado materias',
