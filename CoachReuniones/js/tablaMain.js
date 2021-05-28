@@ -283,11 +283,10 @@ function CreatDivs(e, ids) {
                         <button type="button" class="btn" data-toggle="modal" data-target="#retiradas-${cont3++}" style='background-color: #FFF587;'>Retiradas</button>
                     </center>
                 </div>
-
                 <div class='exporting'>
-                    <a class='btn btn-danger  d-block p-3' href='#'><i class="fas fa-file-pdf"></i></a>
+                    <button class='${ids[index].replace(/\s/g, "-")} btn btn-danger d-block p-3 btnexpPdf'><i class="fas fa-file-pdf"></i></button>
                 <br/>
-                    <a class='btn btn-success d-block p-3' href='#'><i class="fas fa-file-excel"></i></a>
+                    <button class=' ${ids[index].replace(/\s/g, "-")} btn btn-success d-block p-3 btnexpExcel'><i class="fas fa-file-excel"></i></button>
                 </div>
             </div>
         `;
@@ -606,6 +605,8 @@ function loadUniversity(datos) {
             colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3']
         });
     }
+    ExportarPDF(datos);
+    ExportarEXCEL(datos);
 }
 
 
@@ -648,6 +649,24 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes, grafico) {
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("some error in ajax" + "\n" + XMLHttpRequest + "\n" + textStatus + "\n" + errorThrown);
+        }
+    });
+}
+
+function GetDataUniversity(ciclos, clases, financiamiento, sedes) {
+    let datos;
+    $.ajax({
+        type: "POST",
+        url: "../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/GraphBarUniversidad.php",
+        data: {
+            "ciclos": ciclos,
+            "clases": clases,
+            "financiamientos": financiamiento,
+            "sedes": sedes
+        },
+        success: function (response) {
+            datos = JSON.parse(response);
+            return datos;
         }
     });
 }
