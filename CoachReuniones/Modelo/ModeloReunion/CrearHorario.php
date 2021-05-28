@@ -19,6 +19,7 @@ if (isset($_POST['Guardar_Datos'])) {
 	$IDreunion = $_POST['idreunion'];
 	$HoraInicio = $_POST['horaInicio'];
 	$HoraFinal = $_POST['horafinalizar'];
+	$link = $_POST['link'];
 
 	$tipo = $_POST['tipo'];
 
@@ -45,12 +46,14 @@ if (isset($_POST['Guardar_Datos'])) {
 	}
 
 
-	$consulta3 = $pdo->prepare("INSERT INTO horariosreunion (ID_Reunion,HorarioInicio,HorarioFinalizado ,Canitdad, TiempoReunion) VALUES(:idreunion,:horainicio,:horafinalizado,:cantidad,:tiemporeu)");
+	$consulta3 = $pdo->prepare("INSERT INTO horariosreunion (ID_Reunion,HorarioInicio,HorarioFinalizado ,
+	Canitdad, TiempoReunion, link) VALUES(:idreunion,:horainicio,:horafinalizado,:cantidad,:tiemporeu,:link)");
 	$consulta3->bindParam(':idreunion', $IDreunion);
 	$consulta3->bindParam(':horainicio', $HoraInicio);
 	$consulta3->bindParam(':horafinalizado', $HoraFinal);
 	$consulta3->bindParam(':cantidad', $cupos);
 	$consulta3->bindParam(':tiemporeu', $tiempoN);
+	$consulta3->bindParam(':link', $link);
 
 	if (!$consulta3->execute()) {
 		$_SESSION['message'] = 'Fallo al crear horario';

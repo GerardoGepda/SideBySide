@@ -21,36 +21,20 @@ while ($fila = $stmt1->fetch()) {
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-<script async src="JS/AdmCupo.js"></script>
 <div class="container-fluid text-center">
   <br>
   <h1 class="h1">Inscripción reuniones</h1>
   <br>
   <br>
   <div>
-    <?php  include "config/Alerta.php";  ?>
+    <?php include "config/Alerta.php";  ?>
   </div>
   <div class="row">
     <div class="col">
       <table class="table table-responsive-lg w-75 mx-auto float-center">
-        <thead class="thead-dark">
+        <thead class="thead-dark" id="columnas">
           <tr>
-            <th scope="col">Hora inicio</th>
-            <th>Hora final</th>
-            <th>Cupo</th>
-            <th>Duración por sesión</th>
-            <?php
-           if ($tipoReunion != "Sesión individual" && $tipoReunion != "Otro" && $tipoReunion != "Sesión Grupal" ) {
-              echo "<th>Teléfono</th>";
-              if ($result == 0) {
-                echo "<th>Inscribir</th>";
-              } else {
-                echo "<th>Desinscribir</th>";
-              }
-            } else {
-              echo "<th>Horarios</th>";
-            }
-            ?>
+            <th v-for="e in columns"> {{e}} </th>
           </tr>
         </thead>
         <tbody class="bg-light table-bordered" id="tbody-reunion">
@@ -79,6 +63,7 @@ while ($fila = $stmt1->fetch()) {
             <td v-else="">
               <a v-bind:href="'listadoxReunion.php?id='+e.IDHorRunion+'&reunion='+e.ID_Reunion" class="btn btn-warning"><i class="fas fa-user-edit"></i></a>
             </td>
+            <td v-if="verificado >= 1 "><a v-bind:href="e.link" class="btn btn-primary" target="_blank" rel="noopener noreferrer">Unirse</a></td>
           </tr>
         </tbody>
       </table>
@@ -146,12 +131,10 @@ while ($fila = $stmt1->fetch()) {
 <!-- Enlace con el JS para mandar datos de inscripción por Ajax -->
 <script async>
   const taller = <?php echo $taller; ?>;
-</script>
-
-<script async>
-  const tiporeunion = <?php echo $tipoReunion; ?>;
-  console.log(tiporeunion);
+  const tiporeunion = '<?php echo $tipoReunion; ?>';
+  const a = '<?php echo $alumno; ?>';
 </script>
 
 <script async src="JS/CrearHorario.js"></script>
+<script async src="JS/reuniones.js"></script>
 <?php require_once 'templates/footer.php'; ?>
