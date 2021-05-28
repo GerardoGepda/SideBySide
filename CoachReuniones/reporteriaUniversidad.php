@@ -92,8 +92,7 @@ $cantidad = $query->rowCount();
                                 <option value="FGK" class="dropdown-item">FGK</option>
                                 <option value="BORJA" class="dropdown-item">BORJA</option>
                                 <option value="FOM" class="dropdown-item">FOM</option>
-                                <option value="Financiamiento Propio" class="dropdown-item">Financiamiento propio
-                                </option>
+                                <option value="Financiamiento Propio" class="dropdown-item">Financiamiento propio</option>
                             </select>
                             <input class="form-check-input" type="checkbox" id="checkbox3">Select All</input>
                         </div>
@@ -119,53 +118,9 @@ $cantidad = $query->rowCount();
     </div>
     <!-- fin de filtros -->
 
-    <!-- graficas generales -->
-    <div id="content3">
-        <div id="content-middle-pie">
-            <h4><span>G</span>rafica General</h4>
-            <div id="middle-pie"></div>
-        </div>
-        <div id="cum1">
-            <h4><span>C</span>um Global</h4>
-            <div id="cumGeneral"></div>
-        </div>
-    </div>
-    <!-- fin de graficas generales -->
-    <div class="content-content">
-        <div id="maps">
-            <div id="content">
-                <h3>Grafica por Sede</h3>
-                <!-- inicio de contenedores de mapas -->
-                <div id="map1" class="loading"></div>
-                <div id="map2" class="loading"></div>
-                <!-- fin de contenedores de mapas -->
-            </div>
-        </div>
-        <div id="maps">
-            <div id="content2">
-                <!-- inicio de contenedores de graficas por sexo -->
-                <h3>Grafica por Género</h3>
-                <figure class="highcharts-figure">
-                    <div id="gen"></div>
-                </figure>
-                <figure class="highcharts-figure">
-                    <div id="gen2"></div>
-                </figure>
-                <!-- fin de contenedores de graficas por sexo -->
-            </div>
-        </div>
-    </div>
-    <h3 class="materia">Estadística por materia</h3>
-    <div class="graficas">
-        <div id="Ugraph"></div>
-        <div id="graphicTwo"></div>
-        <div id="graphicThree"></div>
-    </div>
-    <h3 class="materia">Estadística por alumno</h3>
-    <div class="graficas">
-        <div id="one"></div>
-        <div id="two"></div>
-        <div id="three"></div>
+    <!-- cargar los contenedores por medio de este identificador -->
+    <div id="loader">
+
     </div>
 
 </div>
@@ -184,9 +139,11 @@ $cantidad = $query->rowCount();
     </div>
 </div>
 <div id="universidades"> </div>
-<br>
-<br>
+
 <div id="showData" style="display: hidden;"></div>
+
+<br><br><br><br><br><br>
+
 <!-- proceso de graficas -->
 <!-- Select2 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
@@ -200,55 +157,7 @@ $cantidad = $query->rowCount();
 <script src="./js/filtros.js"></script>
 <!-- grafica por sexo -->
 <script src="./js/graficBySex.js"></script>
-
-
-<script type="text/javascript">
-    // declarar variables
-    let listaClases;
-    let listaCiclos;
-    let listaFinanciamiento;
-    let listaSede;
-
-    function main() {
-        // extraer datos
-        ciclos();
-        clases();
-        financiamiento();
-        sede();
-        // inicio de procesar consultas
-        ShowSelected(listaCiclos, listaClases, listaFinanciamiento, listaSede);
-        // fin de procesar consultas
-        // cargar tabla
-        ObtenerDatos(listaCiclos, listaClases, listaFinanciamiento, listaSede);
-        // cargar graficas por universidad
-        graphicsByUniversity(listaCiclos, listaClases, listaFinanciamiento, listaSede);
-    }
-
-    function GraphBarraU() {
-        GetDataGraphBarU(listaCiclos, listaClases, listaFinanciamiento, listaSede, MateriasPoruniversidad);
-    }
-</script>
-<!-- datatable -->
-<script>
-    $(document).ready(function() {
-        $(document).ready(function() {
-            $('#tablaGeneral').DataTable({
-                "ordering": false,
-                "bFilter": false,
-                "scrollY": 100,
-                "bPaginate": false,
-                "bLengthChange": false,
-                "bInfo": false,
-                "bAutoWidth": false
-            });
-        });
-        //MateriasPoruniversidad();
-    });
-</script>
-<script>
-
-</script>
-<script src="../Alumno/JS/datatable.js"></script>
+<script async src="./js/main.js"></script>
 <!-- Script del filtro por universidad -->
 <script src="./js/filtroUniversidad.js"></script>
 <!-- js para exportar pdf -->
@@ -258,6 +167,4 @@ $cantidad = $query->rowCount();
 <!-- fin de proceso de  graficas -->
 <!-- **************************************** Fin de estructura de trabajo **************************** -->
 
-<?php
-//Incluir el footer
-include 'Modularidad/PiePagina.php'; ?>
+<?php include 'Modularidad/PiePagina.php'; ?>

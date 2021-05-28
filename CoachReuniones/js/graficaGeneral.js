@@ -47,7 +47,7 @@ function mapaGeneral(aprobados, reprobados, retirados, cumM) {
                 ['Reprobadas: ' + reprobados + ' ', PorcentajeReprobados, true],
                 ['Retiradas: ' + retirados + '', PorcentajeRetirados, true],
             ],
-            showInLegend: true
+            showInLegend: false
         }],
         navigation: {
             buttonOptions: {

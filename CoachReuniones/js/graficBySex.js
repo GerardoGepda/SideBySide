@@ -45,7 +45,7 @@ function graficBySex(aprobados, reprobados, retirados, cums) {
                 ['Reprobadas: ' + reprobados + ' ', PorcentajeReprobados, true],
                 ['Retiradas: ' + retirados + '', PorcentajeRetirados, true],
             ],
-            showInLegend: true
+            showInLegend: false
         }],
         navigation: {
             buttonOptions: {

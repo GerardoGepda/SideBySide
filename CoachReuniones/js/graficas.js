@@ -42,6 +42,61 @@ function sede() {
     listaSede = selected;
 }
 
+function loadTemplete() {
+    let templete = '';
+    templete = `
+        <div id="content3">
+            <div id="content-middle-pie">
+                <h4><span>G</span>rafica General</h4>
+                <div id="middle-pie"></div>
+            </div>
+
+            <div id="cum1">
+                <h4><span>C</span>um Global</h4>
+                <div id="cumGeneral"></div>
+            </div>
+        </div>
+
+        <div class="graficas">
+        <div class="content">
+            <div id="map1" class="loading"></div>
+            <div id="map2" class="loading"></div>
+        </div>
+
+        <div class="content">
+            <figure class="highcharts-figure">
+                <div id="gen"></div>
+            </figure>
+            <figure class="highcharts-figure">
+                <div id="gen2"></div>
+            </figure>
+        </div>
+
+        <div class="content">
+            <div id="cum"></div>
+        </div>
+
+    </div>
+
+    <h3 class="materia">Estadística por materia</h3>
+    <div class="graficas">
+        <div id="Ugraph"></div>
+        <div id="graphicTwo"></div>
+        <div id="graphicThree"></div>
+    </div>
+
+    <h3 class="materia">Estadística por alumno</h3>
+    <div class="graficas">
+        <div id="one"></div>
+        <div id="two"></div>
+        <div id="three"></div>
+    </div>
+    `;
+
+    document.getElementById('loader').innerHTML = templete;
+
+}
+
 // la funcion ShowSelected recibe como parametro ciclos,
 // el el array ciclos se extrae de la funcion ciclos() que extrae los ciclos seleccionados
 function ShowSelected(ciclos, clases, financiamiento, sedes) {
@@ -71,7 +126,7 @@ function ShowSelected(ciclos, clases, financiamiento, sedes) {
                 cumM: parseFloat(datosRetornados.cumM).toFixed(1),
                 cumF: parseFloat(datosRetornados.cumF).toFixed(1)
             };
-
+            loadTemplete();
             mapa1(datosRetornados.result1, datosRetornados.result2, datosRetornados.result3, datosRetornados.ciclo, datosRetornados.clase, cums.cumSSFT);
             mapa2(datosRetornados.result4, datosRetornados.result5, datosRetornados.result6, datosRetornados.ciclo, datosRetornados.clase, cums.cumSAFT);
             mapaGeneral(datosRetornados.result7, datosRetornados.result8, datosRetornados.result9, cums.cumM);
@@ -91,14 +146,17 @@ function mapa1(result1, result2, result3, ciclo, clase, cumSSFT) {
     // Create the chart
     Highcharts.mapChart('map1', {
         chart: {
-            map: 'countries/sv/sv-all'
+            map: 'countries/sv/sv-all',
+            height: 195
         },
+
 
         title: {
             text: 'Reporte San Salvador FT ',
             style: {
                 color: '#be0032',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                fontSize: '10px'
             }
         },
 
@@ -170,14 +228,16 @@ function mapa2(result4, result5, result6, ciclo, clase, cumSAFT) {
     // Create the chart
     Highcharts.mapChart('map2', {
         chart: {
-            map: 'countries/sv/sv-all'
+            map: 'countries/sv/sv-all',
+            height: 195,
         },
 
         title: {
             text: 'Reporte Santa Ana FT',
             style: {
                 color: '#be0032',
-                fontWeight: 'bold'
+                fontWeight: 'bold',
+                fontSize: '10px'
             }
         },
 
@@ -194,7 +254,7 @@ function mapa2(result4, result5, result6, ciclo, clase, cumSAFT) {
             },
             dataLabels: {
                 enabled: true,
-                format: data.subtitle
+                format: data.subtitle,
             }
         }, {
             data: data,
@@ -297,6 +357,13 @@ function MateriasPoruniversidad(datos) {
             tickInterval: 1,
             categories: uni,
         },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                }
+            }
+        },
         series: [{
             name: 'Materias Aprobadas',
             data: apro
@@ -324,6 +391,13 @@ function MateriasPoruniversidad(datos) {
             tickInterval: 1,
             categories: uni,
         },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                }
+            }
+        },
         series: [{
             name: 'Materias Reprobadas',
             data: repro
@@ -331,7 +405,7 @@ function MateriasPoruniversidad(datos) {
         credits: {
             enabled: false
         },
-        colors: [ '#FF8C64']
+        colors: ['#FF8C64']
     });
 
     Highcharts.chart('graphicThree', {
@@ -349,6 +423,13 @@ function MateriasPoruniversidad(datos) {
         xAxis: {
             tickInterval: 1,
             categories: uni,
+        },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                }
+            }
         },
         series: [{
             name: 'Materias Retiradas',

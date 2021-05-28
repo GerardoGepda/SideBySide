@@ -283,8 +283,7 @@ function CreatDivs(e, ids) {
                         <button type="button" class="btn" data-toggle="modal" data-target="#retiradas-${cont3++}" style='background-color: #FFF587;'>Retiradas</button>
                     </center>
                 </div>
-
-                <div style='position:absolute; z-index:2; left:590px; top:20%;'>
+                <div class='exporting'>
                     <button class='${ids[index].replace(/\s/g, "-")} btn btn-danger d-block p-3 btnexpPdf'><i class="fas fa-file-pdf"></i></button>
                 <br/>
                     <button class=' ${ids[index].replace(/\s/g, "-")} btn btn-success d-block p-3 btnexpExcel'><i class="fas fa-file-excel"></i></button>
@@ -308,6 +307,53 @@ function CumGeneral(cum) {
     document.getElementById('cumGeneral').innerHTML = template;
 }
 
+function GraficaCUM(id, cums) {
+
+    let a = [];
+    let b = [];
+
+    cums.forEach(e => {
+        a.push(parseFloat(e.cum));
+    });
+    respv = (300 * id.length) / 60;
+
+    Highcharts.chart('cum', {
+        chart: {
+            renderTo: 'container',
+            type: 'column',
+            height: 195,
+            scrollablePlotArea: {
+                minWidth: respv,
+                scrollPositionX: 1
+            }
+        },
+        title: {
+            text: 'CUM por Universidad'
+        },
+        xAxis: {
+            tickInterval: 1,
+            categories: id,
+        },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.y:.1f}%'
+                }
+            }
+        },
+        series: [{
+            name: 'CUM por Universidad',
+            data: a,
+            y: a,
+        }],
+        credits: {
+            enabled: false
+        },
+        colors: ['#54E38A']
+    });
+
+}
 
 function graficasByAlumno(n1, n2, n3, universidades) {
 
@@ -343,6 +389,13 @@ function graficasByAlumno(n1, n2, n3, universidades) {
             tickInterval: 1,
             categories: universidades,
         },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                }
+            }
+        },
         series: [{
             name: 'Cantidad de alumnos que han aprobado materias',
             data: Aaprobados
@@ -369,6 +422,13 @@ function graficasByAlumno(n1, n2, n3, universidades) {
             tickInterval: 1,
             categories: universidades,
         },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                }
+            }
+        },
         series: [{
             name: 'Cantidad de alumnos que han reprobado materias',
             data: Areprobados
@@ -394,6 +454,13 @@ function graficasByAlumno(n1, n2, n3, universidades) {
         xAxis: {
             tickInterval: 1,
             categories: universidades,
+        },
+        plotOptions: {
+            series: {
+                dataLabels: {
+                    enabled: true,
+                }
+            }
         },
         series: [{
             name: 'Cantidad de alumnos que han retirado materias',
@@ -464,6 +531,7 @@ function loadUniversity(datos) {
 
 
     graficasByAlumno(one, two, three, ids);
+    GraficaCUM(ids, cum);
 
 
     // calcular cum global
