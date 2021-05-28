@@ -220,14 +220,12 @@
             </li>
             <li>
               <a class="list-group-item list-group-item-action" data-toggle="collapse" href="#collapseExample10" role="button" aria-expanded="false" aria-controls="collapseExample" id="menus">
-              <i class="fas fa-chart-pie"></i>Reporteria<i class="fas fa-sort-down"></i>
+                <i class="fas fa-chart-pie"></i>Reporteria<i class="fas fa-sort-down"></i>
               </a>
               <div class="collapse" id="collapseExample10">
                 <ul>
-                  <li><a href="ReporteReuniones.php" class="list-group-item list-group-item-action"
-                   id="submenu">Reuniones</a></li>
-                  <li><a href="reporteriaUniversidad.php" class="list-group-item list-group-item-action"
-                   id="submenu">Universidad</a></li>
+                  <li><a href="ReporteReuniones.php" class="list-group-item list-group-item-action" id="submenu">Reuniones</a></li>
+                  <li><a href="reporteriaUniversidad.php" class="list-group-item list-group-item-action" id="submenu">Universidad</a></li>
                   <!--<li><a href="ReporteRenovacion.php" class="list-group-item list-group-item-action" id="submenu">Reporteria</a></li>-->
                 </ul>
               </div>
@@ -237,7 +235,7 @@
               <a class="list-group-item list-group-item-action" href="preguntas.php" id="menus"><i class="fas fa-question-circle"></i> Preguntas Frecuentes
               </a>
             </li>
-            
+
             <!-- fin de preguntas frecuentes -->
             <li>
               <a class="list-group-item list-group-item-action" data-toggle="collapse" href="#collapseExample10" role="button" aria-expanded="false" aria-controls="collapseExample" id="menus">
@@ -285,9 +283,9 @@
 
 
       <script type="text/javascript">
-        $(document).ready(function() {
-              //Recibir cantidad de notificaciones
-              $.ajax({
+        $(document).ready(function () {
+          //Recibir cantidad de notificaciones
+          $.ajax({
                   url: "Modelo/Notificaciones/notificaciones.php",
                   data: {
                     "user": "<?php echo $idUser; ?>",
@@ -307,7 +305,7 @@
                   }
                 }
 
-              });
+              );
 
 
             //Recibir notificaciones
@@ -333,10 +331,8 @@
                     var idNoti = notificacion[i].Id;
                     var correo = notificacion[i].correo;
                   }
-
-
-
-                });
+                }});
+        });
       </script>
       <script type="text/javascript">
         setInterval(function() {
@@ -1009,12 +1005,8 @@
   </div>
 
 </nav>
-
-</body>
-
-</html>
 <script type="text/javascript">
-  /* Set the width of the sidebar to 250px (show it) */
+  /* Set the width of the sidebar to 250px (show it)*/
   function openNav() {
     document.getElementById("mySidepanel").style.width = "270px";
   }

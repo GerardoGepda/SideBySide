@@ -30,6 +30,15 @@ $cantidad = $query->rowCount();
 // FIN DE CONSULTAS PARA FILTROS
 
 ?>
+<!-- jsPDF -->
+<script src="js/jspdf.umd.js"></script>
+<!-- jsPDF Autotable -->
+<script src="js/jspdf.plugin.autotable.js"></script>
+<!-- SheetJs -->
+<script src="js/xlsx.full.min.js"></script>
+<!-- FileSaver -->
+<script src="js/FileSaver.js"></script>
+
 <link rel="stylesheet" type="text/css" href="css/Renovacion.css">
 <div class="title mb-2">
     <a href="javascript:history.back();"><img src="../img/back.png" class="icon"></a>
@@ -244,6 +253,8 @@ $cantidad = $query->rowCount();
 <script src="./js/filtroUniversidad.js"></script>
 <!-- js para exportar pdf -->
 <script src="js/exportpdfreporte.js"></script>
+<!-- js para exportar a Excel -->
+<script src="js/exportexcelreporte.js"></script>
 <!-- fin de proceso de  graficas -->
 <!-- **************************************** Fin de estructura de trabajo **************************** -->
 

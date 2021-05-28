@@ -285,9 +285,9 @@ function CreatDivs(e, ids) {
                 </div>
 
                 <div style='position:absolute; z-index:2; left:590px; top:20%;'>
-                    <a class='btn btn-danger  d-block p-3' href='#'><i class="fas fa-file-pdf"></i></a>
+                    <button class='${ids[index].replace(/\s/g, "-")} btn btn-danger d-block p-3 btnexpPdf'><i class="fas fa-file-pdf"></i></button>
                 <br/>
-                    <a class='btn btn-success d-block p-3' href='#'><i class="fas fa-file-excel"></i></a>
+                    <button class=' ${ids[index].replace(/\s/g, "-")} btn btn-success d-block p-3 btnexpExcel'><i class="fas fa-file-excel"></i></button>
                 </div>
             </div>
         `;
@@ -537,6 +537,8 @@ function loadUniversity(datos) {
             colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3']
         });
     }
+    ExportarPDF(datos);
+    ExportarEXCEL(datos);
 }
 
 
