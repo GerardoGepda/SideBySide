@@ -122,6 +122,10 @@
             </div>
             <div class="list-group list-group-flush">
                 <ul class="snip1135" style="text-align: left;">
+                
+                <li><a href="calendario.php" class="list-group-item list-group-item-action">
+                <i class="fas fa-calendar-day"></i> Calendario</a></li>
+
                     <li><a href="AlumnoInicio.php" class="list-group-item list-group-item-action"><i class="far fa-address-book"></i> Expediente</a></li>
                     <br>
                     <!-- <li>
