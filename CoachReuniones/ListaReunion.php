@@ -229,6 +229,12 @@ include 'Modularidad/MenuVertical.php';
                                 </div>";
                                 }
                                 ?>
+                                 <div class='col'>
+                                        <div class='md-form'>
+                                            <input type ='text' name ='link' id='link' class="form-control"  />
+                                            <label for='materialRegisterFormFirstName' style='color: black'>Link</label>
+                                        </div>
+                                    </div>
 
                         </div>
                         <div class="modal-footer">
