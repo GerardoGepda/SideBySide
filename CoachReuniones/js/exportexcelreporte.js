@@ -14,7 +14,7 @@ const ExportarEXCEL = (datos) =>{
         }
 
         let data = [
-            ["No.", "Alumno", "Universidad", "Tipo de materias","Promedio", "Materias"],
+            ["No.", "ID", "Alumno", "Universidad", "Class", "Correo", "Estatus", "Financiamiento", "Tipo de materias","Promedio", "Materias"],
         ];
 
         let alumnotmp = "";
@@ -26,8 +26,13 @@ const ExportarEXCEL = (datos) =>{
                 alumnotmp = listAprobados[key].alumno;
                 data.push([
                     contador++,
+                    listAprobados[key].idAlumno,
                     listAprobados[key].alumno,
                     universidad.id,
+                    listAprobados[key].Class,
+                    listAprobados[key].Correo,
+                    listAprobados[key].estatus,
+                    listAprobados[key].Financiamiento,
                     "Aprobadas",
                     PromedioMaterias(listAprobados.filter(x => x.alumno === alumnotmp)),
                     NombreMaterias(listAprobados.filter(x => x.alumno === alumnotmp))
@@ -43,8 +48,13 @@ const ExportarEXCEL = (datos) =>{
                 alumnotmp = listRetirados[key].alumno;
                 data.push([
                     contador++,
+                    listAprobados[key].idAlumno,
                     listRetirados[key].alumno,
                     universidad.id,
+                    listAprobados[key].Class,
+                    listAprobados[key].Correo,
+                    listAprobados[key].estatus,
+                    listAprobados[key].Financiamiento,
                     "Retiradas",
                     PromedioMaterias(listRetirados.filter(x => x.alumno === alumnotmp)),
                     NombreMaterias(listRetirados.filter(x => x.alumno === alumnotmp))
@@ -60,16 +70,21 @@ const ExportarEXCEL = (datos) =>{
                 alumnotmp = listReprobados[key].alumno;
                 data.push([
                     contador++,
+                    listAprobados[key].idAlumno,
                     listReprobados[key].alumno,
                     universidad.id,
+                    listAprobados[key].Class,
+                    listAprobados[key].Correo,
+                    listAprobados[key].estatus,
+                    listAprobados[key].Financiamiento,
                     "Reprobadas",
                     PromedioMaterias(listReprobados.filter(x => x.alumno === alumnotmp)),
                     NombreMaterias(listReprobados.filter(x => x.alumno === alumnotmp))
                 ]);
             }
         }
-        
-        MakeExcel(data);
+
+        MakeExcel(data, universidad.id);
     }));
 
     function PromedioMaterias(materias) {
@@ -99,13 +114,13 @@ const ExportarEXCEL = (datos) =>{
         return buff;    
     }
 
-    function MakeExcel(data) {
+    function MakeExcel(data, UId) {
         var wb = XLSX.utils.book_new();
         wb.Props = {
-            Title: "Reporte Universidad" + data[1][2],
+            Title: "Reporte Universidad" + UId,
             Subject: "Reporte",
             Author: "Coach reuniones",
-            CreateDate: new Date(fecha.toLocaleString())
+            CreateDate: new Date(fecha.toLocaleString()),
         }
 
         wb.SheetNames.push("hoja reporte");
@@ -115,6 +130,6 @@ const ExportarEXCEL = (datos) =>{
         var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
 
         //Guardando el archivo. data[1][2] representa las siglas de la universidad
-        saveAs(new Blob([CreateAnArrayBuffer(wbout)],{type:"application/octet-stream"}), "Reporte " + data[1][2] +".xlsx");
+        saveAs(new Blob([CreateAnArrayBuffer(wbout)],{type:"application/octet-stream"}), "Reporte " + UId +".xlsx");
     }
 }
