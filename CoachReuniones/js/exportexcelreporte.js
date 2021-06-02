@@ -13,6 +13,10 @@ const ExportarEXCEL = (datos) =>{
             }
         }
 
+        //vector con los id o carnets de los alumnos
+        let idsAlmunos = [];
+
+        //vector con datos para formar el excel
         let data = [
             ["No.", "ID", "Alumno", "Universidad", "Class", "Correo", "Estatus", "Financiamiento", "Tipo de materias","Promedio", "Materias"],
         ];
@@ -22,6 +26,12 @@ const ExportarEXCEL = (datos) =>{
         //obteniendo datos de aprobados
         const listAprobados = universidad.listaAprobado;
         for (const key in listAprobados) {
+            //añade el carnet o id a nuestro vector de ids
+            if (!idsAlmunos.includes(listAprobados[key].idAlumno)) {
+                idsAlmunos.push(listAprobados[key].idAlumno);
+            }
+
+            //añadimos los datos del almuno al array principal
             if (alumnotmp !== listAprobados[key].alumno) {
                 alumnotmp = listAprobados[key].alumno;
                 data.push([
@@ -44,17 +54,23 @@ const ExportarEXCEL = (datos) =>{
         alumnotmp = "";
         const listRetirados = universidad.listaRetirado;
         for (const key in listRetirados) {
+            //añade el carnet o id a nuestro vector de ids
+            if (!idsAlmunos.includes(listRetirados[key].idAlumno,)) {
+                idsAlmunos.push(listRetirados[key].idAlumno,);
+            }
+
+            //añadimos los datos del almuno al array principal
             if (alumnotmp !== listRetirados[key].alumno) {
                 alumnotmp = listRetirados[key].alumno;
                 data.push([
                     contador++,
-                    listAprobados[key].idAlumno,
+                    listRetirados[key].idAlumno,
                     listRetirados[key].alumno,
                     universidad.id,
-                    listAprobados[key].Class,
-                    listAprobados[key].Correo,
-                    listAprobados[key].estatus,
-                    listAprobados[key].Financiamiento,
+                    listRetirados[key].Class,
+                    listRetirados[key].Correo,
+                    listRetirados[key].estatus,
+                    listRetirados[key].Financiamiento,
                     "Retiradas",
                     PromedioMaterias(listRetirados.filter(x => x.alumno === alumnotmp)),
                     NombreMaterias(listRetirados.filter(x => x.alumno === alumnotmp))
@@ -66,25 +82,33 @@ const ExportarEXCEL = (datos) =>{
         alumnotmp = "";
         const listReprobados = universidad.listaReprobado;
         for (const key in listReprobados) {
+            //añade el carnet o id a nuestro vector de ids
+            if (!idsAlmunos.includes(listReprobados[key].idAlumno)) {
+                idsAlmunos.push(listReprobados[key].idAlumno);
+            }
+            
+            //añadimos los datos del almuno al array principal
             if (alumnotmp !== listReprobados[key].alumno) {
                 alumnotmp = listReprobados[key].alumno;
                 data.push([
                     contador++,
-                    listAprobados[key].idAlumno,
+                    listReprobados[key].idAlumno,
                     listReprobados[key].alumno,
                     universidad.id,
-                    listAprobados[key].Class,
-                    listAprobados[key].Correo,
-                    listAprobados[key].estatus,
-                    listAprobados[key].Financiamiento,
+                    listReprobados[key].Class,
+                    listReprobados[key].Correo,
+                    listReprobados[key].estatus,
+                    listReprobados[key].Financiamiento,
                     "Reprobadas",
                     PromedioMaterias(listReprobados.filter(x => x.alumno === alumnotmp)),
                     NombreMaterias(listReprobados.filter(x => x.alumno === alumnotmp))
                 ]);
             }
         }
-
-        MakeExcel(data, universidad.id);
+        console.log(idsAlmunos.map(x => "'" + x.toString() + "'"));
+        console.log(idsAlmunos.map(x => "'" + x.toString() + "'").join());
+        ExtraerInfoPorCiclo(idsAlmunos.map(x => "'" + x.toString() + "'"));
+        //MakeExcel(data, universidad.id);
     }));
 
     function PromedioMaterias(materias) {
@@ -103,6 +127,32 @@ const ExportarEXCEL = (datos) =>{
         });
 
         return nombres;
+    }
+
+    function ExtraerInfoPorCiclo(ids) {
+        const datos = {
+            idalumnos: ids,
+            ciclos: listaCiclos
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "Modelo/ModeloReportes/ModelUniversidad/infoPorCiclo.php",
+            data: datos,
+            success: function (response) {
+                console.log(JSON.parse(response));
+                const datosExcel = JSON.parse(response);
+                console.log(datosExcel.general);
+
+                datosExcel.general[0].map(x => x === datos.general[1][0].nombre, x.push(datos.general[1][7]));
+
+                let nuevosDatos = [];
+                for (const index in datosExcel.general) {
+                    const datoExcel = datosExcel.general[index];
+                    const vector = datoExcel.map(x => x.push(datosExcel.general[index][1][7]));
+                }
+            }
+        });
     }
 
     const fecha = new Date();

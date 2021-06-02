@@ -605,6 +605,7 @@ function loadUniversity(datos) {
             colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3']
         });
     }
+    
     ExportarPDF(datos);
     ExportarEXCEL(datos);
 }
