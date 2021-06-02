@@ -150,23 +150,23 @@ FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
     // seleccionar solo nombres
     //  count(IM.idMateria) as total, (SUM(IM.nota)/COUNT(IM.nota) as promedio,
     $sql12 = "SELECT DISTINCT a.Nombre as alumno,  u.imagen as imagen, COUNT(IM.idMateria) as total, TRUNCATE((SUM(IM.nota)/COUNT(IM.idMateria)),2)  as promedio
-    , a.correo as correo  FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
+    , a.correo as correo,  a.StatusActual as estatus, a.FuenteFinacimiento as Financiamiento, a.Class as Class  FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
     = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON
     a.ID_Alumno = e.ID_Alumno  JOIN materias m ON m.idMateria = IM.idMateria INNER JOIN usuarios u ON u.correo =
     a.correo  WHERE (IM.estado = 'Aprobada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND 
     ($fragmento4) AND a.ID_Empresa  = '$univeridades' GROUP BY a.Nombre ";
 
     // count(IM.idMateria) as total, (SUM(IM.nota)/COUNT(IM.nota) as promedio, 
-    $sql13 = "SELECT DISTINCT a.Nombre as alumno,  u.imagen as imagen, COUNT(IM.idMateria) as total,  TRUNCATE((SUM(IM.nota)/COUNT(IM.idMateria)),2) as promedio
-     , a.correo as correo FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
+    $sql13 = "SELECT DISTINCT a.Nombre as alumno,  u.imagen as imagen, COUNT(IM.idMateria) as total, TRUNCATE((SUM(IM.nota)/COUNT(IM.idMateria)),2)  as promedio
+    , a.correo as correo,  a.StatusActual as estatus, a.FuenteFinacimiento as Financiamiento, a.Class as Class  FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
     = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON
     a.ID_Alumno = e.ID_Alumno  JOIN materias m ON m.idMateria = IM.idMateria INNER JOIN usuarios u ON u.correo =
     a.correo  WHERE (IM.estado = 'Reprobada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND
      ($fragmento4) AND a.ID_Empresa  = '$univeridades' GROUP BY a.Nombre ";
     // count(IM.idMateria) as total, (SUM(IM.nota)/COUNT(IM.nota) as promedio, 
 
-    $sql14 = "SELECT DISTINCT a.Nombre as alumno,  u.imagen as imagen,  COUNT(IM.idMateria) as total,  TRUNCATE((SUM(IM.nota)/COUNT(IM.idMateria)),2)  as promedio
-    , a.correo as correo FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
+    $sql14 = "SELECT DISTINCT a.Nombre as alumno,  u.imagen as imagen, COUNT(IM.idMateria) as total, TRUNCATE((SUM(IM.nota)/COUNT(IM.idMateria)),2)  as promedio
+    , a.correo as correo,  a.StatusActual as estatus, a.FuenteFinacimiento as Financiamiento, a.Class as Class  FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
     = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON
     a.ID_Alumno = e.ID_Alumno  JOIN materias m ON m.idMateria = IM.idMateria INNER JOIN usuarios u ON u.correo =
     a.correo  WHERE (IM.estado = 'Retirada') AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND 
