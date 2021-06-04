@@ -28,7 +28,7 @@ foreach ($ciclos as $key => $value) {
         ON eu.idExpedienteU = ic.idExpedienteU
         INNER JOIN alumnos al
         ON al.ID_Alumno = eu.ID_Alumno
-        WHERE ic.cicloU = '$value' AND al.ID_Alumno IN ($alumnos) GROUP BY al.ID_Alumno";
+        WHERE ic.cicloU = '$value' AND al.ID_Alumno IN ($alumnos) AND im.estado IN ('Aprobada', 'Reprobada') GROUP BY al.ID_Alumno";
 
         $query1 = $pdo->prepare($sql1);
         $query1->execute();
@@ -73,25 +73,21 @@ foreach ($ciclos as $key => $value) {
 
     $cantidad = $query1->rowCount();
     if ($cantidad > 0) {
-        // if (empty($json["general"])) {
-            array_push($json["general"], $query1->fetchAll(PDO::FETCH_NUM));
-        // }else{
-        //     $query1->fetchAll(PDO::FETCH_NUM);
-        // }
+        array_push($json["general"], $query1->fetchAll(PDO::FETCH_NUM));
     }else {
         echo "sin datos";
     }
 
     $cantidadReti = $query2->rowCount();
     if ($cantidadReti > 0) {
-        array_push($json["retiradas"], $query2->fetchAll(PDO::FETCH_NUM));
+        $json["retiradas"] = array_merge($json["retiradas"], $query2->fetchAll(PDO::FETCH_NUM));
     } else {
         echo "sin datos";
     }
 
     $cantidadRepro = $query3->rowCount();
     if ($cantidadRepro > 0) {
-        array_push($json["reprobadas"], $query3->fetchAll(PDO::FETCH_NUM));
+        $json["reprobadas"] = array_merge($json["reprobadas"], $query3->fetchAll(PDO::FETCH_NUM));
     } else {
         echo "sin datos";
     }

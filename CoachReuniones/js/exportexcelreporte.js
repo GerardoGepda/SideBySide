@@ -3,133 +3,56 @@ const ExportarEXCEL = (datos) =>{
     let universidad = [];
 
     btnexportExcel.forEach(btn => btn.addEventListener("click", (e) => {
-        //extraemos el id de la universidad del btn
-        const idU = e.target.classList[0].replace("-", " ");
-        //filtramos los datos para la U seleccionada
-        for (const U in datos) {
-            if (datos[U].id === idU) {
-                universidad = datos[U];
-                break;
-            }
-        }
 
-        //vector con los id o carnets de los alumnos
-        let idsAlmunos = [];
-
-        //vector con datos para formar el excel
-        let data = [
-            ["No.", "ID", "Alumno", "Universidad", "Class", "Correo", "Estatus", "Financiamiento", "Tipo de materias","Promedio", "Materias"],
-        ];
-
-        let alumnotmp = "";
-        let contador = 1;
-        //obteniendo datos de aprobados
-        const listAprobados = universidad.listaAprobado;
-        for (const key in listAprobados) {
-            //añade el carnet o id a nuestro vector de ids
-            if (!idsAlmunos.includes(listAprobados[key].idAlumno)) {
-                idsAlmunos.push(listAprobados[key].idAlumno);
+        let icon = `<i class="fas fa-spinner " id="rotate" ></i>`;
+        btn.innerHTML = icon;
+        setTimeout(() => {
+            //extraemos el id de la universidad del btn
+            const idU = e.target.classList[0].replace("-", " ");
+            //filtramos los datos para la U seleccionada
+            for (const U in datos) {
+                if (datos[U].id === idU) {
+                    universidad = datos[U];
+                    break;
+                }
             }
 
-            //añadimos los datos del almuno al array principal
-            if (alumnotmp !== listAprobados[key].alumno) {
-                alumnotmp = listAprobados[key].alumno;
-                data.push([
-                    contador++,
-                    listAprobados[key].idAlumno,
-                    listAprobados[key].alumno,
-                    universidad.id,
-                    listAprobados[key].Class,
-                    listAprobados[key].Correo,
-                    listAprobados[key].estatus,
-                    listAprobados[key].Financiamiento,
-                    "Aprobadas",
-                    PromedioMaterias(listAprobados.filter(x => x.alumno === alumnotmp)),
-                    NombreMaterias(listAprobados.filter(x => x.alumno === alumnotmp))
-                ]);
-            }
-        }
+            //vector con los id o carnets de los alumnos
+            let idsAlmunos = [];
 
-        //obteniendo datos de retirados
-        alumnotmp = "";
-        const listRetirados = universidad.listaRetirado;
-        for (const key in listRetirados) {
-            //añade el carnet o id a nuestro vector de ids
-            if (!idsAlmunos.includes(listRetirados[key].idAlumno,)) {
-                idsAlmunos.push(listRetirados[key].idAlumno,);
+            //obteniendo datos de aprobados
+            const listAprobados = universidad.listaAprobado;
+            for (const key in listAprobados) {
+                //añade el carnet o id a nuestro vector de ids
+                if (!idsAlmunos.includes(listAprobados[key].idAlumno)) {
+                    idsAlmunos.push(listAprobados[key].idAlumno);
+                }
             }
 
-            //añadimos los datos del almuno al array principal
-            if (alumnotmp !== listRetirados[key].alumno) {
-                alumnotmp = listRetirados[key].alumno;
-                data.push([
-                    contador++,
-                    listRetirados[key].idAlumno,
-                    listRetirados[key].alumno,
-                    universidad.id,
-                    listRetirados[key].Class,
-                    listRetirados[key].Correo,
-                    listRetirados[key].estatus,
-                    listRetirados[key].Financiamiento,
-                    "Retiradas",
-                    PromedioMaterias(listRetirados.filter(x => x.alumno === alumnotmp)),
-                    NombreMaterias(listRetirados.filter(x => x.alumno === alumnotmp))
-                ]);
+            //obteniendo datos de retirados
+            const listRetirados = universidad.listaRetirado;
+            for (const key in listRetirados) {
+                //añade el carnet o id a nuestro vector de ids
+                if (!idsAlmunos.includes(listRetirados[key].idAlumno,)) {
+                    idsAlmunos.push(listRetirados[key].idAlumno,);
+                }
             }
-        }
 
-        //obteniendo datos de reprobados
-        alumnotmp = "";
-        const listReprobados = universidad.listaReprobado;
-        for (const key in listReprobados) {
-            //añade el carnet o id a nuestro vector de ids
-            if (!idsAlmunos.includes(listReprobados[key].idAlumno)) {
-                idsAlmunos.push(listReprobados[key].idAlumno);
+            //obteniendo datos de reprobados
+            const listReprobados = universidad.listaReprobado;
+            for (const key in listReprobados) {
+                //añade el carnet o id a nuestro vector de ids
+                if (!idsAlmunos.includes(listReprobados[key].idAlumno)) {
+                    idsAlmunos.push(listReprobados[key].idAlumno);
+                }
             }
-            
-            //añadimos los datos del almuno al array principal
-            if (alumnotmp !== listReprobados[key].alumno) {
-                alumnotmp = listReprobados[key].alumno;
-                data.push([
-                    contador++,
-                    listReprobados[key].idAlumno,
-                    listReprobados[key].alumno,
-                    universidad.id,
-                    listReprobados[key].Class,
-                    listReprobados[key].Correo,
-                    listReprobados[key].estatus,
-                    listReprobados[key].Financiamiento,
-                    "Reprobadas",
-                    PromedioMaterias(listReprobados.filter(x => x.alumno === alumnotmp)),
-                    NombreMaterias(listReprobados.filter(x => x.alumno === alumnotmp))
-                ]);
-            }
-        }
-        console.log(idsAlmunos.map(x => "'" + x.toString() + "'"));
-        console.log(idsAlmunos.map(x => "'" + x.toString() + "'").join());
-        ExtraerInfoPorCiclo(idsAlmunos.map(x => "'" + x.toString() + "'"));
-        //MakeExcel(data, universidad.id);
+
+            ExtraerInfoPorCiclo(idsAlmunos.map(x => "'" + x.toString() + "'"), universidad.id);
+            btn.innerHTML = `<i class="fas fa-file-excel"></i>`;
+        }, 5000);
     }));
 
-    function PromedioMaterias(materias) {
-        let promedio = 0;
-        materias.forEach(materia => {
-            promedio += parseFloat(materia.nota);
-        });
-        promedio = promedio/materias.length;
-        return parseFloat(promedio).toFixed(2);
-    }
-
-    function NombreMaterias(materias) {
-        let nombres = "";
-        materias.forEach(materia => {
-            nombres += materia.nombreMateria + ", ";   
-        });
-
-        return nombres;
-    }
-
-    function ExtraerInfoPorCiclo(ids) {
+    function ExtraerInfoPorCiclo(ids, idU) {
         const datos = {
             idalumnos: ids,
             ciclos: listaCiclos
@@ -141,16 +64,34 @@ const ExportarEXCEL = (datos) =>{
             data: datos,
             success: function (response) {
                 console.log(JSON.parse(response));
-                const datosExcel = JSON.parse(response);
-                console.log(datosExcel.general);
+                datosExcel = JSON.parse(response);
+                const datosGeneral = datosExcel.general;
 
-                datosExcel.general[0].map(x => x === datos.general[1][0].nombre, x.push(datos.general[1][7]));
+                //Recorremos todos los alumnos del primer array general
+                const datoGeneralMerge = datosGeneral[0].map((x) => {
+                    //recorremos todos los demás arrays en la info general
+                    for (const key in datosGeneral) {
+                        //con esta validación evitamos repetir info del primer vector
+                        if (key !== "0") {
+                            //buscamos nota del alumno en la actual iteración y si hay nota la agregamps
+                            //de lo contrario pondremos "NA"
+                            const datoEncontrado = datosGeneral[key].find(element => element[0] === x[0]);
+                            if (datoEncontrado !== undefined) {
+                                x.push(datoEncontrado[7]);
+                            }else{
+                                x.push("NA");
+                            }
+                        }
+                    }
+                    return x;
+                });
 
-                let nuevosDatos = [];
-                for (const index in datosExcel.general) {
-                    const datoExcel = datosExcel.general[index];
-                    const vector = datoExcel.map(x => x.push(datosExcel.general[index][1][7]));
-                }
+                datosExcel.general = datoGeneralMerge;
+                datosExcel.general.unshift(["ID", "Alumno", "Universidad", "Class", "Correo", "Estatus", "Financiamiento"].concat(listaCiclos));
+                datosExcel.reprobadas.unshift(["ID", "Alumno", "Universidad", "Class", "Correo", "Estatus", "Financiamiento", "Estatus", "Ciclo", "Materias"]);
+                datosExcel.retiradas.unshift(["ID", "Alumno", "Universidad", "Class", "Correo", "Estatus", "Financiamiento", "Estatus", "Ciclo", "Materias"]);
+                console.log(datosExcel);
+                MakeExcel(datosExcel, idU);
             }
         });
     }
@@ -173,13 +114,21 @@ const ExportarEXCEL = (datos) =>{
             CreateDate: new Date(fecha.toLocaleString()),
         }
 
-        wb.SheetNames.push("hoja reporte");
-        var ws = XLSX.utils.aoa_to_sheet(data);
-        wb.Sheets["hoja reporte"] = ws;
+        wb.SheetNames.push("General");
+        var wsg = XLSX.utils.aoa_to_sheet(data.general);
+        wb.Sheets["General"] = wsg;
+
+        wb.SheetNames.push("Reprobados");
+        var wsrp = XLSX.utils.aoa_to_sheet(data.reprobadas);
+        wb.Sheets["Reprobados"] = wsrp;
+
+        wb.SheetNames.push("Retirados");
+        var wsrt = XLSX.utils.aoa_to_sheet(data.retiradas);
+        wb.Sheets["Retirados"] = wsrt;
 
         var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
 
-        //Guardando el archivo. data[1][2] representa las siglas de la universidad
+        //Guardando el archivo
         saveAs(new Blob([CreateAnArrayBuffer(wbout)],{type:"application/octet-stream"}), "Reporte " + UId +".xlsx");
     }
 }
