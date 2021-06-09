@@ -47,7 +47,16 @@ const ExportarEXCEL = (datos) =>{
                 }
             }
 
-            ExtraerInfoPorCiclo(idsAlmunos.map(x => "'" + x.toString() + "'"), universidad.id);
+            try {
+                ExtraerInfoPorCiclo(idsAlmunos.map(x => "'" + x.toString() + "'"), universidad.id);
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Time Out',
+                    text: error,
+                    footer: '<b>Intente de nuevo dentro de unos segundos</b>'
+                });
+            }
             btn.innerHTML = `<i class="fas fa-file-excel"></i>`;
         }, 5000);
     }));
@@ -63,35 +72,49 @@ const ExportarEXCEL = (datos) =>{
             url: "Modelo/ModeloReportes/ModelUniversidad/infoPorCiclo.php",
             data: datos,
             success: function (response) {
-                console.log(JSON.parse(response));
-                datosExcel = JSON.parse(response);
-                const datosGeneral = datosExcel.general;
+                try {
+                    datosExcel = JSON.parse(response);
+                    const datosGeneral = datosExcel.general;
 
-                //Recorremos todos los alumnos del primer array general
-                const datoGeneralMerge = datosGeneral[0].map((x) => {
-                    //recorremos todos los demás arrays en la info general
-                    for (const key in datosGeneral) {
-                        //con esta validación evitamos repetir info del primer vector
-                        if (key !== "0") {
-                            //buscamos nota del alumno en la actual iteración y si hay nota la agregamps
-                            //de lo contrario pondremos "NA"
-                            const datoEncontrado = datosGeneral[key].find(element => element[0] === x[0]);
-                            if (datoEncontrado !== undefined) {
-                                x.push(datoEncontrado[7]);
-                            }else{
-                                x.push("NA");
+                    //Recorremos todos los alumnos del primer array general
+                    const datoGeneralMerge = datosGeneral[0].map((x) => {
+                        //recorremos todos los demás arrays en la info general
+                        for (const key in datosGeneral) {
+                            //con esta validación evitamos repetir info del primer vector
+                            if (key !== "0") {
+                                //buscamos nota del alumno en la actual iteración y si hay nota la agregamps
+                                //de lo contrario pondremos "NA"
+                                const datoEncontrado = datosGeneral[key].find(element => element[0] === x[0]);
+                                if (datoEncontrado !== undefined) {
+                                    x.push(datoEncontrado[1]);
+                                }else{
+                                    x.push("NA");
+                                }
                             }
                         }
-                    }
-                    return x;
-                });
+                        return x;
+                    });
 
-                datosExcel.general = datoGeneralMerge;
-                datosExcel.general.unshift(["ID", "Alumno", "Universidad", "Class", "Correo", "Estatus", "Financiamiento"].concat(listaCiclos));
-                datosExcel.reprobadas.unshift(["ID", "Alumno", "Universidad", "Class", "Correo", "Estatus", "Financiamiento", "Estatus", "Ciclo", "Materias"]);
-                datosExcel.retiradas.unshift(["ID", "Alumno", "Universidad", "Class", "Correo", "Estatus", "Financiamiento", "Estatus", "Ciclo", "Materias"]);
-                console.log(datosExcel);
-                MakeExcel(datosExcel, idU);
+                    datosExcel.general = datoGeneralMerge;
+                    datosExcel.general.unshift(["ID", "Alumno", "Correo", "Universidad", "Class", "Estatus", "Financiamiento"].concat(listaCiclos));
+                    datosExcel.reprobadas.unshift(["ID", "Alumno", "Correo", "Universidad", "Class", "Estatus", "Financiamiento", "Estatus", "Ciclo", "Materias", "Cantidad"]);
+                    datosExcel.retiradas.unshift(["ID", "Alumno", "Correo", "Universidad", "Class", "Estatus", "Financiamiento", "Estatus", "Ciclo", "Materias", "Cantidad"]);
+                    MakeExcel(datosExcel, idU);
+                } catch (error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Time Out',
+                        text: error,
+                        footer: '<b>Intente de nuevo dentro de unos segundos</b>'
+                    });
+                }
+            },error: function (xhr, ajaxOptions, thrownError) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Time Out',
+                    text: "HTTP REQUEST ERROR",
+                    footer: '<b>Contacte con los administradores del sistema</b>'
+                });
             }
         });
     }

@@ -38,7 +38,7 @@ $cantidad = $query->rowCount();
 <script src="js/xlsx.full.min.js"></script>
 <!-- FileSaver -->
 <script src="js/FileSaver.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <link rel="stylesheet" type="text/css" href="css/Renovacion.css">
 <div class="title mb-2">
     <a href="javascript:history.back();"><img src="../img/back.png" class="icon"></a>

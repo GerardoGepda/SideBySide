@@ -3,7 +3,7 @@
 include "../../../../BaseDatos/conexion.php";
 
 // ocultar errores
-error_reporting(0);
+//error_reporting(0);
 
 // declaracion de variables
 $json = array("general" => array(), "retiradas" => array(), "reprobadas" => array());
@@ -17,12 +17,29 @@ $idsAlumnos = $_POST['idalumnos'];
 $alumnos = implode(",", $idsAlumnos);
 //echo $alumnos;
  
+try {
+    $sqlls = "SELECT al.ID_Alumno, al.Nombre, al.correo, al.ID_Empresa, al.Class, al.StatusActual, al.FuenteFinacimiento FROM alumnos al
+    INNER JOIN expedienteu eu
+    ON al.ID_Alumno = eu.ID_Alumno
+    WHERE al.ID_Alumno IN ($alumnos)";
+
+    $queryls = $pdo->prepare($sqlls);
+    $queryls->execute();
+
+} catch (PDOException $expt) {
+    echo "ERROR: " .$expt->getMessage();
+}
+
+$cantidadAlm = $queryls->rowCount();
+if ($cantidadAlm > 0) {
+    array_push($json["general"], $queryls->fetchAll(PDO::FETCH_NUM));
+}
 
 foreach ($ciclos as $key => $value) { 
 
     try {
         //promedio de notas del ciclo
-        $sql1 = "SELECT al.ID_Alumno, al.Nombre, al.ID_Empresa, al.Class, al.correo, al.StatusActual, al.FuenteFinacimiento, ROUND((SUM(nota)/COUNT(al.ID_Alumno)),2) as promedio FROM inscripcionmateria im INNER JOIN inscripcionciclos ic
+        $sql1 = "SELECT al.ID_Alumno, ROUND((SUM(nota)/COUNT(al.ID_Alumno)),2) as promedio FROM inscripcionmateria im INNER JOIN inscripcionciclos ic
         ON ic.Id_InscripcionC = im.Id_InscripcionC
         INNER JOIN expedienteu eu
         ON eu.idExpedienteU = ic.idExpedienteU
@@ -34,7 +51,7 @@ foreach ($ciclos as $key => $value) {
         $query1->execute();
 
         //materias retiradas de cada alumno
-        $sql2 = "SELECT al.ID_Alumno, al.Nombre, al.ID_Empresa, al.Class, al.correo, al.StatusActual, al.FuenteFinacimiento, im.estado, ic.cicloU, GROUP_CONCAT(ma.nombreMateria SEPARATOR ', ') AS materias
+        $sql2 = "SELECT al.ID_Alumno, al.Nombre, al.correo, al.ID_Empresa, al.Class, al.StatusActual, al.FuenteFinacimiento, im.estado, ic.cicloU, GROUP_CONCAT(ma.nombreMateria SEPARATOR ', ') AS materias, COUNT(ma.nombreMateria) AS cantidad
         FROM inscripcionmateria im 
         INNER JOIN inscripcionciclos ic
         ON ic.Id_InscripcionC = im.Id_InscripcionC
@@ -51,7 +68,7 @@ foreach ($ciclos as $key => $value) {
         $query2->execute();
 
         //materias reprobadas de cada alumno
-        $sql3 = "SELECT al.ID_Alumno, al.Nombre, al.ID_Empresa, al.Class, al.correo, al.StatusActual, al.FuenteFinacimiento, im.estado, ic.cicloU, GROUP_CONCAT(ma.nombreMateria SEPARATOR ', ') AS materias
+        $sql3 = "SELECT al.ID_Alumno, al.Nombre, al.correo, al.ID_Empresa, al.Class, al.StatusActual, al.FuenteFinacimiento, im.estado, ic.cicloU, GROUP_CONCAT(ma.nombreMateria SEPARATOR ', ') AS materias, COUNT(ma.nombreMateria) AS cantidad
         FROM inscripcionmateria im 
         INNER JOIN inscripcionciclos ic
         ON ic.Id_InscripcionC = im.Id_InscripcionC
@@ -75,21 +92,22 @@ foreach ($ciclos as $key => $value) {
     if ($cantidad > 0) {
         array_push($json["general"], $query1->fetchAll(PDO::FETCH_NUM));
     }else {
-        echo "sin datos";
+        //echo "sin datos general ($value)";
+        array_push($json["general"], array());
     }
 
     $cantidadReti = $query2->rowCount();
     if ($cantidadReti > 0) {
         $json["retiradas"] = array_merge($json["retiradas"], $query2->fetchAll(PDO::FETCH_NUM));
     } else {
-        echo "sin datos";
+        //echo "sin datos retiradas ($value)";
     }
 
     $cantidadRepro = $query3->rowCount();
     if ($cantidadRepro > 0) {
         $json["reprobadas"] = array_merge($json["reprobadas"], $query3->fetchAll(PDO::FETCH_NUM));
     } else {
-        echo "sin datos";
+        //echo "sin datos reprobadas ($value)";
     }
 }
 
