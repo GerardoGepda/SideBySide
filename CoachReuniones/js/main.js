@@ -17,6 +17,7 @@
         ObtenerDatos(listaCiclos, listaClases, listaFinanciamiento, listaSede);
         // cargar graficas por universidad
         graphicsByUniversity(listaCiclos, listaClases, listaFinanciamiento, listaSede);
+        EstadosBecas(listaCiclos);
     }
 
     function GraphBarraU() {

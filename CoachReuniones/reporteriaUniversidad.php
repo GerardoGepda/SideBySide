@@ -119,6 +119,9 @@ $cantidad = $query->rowCount();
     <!-- fin de filtros -->
 
     <!-- cargar los contenedores por medio de este identificador -->
+    <div id="becas">
+
+    </div>
     <div id="loader">
 
     </div>
@@ -164,6 +167,7 @@ $cantidad = $query->rowCount();
 <script src="js/exportpdfreporte.js"></script>
 <!-- js para exportar a Excel -->
 <script src="js/exportexcelreporte.js"></script>
+
 <!-- fin de proceso de  graficas -->
 <!-- **************************************** Fin de estructura de trabajo **************************** -->
 

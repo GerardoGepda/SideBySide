@@ -42,6 +42,86 @@ function sede() {
     listaSede = selected;
 }
 
+
+function EstadosBecas(listaCiclos, listaClases, finan, sede) {
+    let templete = '';
+    let alumnos = [];
+    let table = [];
+    let contador = 1;
+    fetch(
+        "../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/estadosBecas.php", {
+        method: 'POST',
+        body: JSON.stringify({ ciclos: listaCiclos, clases: listaClases, finan: finan, sedes: sede }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(json => {
+
+            alumnos = json.alumnos;
+            for (const e of alumnos) {
+                table += `<tr>
+                                <td>${contador++}</td>
+                                <td><img src='../img/imgUser/${e.img}' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
+                                <td>${e.nombre}</td>
+                                <td>${e.carrera}</td>
+                                <td>${e.universidad}</td>
+                                <td>${e.estatus}</td>
+                                <td>${e.fecha}</td>
+                                <td>${e.ciclo}</td>
+                            </tr>`;
+            }
+
+            templete = `
+            <div class="graficas p-3">
+                <button type="button" class="btn btn-danger w-50 " data-toggle="modal" data-target=".bd-example-modal-lg">
+                Becas Declinadas/Cancelada </button>
+
+            </div> 
+        
+            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Becas Declinadas</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+              </div>
+              <div class="modal-body">
+              <table class='table table-striped' id="becas" >
+                <thead class="thead-dark">
+                    <th>No.</th>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Carrera</th>
+                    <th>Universidad</th>
+                    <th>Status</th>
+                    <th>Fecha</th>
+                    <th>Ciclo</th>
+                </thead>
+                <tbody class='table-bordered table-hover'>
+                    ${table}
+                </tbody>
+          </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+            
+                </div>
+            </div>
+            </div>
+      
+            `;
+            document.getElementById('becas').innerHTML = templete;
+
+        })
+}
+
+
 function loadTemplete() {
     let templete = '';
     templete = `
