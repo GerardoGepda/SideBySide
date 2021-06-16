@@ -119,9 +119,6 @@ $cantidad = $query->rowCount();
     <!-- fin de filtros -->
 
     <!-- cargar los contenedores por medio de este identificador -->
-    <div id="becas">
-
-    </div>
     <div id="loader">
 
     </div>

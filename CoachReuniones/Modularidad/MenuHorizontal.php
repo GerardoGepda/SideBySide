@@ -226,6 +226,7 @@
                 <ul>
                   <li><a href="ReporteReuniones.php" class="list-group-item list-group-item-action" id="submenu">Reuniones</a></li>
                   <li><a href="reporteriaUniversidad.php" class="list-group-item list-group-item-action" id="submenu">Universidad</a></li>
+                  <li><a href="EstatusBeca.php" class="list-group-item list-group-item-action" id="submenu" title="Becas canceladas y declinadas">Becas CANC/DECL</a></li>
                   <!--<li><a href="ReporteRenovacion.php" class="list-group-item list-group-item-action" id="submenu">Reporteria</a></li>-->
                 </ul>
               </div>

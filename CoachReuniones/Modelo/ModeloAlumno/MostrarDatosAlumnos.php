@@ -38,17 +38,15 @@ $LugarSAT=$InicialDep . $FinalDep .$Sabatino; //Ejemplo SSSAT
 
 				echo "
 		<tr class='table-light'>
-		
-		<th style='width:13.4%'>".$fila['ID_Alumno']."</th>
-		<th style='width:22.1%'>".utf8_decode($fila['Nombre'])."</th>
-		<th style='width:7.3%'>".$fila['Class']."</th>
-		<th style='width:7.9%'>".$fila['ID_Sede']."</th>
-		<th style='width:11.9%'>".$Asistencia."</th>
-		<th style='width:21.2%'>".$fila['StatusActual']."</th>
-		<th>".$fila['Estado']."</th>
-		<td><a href='AlumnoInicio.php?id=".$fila['correo']."' class='fas fa-user  btn btn-warning'></a> </td>
-		<td><a href='ModificarBeca.php?id=".$fila['correo']."' class='fas fa-user  btn btn-warning'></a> </td>
-		
+		<td>".$fila['ID_Alumno']."</td>
+		<td>".$fila['Nombre']."</td>
+		<td>".$fila['Class']."</td>
+		<td>".$fila['ID_Sede']."</td>
+		<td>".$Asistencia."</td>
+		<td>".$fila['StatusActual']."</td>
+		<td>".$fila['Estado']."</td>
+		<td><a href='AlumnoInicio.php?id=".$fila['correo']."' class='fas fa-user  btn btn-warning'></a></td>
+		<td><a href='ModificarBeca.php?id=".$fila['correo']."' class='fas fa-user  btn btn-warning'></a></td>
 		</tr>";
 
 	}

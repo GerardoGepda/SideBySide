@@ -43,7 +43,7 @@ header('Location: ../index.php');//Aqui lo redireccionas al lugar que quieras.
   }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
