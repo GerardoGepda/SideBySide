@@ -39,31 +39,16 @@ include 'Modularidad/MenuHorizontal.php';
 </style>
 
 <?php
-// require_once '../Alumno/templates/header.php';
 require '../Conexion/conexion.php';
 
 $id = $_GET['id'];
-$expediente = $_GET['id'];
-$stmt1 = $dbh->prepare("SELECT `ID_Alumno` , A.Nombre , A.ID_Empresa AS 'idem' , E.Nombre AS 'Universidad', 
- A.Id_Carrera AS 'idUni' FROM alumnos A INNER JOIN empresas E ON A.ID_Empresa = E.ID_Empresa
-  WHERE ID_Alumno='" . $id . "'");
-// Ejecutamos
-$stmt1->execute();
-
-while ($fila = $stmt1->fetch()) {
-  $alumno = $fila["ID_Alumno"];
-  $Nombre_Alumno = $fila["Nombre"];
-  $univerisdad = $fila["Universidad"];
-  $iduniverisdad = $fila["idUni"];
-  $IDempresa = $fila["idem"];
-}
-$id = $alumno;
 
 //consulta para extraer el id universitario del alumno
-$stmt14525646 = $dbh->prepare("SELECT idExpedienteU FROM expedienteu WHERE ID_Alumno= '" . $id . "'");
+$stmt14525646 = $dbh->prepare("SELECT idExpedienteU FROM expedienteu WHERE ID_Alumno= '" . $id . "' ");
 $stmt14525646->execute();
 while ($row = $stmt14525646->fetch()) {
   $idExpedienteU = $row['idExpedienteU'];
+  $expediente = $row['idExpedienteU'];
 }
 
 
@@ -91,58 +76,6 @@ $stmt99452464->bindParam(":id", $idExpedienteU);
 $stmt99452464->execute();
 // fin de consulta para extraer las materias retiradas de los alumnos
 
-
-
-
-$FotoAlumno = '';
-
-$consulta2 = $dbh->prepare("SELECT * FROM usuarios where correo = :IdAlumno");
-$consulta2->bindParam(":IdAlumno", $Correo);
-$consulta2->execute();
-
-if ($consulta2->rowCount() >= 0) {
-  $fila2 = $consulta2->fetch();
-  $FotoAlumno = $fila2['imagen'];
-}
-
-$consulta2 = $dbh->prepare("SELECT * FROM usuarios where correo = :IdAlumno");
-$consulta2->bindParam(":IdAlumno", $Correo);
-$consulta2->execute();
-
-if ($consulta2->rowCount() >= 0) {
-  $fila2 = $consulta2->fetch();
-  $FotoAlumno = $fila2['imagen'];
-}
-
-
-$stmt2 = $dbh->prepare("SELECT idExpedienteU , A.Nombre AS 'Alumno', E.Nombre 'Universidad' ,
-  C.nombre AS 'CARRERA' , F.Nombre 'Facultad',C.Duracion , cum , proyecEgreso , pensum , avancePensum,carnet, 
-  EU.estado FROM expedienteu EU INNER JOIN alumnos A ON EU.ID_Alumno = A.ID_Alumno LEFT JOIN carrera C
-   ON EU.Id_Carrera = C.Id_Carrera LEFT JOIN facultades F ON C.ID_Facultades = F.IDFacultates LEFT JOIN
-    empresas E ON EU.ID_Empresa = E.ID_Empresa WHERE EU.ID_Alumno = ? ");
-// Ejecutamos
-$stmt2->execute(array($id));
-
-$stmt3 = $dbh->prepare("SELECT idExpedienteU , A.Nombre AS 'Alumno', E.Nombre 'Universidad' ,
-    C.nombre AS 'CARRERA' , F.Nombre 'Facultad',C.Duracion , cum , proyecEgreso , pensum , avancePensum,carnet,
-     EU.estado FROM expedienteu EU INNER JOIN alumnos A ON EU.ID_Alumno = A.ID_Alumno LEFT JOIN carrera C 
-     ON EU.Id_Carrera = C.Id_Carrera LEFT JOIN facultades F ON C.ID_Facultades = F.IDFacultates LEFT JOIN
-      empresas E ON EU.ID_Empresa = E.ID_Empresa WHERE EU.idExpedienteU = ? ");
-// Ejecutamos
-$stmt3->execute(array($idExpedienteU));
-
-
-if ($stmt3->rowCount() >= 0) {
-  $fila3 = $stmt3->fetch();
-  $Universi = $fila3['Universidad'];
-  $Carrera = $fila3['CARRERA'];
-  $cum = $fila3['cum'];
-  $Egreso = $fila3['proyecEgreso'];
-  $Pensum = $fila3['pensum'];
-  $PorcPens = $fila3['avancePensum'];
-  $EstadoCarrera = $fila3['estado'];
-  $carnet = $fila3['carnet'];
-}
 
 
 $stmt4 = $dbh->prepare("SELECT COUNT(idMateria) AS 'Aprobado' FROM `materias` WHERE `idExpedienteU` = ? AND estadoM ='Aprobada'");
@@ -190,7 +123,6 @@ if ($stmt7->rowCount() >= 0) {
   $Inscrita = $fila7['Inscrita'];
 }
 
-$PorcetaCarrera = (($Aprobado * 100) / $Inscrita);
 
 $stmt9 = $dbh->prepare("SELECT * FROM `inscripcionciclos` WHERE `idExpedienteU` = ?");
 $stmt9->execute(array($idExpedienteU));
@@ -200,6 +132,8 @@ $stmt16584->execute(array($idExpedienteU));
 
 
 ?>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 <link rel="stylesheet" type="text/css" href="css/Menu.css">
 <nav class="navbar navbar-expand-lg navbar-light" id="row">
   <a href="javascript:history.back();"><img src="../img/back.png" class="icon" style="transform:rotate(0deg);"></a>
@@ -219,21 +153,17 @@ $stmt16584->execute(array($idExpedienteU));
 <div class="float-right"> <?php include 'Modularidad/AlertaCorreo.php' ?></div>
 
 <div class="container-fluid text-center">
-  <div class="row ml-5 mt-2">
-    <div class="text-center align-self-center " id="carnet" style="background-color:  #c7c7c7;">
+  <div class="row  mt-2" id="detalles">
+    <div class="text-center align-self-center ml-5 " id="carnet" style="background-color:  #c7c7c7;">
       <br>
-      <img src="../img/imgUser/<?php echo $FotoAlumno ?>" alt="img de usuario" style="height: 170px;
-      width: 170px; background-repeat: no-repeat;
-      background-position: 50%;
-      border-radius: 50%;
-      background-size: 100% auto;">
-      <h4 style="color: white; text-align: center; font-weight: bold;"><?php echo ($univerisdad)  ?>
-      </h4>
+      <img v-bind:src="'../img/imgUser/'+datos.imagen" alt="img de usuario" style="height: 170px; width: 170px; background-repeat: no-repeat; background-position: 50%; border-radius: 50%; background-size: 100% auto;">
+      <h4 style="color: white; text-align: center; font-weight: bold;"> {{datos.Universidad}} </h4>
     </div>
     <div class="col text-center">
-      <br><br><br>
-      <h3 style="text-align: left; color: #555555; font-weight: bold;"><?php echo $Nombre_Alumno; ?> </h3>
-      <h5 style="color: #555555; text-align: left;">Carnet Universidad: <?php echo $carnet; ?></h5>
+      <h3 style="text-align: left; color: #555555; font-weight: bold;"> {{datos.Alumno}} </h3>
+      <h5 style="color: #555555; text-align: left;" v-if="block">Carnet Universidad: {{block.carnet}} </h5>
+      <h5 style="color: #555555; text-align: left;" v-else>Carnet Universidad: Debe actualizar expediente </h5>
+
       <table class="table table-responsive-lg float-left">
         <thead style="background-color: #2D2D2E;; color: white; ">
           <tr>
@@ -241,30 +171,21 @@ $stmt16584->execute(array($idExpedienteU));
             <th scope="col">Carrera</th>
             <th scope="col">Facultad</th>
             <th scope="col">Estado</th>
-            <!-- <th scope="col">Actualizar</th> -->
           </tr>
         </thead>
         <tbody>
-
-          <?php
-          if (isset($carnet)) {
-            while ($fila2 = $stmt2->fetch()) {
-              echo " <tr class='table-dark' style='color: black;'>
-                        <td scope=\"row\">" . $fila2["Universidad"] . "</td>"
-                . ("<td>" . $fila2["CARRERA"] . "</td>")
-                . ("<td>" . $fila2["Facultad"] . "</td>")
-                . "<td>" . $fila2["estado"] . "</td>";
-              echo "</tr>";
-            }
-          } else {
-            echo " <tr class='table-dark' style='color: black;'>
-                             <td scope=\"row\">Debe actualizar </td>" .
-              ("<td>Debe actualizar </td>") .
-              ("<td>Debe actualizar </td>") .
-              "<td>Debe actualizar</td>
-                  </tr>";
-          }
-          ?>
+          <tr v-if="datos" class="table-dark text-dark ">
+            <td> {{datos.Universidad}} </td>
+            <td>{{datos.CARRERA}}</td>
+            <td> {{datos.Facultad}} </td>
+            <td> Activo</td>
+          </tr>
+          <tr v-else="" class="table-dark text-dark ">
+            <td>Debe actualizar</td>
+            <td>Debe actualizar</td>
+            <td>Debe actualizar</td>
+            <td>Debe actualizar</td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -283,27 +204,29 @@ $stmt16584->execute(array($idExpedienteU));
               <th scope="col">Estado</th>
               <th scope="col">Subir Pensum</th>
               <th scope="col">Ver Pensum</th>
+              <th scope="col">Actualizar</th>
             </tr>
           </thead>
-          <tbody>
-            <tr class='table-dark' style="color: black;">
-              <th scope="col"> <?php echo $Universi ?> </th>
-              <th scope="col"> <?php echo ($Carrera) ?> </th>
-              <th scope="col"> <?php echo $cum ?></th>
-              <th scope="col"> <?php echo $EstadoCarrera ?> </th>
+          <tbody id="estudio">
+            <tr class="table-dark text-dark ">
+              <th scope="col"> {{info.Universidad}} </th>
+              <th scope="col"> {{info.CARRERA}} </th>
+              <th scope="col" v-if="expedU.cum"> {{expedU.cum}} </th>
+              <th scope="col" v-else> Debe actualizar </th>
+              <th scope="col" v-if="expedU.estado"> {{expedU.estado}} </th>
+              <th scope="col" v-else> Debe actualizar </th>
               <th scope="col">
                 <button type='button' class='btn btn-danger' data-toggle='modal' data-target='#pensum' style="border-radius: 20px; border: 2px solid #9d120e; width: 100px;height: 50px; background-color: #9d120e; color:white;"><img src="../img/add.png" width="25px" height="25px"><br>
                   <p style="font-size: 10px;">Subir pensum</p>
                 </button>
               </th>
-              <?php
-              if ($Pensum == null) {
-                echo "
-                 <th><button type='button' class='btn btn-danger'  disabled> <img src='../img/PDF.png' width='25px' height='25px'></button></th>";
-              } else {
-                echo "<th><a href='../pdfPensum/$Pensum' target='_blank' class='btn btn-danger '><img src='../img/PDF.png' width='25px' height='25px>'</a> </th>";
-              }
-              ?>
+              <th scope="col" v-if="expedU.pensum "><a v-bind:href="'../pdfPensum/'+expedU.pensum" target='_blank' class='btn btn-danger '><img src='../img/PDF.png' width='25px' height='25px'></a></th>
+              <th scope="col" v-else><a v-bind:href="'../pdfPensum/'+expedU.pensum" target='_blank' class='btn btn-danger ' disabled><img src='../img/PDF.png' width='25px' height='25px'></a></th>
+              <th scope="col">
+                <button type="button" class="btn" data-toggle="modal" data-target="#exampleModalx">
+                  <i class='fas fa-pen'></i>
+                </button>
+              </th>
             </tr>
           </tbody>
         </table>
@@ -346,7 +269,6 @@ $stmt16584->execute(array($idExpedienteU));
                 </div>
               </div>
             </div>
-
             <div class="col-lg-3 col-xs-6 text-center">
               <div class="panel panel-udb text-white bg-primary">
                 <div class="card-header">
@@ -359,16 +281,15 @@ $stmt16584->execute(array($idExpedienteU));
                 </div>
               </div>
             </div>
-
           </div>
         </div>
 
-        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center">
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 text-center" id="porcentaje">
           <div class="card card-udb" style="background-color: #c7c7c7; border-width: medium; border-color: #2D2D2E; border-radius: 3%;">
             <div class="card-header">
               <b>
                 <h1>
-                  <span id="ContentPlaceHolder1_LbCPorcentaje"><?php echo  number_format($PorcPens, 2, '.', '');  ?>%</span>
+                  <span id="ContentPlaceHolder1_LbCPorcentaje"> {{porcentaje}}%</span>
                 </h1>
               </b>
             </div>
@@ -378,13 +299,10 @@ $stmt16584->execute(array($idExpedienteU));
           </div>
         </div>
       </div>
-
-      <br>
-      <h3 style="text-align: left; font-weight: bold;">Inscripciones de Ciclos</h3>
+      <h3 style="text-align: left; font-weight: bold;" class="m-3">Inscripciones de Ciclos</h3>
       <!-- Button trigger modal -->
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Agregar inscripción</button>
-      <br>
-      <br>
+      <button type="button" class="btn btn-primary m-3" data-toggle="modal" data-target="#exampleModal">Agregar inscripción</button>
+
       <table class="table table-responsive-lg float-left">
         <thead style="background-color: #2D2D2E; color: white; ">
           <tr>
@@ -524,8 +442,7 @@ $stmt16584->execute(array($idExpedienteU));
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <br><br>
+      <div class="modal-body m-3">
         <form action="Modelo/ModeloMaterias/subirPensum.php" method="post" enctype="multipart/form-data">
           <div class="custom-file">
             <input type="file" class="custom-file-input" accept=".pdf" id="customFileLang" name="archivo" required>
@@ -533,17 +450,9 @@ $stmt16584->execute(array($idExpedienteU));
               Comprobante</label>
             <center><small>El archivo no debe pesar más de 5MB</small></center>
           </div>
-          <br><br>
           <div>
-            <?php
-            $stmt1 = $dbh->prepare("SELECT `ID_Alumno`  FROM `alumnos` WHERE correo='" . $_SESSION['Email'] . "'");
-            $stmt1->execute();
-            while ($fila = $stmt1->fetch()) {
-              $alumno = $fila["ID_Alumno"];
-            }
-            ?>
             <!--idalumnos-->
-            <input type="hidden" name="alumno" value="<?php echo $alumno; ?>">
+            <input type="hidden" name="alumno" value="<?php echo $id; ?>">
             <!--id expedente-->
             <input type="hidden" name="expediente" value="<?php echo $idExpedienteU; ?>">
           </div>
@@ -753,4 +662,49 @@ $stmt16584->execute(array($idExpedienteU));
   </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="exampleModalx" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modificar información</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="formAlumno">
+        <form class="w-50 mx-auto" method="post" action="Modelo/ModeloAlumno/actualizar.php">
+          <div class="form-group">
+            <label for="" class="text-dark">Hola <b> {{otros.Alumno}} </b> a continuación escriba los datos que se solicitan:</label><br>
+            <label for="exampleInputEmail1" class="text-dark">CUM:</label>
+            <input type="number" step="0.1" min="0" max="10" name="cum" v-bind:value="universidad.cum" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese su CUM">
+          </div>
+          <div class="form-group text-dark">
+            <label for="exampleInputPassword1" class="text-dark">Carnet:</label>
+            <input type="hidden" name="id" value="<?php echo $id; ?>" />
+            <input type="hidden" name="carrera" v-bind:value="otros.idUni" />
+            <input type="text" name="carnet" v-bind:value="universidad.carnet" class="form-control" id="exampleInputPassword1" placeholder="Ingrese su carnet">
+            <input type="hidden" name="universidad" v-bind:value="otros.idem">
+            <input type="hidden" name="expU" v-bind:value="universidad.idExpedienteU">
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1" class="text-dark">avance de carrera:</label>
+            <input type="number" step="0.01" min="0" max="100" name="avance" v-bind:value="universidad.avancePensum" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese su CUM">
+          </div>
+          <div class="form-check">
+          </div>
+          <center><button type="submit" class="btn btn-success" name="actualizar" value="Actualizar">Actualizar</button></center>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<script async>
+  const carnet = '<?php echo $id; ?>';
+</script>
+
+<script async src="js/vue.js"></script>
 <?php require_once '../Alumno/templates/footer.php'; ?>
