@@ -80,7 +80,7 @@
             transform: rotate(360deg);
         }
     }
-    
+
 
     .form-label {
         color: #be0032;
@@ -608,6 +608,35 @@
             margin: 0%;
         }
 
+    }
+
+    /* width */
+    ::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    /* Track */
+    ::-webkit-scrollbar-track {
+        box-shadow: inset 0 0 5px grey;
+        border-radius: 10px;
+    }
+
+    /* Handle */
+    ::-webkit-scrollbar-thumb {
+        background: #0D0D00;
+        border-radius: 10px;
+    }
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #0D0D0D;
+    }
+
+    #filtros {
+        height: 130px;
+        max-height: 180px;
+        overflow-y: scroll;
+        overflow-x: hidden;
     }
 
     /*Fin del nuevo diseño */

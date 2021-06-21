@@ -137,6 +137,10 @@ $cantidad = $query->rowCount();
             <option>Mostrar todas</option>
         </select>
     </div>
+    <div class="form-group float-right m-4">
+        <button class='btn btn-danger' id="pdfExport" onclick="ExportarGeneralPDF()"><i class="fas fa-file-pdf"></i></button>
+        <button class='btn btn-success' id="excelexport" onclick="exportar()"><i class="fas fa-file-excel"></i></button>
+    </div>
 </div>
 <div id="universidades"> </div>
 
