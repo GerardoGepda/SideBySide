@@ -1,5 +1,7 @@
 $(document).ready(function () {
+    window.jsPDF = window.jspdf.jsPDF;
 
+    //petición fetch para extraer datos de estatus de becas
     fetch(
         "Modelo/ModeloReportes/ModelUniversidad/estadosBecas.php", {
         method: 'POST', // or 'PUT'
@@ -9,12 +11,20 @@ $(document).ready(function () {
     })
     .then(response => response.json())
     .then(json => {
-        console.log(json.alumnos);
         CreateTableData(json.alumnos);
     })
     .catch(function(error) {
         console.log('Hubo un problema con la petición Fetch:' + error.message);
     });
+
+    //eventos para botones de exportación
+    const btnExportExcel = document.getElementById('exprtToExcel');
+    btnExportExcel.addEventListener('click', ExportEXCEL);
+
+    const btnExportPdf = document.getElementById('exprtToPdf');
+    btnExportPdf.addEventListener('click', ExportPDF);
+    
+
 });
 
 function CreateTableData(data) {
@@ -24,17 +34,17 @@ function CreateTableData(data) {
     data.forEach(element => {
         templete += `
             <tr class='table-light'>
-                <td>${element.IDalumno}</td>
-                <td>${element.nombre}</td>
-                <td>${element.class}</td>
-                <td>${element.sede}</td>
-                <td>${element.universidad}</td>
-                <td>${element.carrera}</td>
-                <td>${element.estatus}</td>
-                <td>${element.FFinanciamiento}</td>
-                <td>${element.ciclo}</td>
+                <td>${element[0]}</td>
+                <td>${element[1]}</td>
+                <td>${element[2]}</td>
+                <td>${element[3]}</td>
+                <td>${element[6]}</td>
+                <td>${element[5]}</td>
+                <td>${element[7]}</td>
+                <td>${element[4]}</td>
+                <td>${element[10]}</td>
                 <td>
-                    ${new Date(element.fecha).toLocaleString('en-US',{
+                    ${new Date(element[8]).toLocaleString('en-US',{
                         day: '2-digit',
                         month: '2-digit',
                         year: 'numeric',
@@ -44,8 +54,6 @@ function CreateTableData(data) {
             </tr>
             `;
     });
-
-    console.log(templete);
 
     const tBodyStatus = document.getElementById('bodyTableStatus');
     tBodyStatus.innerHTML = templete;
@@ -261,4 +269,76 @@ function CreateTableData(data) {
     });
     //****Esta bendita linea hace la magia, adjusta el header de la tabla con el body
     table.columns.adjust();
+}
+
+function table_to_array(table_id) {
+    const myData = document.getElementById(table_id).rows
+    my_liste = []
+    for (var i = 0; i < myData.length; i++) {
+            el = myData[i].children
+            my_el = []
+            for (var j = 0; j < el.length; j++) {
+                    my_el.push(el[j].innerText);
+            }
+            my_liste.push(my_el)
+
+    }
+    return my_liste
+}
+
+function CreateAnArrayBuffer(info) {
+    var buff = new ArrayBuffer(info.length); //convert info to arrayBuffer
+    var view = new Uint8Array(buff);  //create uint8array as viewer
+    for (var i=0; i<info.length; i++) view[i] = info.charCodeAt(i) & 0xFF; //convert to octet
+    return buff;    
+}
+
+function ExportEXCEL() {
+    var wb = XLSX.utils.book_new();
+    wb.Props = {
+        Title: "Reporte estatus de beca",
+        Subject: "Reporte",
+        Author: "Coach reuniones",
+    }
+
+    let data = table_to_array('tablestatus');
+    data.shift();
+    const field = ["Carnet", "Alumno", "Class", "Sede", "Universidad", "Carrera", "Estatus", "Financiamiento", "Ciclo", "Fecha"];
+    data.unshift(field);
+
+    wb.SheetNames.push("Test Sheet2");
+    var ws = XLSX.utils.aoa_to_sheet(data);
+    wb.Sheets["Test Sheet2"] = ws;
+
+    var wbout = XLSX.write(wb, {bookType:'xlsx',  type: 'binary'});
+
+    //Guardando el archivo
+    saveAs(new Blob([CreateAnArrayBuffer(wbout)],{type:"application/octet-stream"}), "Reporte estatus de beca.xlsx");
+}
+
+function ExportPDF() {
+
+    const data = table_to_array('tablestatus');
+    data.shift();
+    const header = ["Carnet", "Alumno", "Class", "Sede", "Universidad", "Carrera", "Estatus", "Financiamiento", "Ciclo", "Fecha"];
+
+    var pdfdoc = new jsPDF({
+        unit: "pt",
+        orientation: "landscape"
+    });
+    pdfdoc.setFontSize(12);
+    pdfdoc.setTextColor(0);
+    pdfdoc.text("Lista de alumnos con estatus de beca cancelada y declinados", 40, 40);
+
+    pdfdoc.autoTable({
+        head: [header],
+        body: data,
+        theme: 'grid',
+        headStyles: {
+            fillColor: [157, 18, 14],
+        },
+        margin: {top: 60},
+    });
+
+    pdfdoc.save("Reporte estatus de beca.pdf");
 }

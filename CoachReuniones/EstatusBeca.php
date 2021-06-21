@@ -33,8 +33,8 @@ include 'Modularidad/MenuVertical.php';
 
 <div class="statusMain">
     <div class="mx-3 my-3 d-flex flex-row-reverse">
-        <button class="btn btn-danger mx-2"><i class="fas fa-file-pdf"></i> Exportar a PDF</button>
-        <button class="btn btn-success"><i class="fas fa-file-excel"></i> Exportar a EXCEL</button>
+        <button class="btn btn-danger mx-2" id="exprtToPdf"><i class="fas fa-file-pdf"></i> Exportar a PDF</button>
+        <button class="btn btn-success" id="exprtToExcel"><i class="fas fa-file-excel"></i> Exportar a EXCEL</button>
     </div>
     <div class="card-body mx-3 my-3">
         <div class="table-responsive">
@@ -63,6 +63,14 @@ include 'Modularidad/MenuVertical.php';
     </div>
 </div>
 
+<!-- jsPDF -->
+<script src="js/jspdf.umd.js"></script>
+<!-- jsPDF Autotable -->
+<script src="js/jspdf.plugin.autotable.js"></script>
+<!-- SheetJs -->
+<script src="js/xlsx.full.min.js"></script>
+<!-- FileSaver -->
+<script src="js/FileSaver.js"></script>
 <script async src="js/sciptEstatusBeca.js"></script>
 
 <?php

@@ -26,7 +26,7 @@ try {
         $alumnos = array_merge(array("alumnos" => $query2->fetchAll()));
     }
     */  
-    $alumnos = array_merge(array("alumnos" => $query2->fetchAll(PDO::FETCH_ASSOC)));
+    $alumnos = array_merge(array("alumnos" => $query2->fetchAll(PDO::FETCH_NUM)));
 
     $jsondata = json_encode($alumnos);
     echo $jsondata;
