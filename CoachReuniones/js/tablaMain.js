@@ -338,7 +338,7 @@ function GraficaCUM(id, cums) {
             series: {
                 dataLabels: {
                     enabled: true,
-                    format: '{point.y:.1f}%'
+                    pointFormat: '<b>{point.y:.2f}</b>',
                 }
             }
         },
