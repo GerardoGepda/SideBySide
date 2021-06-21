@@ -10,6 +10,22 @@ const pensum = new Vue({
     }
 });
 
+const totales = new Vue({
+    el: "#totales",
+    data: {
+        aprob: [],
+        reprob: [],
+        retir: [],
+        inscritas: [],
+    }
+});
+
+const modalMaterias = new Vue({
+    el: "#materiasInsc",
+    data: {
+        materias: []
+    }
+})
 const modal = new Vue({
     el: "#formAlumno",
     data: {
@@ -30,10 +46,12 @@ const app = new Vue({
     data: {
         datos: [],
         block: [],
+        total: [],
     },
     created: function () {
-        this.getInfo();
+        this.getInfo()
         this.getExpedienteU()
+        this.getTotal()
     },
     methods: {
         getInfo: function () {
@@ -63,13 +81,32 @@ const app = new Vue({
             })
                 .then(response => response.json())
                 .then(json => {
-                    console.log(json);
                     this.block = json.alumno[0]
                     pensum.expedU = json.alumno[0]
                     modal.universidad = json.alumno[0]
                     porcentaje.porcentaje = parseFloat(json.alumno[0].avancePensum).toFixed(2)
                 })
         },
+        getTotal: function () {
+            fetch(
+                "Modelo/ModeloAlumno/aprobado.php", {
+                method: 'POST', // or 'PUT'
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then(response => response.json())
+                .then(json => {
+                    totales.aprob = json[0].Aprobado
+                    totales.reprob = json[1].Reprobada
+                    totales.retir = json[2].Retirada
+                    totales.inscritas = json[3].Inscrita
+                    modalMaterias.materias = json[4]
+
+                    console.log(modalMaterias.materias);
+                })
+        }
 
 
     }

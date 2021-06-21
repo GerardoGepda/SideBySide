@@ -4,14 +4,11 @@ include 'Modularidad/CabeceraInicio.php';
 ?>
 <title>Notas del alumno</title>
 <?php include("../BaseDatos/conexion.php"); //Realizamos la conexión con la base de datos  
-
-
 include_once "Modelo/ModeloAlumno/NotasAlumno.php";
 //Modularaidad para extraere los enlaces en HEAD
 include 'Modularidad/EnlacesCabecera.php';
 //Incluir el menu horizontal
 include 'Modularidad/MenuHorizontal.php';
-// include 'Modularidad/MenuVertical.php';
 ?>
 <title>Inicio</title>
 <style>
@@ -51,13 +48,6 @@ while ($row = $stmt14525646->fetch()) {
   $expediente = $row['idExpedienteU'];
 }
 
-
-//consulta para extraer las materias inscritas de los alumnos
-$stmt9945246 = $dbh->prepare("SELECT * FROM materias WHERE idExpedienteU = :id AND Estado = 'Activo' ");
-$stmt9945246->bindParam(":id", $idExpedienteU);
-$stmt9945246->execute();
-// fin de consulta para extraer las materias inscritas de los alumnos
-
 //consulta para extraer las materias retiradas de los alumnos
 $stmt99452462 = $dbh->prepare("SELECT * FROM materias WHERE idExpedienteU = :id AND estadoM = 'Retirada' ");
 $stmt99452462->bindParam(":id", $idExpedienteU);
@@ -76,61 +66,11 @@ $stmt99452464->bindParam(":id", $idExpedienteU);
 $stmt99452464->execute();
 // fin de consulta para extraer las materias retiradas de los alumnos
 
-
-
-$stmt4 = $dbh->prepare("SELECT COUNT(idMateria) AS 'Aprobado' FROM `materias` WHERE `idExpedienteU` = ? AND estadoM ='Aprobada'");
-// Ejecutamos
-$stmt4->execute(array($idExpedienteU));
-
-
-if ($stmt4->rowCount() >= 0) {
-  $fila4 = $stmt4->fetch();
-  $Aprobado = $fila4['Aprobado'];
-}
-
-
-
-$stmt5 = $dbh->prepare("SELECT COUNT(idMateria) AS 'Reprobado' FROM `materias` WHERE `idExpedienteU` = ? AND estadoM ='Reprobada'");
-// Ejecutamos
-$stmt5->execute(array($idExpedienteU));
-
-
-if ($stmt5->rowCount() >= 0) {
-  $fila5 = $stmt5->fetch();
-  $Reprobado = $fila5['Reprobado'];
-}
-
-
-
-$stmt6 = $dbh->prepare("SELECT COUNT(Id_InscripcionM) AS 'RETIRADAS' FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC WHERE IC.idExpedienteU = ? AND estado = 'Retirada' ");
-// Ejecutamos
-$stmt6->execute(array($idExpedienteU));
-
-
-if ($stmt6->rowCount() >= 0) {
-  $fila6 = $stmt6->fetch();
-  $Retirads = $fila6['RETIRADAS'];
-}
-
-
-$stmt7 = $dbh->prepare("SELECT COUNT(idMateria) AS 'Inscrita' FROM materias WHERE idExpedienteU = ? ");
-// Ejecutamos
-$stmt7->execute(array($idExpedienteU));
-
-
-if ($stmt7->rowCount() >= 0) {
-  $fila7 = $stmt7->fetch();
-  $Inscrita = $fila7['Inscrita'];
-}
-
-
 $stmt9 = $dbh->prepare("SELECT * FROM `inscripcionciclos` WHERE `idExpedienteU` = ?");
 $stmt9->execute(array($idExpedienteU));
 
 $stmt16584 = $dbh->prepare("SELECT * FROM `materias` WHERE  `idExpedienteU` = ? ORDER BY estadoM DESC");
 $stmt16584->execute(array($idExpedienteU));
-
-
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
@@ -231,13 +171,13 @@ $stmt16584->execute(array($idExpedienteU));
           </tbody>
         </table>
         <br>
-        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12">
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-12" id="totales">
           <div class="row">
             <div class="col-lg-3 col-xs-6">
               <div class="card text-white bg-success mb-3 text-center">
                 <div class="card-header">
                   <h1>
-                    <span id="ContentPlaceHolder1_LbCAprobadas"><?php echo  $Aprobado;  ?></span>
+                    <span id="ContentPlaceHolder1_LbCAprobadas"> {{aprob}}</span>
                   </h1>
                 </div>
                 <div class="card-footer">
@@ -249,7 +189,7 @@ $stmt16584->execute(array($idExpedienteU));
               <div class="card text-white bg-danger mb-3 text-center">
                 <div class="card-header">
                   <h1>
-                    <span id="ContentPlaceHolder1_LbCReprobadas"><?php echo  $Reprobado;  ?></span>
+                    <span id="ContentPlaceHolder1_LbCReprobadas"> {{reprob}} </span>
                   </h1>
                 </div>
                 <div class="card-footer">
@@ -261,7 +201,7 @@ $stmt16584->execute(array($idExpedienteU));
               <div class="card text-white bg-warning mb-3 text-center">
                 <div class="card-header">
                   <h1>
-                    <span id="ContentPlaceHolder1_LbCRetiradas"><?php echo  $Retirads;  ?></span>
+                    <span id="ContentPlaceHolder1_LbCRetiradas"> {{retir}} </span>
                   </h1>
                 </div>
                 <div class="card-footer">
@@ -273,7 +213,7 @@ $stmt16584->execute(array($idExpedienteU));
               <div class="panel panel-udb text-white bg-primary">
                 <div class="card-header">
                   <h1>
-                    <span id="ContentPlaceHolder1_LbCEquivalencia"><?php echo  $Inscrita;  ?></span>
+                    <span id="ContentPlaceHolder1_LbCEquivalencia"> {{inscritas}} </span>
                   </h1>
                 </div>
                 <div class="card-footer">
@@ -340,8 +280,7 @@ $stmt16584->execute(array($idExpedienteU));
                       <td scope=\"row\">" . $fila9["Id_InscripcionC"] . "</td>
                       <td>" . $fila9["cicloU"] . "</td>";
             if ($pdfCiclo == null) {
-              echo "
-            <th><button type='button' class='btn btn-danger'  disabled> 
+              echo "<th><button type='button' class='btn btn-danger'  disabled> 
             <img src='../img/PDF.png' width='25px' height='25px'></button></th>";
             } else {
               echo "<th><a href='../pdfCicloInscripcion/$pdfCiclo' target='_blank' class='btn btn-danger '>
@@ -479,13 +418,9 @@ $stmt16584->execute(array($idExpedienteU));
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
-        <ul>
-          <?php
-          while ($row = $stmt9945246->fetch()) {
-            echo "<li>" . (utf8_decode($row['nombreMateria'])) . "</li>";
-          }
-          ?>
+      <div class="modal-body" id="materiasInsc">
+        <ul v-for="e in materias">
+          <li>{{e.nombreMateria}} </li>
         </ul>
       </div>
       <div class="modal-footer">
