@@ -9,18 +9,18 @@
     $data = array();
     $id = $input['id'];
 
-    $sql = "SELECT COUNT(im.Id_InscripcionM) AS 'Aprobado' FROM inscripcionmateria
+    $sql = "SELECT COUNT(IM.Id_InscripcionM) AS 'Aprobado' FROM inscripcionmateria
     IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC
     INNER JOIN expedienteu a on a.idExpedienteU   = IC.idExpedienteU WHERE a.ID_Alumno = ?
      AND IM.estado = 'Aprobada' ";
 
-    $sql2 = " SELECT COUNT(im.Id_InscripcionM) AS 'Reprobada' FROM inscripcionmateria
+    $sql2 = " SELECT COUNT(IM.Id_InscripcionM) AS 'Reprobada' FROM inscripcionmateria
    IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC
    INNER JOIN expedienteu a on a.idExpedienteU   = IC.idExpedienteU WHERE a.ID_Alumno = ?
     AND IM.estado = 'Reprobada' ";
 
 
-    $sql3 = " SELECT COUNT(im.Id_InscripcionM) AS 'Retirada' FROM inscripcionmateria
+    $sql3 = " SELECT COUNT(IM.Id_InscripcionM) AS 'Retirada' FROM inscripcionmateria
     IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC
     INNER JOIN expedienteu a on a.idExpedienteU   = IC.idExpedienteU WHERE a.ID_Alumno = ?
     AND IM.estado = 'Retirada' ";

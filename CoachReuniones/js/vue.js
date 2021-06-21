@@ -103,8 +103,6 @@ const app = new Vue({
                     totales.retir = json[2].Retirada
                     totales.inscritas = json[3].Inscrita
                     modalMaterias.materias = json[4]
-
-                    console.log(modalMaterias.materias);
                 })
         }
 
