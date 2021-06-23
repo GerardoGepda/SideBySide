@@ -5,14 +5,14 @@ $("#ciclo").select2({
     placeholder: "Seleccione ciclo",
     allowClear: true,
 });
-$("#checkbox1").click(function(){
-    if($("#checkbox1").is(':checked') ){
-        $("#ciclo > option").prop("selected","selected");
+$("#checkbox1").click(function () {
+    if ($("#checkbox1").is(':checked')) {
+        $("#ciclo > option").prop("selected", "selected");
         $("#ciclo").trigger("change");
-    }else{
+    } else {
         $("#ciclo > option").removeAttr("selected");
-         $("#ciclo").trigger("change");
-     }
+        $("#ciclo").trigger("change");
+    }
 });
 // 
 $("#clase").select2({
@@ -21,14 +21,14 @@ $("#clase").select2({
     placeholder: "Seleccione clase",
     allowClear: true,
 });
-$("#checkbox2").click(function(){
-    if($("#checkbox2").is(':checked') ){
-        $("#clase > option").prop("selected","selected");
+$("#checkbox2").click(function () {
+    if ($("#checkbox2").is(':checked')) {
+        $("#clase > option").prop("selected", "selected");
         $("#clase").trigger("change");
-    }else{
+    } else {
         $("#clase > option").removeAttr("selected");
-         $("#clase").trigger("change");
-     }
+        $("#clase").trigger("change");
+    }
 });
 // 
 $("#financiamiento").select2({
@@ -37,14 +37,14 @@ $("#financiamiento").select2({
     placeholder: "Seleccione financiamiento",
     allowClear: true,
 });
-$("#checkbox3").click(function(){
-    if($("#checkbox3").is(':checked') ){
-        $("#financiamiento > option").prop("selected","selected");
+$("#checkbox3").click(function () {
+    if ($("#checkbox3").is(':checked')) {
+        $("#financiamiento > option").prop("selected", "selected");
         $("#financiamiento").trigger("change");
-    }else{
+    } else {
         $("#financiamiento > option").removeAttr("selected");
-         $("#financiamiento").trigger("change");
-     }
+        $("#financiamiento").trigger("change");
+    }
 });
 // 
 $("#sede").select2({
@@ -53,12 +53,32 @@ $("#sede").select2({
     placeholder: "Seleccione sede",
     allowClear: true,
 });
-$("#checkbox4").click(function(){
-    if($("#checkbox4").is(':checked') ){
-        $("#sede > option").prop("selected","selected");
+
+$("#checkbox4").click(function () {
+    if ($("#checkbox4").is(':checked')) {
+        $("#sede > option").prop("selected", "selected");
         $("#sede").trigger("change");
-    }else{
+    } else {
         $("#sede > option").removeAttr("selected");
-         $("#sede").trigger("change");
-     }
+        $("#sede").trigger("change");
+    }
 });
+
+$("#status").select2({
+    width: 'resolve',
+    tags: "true",
+    placeholder: "Seleccione status",
+    allowClear: true,
+});
+
+
+$("#checkbox5").click(function () {
+    if ($("#checkbox5").is(':checked')) {
+        $("#status > option").prop("selected", "selected");
+        $("#status").trigger("change");
+    } else {
+        $("#status > option").removeAttr("selected");
+        $("#status").trigger("change");
+    }
+});
+

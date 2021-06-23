@@ -2,32 +2,8 @@
 let contador = 1;
 let contador2 = 1;
 
-function ObtenerDatos(ciclos, clases, financiamiento, sedes) {
-    $.ajax({
-        type: "POST",
-        data: {
-            "ciclos": ciclos,
-            "clases": clases,
-            "financiamientos": financiamiento,
-            "sedes": sedes
-        },
-        url: "../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/cargarTabla.php",
-        error: function (xhr, textStatus, errorMessage) {
-            console.log("ERROR\n" + errorMessage + textStatus + xhr);
-        },
-        success: function (response) {
-            let datos = JSON.stringify(response);
-            let templete;
-            templete = datos;
-            //añadimos el html con los datos a la tabla
-            // $("#TableBody").html(templete);
-
-        }
-    });
-}
-
 //función que extrae los datos para las graficas de barra de Aprovados, reprobados, etc. por Universidad
-function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico) {
+function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico, status) {
     let datos;
     $.ajax({
         type: "POST",
@@ -36,7 +12,8 @@ function GetDataGraphBarU(ciclos, clases, financiamiento, sedes, grafico) {
             "ciclos": ciclos,
             "clases": clases,
             "financiamientos": financiamiento,
-            "sedes": sedes
+            "sedes": sedes,
+            "status": status
         },
         success: function (response) {
             try {
@@ -118,7 +95,6 @@ function CreateModals(e, universidad, l1, l2, l3) {
         let table1 = '';
         let table2 = '';
         let table3 = '';
-        let data = '';
         let c1 = 1;
         let c2 = 1;
         let c3 = 1;
@@ -605,7 +581,7 @@ function loadUniversity(datos) {
             colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3']
         });
     }
-    
+
     ExportarPDF(datos);
     ExportarEXCEL(datos);
 }
@@ -613,8 +589,17 @@ function loadUniversity(datos) {
 
 //codigo ajax que obtiene los datos de la BD
 
-function graphicsByUniversity(ciclos, clases, financiamiento, sedes, grafico) {
+function graphicsByUniversity(ciclos, clases, financiamiento, sedes, status) {
     let datos;
+    spinner = document.getElementById("universidades")
+    spinner.innerHTML = `
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border " style="color: #B01D33"  role="status">
+                    <span class="sr-only" >Loading...</span>
+                </div>
+            </div>
+            `;
+
     $.ajax({
         type: "POST",
         url: "../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/GraphBarUniversidad.php",
@@ -622,11 +607,13 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes, grafico) {
             "ciclos": ciclos,
             "clases": clases,
             "financiamientos": financiamiento,
-            "sedes": sedes
+            "sedes": sedes,
+            "status": status
         },
         success: function (response) {
-
             try {
+                spinner.innerHTML = "";
+
                 datos = JSON.parse(response);
                 loadUniversity(datos);
 
@@ -650,24 +637,6 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes, grafico) {
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
             console.log("some error in ajax" + "\n" + XMLHttpRequest + "\n" + textStatus + "\n" + errorThrown);
-        }
-    });
-}
-
-function GetDataUniversity(ciclos, clases, financiamiento, sedes) {
-    let datos;
-    $.ajax({
-        type: "POST",
-        url: "../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/GraphBarUniversidad.php",
-        data: {
-            "ciclos": ciclos,
-            "clases": clases,
-            "financiamientos": financiamiento,
-            "sedes": sedes
-        },
-        success: function (response) {
-            datos = JSON.parse(response);
-            return datos;
         }
     });
 }

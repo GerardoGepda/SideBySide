@@ -42,6 +42,16 @@ function sede() {
     listaSede = selected;
 }
 
+function getstatus() {
+    var selected = []
+    for (var option of document.getElementById('status').options) {
+        if (option.selected) {
+            selected.push(option.value);
+        }
+    }
+    listaStatus = selected;
+}
+
 function loadTemplete() {
     let templete = '';
     templete = `
@@ -95,22 +105,166 @@ function loadTemplete() {
 
     document.getElementById('loader').innerHTML = templete;
 
+    spinner = `
+    <div class="spinner-border m-5" role="status" style="color: #B01D33">
+        <span class="sr-only">Loading...</span>
+    </div>
+    `;
+
+    document.getElementById("middle-pie").innerHTML = spinner
+    document.getElementById("cumGeneral").innerHTML = `
+    <div class="spinner-border m-1" role="status" style="color: #B01D33">
+        <span class="sr-only">Loading...</span>
+    </div>
+    `;
+
+    document.getElementById("Ugraph").innerHTML = spinner;
+    document.getElementById("graphicTwo").innerHTML = spinner;
+    document.getElementById("graphicThree").innerHTML = spinner;
+    document.getElementById("one").innerHTML = spinner;
+    document.getElementById("two").innerHTML = spinner;
+    document.getElementById("three").innerHTML = spinner;
 }
+function graficBySex(aprobados, reprobados, retirados, cums) {
+    total = parseInt(aprobados) + parseInt(reprobados) + parseInt(retirados);
+
+    // calcular porcentajes
+    PorcentajeAprobados = (parseInt(aprobados) * 100) / total;
+    PorcentajeReprobados = (parseInt(reprobados) * 100) / total;
+    PorcentajeRetirados = (parseInt(retirados) * 100) / total;
+
+    // maquetación de graficas
+    Highcharts.chart('gen2', {
+
+        chart: {
+            styledMode: false,
+            height: (14 / 16 * 100) + '%' // 16:9 ratio
+        },
+
+        title: {
+            text: 'Fenemino',
+            style: {
+                color: '#be0032',
+                fontWeight: 'bold'
+            }
+        },
+        subtitle: {
+            text: 'CUM: ' + cums.cumF,
+        },
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        legend: {
+            // propiedades de las leyendas
+            align: 'right',
+            // verticalAlign: 'top',
+            // layout: 'vertical',
+            // x: 0,
+            // y: 100
+        },
+
+        series: [{
+            type: 'pie',
+            allowPointSelect: true,
+            keys: ['name', 'y', 'selected', 'sliced'],
+            data: [
+                ['Aprobadas: ' + aprobados + ' ', PorcentajeAprobados, true],
+                ['Reprobadas: ' + reprobados + ' ', PorcentajeReprobados, true],
+                ['Retiradas: ' + retirados + '', PorcentajeRetirados, true],
+            ],
+            showInLegend: false
+        }],
+        navigation: {
+            buttonOptions: {
+                align: 'right',
+                verticalAlign: 'top',
+                layout: 'vertical'
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3']
+    });
+}
+
+// ************************ inicio de graficas generales *********************************
+// La funcion mapaGeneral recibe 3 parametros que son la cantidad de materias aprobadas, reprobadas y retirdas
+function mapaGeneral(aprobados, reprobados, retirados, cumM) {
+    total = parseInt(aprobados) + parseInt(reprobados) + parseInt(retirados);
+
+    // calcular porcentajes
+    PorcentajeAprobados = (parseInt(aprobados) * 100) / total;
+    PorcentajeReprobados = (parseInt(reprobados) * 100) / total;
+    PorcentajeRetirados = (parseInt(retirados) * 100) / total;
+
+    // maquetación de graficas
+    Highcharts.chart('gen', {
+
+        chart: {
+            styledMode: false,
+            height: (14 / 16 * 100) + '%' // 16:9 ratio
+        },
+
+        title: {
+            text: 'Masculino',
+            style: {
+                color: '#be0032',
+                fontWeight: 'bold'
+            }
+        },
+        subtitle: {
+            text: 'CUM: ' + cumM,
+        },
+        xAxis: {
+            categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        legend: {
+            // propiedades de las leyendas
+            align: 'right',
+            // verticalAlign: 'top',
+            // layout: 'vertical',
+            // x: 0,
+            // y: 100
+        },
+
+        series: [{
+            type: 'pie',
+            allowPointSelect: true,
+            keys: ['name', 'y', 'selected', 'sliced'],
+            data: [
+                ['Aprobadas: ' + aprobados + ' ', PorcentajeAprobados, true],
+                ['Reprobadas: ' + reprobados + ' ', PorcentajeReprobados, true],
+                ['Retiradas: ' + retirados + '', PorcentajeRetirados, true],
+            ],
+            showInLegend: false
+        }],
+        navigation: {
+            buttonOptions: {
+                align: 'right',
+                verticalAlign: 'top',
+                layout: 'vertical'
+            }
+        },
+        credits: {
+            enabled: false
+        },
+        colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3'],
+    });
+}
+/***************************fin de graficas generales */
 
 // la funcion ShowSelected recibe como parametro ciclos,
 // el el array ciclos se extrae de la funcion ciclos() que extrae los ciclos seleccionados
-function ShowSelected(ciclos, clases, financiamiento, sedes) {
-    const ciclo = document.getElementById("ciclo").value;
-    const clase = document.getElementById("clase").value;
+function ShowSelected(ciclos, clases, financiamiento, sedes, status) {
     $.ajax({
         url: '../CoachReuniones/Modelo/ModeloReportes/ModelUniversidad/cargarMap.php',
         data: {
-            "ciclo": ciclo,
-            "class": clase,
             "ciclos": ciclos,
             "clases": clases,
             "financiamientos": financiamiento,
-            "sedes": sedes
+            "sedes": sedes,
+            "status": status
         },
         type: "POST",
         //AGREGA ESTE TIPO DE RETORNO
@@ -127,8 +281,8 @@ function ShowSelected(ciclos, clases, financiamiento, sedes) {
                 cumF: parseFloat(datosRetornados.cumF).toFixed(1)
             };
             loadTemplete();
-            mapa1(datosRetornados.result1, datosRetornados.result2, datosRetornados.result3, datosRetornados.ciclo, datosRetornados.clase, cums.cumSSFT);
-            mapa2(datosRetornados.result4, datosRetornados.result5, datosRetornados.result6, datosRetornados.ciclo, datosRetornados.clase, cums.cumSAFT);
+            mapa1(datosRetornados.result1, datosRetornados.result2, datosRetornados.result3, cums.cumSSFT);
+            mapa2(datosRetornados.result4, datosRetornados.result5, datosRetornados.result6, cums.cumSAFT);
             mapaGeneral(datosRetornados.result7, datosRetornados.result8, datosRetornados.result9, cums.cumM);
             graficBySex(datosRetornados.result10, datosRetornados.result11, datosRetornados.result12, cums);
             principal(datosRetornados.result13, datosRetornados.result14, datosRetornados.result15);
@@ -138,7 +292,7 @@ function ShowSelected(ciclos, clases, financiamiento, sedes) {
 
 
 // funcion para cargar mapa #1
-function mapa1(result1, result2, result3, ciclo, clase, cumSSFT) {
+function mapa1(result1, result2, result3, cumSSFT) {
     var data = [
         ['sv-ss', 'San Salvador'],
 
@@ -163,14 +317,6 @@ function mapa1(result1, result2, result3, ciclo, clase, cumSSFT) {
         subtitle: {
             text: 'CUM: ' + cumSSFT,
         },
-        // propiedad para hacer zoom
-        // mapNavigation: {
-        //     enabled: true,
-        //     buttonOptions: {
-        //         verticalAlign: 'bottom'
-        //     }
-        // },
-        // ejemplo de como mostrar datos
         series: [{
             data: data,
             name: 'Aprobadas: ' + result1 + ' ',
@@ -220,7 +366,7 @@ function mapa1(result1, result2, result3, ciclo, clase, cumSSFT) {
 // result5 es la cantidad de materias reprobadas
 // result6 es la cantidad de materias reprobadas
 // ciclo es el ciclo seleccionado
-function mapa2(result4, result5, result6, ciclo, clase, cumSAFT) {
+function mapa2(result4, result5, result6, cumSAFT) {
     var data = [
         ['sv-sa', 'Santa Ana'],
 

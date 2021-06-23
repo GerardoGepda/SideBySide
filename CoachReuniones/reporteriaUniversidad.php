@@ -20,14 +20,10 @@ $stmt2->execute();
 $stmt3 = $pdo->query("SELECT DISTINCT ID_Sede FROM alumnos ORDER BY Class ASC");
 $stmt3->execute();
 
-$sql = "SELECT * FROM empresas WHERE Tipo = 'Universidad' ";
 
-// ejecucion de consultas
-$query = $pdo->prepare($sql);
-$query->execute();
-$cantidad = $query->rowCount();
-
-// FIN DE CONSULTAS PARA FILTROS
+// consulta para obtener los status de beca
+$stmt4 = $pdo->query("SELECT DISTINCT StatusActual FROM alumnos ORDER BY StatusActual ASC");
+$stmt4->execute();
 
 ?>
 <!-- jsPDF -->
@@ -113,6 +109,21 @@ $cantidad = $query->rowCount();
                         </div>
                     </fieldset>
                 </div>
+                <div class="col" id="filtro4">
+                    <fieldset>
+                        <div class="mb-1 w-75 pl-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-select form-control" id="status" multiple="" onchange=" main(), GraphBarraU()">
+                            <?php
+                                    while ($row2 = $stmt4->fetch()) {
+                                        echo "<option>" . $row2['StatusActual'] . "</option>";
+                                    }
+                                    ?>
+                            </select>
+                            <input class="form-check-input" type="checkbox" id="checkbox5">Select All</input>
+                        </div>
+                    </fieldset>
+                </div>
             </div>
         </form>
     </div>
@@ -155,12 +166,8 @@ $cantidad = $query->rowCount();
 <script src="./js/tablaMain.js"></script>
 <!-- grafica tipo pais  -->
 <script src="./js/graficas.js"></script>
-<!-- grafica general -->
-<script src="./js/graficaGeneral.js"></script>
 <!-- anclar los id de filtros -->
 <script src="./js/filtros.js"></script>
-<!-- grafica por sexo -->
-<script src="./js/graficBySex.js"></script>
 <script async src="./js/main.js"></script>
 <!-- Script del filtro por universidad -->
 <script src="./js/filtroUniversidad.js"></script>

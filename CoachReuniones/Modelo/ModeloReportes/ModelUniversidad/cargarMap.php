@@ -1,8 +1,5 @@
 <?php
 include "../../../../BaseDatos/conexion.php";
-// inicio de extracción de datos 
-$ciclo = $_POST['ciclo'];
-$class = $_POST['class'];
 
 // arrays con las listas de ciclos,clases, financiamiento y sedes
 
@@ -10,6 +7,7 @@ $ciclos = $_POST['ciclos'];
 $clases = $_POST['clases'];
 $financiamientos = $_POST['financiamientos'];
 $sedes = $_POST['sedes'];
+$status = $_POST['status'];
 
 // fin de extracción de datos
 
@@ -27,12 +25,19 @@ $fragmento4 = "";
 
 // recorrer la cantidad de condiciones que se necesitan a partir del conteo de la condicion
 
+if (count($status) >= 1) {
+    for ($i = 0; $i < count($status); $i++) {
+        $fragmento5[] = "'$status[$i]'";
+    }
+    $listaStatus = implode(",", $fragmento5);
+}
+
 // condicion para ciclos
 if ($contarCiclos >= 1) {
-    for ($i=0; $i < $contarCiclos ; $i++) { 
+    for ($i = 0; $i < $contarCiclos; $i++) {
         $conditions1[]   = "IC.cicloU = '$ciclos[$i]' OR ";
     }
-    $var1 = implode(" ", $conditions1);    
+    $var1 = implode(" ", $conditions1);
     $fragmento1 = substr($var1, 0, -3);
 } else {
     $conditions1 = " ";
@@ -41,10 +46,10 @@ if ($contarCiclos >= 1) {
 // condicion para sede
 
 if ($contarSedes >= 1) {
-    for ($i=0; $i < $contarSedes ; $i++) { 
+    for ($i = 0; $i < $contarSedes; $i++) {
         $conditions2[]   = "a.ID_Sede = '$sedes[$i]' OR ";
     }
-    $var2 = implode(" ", $conditions2);    
+    $var2 = implode(" ", $conditions2);
     $fragmento2 = substr($var2, 0, -3);
 } else {
     $conditions2 = " ";
@@ -53,10 +58,10 @@ if ($contarSedes >= 1) {
 
 // condicion para clases
 if ($contarClases >= 1) {
-    for ($i=0; $i < $contarClases ; $i++) { 
+    for ($i = 0; $i < $contarClases; $i++) {
         $conditions3[]   = "a.Class = $clases[$i] OR ";
     }
-    $var3 = implode(" ", $conditions3);    
+    $var3 = implode(" ", $conditions3);
     $fragmento3 = substr($var3, 0, -3);
 } else {
     $conditions3 = " ";
@@ -64,10 +69,10 @@ if ($contarClases >= 1) {
 // **********************************
 // condicion para financiamiento
 if ($contarfinanciamientos >= 1) {
-    for ($i=0; $i < $contarfinanciamientos ; $i++) { 
+    for ($i = 0; $i < $contarfinanciamientos; $i++) {
         $conditions4[]   = "a.FuenteFinacimiento = '$financiamientos[$i]' OR ";
     }
-    $var4 = implode(" ", $conditions4);    
+    $var4 = implode(" ", $conditions4);
     $fragmento4 = substr($var4, 0, -3);
 } else {
     $conditions4 = " ";
@@ -81,19 +86,19 @@ if ($contarfinanciamientos >= 1) {
 $consulta1 = "SELECT COUNT(IM.Id_InscripcionM) AS 'Aprobada' FROM inscripcionmateria IM
 INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU 
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-WHERE IM.estado = 'Aprobada' AND ($fragmento1) AND a.ID_Sede = 'SSFT' AND ($fragmento3) AND ($fragmento4) ";
+WHERE IM.estado = 'Aprobada' AND ($fragmento1) AND a.ID_Sede = 'SSFT' AND ($fragmento3) AND ($fragmento4)  AND (a.StatusActual IN ($listaStatus)) ";
 
 // consulta para seleccionar la cantidad de materias reprobadas en san salvador
 $consulta2 = "SELECT COUNT(IM.Id_InscripcionM) AS 'Reprobada' FROM inscripcionmateria IM
 INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU 
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-WHERE IM.estado = 'Reprobada' AND ($fragmento1) AND a.ID_Sede = 'SSFT' AND ($fragmento3) AND ($fragmento4)";
+WHERE IM.estado = 'Reprobada' AND ($fragmento1) AND a.ID_Sede = 'SSFT' AND ($fragmento3) AND ($fragmento4)  AND (a.StatusActual IN ($listaStatus))";
 
 // consulta para seleccionar la cantidad de materias retiradas en san salvador
 $consulta3 = "SELECT COUNT(IM.Id_InscripcionM) AS 'Retirada' FROM inscripcionmateria IM
 INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU 
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-WHERE IM.estado = 'Retirada' AND ($fragmento1) AND a.ID_Sede = 'SSFT' AND ($fragmento3) AND ($fragmento4)";
+WHERE IM.estado = 'Retirada' AND ($fragmento1) AND a.ID_Sede = 'SSFT' AND ($fragmento3) AND ($fragmento4)  AND (a.StatusActual IN ($listaStatus))";
 
 
 
@@ -102,19 +107,19 @@ WHERE IM.estado = 'Retirada' AND ($fragmento1) AND a.ID_Sede = 'SSFT' AND ($frag
 $consulta4 = "SELECT COUNT(IM.Id_InscripcionM) AS 'Reprobada' FROM inscripcionmateria IM
 INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU 
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-WHERE IM.estado = 'Aprobada' AND ($fragmento1) AND a.ID_Sede = 'SAFT' AND ($fragmento3) AND ($fragmento4) ";
+WHERE IM.estado = 'Aprobada' AND ($fragmento1) AND a.ID_Sede = 'SAFT' AND ($fragmento3) AND ($fragmento4)  AND (a.StatusActual IN ($listaStatus)) ";
 
 // consulta para seleccionar la cantidad de materias reprobadas en santa ana
 $consulta5 = "SELECT COUNT(IM.Id_InscripcionM) AS 'Reprobada' FROM inscripcionmateria IM
 INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU 
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-WHERE IM.estado = 'Reprobada' AND ($fragmento1) AND a.ID_Sede = 'SAFT' AND ($fragmento3) AND ($fragmento4)";
+WHERE IM.estado = 'Reprobada' AND ($fragmento1) AND a.ID_Sede = 'SAFT' AND ($fragmento3) AND ($fragmento4)  AND (a.StatusActual IN ($listaStatus))";
 
 // consulta para seleccionar la cantidad de materias retiradas en santa ana
 $consulta6 = "SELECT COUNT(IM.Id_InscripcionM) AS 'Reprobada' FROM inscripcionmateria IM
 INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU 
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-WHERE IM.estado = 'Retirada' AND ($fragmento1) AND a.ID_Sede = 'SAFT' AND ($fragmento3) AND ($fragmento4) ";
+WHERE IM.estado = 'Retirada' AND ($fragmento1) AND a.ID_Sede = 'SAFT' AND ($fragmento3) AND ($fragmento4)  AND (a.StatusActual IN ($listaStatus))";
 
 
 
@@ -124,19 +129,19 @@ WHERE IM.estado = 'Retirada' AND ($fragmento1) AND a.ID_Sede = 'SAFT' AND ($frag
 $consulta7 = "SELECT COUNT(IM.Id_InscripcionM) AS 'Aprobada' FROM inscripcionmateria IM
 INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU 
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-WHERE IM.estado = 'Aprobada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.Sexo = 'M' ";
+WHERE IM.estado = 'Aprobada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.Sexo = 'M'  AND (a.StatusActual IN ($listaStatus))";
 
 // consulta para seleccionar la cantidad de materias reprobadas en san salvador
 $consulta8 = "SELECT COUNT(IM.Id_InscripcionM) AS 'Reprobada' FROM inscripcionmateria IM
 INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU 
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-WHERE IM.estado = 'Reprobada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.Sexo = 'M' ";
+WHERE IM.estado = 'Reprobada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.Sexo = 'M' AND (a.StatusActual IN ($listaStatus)) ";
 
 // consulta para seleccionar la cantidad de materias Retirada en san salvador
 $consulta9 = "SELECT COUNT(IM.Id_InscripcionM) AS 'Retirada' FROM inscripcionmateria IM
 INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU 
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-WHERE IM.estado = 'Retirada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.Sexo = 'M' ";
+WHERE IM.estado = 'Retirada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.Sexo = 'M' AND (a.StatusActual IN ($listaStatus)) ";
 
 // consultas por genero femenino
 
@@ -144,19 +149,19 @@ WHERE IM.estado = 'Retirada' AND ($fragmento1) AND ($fragmento2)  AND ($fragment
 $consulta10 = "SELECT COUNT(IM.Id_InscripcionM) AS 'Reprobada' FROM inscripcionmateria IM
 INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU 
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-WHERE IM.estado = 'Aprobada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.Sexo = 'F' ";
+WHERE IM.estado = 'Aprobada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.Sexo = 'F'  AND (a.StatusActual IN ($listaStatus))";
 
 // consulta para seleccionar la cantidad de materias reprobadas en san salvador
 $consulta11 = "SELECT COUNT(IM.Id_InscripcionM) AS 'Reprobada' FROM inscripcionmateria IM
 INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU 
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-WHERE IM.estado = 'Reprobada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.Sexo = 'F' ";
+WHERE IM.estado = 'Reprobada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.Sexo = 'F' AND (a.StatusActual IN ($listaStatus))  ";
 
 // consulta para seleccionar la cantidad de materias reprobadas en san salvador
 $consulta12 = "SELECT COUNT(IM.Id_InscripcionM) AS 'Reprobada' FROM inscripcionmateria IM
 INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU 
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-WHERE IM.estado = 'Retirada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.Sexo = 'F' ";
+WHERE IM.estado = 'Retirada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND a.Sexo = 'F' AND (a.StatusActual IN ($listaStatus)) ";
 
 // CONSULTAS GENERALES
 
@@ -164,39 +169,39 @@ WHERE IM.estado = 'Retirada' AND ($fragmento1) AND ($fragmento2)  AND ($fragment
 $consulta13 = "SELECT COUNT(IM.Id_InscripcionM) AS 'Reprobada' FROM inscripcionmateria IM
 INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU 
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-WHERE IM.estado = 'Aprobada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) ";
+WHERE IM.estado = 'Aprobada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4)  AND (a.StatusActual IN ($listaStatus)) ";
 
 // consulta para seleccionar la cantidad de materias reprobadas en san salvador
 $consulta14 = "SELECT COUNT(IM.Id_InscripcionM) AS 'Reprobada' FROM inscripcionmateria IM
 INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU 
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-WHERE IM.estado = 'Reprobada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4)";
+WHERE IM.estado = 'Reprobada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND (a.StatusActual IN ($listaStatus)) ";
 
 // consulta para seleccionar la cantidad de materias reprobadas en san salvador
 $consulta15 = "SELECT COUNT(IM.Id_InscripcionM) AS 'Reprobada' FROM inscripcionmateria IM
 INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e ON e.idExpedienteU 
 = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-WHERE IM.estado = 'Retirada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) ";
+WHERE IM.estado = 'Retirada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4)  AND (a.StatusActual IN ($listaStatus))";
 
 $consulta16 = "SELECT DISTINCT (SUM(e.cum))/COUNT(e.cum) AS cum FROM inscripcionmateria IM INNER JOIN 
 inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e
 ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE 
-($fragmento1) AND a.ID_Sede = 'SSFT' AND ($fragmento3) AND ($fragmento4) ";
+($fragmento1) AND a.ID_Sede = 'SSFT' AND ($fragmento3) AND ($fragmento4) AND (a.StatusActual IN ($listaStatus)) ";
 
 $consulta17 = "SELECT DISTINCT (SUM(e.cum))/COUNT(e.cum) AS cum FROM inscripcionmateria IM INNER JOIN 
 inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e
 ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE 
-($fragmento1) AND a.ID_Sede = 'SAFT' AND ($fragmento3) AND ($fragmento4) ";
+($fragmento1) AND a.ID_Sede = 'SAFT' AND ($fragmento3) AND ($fragmento4) AND (a.StatusActual IN ($listaStatus))";
 
 $consulta18 = "SELECT DISTINCT (SUM(e.cum))/COUNT(e.cum) AS cum FROM inscripcionmateria IM INNER JOIN 
 inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e
 ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE 
-($fragmento1) AND a.Sexo = 'M' AND ($fragmento3) AND ($fragmento4) ";
+($fragmento1) AND a.Sexo = 'M' AND ($fragmento3) AND ($fragmento4) AND (a.StatusActual IN ($listaStatus)) ";
 
 $consulta19 = "SELECT DISTINCT (SUM(e.cum))/COUNT(e.cum) AS cum FROM inscripcionmateria IM INNER JOIN 
 inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e
 ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE 
-($fragmento1) AND a.Sexo = 'F' AND ($fragmento3) AND ($fragmento4) ";
+($fragmento1) AND a.Sexo = 'F' AND ($fragmento3) AND ($fragmento4) AND (a.StatusActual IN ($listaStatus)) ";
 
 
 // ejecutamos para obtener el total de materias aprobadas, reprobadas, retiradas en san salvador
@@ -308,9 +313,6 @@ $respuestaValidacion["result14"] = $result14[0];
 $respuestaValidacion["result15"] = $result15[0];
 
 
-$respuestaValidacion["ciclo"] = $ciclo;
-$respuestaValidacion["clase"] = $class;
-
 // listas de dato ingresados(ciclos,clases,financiamientos, sedes)
 
 $respuestaValidacion["ciclos"] = $ciclos;
@@ -334,7 +336,6 @@ $respuestaValidacion["cumSSFT"] = $result16[0];
 $respuestaValidacion["cumSAFT"] = $result17[0];
 $respuestaValidacion["cumM"] = $result18[0];
 $respuestaValidacion["cumF"] = $result19[0];
-
 
 /*ahora lo imprimes 
 IMPORTANTE !! IMPORTANTE !! IMPORTANTE !! IMPORTANTE !! 

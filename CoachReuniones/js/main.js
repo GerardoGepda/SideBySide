@@ -1,24 +1,26 @@
-    // declarar variables
-    let listaClases;
-    let listaCiclos;
-    let listaFinanciamiento;
-    let listaSede;
+// declarar variables
+let listaClases;
+let listaCiclos;
+let listaFinanciamiento;
+let listaSede;
+let listaStatus;
 
-    function main() {
-        // extraer datos
-        ciclos();
-        clases();
-        financiamiento();
-        sede();
-        // inicio de procesar consultas
-        ShowSelected(listaCiclos, listaClases, listaFinanciamiento, listaSede);
-        // fin de procesar consultas
-        // cargar tabla
-        ObtenerDatos(listaCiclos, listaClases, listaFinanciamiento, listaSede);
-        // cargar graficas por universidad
-        graphicsByUniversity(listaCiclos, listaClases, listaFinanciamiento, listaSede);
-    }
+function main() {
+    // extraer datos
+    ciclos();
+    clases();
+    financiamiento();
+    sede();
+    getstatus();
+    // fin de extraer datos
 
-    function GraphBarraU() {
-        GetDataGraphBarU(listaCiclos, listaClases, listaFinanciamiento, listaSede, MateriasPoruniversidad);
-    }
+    // inicio de procesar consultas
+    ShowSelected(listaCiclos, listaClases, listaFinanciamiento, listaSede, listaStatus);
+    graphicsByUniversity(listaCiclos, listaClases, listaFinanciamiento, listaSede, listaStatus);
+    // fin de procesar consultas
+    
+}
+
+function GraphBarraU() {
+    GetDataGraphBarU(listaCiclos, listaClases, listaFinanciamiento, listaSede, MateriasPoruniversidad, listaStatus);
+}
