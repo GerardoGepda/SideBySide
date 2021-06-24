@@ -31,7 +31,7 @@ function ExportarGeneralPDF() {
                 "clases": listaClases,
                 "financiamientos": listaFinanciamiento,
                 "sedes": listaSede,
-                "status": { name: null }
+                "status": listaStatus
             },
             success: function (response) {
                 try {
