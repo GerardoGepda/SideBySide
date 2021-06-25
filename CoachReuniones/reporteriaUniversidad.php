@@ -9,7 +9,7 @@ include 'Modularidad/MenuHorizontal.php';
 // consulta para obtener los ciclos
 
 //INICIO DE  CONSULTAS PARA FILTROS
-$stmt = $pdo->query("SELECT DISTINCT cicloU FROM inscripcionciclos ORDER BY cicloU ASC");
+$stmt = $pdo->query("SELECT DISTINCT cicloU FROM inscripcionciclos WHERE cicloU != '' ORDER BY cicloU ASC");
 $stmt->execute();
 
 // consulta para obtener las clases
@@ -96,7 +96,7 @@ $stmt4->execute();
                 </div>
                 <div class="col" id="filtro3">
                     <fieldset>
-                        <div class="mb-1 w-75 pl-3">
+                        <div class="mb-1 w-75 pl-1">
                             <label class="form-label">Sede</label>
                             <select class="form-select form-control" id="sede" multiple="" onchange=" main(), GraphBarraU()">
                                 <?php

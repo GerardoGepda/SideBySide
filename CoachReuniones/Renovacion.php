@@ -76,16 +76,18 @@ if (isset($_SESSION['noti'])) {
     font-weight: bold;
     letter-spacing: 2px;margin-top: 10px;margin-left: 5px;">Renovaciones de Beca</h2>
 </div>
+
 <div>
+  <div class="alerta">
+    <?php include "../Alumno/config/Alerta.php" ?>
+  </div>
 </div>
 <div id="body">
-
-  <table id="table" class="table table-striped" style="width: 50%;">
-    <br>
+  <table id="table" class="table table-striped w-75 w-1">
     <?php
 
     if ($condicion < 1) {
-      echo " <thead><td colspan='4' style='font-size: 18px;font-weight: bold;''>" .$Alumno . "</td></thead>";
+      echo " <thead><td colspan='4' style='font-size: 18px;font-weight: bold;''>" . $Alumno . "</td></thead>";
       echo "<thead><td colspan='4'><img src='../img/imgUser/$FotoAlumno?>' alt='img de usuario' id='perfil'></td></thead>";
       echo "<td colspan='4' class='alert alert-danger'>Sin renovaciones de Beca</td>";
     } else {
@@ -96,8 +98,6 @@ if (isset($_SESSION['noti'])) {
       </thead>
       <thead>
         <td colspan="5"><img src="../img/imgUser/<?php echo $FotoAlumno ?>" alt="img de usuario" id="perfil"></td>
-
-
         <thead class="table-dark">
           <tr>
             <th>Ciclo</th>
@@ -126,19 +126,17 @@ if (isset($_SESSION['noti'])) {
                     <path fill-rule="evenodd" d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.134 13.134 0 0 0 1.66 2.043C4.12 11.332 5.88 12.5 8 12.5c2.12 0 3.879-1.168 5.168-2.457A13.134 13.134 0 0 0 14.828 8a13.133 13.133 0 0 0-1.66-2.043C11.879 4.668 10.119 3.5 8 3.5c-2.12 0-3.879 1.168-5.168 2.457A13.133 13.133 0 0 0 1.172 8z" />
                     <path fill-rule="evenodd" d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
                   </svg>Ver PDF</button>
-                <!--<button type="button" value="<?php echo $datos['idRenovacion'] ?>" class="btn btn-success" data-toggle="modal" data-target="#subirPDF"   id="archivo"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
-  <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
-</svg>Editar</button>-->
+                <button type="button" value="<?php echo $datos['idRenovacion'] ?>" class="btn btn-success" data-toggle="modal" data-target="#subirPDF" id="archivo"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil-square" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                  </svg>Editar</button>
                 <a id="btn" href="proceso-renovacion.php?cn=<?php echo $datos["idRenovacion"] ?>" class="btn btn-danger"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
                   </svg>Eliminar</a>
             </td>
-
             <input type="hidden" name="id" id="id" value="<?php echo $datos['idRenovacion'] ?>">
             <input type="hidden" name="carne" value="<?php echo $datos['ID_Alumno'] ?>">
-
           </tr>
       <?php
           $n++;
@@ -181,12 +179,7 @@ if (isset($_SESSION['noti'])) {
 
       var dir = $('#direccionpdf').val();
       var idEditar = $('#id').val();
-
-      // var direccion = $('#direccion').val();
-
       $('#pdf2').html('<iframe  src="' + dir + '" width="700px" height="500px"></iframe>');
-
-
     });
     $(document).on('click', '#cerrar', function() {
       $('#pdf2').val('');
@@ -245,26 +238,20 @@ if (isset($_SESSION['noti'])) {
             <option>2</option>
           </select>
           <br>
-          <div class="custom-file">
+          <div class="custom-file w-3">
             <input type="file" class="custom-file-input" accept=".pdf" id="customFileLang" name="archivo" required>
             <label class="custom-file-label" for="customFileLang" data-browse="Buscar">Seleccionar Carta</label>
             <center><small>El archivo no debe pesar más de 5MB</small></center>
           </div>
-          <br><br>
-
           <div>
 
             <?php
             $stmt1 = $dbh->prepare("SELECT `ID_Alumno`  FROM `alumnos` WHERE correo='" . $_SESSION['Email'] . "'");
-
             $stmt1->execute();
-
             while ($fila = $stmt1->fetch()) {
               $alumno = $fila["ID_Alumno"];
             }
             ?>
-
-
             <!--idalumnos-->
             <input type="hidden" name="alumno" value="<?php echo $ID; ?>">
           </div>
@@ -272,14 +259,8 @@ if (isset($_SESSION['noti'])) {
       </div>
 
       <div class="modal-footer" style="margin-top: -30px;">
-
-        <center><input style="border-radius: 20px;
-    border: 2px solid #9d120e;
-    width: 200px;height: 38px;
-     background-color: #9d120e;
-     color:white;margin-bottom: -10px;" type="submit" id="subirCarta" name="subirCarta3" value="Guardar Cambios"></center>
+        <center><input style="border-radius: 20px; border: 2px solid #9d120e; width: 200px;height: 38px;  background-color: #9d120e;  color:white;margin-bottom: -10px;" type="submit" id="subirCarta" name="subirCarta3" value="Guardar Cambios"></center>
       </div>
-
       </form>
     </div>
   </div>
@@ -310,6 +291,7 @@ if (isset($_SESSION['noti'])) {
         <input name="anio" placeholder="año" readonly class="form-control" value="<?php echo date("Y");  ?>" ></input>
         <br>
           -->
+
           <div class="custom-file">
             <input type="file" class="custom-file-input" accept=".pdf" id="customFileLang" name="archivo" required>
             <label class="custom-file-label" for="customFileLang" data-browse="Buscar">Seleccionar Carta</label>
@@ -350,79 +332,61 @@ if (isset($_SESSION['noti'])) {
   </div>
 </div>
 </div>
-
+<!-- modificar carta -->
 <div class="modal fade" id="subirPDF" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Carta</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Actualizar Carta</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-
-      <div class="modal-body" style="margin-top:-20px;">
-        <!--<div class="alert alert-danger" style="height: 60px;margin-bottom: -10px;">
-           <p style="font-size: 13px;text-align: center;">Debe de escribir el nombre del archivo  de la siguiente manera: <span style="font-style: italic; "><?php echo $formato ?>.pdf</span></p>
-        </div>-->
-
-        <br>
+      <div class="modal-body m-2">
         <form action="Modelo/ModeloRenovacion/carta.php" method="post" enctype="multipart/form-data">
           <label style="color:black;">Universidad</label>
-          <input name="uni" placeholder="año" readonly class="form-control" value="<?php echo $U;  ?>"></input>
-          <br>
+          <input name="uni" placeholder="año" readonly class="form-control w-3" value="<?php echo $U;  ?>"></input>
           <label style="color:black;">Ciclo</label>
-          <select name="ciclo" class="form-control">
+          <select name="ciclo" class="form-control w-3">
             <option>1</option>
             <option>2</option>
           </select>
+          <label class="text-dark">Tipo</label>
+          <select name="tipo" class="form-control w-1">
+            <option value="renovacion">Renovación de beca</option>
+            <option value="cancelacion">Beca cancelada</option>
+            <option value="condicionamiento">Beca condicionada</option>
+            <option value="pausa">Beca pausada</option>
+          </select>
+          <label class="text-dark">Año</label>
+          <input name="anio" placeholder="año"  class="form-control w-3 p-2" value="<?php echo date("Y");  ?>"></input>
           <br>
-          <label style="color:black;">Año</label>
-          <input name="anio" placeholder="año" readonly class="form-control" value="<?php echo date("Y");  ?>"></input>
-          <br>
-          <div class="custom-file">
+          <div class="custom-file p-2">
             <input type="file" class="custom-file-input" accept=".pdf" id="customFileLang" name="archivo" required>
             <label class="custom-file-label" for="customFileLang" data-browse="Buscar">Seleccionar Carta</label>
             <center><small>El archivo no debe pesar más de 5MB</small></center>
           </div>
-          <br><br>
-
           <div>
-
             <?php
             $stmt1 = $dbh->prepare("SELECT `ID_Alumno`  FROM `alumnos` WHERE correo='" . $_SESSION['Email'] . "'");
-
             $stmt1->execute();
-
             while ($fila = $stmt1->fetch()) {
               $alumno = $fila["ID_Alumno"];
             }
             ?>
-
-
             <!--idalumnos-->
             <input type="hidden" name="alumno" value="<?php echo $ID; ?>">
           </div>
-
       </div>
-
       <div class="modal-footer" style="margin-top: -30px;">
-
-        <center><input style="border-radius: 20px;
-    border: 2px solid #9d120e;
-    width: 200px;height: 38px;
-     background-color: #9d120e;
-     color:white;margin-bottom: -10px;" type="submit" id="subirCarta" name="subirCarta" value="Guardar Cambios"></center>
+        <center><input style="border-radius: 20px;  border: 2px solid #9d120e;  width: 200px;height: 38px; background-color: #9d120e; color:white;margin-bottom: -10px;" type="submit" id="subirCarta" name="subirCarta" value="Guardar Cambios"></center>
       </div>
-
       </form>
     </div>
   </div>
 </div>
 
-
 </div>
-
 </div>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

@@ -7,6 +7,7 @@ function ciclos() {
         }
     }
     listaCiclos = selected;
+    listaCiclos.sort((a, b) => a.substr(9, 4) - b.substr(9, 4))
 }
 
 function clases() {
