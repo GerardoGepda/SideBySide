@@ -20,6 +20,7 @@ $correo = "";
 $lN = "";
 $formato = "";
 $idRenovacion = "";
+$idcarta = "";
 // fin de declarar variables
 
 if (isset($_POST['subirCarta'])) {
@@ -33,16 +34,20 @@ if (isset($_POST['subirCarta'])) {
     $alumno = $_POST['alumno'];
     $size = $_FILES["archivo"]["size"];
     $direccion = $_FILES["archivo"]["tmp_name"];
+    $idcarta = $_POST["idCarta"];
     // fin de asignar valores
 
 
     // consulta para obtener informacion de alumno
-    foreach ($dbh->query("SELECT Nombre,LEFT(alumnos.Nombre,LOCATE(' ',alumnos.Nombre) - 1) AS 'name',SedeAsistencia,Class,correo FROM alumnos WHERE ID_Alumno = '" . $alumno . "'") as $Name) {
+    foreach ($dbh->query("SELECT r.carpeta as 'nuevo', r.archivo , a.Nombre,LEFT(a.Nombre,LOCATE(' ',a.Nombre) - 1) AS 'name',a.SedeAsistencia,a.Class,a.correo FROM alumnos a
+    INNER JOIN renovacion r ON r.ID_Alumno = a.ID_Alumno   WHERE a.ID_Alumno = '" . $alumno . "'") as $Name) {
         $Nombre = $Name['Nombre'];
         $SC = $Name['SedeAsistencia'];
         $Class = $Name['Class'];
         $correo = $Name['correo'];
         $lN = $Name['name'];
+        $ubication = $Name['nuevo'];
+        $dir = $Name['archivo'];
     }
 
     $Sede = substr($SC, 0, 2);
@@ -76,52 +81,40 @@ if (isset($_POST['subirCarta'])) {
         $ex = $con['contar'];
     }
 
+    $old  =  $ubication . $dir;
 
     if ($dbh) {
         try {
             $nombreArchivo = $formato;
-            $actualizar = $dbh->prepare("UPDATE renovacion SET Estado = 'enviado' WHERE year = '" . $year . "')  
-            AND ciclo = :ciclo AND archivo = :archivo AND Estado = 'rechazada' OR Estado = 'eliminado' AND ID_Alumno = :alumno AND tipo = :tipo");
-            $actualizar->bindParam(':ciclo', $ciclo, PDO::PARAM_STR);
-            $actualizar->bindParam(':archivo', $formato, PDO::PARAM_STR);
-            $actualizar->bindParam(':alumno', $alumno, PDO::PARAM_STR);
-            $actualizar->bindParam(':tipo', $tipo, PDO::PARAM_STR);
+            $sql = "UPDATE renovacion SET ciclo = ?, `year` = ?, archivo = ?, direccion = ?,
+                carpeta = ?, Estado = ?, tipo = ? WHERE idRenovacion  = ?";
+            $result =   $dbh->prepare($sql)->execute([
+                $ciclo, $year, $formato, $ubicacion,
+                $carpeta, 'enviado', $tipo, $idcarta
+            ]);
+            if ($result) {
+                $nuevo =  $archivero . "/" . $nombreArchivo;
+                $resultado = rename($direccion, $archivero . "/" . $nombreArchivo);
 
-            echo $actualizar->execute(); 
-            if ($actualizar->execute() and move_uploaded_file($direccion, $archivero . "/" . $nombreArchivo)) {
-                // var_dump(
-                //     $universidad,
-                //     $ciclo,
-                //     $tipo,
-                //     $year,
-                //     $carta,
-                //     $alumno,
-                //     $size,
-                //     $direccion,
-                //     $Nombre,
-                //     $SC,
-                //     $Class,
-                //     $correo,
-                //     $lN,
-                //     $formato,
-                //     $numero,
-                //     $archivero,
-                //     $ubicacion,
-                //     $carpeta,
-                //     $ex
-                // );
-                // $asunto = "Renovaciones de Beca Ciclo-0" . $ciclo;
-                // $mensaje = "Hola " . $lN . "\nPor este medio se te informa que tu  renovación ha sido entregada con exito\nTen un lindo dia.";
-                // include "../../../CoachReuniones/Modelo/ModeloCorreo/correo.php";
-
-                $_SESSION['message'] = 'Carta Actualizada';
-                $_SESSION['message2'] = 'success';
+                if ($resultado) {
+                    $_SESSION['message'] = 'Carta Actualizada';
+                    $_SESSION['message2'] = 'success';
+                    header("Location: ../../Renovacion.php?id=$alumno");
+                } else {
+                    $_SESSION['message'] = 'No se pudo actualizar el documento';
+                    $_SESSION['message2'] = 'danger';
+                    header("Location: ../../Renovacion.php?id=$alumno");
+                }
+            } else {
+                $_SESSION['message'] = 'No se pudo actualizar en la base de datos';
+                $_SESSION['message2'] = 'danger';
                 header("Location: ../../Renovacion.php?id=$alumno");
-                echo "success";
             }
-        } catch (\Throwable $th) {
-            throw $th;
-            echo $th;
+        } catch (PDOException $th) {
+            $error =  $th->getMessage();
+            $_SESSION['message'] = $error;
+            $_SESSION['message2'] = 'danger';
+            header("Location: ../../Renovacion.php?id=$alumno");
         }
     } else {
         $_SESSION['message'] = 'No hay conexion a la base de datos';
