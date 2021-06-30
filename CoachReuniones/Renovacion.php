@@ -119,8 +119,22 @@ if (isset($_SESSION['noti'])) {
           <tr>
             <td><?php echo $datos["ciclo"] ?></td>
             <td><?php echo $datos["year"] ?></td>
-            <td><?php echo $datos["Estado"]; ?></td>
-            <td><?php echo $datos["tipo"]; ?> de beca</td>
+            <td><?php echo ucfirst($datos["Estado"]); ?></td>
+            <td>
+              <?php 
+                if ($datos["tipo"] == 'renovacion') {
+                  echo "Renovación de Beca";
+                }elseif ($datos["tipo"] == 'condicionamiento') {
+                  echo "Condicionamiento de Beca";
+                }elseif ($datos["tipo"] == 'cancelacion') {
+                  echo "Cancelación de Beca";
+                }elseif ($datos["tipo"] == 'pausa') {
+                  echo "Beca en Pausa";
+                }else {
+                  echo "Error en tipo";
+                }
+              ?>
+            </td>
             <td>
               <div class="btn-grupo">
                 <button type="button" value="<?php echo $datos['direccion'] ?>" class="btn btn-warning" data-toggle="modal" data-target="#mostrarPDF" id="direccion<?php echo $n ?>"><i class="fas fa-eye"></i>Ver PDF</button>
@@ -239,10 +253,10 @@ if (isset($_SESSION['noti'])) {
           </select>
           <label class="text-dark">Tipo</label>
           <select name="tipo" class="form-control w-1">
-            <option value="renovacion">Renovación de beca</option>
+            <option value="renovacion">Beca renovada</option>
             <option value="cancelacion">Beca cancelada</option>
             <option value="condicionamiento">Beca condicionada</option>
-            <option value="pausa">Beca pausada</option>
+            <option value="pausa">Beca en pausa</option>
           </select>
           <label class="text-dark">Año</label>
           <input name="anio" placeholder="año" class="form-control w-3 p-2" value="<?php echo date("Y");  ?>"></input>
@@ -277,18 +291,18 @@ if (isset($_SESSION['noti'])) {
         </button>
       </div>
       <div class="modal-body mx-auto">
-        <form action="Modelo/ModeloRenovacion/subir.php" method="post">
+        <form action="Modelo/ModeloRenovacion/subir.php" method="post" enctype="multipart/form-data">
           <div class="row">
             <div>
               <div class="col mx-auto text-center">
                 <label for="" class="text-dark" style="width: 300px;">Alumno</label>
-                <input type="text" class="form-control" readonly value=" <?php echo $ID ?>">
+                <input type="text" name="renovacion_alumno" class="form-control" readonly value=" <?php echo $ID ?>">
               </div>
             </div>
             <div>
               <div class="col mx-auto text-center">
                 <label for="" class="text-dark">Universidad</label>
-                <input type="text" readonly class="form-control" value="<?php echo $U;  ?>" style="width: 300px;">
+                <input type="text" name="renovacion_universidad" readonly class="form-control" value="<?php echo $U;  ?>" style="width: 300px;">
               </div>
             </div>
           </div>
@@ -296,7 +310,7 @@ if (isset($_SESSION['noti'])) {
             <div>
               <div class="col  text-center">
                 <label for="" class="text-dark">Ciclo</label>
-                <select name="ciclo" class="form-control " style="width: 300px;">
+                <select name="renovacion_ciclo" class="form-control " style="width: 300px;">
                   <option>1</option>
                   <option>2</option>
                 </select>
@@ -305,11 +319,11 @@ if (isset($_SESSION['noti'])) {
             <div>
               <div class="col  text-center">
                 <label for="" class="text-dark">Tipo</label>
-                <select name="tipo" class="form-control " style="width: 300px;">
-                  <option value="renovacion">Renovación de beca</option>
+                <select name="renovacion_tipo" class="form-control " style="width: 300px;">
+                  <option value="renovacion">Beca renovada</option>
                   <option value="cancelacion">Beca cancelada</option>
                   <option value="condicionamiento">Beca condicionada</option>
-                  <option value="pausa">Beca pausada</option>
+                  <option value="pausa">Beca en pausa</option>
                 </select>
               </div>
             </div>
@@ -318,18 +332,18 @@ if (isset($_SESSION['noti'])) {
             <div class="row">
               <div class="col  text-center">
                 <label for="" class="text-dark">Año</label>
-                <input name="anio" placeholder="año" class="form-control" value="<?php echo date("Y");  ?>"></input>
+                <input type="number" min="2007" name="renovacion_anio" placeholder="año" class="form-control" value="<?php echo date("Y");  ?>"></input>
               </div>
               <br>
               <div class="custom-file row m-2">
-                <h5 class="modal-title m-2" id="exampleModalLongTitle">Subir Carta</h5>
-                <input type="file" class="custom-file-input" accept=".pdf" id="customFileLang" name="archivo" required>
-                <label class="custom-file-label" for="customFileLang" data-browse="Buscar">Seleccionar Carta</label>
+                <input type="file" class="custom-file-input" name="renovacion_archivo" accept=".pdf" id="inputGroupFile01" required>
+                <label class="custom-file-label" for="inputGroupFile01">Elegir un archivo</label>
+                <center><small>El archivo no debe pesar más de 5MB</small></center>
               </div>
             </div>
           </div>
           <br>
-          <center><button class="btn btn-primary mx-auto m-1" type="submit">Subir Datos</button></center>
+          <center><input name="subirRenovacion" class="btn mx-auto m-1" style="border-radius: 20px;  border: 2px solid #9d120e;  width: 200px;height: 38px; background-color: #9d120e; color:white;margin-bottom: -10px;" type="submit" value="Subir Datos"></center>
         </form>
       </div>
       <div class="modal-footer">
@@ -343,5 +357,10 @@ if (isset($_SESSION['noti'])) {
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+<script type="text/javascript">
+// $(document).ready(function() {
+//     bsCustomFileInput.init()
+// });
+</script>
 
 </html>
