@@ -323,7 +323,7 @@ $stmt16584->execute(array($idExpedienteU));
                         <ul class='list-group list-group-flush'>
                           <li class='list-group-item'> &nbsp; &nbsp;" . "Materia" . "&nbsp;" . "</li> ";
             while ($row = $stmt123456->fetch()) {
-              echo " <li class='list-group-item'>" . "<p class=''></p>" . utf8_decode($row['nombreMateria']) . "&nbsp;" . "</li> ";
+              echo " <li class='list-group-item'>" . "<p class=''></p>" . ($row['nombreMateria']) . "&nbsp;" . "</li> ";
             }
             echo "</ul>
             </div>
@@ -444,7 +444,7 @@ $stmt16584->execute(array($idExpedienteU));
         <ul>
           <?php
           while ($row = $stmt99452462->fetch()) {
-            echo "<li>" . utf8_decode(($row['nombreMateria'])) . "</li>";
+            echo "<li>" . (($row['nombreMateria'])) . "</li>";
           }
           ?>
         </ul>
@@ -472,7 +472,7 @@ $stmt16584->execute(array($idExpedienteU));
           <?php
 
           while ($row = $stmt99452463->fetch()) {
-            echo "<li>" . utf8_decode(($row['nombreMateria'])) . "</li>";
+            echo "<li>" . (($row['nombreMateria'])) . "</li>";
           }
 
           ?>
@@ -500,7 +500,7 @@ $stmt16584->execute(array($idExpedienteU));
           <?php
 
           while ($row = $stmt99452464->fetch()) {
-            echo "<li>" . utf8_decode(($row['nombreMateria'])) . "</li>";
+            echo "<li>" . (($row['nombreMateria'])) . "</li>";
           }
 
           ?>

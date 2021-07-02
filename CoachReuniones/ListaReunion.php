@@ -229,12 +229,12 @@ include 'Modularidad/MenuVertical.php';
                                 </div>";
                                 }
                                 ?>
-                                 <div class='col'>
-                                        <div class='md-form'>
-                                            <input type ='text' name ='link' id='link' class="form-control"  />
-                                            <label for='materialRegisterFormFirstName' style='color: black'>Link</label>
-                                        </div>
+                                <div class='col'>
+                                    <div class='md-form'>
+                                        <input type='text' name='link' id='link' class="form-control" />
+                                        <label for='materialRegisterFormFirstName' style='color: black'>Link</label>
                                     </div>
+                                </div>
 
                         </div>
                         <div class="modal-footer">
@@ -663,7 +663,6 @@ include 'Modularidad/MenuVertical.php';
                                                     <th scope="col">Alumno</th>
                                                     <th scope="col">Horario</th>
                                                     <th scope="col">Contacto</th>
-
                                                 </tr>
                                             </thead>
                                             <tfoot class="table-secondary">
@@ -675,21 +674,17 @@ include 'Modularidad/MenuVertical.php';
                                             </tfoot>
                                             <tbody class="table-hover">
                                                 <?php
-
                                                 if ($consulta4->rowCount() >= 1) {
                                                     while ($fila4 = $consulta4->fetch()) {
                                                         echo "
 										<tr class='table-light'>
-										<th>" . $fila4['Nombre'] . "</th>
-										<th>" . $fila4['HorarioInicio'] . "</th>
-										<th>" . $fila4['telefono'] . "</th>
+                                            <th>" . $fila4['Nombre'] . "</th>
+                                            <th>" . $fila4['HorarioInicio'] . "</th>
+                                            <th>" . $fila4['telefono'] . "</th>
 										</tr>";
                                                     }
                                                 }
-
-
                                                 ?>
-
                                             </tbody>
                                         </table>
 
@@ -742,21 +737,16 @@ include 'Modularidad/MenuVertical.php';
                             </tfoot>
                             <tbody class="table-hover">
                                 <?php
-
                                 if ($consulta77->rowCount() >= 1) {
                                     while ($fila3 = $consulta77->fetch()) {
                                         echo "
 											<tr class='table-light'>
-											<th>" . utf8_encode($fila3['Nombre']) . "</th>
-    <td><a  href='Modelo/ModeloReunion/eliminarUniversidad.php?id=" . $fila3['idreunion'] . "&id2=" . $_GET['id'] . "' class=' btn btn-danger'><i class='fas fa-trash-alt'></i></a> </td>
-
+											    <th>" . ($fila3['Nombre']) . "</th>
+                                                <td><a  href='Modelo/ModeloReunion/eliminarUniversidad.php?id=" . $fila3['idreunion'] . "&id2=" . $_GET['id'] . "' class=' btn btn-danger'><i class='fas fa-trash-alt'></i></a> </td>
 											</tr>";
                                     }
                                 }
-
-
                                 ?>
-
                             </tbody>
                         </table>
                     </div>
@@ -764,7 +754,6 @@ include 'Modularidad/MenuVertical.php';
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -830,7 +819,7 @@ include 'Modularidad/MenuVertical.php';
                                 <?php
                                 echo '<option value="0" disabled selected >Seleccione la opción</option>';
                                 foreach ($pdo->query("SELECT * FROM  empresas  WHERE  Tipo =  'Universidad' ORDER by nombre asc") as $row) {
-                                    echo '<option value="' . $row['ID_Empresa'] . '">' . utf8_encode($row['Nombre']) . '</option>';
+                                    echo '<option value="' . $row['ID_Empresa'] . '">' . ($row['Nombre']) . '</option>';
                                 }
                                 echo '</select>';
                                 echo "<input type='hidden' name='idReunion' value='" . $_GET['id'] . "'>";

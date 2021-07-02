@@ -251,7 +251,7 @@ while ($fila15 = $stmt6->fetch()) {
 
               <h4 id="info1"><?php echo $Nombre_Alumno; ?></h4>
               <h4 id="info1"><?php echo $Carnet; ?></h4>
-              <h6 id="info1" class="little"> <?php echo utf8_encode($univerisdad); ?></h6>
+              <h6 id="info1" class="little"> <?php echo ($univerisdad); ?></h6>
 
             </div>
 
@@ -260,7 +260,7 @@ while ($fila15 = $stmt6->fetch()) {
 
             <section class="opciones">
               <p id="mainTitle" class="parrafo">Carrera: </p>
-              <p class="carrera"><?php echo utf8_encode($Carrera) ?></p>
+              <p class="carrera"><?php echo ($Carrera) ?></p>
               <br>
               <p id="mainTitle" class="promo1">Promocion: </p>
               <p class="promo"><?php echo $promocion ?></p>

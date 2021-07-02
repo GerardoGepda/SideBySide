@@ -1,4 +1,5 @@
-<?php include("../BaseDatos/conexion.php"); //Realizamos la conexión con la base de datos?>
+<?php include("../BaseDatos/conexion.php"); //Realizamos la conexión con la base de datos
+?>
 <?php
 //Modularidad para inicializar el Head y <!DOCTYPE html>
 include 'Modularidad/CabeceraInicio.php';
@@ -15,128 +16,87 @@ include 'Modularidad/MenuVertical.php';
 <link rel="stylesheet" href="css/main.css">
 <link rel="stylesheet" type="text/css" href="css/Alumnos.css">
 <link rel="stylesheet" type="text/css" href="css/Menu.css">
-<!--<div class="title">
-    <img src="../img/back.png" class="icon">
-    <h2 class="main-title" >Listas-Alumnos</h2>
-    <div class="title2">
-        <br>
-    <div class="title2-text">
-    <a href="LIS-Alumnos.php" style="text-decoration: none;"><p><img src="../img/Ver.png" class="icon-2">Alumnos</p></a>
-    
-</div>
-</div>
-<div class="title3">
-        <br>
-    <div class="title3-text">
-    <a href="LIS-Cuentas.php" style="text-decoration: none;"><p><img src="../img/Ver.png" class="icon-2">Cuentas</p></a>
-    
-</div>
 
-</div>
-</div>
--->
 <nav class="navbar navbar-expand-lg navbar-light" id="row">
 	<a href="javascript:history.back();"><img src="../img/back.png" class="icon"></a>
-  <a class="navbar-brand" id="T1">Lista-Alumnos</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNav">
-    <ul class="navbar-nav">
-      <li class="nav-item" id="bloque">
-        <a class="nav-link" href="RecordAlumnos.php"><img src="../img/Ver.png" class="icon-2">Cuentas</a>
-      </li>
-    </ul>
-  </div>
+	<a class="navbar-brand" id="T1">Lista-Alumnos</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+	<div class="collapse navbar-collapse" id="navbarNav">
+		<ul class="navbar-nav">
+			<li class="nav-item" id="bloque">
+				<a class="nav-link" href="RecordAlumnos.php"><img src="../img/Ver.png" class="icon-2">Cuentas</a>
+			</li>
+		</ul>
+	</div>
 </nav>
 <!--Comiezo de estructura de trabajo -->
 <div class="container-fluid text-center">
 	<br>
-<div class="float-right"> <?php include 'Modularidad/Alerta.php'?></div>
-<div class="float-right"> <?php include 'Modularidad/AlertaCorreo.php'?></div>
+	<div class="float-right"> <?php include 'Modularidad/Alerta.php' ?></div>
+	<div class="float-right"> <?php include 'Modularidad/AlertaCorreo.php' ?></div>
 
-<!--/.Navbar-->
-<br><br>
-<div>
-	<br class="salto">
-	<br class="salto">
-	<br class="salto">
-	<br class="salto">
-	<h5 id="Titulo">Alumnos de  <?php if($ubicacion == "SS"){ echo "San Salvador";}else{ echo "Santa Ana";}?>
-	     		<a href="ReportesExcel/ReportesAlumnos.php" class="float-right">
-	     			<button type="button" class="btn btn-success px-3" id="btn-excel">
-	     				<img src="../img/excell.png" width="25px" height="30px">
-	     			Descargar
-	     			</button>
-	     		</a>
-	     		
-	     
-		</span>
-	</h5>	
-	
-	<div class="card-body">
-		<div class="table-responsive">
-			<br>
-			<table  id="example" class="table table-hover w-100 table-sm table-bordered table-fixed" >
-				<thead class="table-secondary w-100">
-					<tr> 
-						<!--<th scope="col"><input type='checkbox' name='' class='case' value="" id="todos">Todos</th>-->
-						<th scope="col">Carnet</th>
-						<th scope="col">Alumno</th>
-						<th scope="col">Class</th>
-						<th scope="col">Sede</th>
-						<th scope="col">Lugar de asistencia</th>
-						<th scope="col">STATUS ACTUAL</th>
-						<th scope="col">Estado de certificación</th>
-						<th scope="col">Ver expediente</th>
-						<th scope="col">Modificar Beca</th>
-					</tr>
-				</thead>
-				<!--<tfoot class="table-secondary">
-					<tr>
-						
-						<th scope="col">Carnet</th>
-						<th scope="col">Alumno</th>
-						<th scope="col">Class</th>
-						<th scope="col">Sede</th>
-						<th scope="col">Lugar de asistencia</th>
-						<th scope="col">STATUS ACTUAL</th>
-						<th scope="col">Estado de certificación</th>
-						<th scope="col">Ver expediente</th>						
-					</tr>
-				</tfoot>-->
-				<tbody class="table h-100 w-100">
-					<?php
-					require_once 'Modelo/ModeloAlumno/MostrarDatosAlumnos.php';
-					?>
+	<!--/.Navbar-->
+	<br><br>
+	<div>
+		<br class="salto">
+		<br class="salto">
+		<br class="salto">
+		<br class="salto">
+		<h5 id="Titulo">Alumnos de <?php if ($ubicacion == "SS") {
+										echo "San Salvador";
+									} else {
+										echo "Santa Ana";
+									} ?>
+			<a href="ReportesExcel/ReportesAlumnos.php" class="float-right"><button type="button" class="btn btn-success px-3" id="btn-excel"><img src="../img/excell.png" width="25px" height="30px"> Descargar</button></a>
+			</span>
+		</h5>
 
-				</tbody>        
-			</table>  
-
-		</div> <!--Fin de la caja responsivo de la tabla-->
-
+		<div class="card-body">
+			<div class="table-responsive">
+				<br>
+				<table id="example" class="table table-hover w-100 table-sm table-bordered table-fixed">
+					<thead class="table-secondary w-100">
+						<tr>
+							<!--<th scope="col"><input type='checkbox' name='' class='case' value="" id="todos">Todos</th>-->
+							<th scope="col">Carnet</th>
+							<th scope="col">Alumno</th>
+							<th scope="col">Class</th>
+							<th scope="col">Sede</th>
+							<th scope="col">Lugar de asistencia</th>
+							<th scope="col">STATUS ACTUAL</th>
+							<th scope="col">Estado de certificación</th>
+							<th scope="col">Ver expediente</th>
+							<th scope="col">Modificar Beca</th>
+						</tr>
+					</thead>
+					<tbody class="table h-100 w-100">
+						<?php require_once 'Modelo/ModeloAlumno/MostrarDatosAlumnos.php'; ?>
+					</tbody>
+				</table>
+			</div>
+			<!--Fin de la caja responsivo de la tabla-->
+		</div>
 	</div>
-</div>
-<br><br>
+	<br><br>
 
-<script type="text/javascript">
+	<script type="text/javascript">
+		$("#todos").on("click", function() {
+			$(".case").prop("checked", this.checked);
+		});
 
-	$("#todos").on("click", function() {
-		$(".case").prop("checked", this.checked);
-	});
+		// if all checkbox are selected, check the selectall checkbox and viceversa  
+		$(".case").on("click", function() {
+			if ($(".case").length == $(".case:checked").length) {
+				$("#todos").prop("checked", true);
+			} else {
+				$("#todos").prop("checked", false);
+			}
+		});
+	</script>
 
-            // if all checkbox are selected, check the selectall checkbox and viceversa  
-            $(".case").on("click", function() {
-            	if ($(".case").length == $(".case:checked").length) {
-            		$("#todos").prop("checked", true);
-            	} else {
-            		$("#todos").prop("checked", false);
-            	}
-            });
-        </script>
-
-<?php
-//Incluir el footer
-include 'Modularidad/PiePagina.php';
-?>
-
+	<?php
+	//Incluir el footer
+	include 'Modularidad/PiePagina.php';
+	?>

@@ -36,17 +36,17 @@ $LugarSAT=$InicialDep . $FinalDep .$Sabatino; //Ejemplo SSSAT
                   } 
                     echo "
                 <tr class='table-light'>
-                <td><input type='checkbox' name='ActuaAlumno[]' class='case' value=".$fila2['id_alumno']."></td>
-                <th>".$fila2['id_alumno']."</th>
-                <th>".utf8_decode($fila2['alumno'])."</th>
-                <th>".$fila2['Sexo']."</th>
-                <th><input type='hidden' name='idtaller' id='idtaller' value=>".$fila2['Class']."</th>
-                <th>".$fila2['ID_Sede']."</th>
-                <th>".($fila2['Nombre'])."</th>
-                <td><a href='AprobacionModulos/aprobarmodulo2.php?id=".$fila2['id']."&id2=".$fila2['id_alumno']."' name='ida' class='btn'><i class='fas fa-check-circle fa-2x'></i></a> </td>
-  
-                <td><a href='ReprobarModulos/reprobarmodulo2.php?id=".$fila2['id']."&id2=".$fila2['id_alumno']."' class='btn' ><i class='fas fa-times-circle fa-2x'></i></a> </td>";
-              }
+                  <td><input type='checkbox' name='ActuaAlumno[]' class='case' value=".$fila2['id_alumno']."></td>
+                  <th>".$fila2['id_alumno']."</th>
+                  <th>".($fila2['alumno'])."</th>
+                  <th>".$fila2['Sexo']."</th>
+                  <th><input type='hidden' name='idtaller' id='idtaller' value=>".$fila2['Class']."</th>
+                  <th>".$fila2['ID_Sede']."</th>
+                  <th>".($fila2['Nombre'])."</th>
+                  <td><a href='AprobacionModulos/aprobarmodulo2.php?id=".$fila2['id']."&id2=".$fila2['id_alumno']."' name='ida' class='btn'><i class='fas fa-check-circle fa-2x'></i></a> </td>
+    
+                  <td><a href='ReprobarModulos/reprobarmodulo2.php?id=".$fila2['id']."&id2=".$fila2['id_alumno']."' class='btn' ><i class='fas fa-times-circle fa-2x'></i></a> </td>";
+                }
             
            
 ?>
