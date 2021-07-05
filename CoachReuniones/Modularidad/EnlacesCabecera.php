@@ -1,4 +1,4 @@
-<link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
+
 <link rel="shortcut icon" href="../img/WorkeysIcon.png" />
  <!-- Bootstrap core CSS -->
   <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -21,8 +21,6 @@
   <!--Estilo calendario-->
   <link href="../css/fullcalendar.css" rel="stylesheet">
 
-  <link rel="stylesheet" type="text/css" href="../css/roboto-regular.css">
-  <link rel="stylesheet" type="text/css" href="../css/roboto-light.css">
 
   <!--ENLACES PARA UTILIZAR DATABLE-->
   <link rel="stylesheet" type="text/css" href="DataTable/css/jquery.dataTables.min.css">

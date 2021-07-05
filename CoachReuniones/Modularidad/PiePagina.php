@@ -70,7 +70,7 @@ $(function() {
 <script>
 $(document).ready(function() {
     var table = $('#example').DataTable({
-
+        "pageLength": 200,
         "scrollX": true,
         "scrollY": "50vh",
         //Esto sirve que se auto ajuste la tabla al aplicar un filtro
@@ -99,7 +99,7 @@ $(document).ready(function() {
 
         initComplete: function() {
             //En el columns especificamos las columnas que queremos que tengan filtro
-            this.api().columns([0, 1, 2, 3, 4, 5, 6, 7, 8]).every(function() {
+            this.api().columns([ 1, 2, 3, 4, 5, 6, 7, 8]).every(function() {
                 var column = this;
 
                 var select = $('<select><option value=""></option></select>')
