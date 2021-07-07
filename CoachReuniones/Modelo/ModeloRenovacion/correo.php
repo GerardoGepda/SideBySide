@@ -38,11 +38,10 @@ try {
 
                 $subject = utf8_decode("Aviso de renovación de beca");
                 // Compose a simple HTML email message
-                $message = '<html><body>';
-                $message = '<img src="https://i0.wp.com/fundacioncontinua.com/wp-content/uploads/2020/03/FGK.png" alt="Logo" style="width: 60px; height:75px;"><img src="https://workeysoportunidades.org/images/WorkeysBlanco.png" alt="workeys" style="width: 120px; height:50px; padding:2px;">';
+                $message .= '<html><body>';
+                $message .= '<img src="https://i0.wp.com/fundacioncontinua.com/wp-content/uploads/2020/03/FGK.png" alt="Logo" style="width: 60px; height:75px;"><img src="https://workeysoportunidades.org/images/WorkeysBlanco.png" alt="workeys" style="width: 120px; height:50px; padding:2px;">';
                 $message .= '<h1 style="color:#BE0032; display: flex;justify-content: center;">Hola ' . $PrimerNombre . ' </h1>';
-                $message .= '<p style="display: flex;justify-content: center;">Hemos notado que aún no ha subido su carta de renovación de beca
-                a la plataforma Side by Side, le pedimos que suba su carta antes del '.$fechaSpanish.'. </p>';
+                $message .= '<p style="display: flex;justify-content: center;">Hemos notado que aún no ha subido su carta de renovación de beca a la plataforma Side by Side, le pedimos que suba su carta antes del ' . $fechaSpanish . '. </p>';
                 $message .= '<p style="display: flex;justify-content: center;"><b>*Este mensaje ha sido generado automáticamente,  por favor no contestar*</b></p>';
                 $message .= '<p style="display: flex;justify-content: center;">Att: Coach Fase 2</p>';
                 $message .= '<p style="display: flex;justify-content: center;">Dudas o consultas puede escribir al correo: portalworkeys@oportunidades.org.sv</p>';
