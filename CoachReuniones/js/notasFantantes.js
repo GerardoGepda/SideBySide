@@ -3,11 +3,32 @@ let template, clase, ciclo, status;
 let contador = 1;
 let listaFaltantes = [];
 let data = {};
+let contar = 0;
+function grafica(cantidad, faltan) {
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+            ['Notas', 'Cantidad'],
+            ['Subidas: ' + cantidad, cantidad],
+            ['Faltantes: ' + faltan, faltan],
+        ]);
+
+        var options = {
+            title: 'Notas Faltantes',
+            pieHole: 0.4,
+            colors: ['#54E38A','#BE0032'],
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        chart.draw(data, options);
+    }
+}
 function createTemplate(ciclo) {
     template = `
-    <div class="mx-auto" style="width:75%; display: flex;justify-content: center; ">
+    <div>
     <form action="Modelo/ModeloNotas/correo.php" method="post">
-        <button type="submit" class="btn btn-primary m-2" value="enviar"><i class="fa fa-paper-plane"></i>Enviar</button>
+        <button type="submit" class="btn btn-primary p-1" value="enviar"><i class="fa fa-paper-plane"></i>Enviar</button>
         <input type="text" value="${ciclo}" name="ciclo" hidden>
         <table class="table  mx-auto mt-4" >
             <thead class="thead-dark table-bordered">
@@ -62,11 +83,11 @@ function main() {
         .then(response => response.json())
         .then(json => {
             listaFaltantes = json.lista;
-
             createTemplate(json.ciclos);
             if (listaFaltantes) {
                 alumnos = "";
                 listaFaltantes.forEach(e => {
+                    contar++;
                     alumnos += `
                                 <tr>
                                     <td>${contador++}</td>
@@ -80,9 +101,10 @@ function main() {
                                 </tr>
                                 `
                 });
+                let subieron = 0;
+                subieron = parseInt(json.cantidad) - contar;
+                grafica(subieron, contar);
                 document.getElementById("alumnos").innerHTML = alumnos;
-            } else {
-                alert("No hay información")
             }
         })
 }

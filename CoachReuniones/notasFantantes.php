@@ -8,6 +8,7 @@ require_once '../Conexion/conexion.php';
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <link rel="stylesheet" type="text/css" href="css/modulos-moodle.css">
 <div class="title  mb-2">
     <a href="javascript:history.back();" title=""><img src="../img/back.png" class="icon"></a>
@@ -50,9 +51,9 @@ require_once '../Conexion/conexion.php';
         </div>
     </div>
 </div>
-
-<div id="lista" style="width: auto; min-height:350px; max-height:max-content">
-
+<div class="d-inline-flex">
+    <div id="donutchart" class="h-50 d-inline" style="width: 35%;"></div>
+    <div id="lista" class="d-inline h-50" style="width: 60%;"></div>
 </div>
 </div>
 <script async src="js/notasFantantes.js"></script>
@@ -69,6 +70,8 @@ require_once '../Conexion/conexion.php';
             $("#todos").prop("checked", false);
         }
     });
+    $(document).ready( function () {
+    $('#alumnos').DataTable();
+} );
 </script>
 <?php include 'Modularidad/PiePagina.php'; ?>
-

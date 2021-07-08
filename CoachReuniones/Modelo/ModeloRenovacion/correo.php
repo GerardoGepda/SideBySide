@@ -30,25 +30,96 @@ try {
                 $to = "$correo[$i]";
                 $from = "portalworkeys@oportunidades.org.sv";
                 // To send HTML mail, the Content-type header must be set
-                $headers  = 'MIME-Version: 1.0' . "\r\n";
-                $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+                $headers .= "Reply-To: '$from'\r\n";
+                $headers .= "Return-Path: $from\r\n";
+                $headers .= "From: $from\r\n";
+                $headers .= "Organization: Oportunidades\r\n";
+                $headers .= "MIME-Version: 1.0\r\n";
+                $headers .= "Content-type: text/html; charset=UFT-8\r\n";
+                $headers .= "X-Priority: 1\r\n";
+                $headers .= "X-MSMail-Priority: High\n";
+                $headers .= "Importance: High\n";
+                $headers .= "X-Mailer: PHP" . phpversion() . "\r\n";
 
                 // Create email headers
                 $headers .= 'From: ' . $from . "\r\n" . 'Reply-To: ' . $from . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
                 $subject = utf8_decode("Aviso de renovación de beca");
                 // Compose a simple HTML email message
-                $message .= '<html><body>';
-                $message .= '<img src="https://i0.wp.com/fundacioncontinua.com/wp-content/uploads/2020/03/FGK.png" alt="Logo" style="width: 60px; height:75px;"><img src="https://workeysoportunidades.org/images/WorkeysBlanco.png" alt="workeys" style="width: 120px; height:50px; padding:2px;">';
-                $message .= '<h1 style="color:#BE0032; display: flex;justify-content: center;">Hola ' . $PrimerNombre . ' </h1>';
-                $message .= '<p style="display: flex;justify-content: center;">Hemos notado que aún no ha subido su carta de renovación de beca a la plataforma Side by Side, le pedimos que suba su carta antes del ' . $fechaSpanish . '. </p>';
-                $message .= '<p style="display: flex;justify-content: center;"><b>*Este mensaje ha sido generado automáticamente,  por favor no contestar*</b></p>';
-                $message .= '<p style="display: flex;justify-content: center;">Att: Coach Fase 2</p>';
-                $message .= '<p style="display: flex;justify-content: center;">Dudas o consultas puede escribir al correo: portalworkeys@oportunidades.org.sv</p>';
-                $message .= '</body></html>';
-
+                $message = '
+                <!DOCTYPE html>
+                <html lang="es">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet"> 
+                    <style>
+                        .message {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            background-color: #2d2d2e;
+                            padding: 2%;
+                        }
+                        .bodyOfMeessage {
+                            border-top: 3px #be0032 solid;
+                            border-bottom: 3px #be0032 solid;
+                            font-family: "Roboto", sans-serif;
+                            color: white;
+                            margin: 3% 3% 1% 3%;
+                            font-size: 9px;
+                        }
+                        .imgMessage {
+                            width: 80%;
+                            max-width: 350px;
+                        }
+                        .imgMessage img {
+                            width: 100%;
+                        }
+                        .footerMessage {
+                            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                            font-size: 9px;
+                            color: white;
+                            margin-bottom: 1%;
+                        }
+                        .btnportal {
+                            background-color: #be0032;
+                            color: white;
+                            display: inline-block;
+                            width: 100px;
+                            height: 25px;
+                            text-decoration: none;
+                            padding-top: 5px;
+                            border-radius: 5px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="message">
+                        <div class="imgMessage">
+                            <img src="http://portal.workeysoportunidades.org/img/SideBySideWhiteVersion.png" alt="logo side by side">
+                        </div>
+                        <div class="bodyOfMeessage">
+                            <p>¡Hola ' . $PrimerNombre . '!</p>
+                            <p>Hemos notado que aún no ha subido su carta de renovación de beca a la plataforma Side by Side, le pedimos que suba su carta antes del ' . $fechaSpanish . '.</p>
+                            <p>Dudas o consultas puede escribir al correo: portalworkeys@oportunidades.org.sv</p>
+                            <p>Att: Coach fase 2</p>
+                            <center><a class="btnportal" href="http://portal.workeysoportunidades.org/" target="_blank">Ir al portal</a></center>
+                            <br>
+                        </div>
+                        <div class="footerMessage">
+                            <center><b>Este mensaje ha sido generado automáticamente,  por favor no contestar</b></center>
+                        </div>
+                    </div>
+                </body>
+                </html>
+                ';
                 // si el mensaje se envia aumentara en 1 el contador 
-                if (mail($to, $subject, utf8_decode($message), $headers)) {
+                if (mail($to, $subject, $message, $headers)) {
                     $contador++;
                 }
             }
