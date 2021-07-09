@@ -51,27 +51,13 @@ require_once '../Conexion/conexion.php';
         </div>
     </div>
 </div>
-<div class="d-inline-flex">
-    <div id="donutchart" class="h-50 d-inline" style="width: 35%;"></div>
-    <div id="lista" class="d-inline h-50" style="width: 60%;"></div>
+<div>
+   <center><div id="donutchart" class="h-50 d-inline bg-light mx-auto" style="width: 55%;"></div></center>
+    <div id="lista" class="d-inline h-50 w-75 mx-auto" style="background-color:#ADADB2"></div>
 </div>
+</div>
+<div style="height:300px;">
+
 </div>
 <script async src="js/notasFantantes.js"></script>
-<script>
-    $("#todos").on("click", function() {
-        $(".case").prop("checked", this.checked);
-    });
-
-    // if all checkbox are selected, check the selectall checkbox and viceversa  
-    $(".case").on("click", function() {
-        if ($(".case").length == $(".case:checked").length) {
-            $("#todos").prop("checked", true);
-        } else {
-            $("#todos").prop("checked", false);
-        }
-    });
-    $(document).ready( function () {
-    $('#alumnos').DataTable();
-} );
-</script>
 <?php include 'Modularidad/PiePagina.php'; ?>

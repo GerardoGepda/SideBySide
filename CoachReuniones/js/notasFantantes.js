@@ -17,7 +17,7 @@ function grafica(cantidad, faltan) {
         var options = {
             title: 'Notas Faltantes',
             pieHole: 0.4,
-            colors: ['#54E38A','#BE0032'],
+            colors: ['#54E38A', '#BE0032'],
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
@@ -26,11 +26,11 @@ function grafica(cantidad, faltan) {
 }
 function createTemplate(ciclo) {
     template = `
-    <div>
-    <form action="Modelo/ModeloNotas/correo.php" method="post">
+    <div style="background-color:#ADADB2" class="w-75 mx-auto">
+    <form action="Modelo/ModeloNotas/correo.php" method="post" style="background-color:#ADADB2">
         <button type="submit" class="btn btn-primary p-1" value="enviar"><i class="fa fa-paper-plane"></i>Enviar</button>
         <input type="text" value="${ciclo}" name="ciclo" hidden>
-        <table class="table  mx-auto mt-4" >
+        <table class="table  mx-auto mt-4" id="example" >
             <thead class="thead-dark table-bordered">
                 <th>#</th>
                 <th><input type='checkbox' name='' class='case' value="" id="todos">Todos</th>
@@ -43,7 +43,7 @@ function createTemplate(ciclo) {
             </thead>
             <tbody class='table table-striped table-hover table-bordered' id='alumnos'>
                 <tr>
-                    <td colspan="7">
+                    <td colspan="8">
                     <center>
                         <div class="spinner-border text-danger mx-auto text-center" role="status">
                             <span class="sr-only">Loading...</span>
@@ -105,6 +105,24 @@ function main() {
                 subieron = parseInt(json.cantidad) - contar;
                 grafica(subieron, contar);
                 document.getElementById("alumnos").innerHTML = alumnos;
+                $(document).ready(function () {
+                    $('#example').DataTable({
+                        "lengthMenu": [[5, 50, 100, -1], [5, 50, 100, "All"]]
+                    });
+                });
             }
         })
 }
+
+$("#todos").on("click", function () {
+    $(".case").prop("checked", this.checked);
+});
+
+// if all checkbox are selected, check the selectall checkbox and viceversa  
+$(".case").on("click", function () {
+    if ($(".case").length == $(".case:checked").length) {
+        $("#todos").prop("checked", true);
+    } else {
+        $("#todos").prop("checked", false);
+    }
+})

@@ -17,7 +17,7 @@ include 'Modularidad/MenuVertical.php';
 <div class="title">
   <a href="javascript:history.back();"><img src="../img/back.png" class="icon"></a>
     <h2 class="main-title" >Preguntas Frecuentes</h2>
-</div>>
+</div>
 
 <!--Comiezo de estructura de trabajo -->
 <div class="container-fluid text-center">
