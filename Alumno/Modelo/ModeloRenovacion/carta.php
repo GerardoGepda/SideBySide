@@ -120,7 +120,7 @@ if ($ex = 0) {
  if (file_exists($archivero)) {
   $estado = "enviado";
           $consulta = $dbh->prepare("INSERT INTO renovacion(idRenovacion,ID_Alumno,ciclo,year,archivo,direccion,carpeta,Estado,tipo,class,sede)
-    VALUES(:idRenovacion,:ID_Alumno,:ciclo,'2020',:archivo,:direccion,:carpeta,:estado,:tipo,:class,:sede)");
+    VALUES(:idRenovacion,:ID_Alumno,:ciclo,'$year',:archivo,:direccion,:carpeta,:estado,:tipo,:class,:sede)");
           $consulta->bindParam(':idRenovacion', $idRenovacion, PDO::PARAM_STR);
           $consulta->bindParam(':ID_Alumno', $alumno, PDO::PARAM_STR);
           $consulta->bindParam(':ciclo', $ciclo, PDO::PARAM_INT);
@@ -151,7 +151,7 @@ header("Location:../../renovacionBeca.php");
     $estado = "enviado";
   mkdir($archivero, 0777, true);
           $consulta = $dbh->prepare("INSERT INTO renovacion(idRenovacion,ID_Alumno,ciclo,year,archivo,direccion,carpeta,Estado,tipo,class,sede)
-    VALUES(:idRenovacion,:ID_Alumno,:ciclo,'2020',:archivo,:direccion,:carpeta,:estado,:tipo,:class,:sede)");
+    VALUES(:idRenovacion,:ID_Alumno,:ciclo,'$year',:archivo,:direccion,:carpeta,:estado,:tipo,:class,:sede)");
           $consulta->bindParam(':idRenovacion', $idRenovacion, PDO::PARAM_STR);
           $consulta->bindParam(':ID_Alumno', $alumno, PDO::PARAM_STR);
           $consulta->bindParam(':ciclo', $ciclo, PDO::PARAM_INT);

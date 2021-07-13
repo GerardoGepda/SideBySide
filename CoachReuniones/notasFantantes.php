@@ -53,7 +53,7 @@ require_once '../Conexion/conexion.php';
 </div>
 <div>
    <center><div id="donutchart" class="h-50 d-inline bg-light mx-auto" style="width: 55%;"></div></center>
-    <div id="lista" class="d-inline h-50 w-75 mx-auto" style="background-color:#ADADB2"></div>
+    <div id="lista" class="d-inline h-50 w-75 mx-auto p-1" style="background-color:#ADADB2"></div>
 </div>
 </div>
 <div style="height:300px;">

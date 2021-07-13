@@ -38,12 +38,11 @@ if (isset($_POST['subirCarta'])) {
     $idcarta = $_POST["idCarta"];
     // fin de asignar valores
 
-    if ($size == 0){
+    if ($size == 0) {
         $_SESSION['message'] = "El tamaño del archivo no cumple el requerimiento, tamaño: $size";
-		$_SESSION['message2'] = 'danger';
-		header("Location: ../../Renovacion.php?id=$alumno");
-    }    
-    elseif ($size <= 5000000) {
+        $_SESSION['message2'] = 'danger';
+        header("Location: ../../Renovacion.php?id=$alumno");
+    } elseif ($size <= 5000000) {
         // consulta para obtener informacion de alumno
         foreach ($dbh->query("SELECT r.carpeta as 'nuevo', r.archivo , a.Nombre,LEFT(a.Nombre,LOCATE(' ',a.Nombre) - 1) AS 'name',a.SedeAsistencia,a.Class,a.correo FROM alumnos a
         INNER JOIN renovacion r ON r.ID_Alumno = a.ID_Alumno   WHERE a.ID_Alumno = '" . $alumno . "'") as $Name) {
@@ -103,9 +102,17 @@ if (isset($_POST['subirCarta'])) {
                     $resultado = rename($direccion, $archivero . "/" . $nombreArchivo);
 
                     if ($resultado) {
-                        $_SESSION['message'] = 'Carta Actualizada';
-                        $_SESSION['message2'] = 'success';
-                        header("Location: ../../Renovacion.php?id=$alumno");
+                        $documento =  ($archivero . "/" . $nombreArchivo);
+                        $info = chmod($documento, 0777);
+                        if ($info) {
+                            $_SESSION['message'] = 'Carta Actualizada';
+                            $_SESSION['message2'] = 'success';
+                            header("Location: ../../Renovacion.php?id=$alumno");
+                        } else {
+                            $_SESSION['message'] = 'Error de permisos';
+                            $_SESSION['message2'] = 'danger';
+                            header("Location: ../../Renovacion.php?id=$alumno");
+                        }
                     } else {
                         $_SESSION['message'] = 'No se pudo actualizar el documento';
                         $_SESSION['message2'] = 'danger';
@@ -127,11 +134,11 @@ if (isset($_POST['subirCarta'])) {
             $_SESSION['message2'] = 'danger';
             header("Location: ../../Renovacion.php?id=$alumno");
         }
-    }else {
-        $tamanioActual = $size/1000;
+    } else {
+        $tamanioActual = $size / 1000;
         $_SESSION['message'] = "El tamaño de su archivo PDF sobrepasa el limite permitido (5 MB), \n su tamaño es de: $tamanioActual";
-		$_SESSION['message2'] = 'danger';
-		header("Location: ../../Renovacion.php?id=$alumno");
+        $_SESSION['message2'] = 'danger';
+        header("Location: ../../Renovacion.php?id=$alumno");
     }
 } else {
     $_SESSION['message'] = 'Datos incompletos';

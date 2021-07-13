@@ -26,11 +26,11 @@ function grafica(cantidad, faltan) {
 }
 function createTemplate(ciclo) {
     template = `
-    <div style="background-color:#ADADB2" class="w-75 mx-auto">
+    <div style="background-color:#ADADB2; border-radius:15px;" class="w-75 mx-auto m-1 p-1">
     <form action="Modelo/ModeloNotas/correo.php" method="post" style="background-color:#ADADB2">
         <button type="submit" class="btn btn-primary p-1" value="enviar"><i class="fa fa-paper-plane"></i>Enviar</button>
         <input type="text" value="${ciclo}" name="ciclo" hidden>
-        <table class="table  mx-auto mt-4" id="example" >
+        <table class="table  mx-auto mt-4 m-1 p-2" id="example" style="width:98%; border-radius:15px;" >
             <thead class="thead-dark table-bordered">
                 <th>#</th>
                 <th><input type='checkbox' name='' class='case' value="" id="todos">Todos</th>
