@@ -52,7 +52,7 @@ try {
                     <style>
                         .message {
                             display: flex;
-                            flex-direction: column;
+                            flex-direction: column !important;
                             justify-content: center;
                             align-items: center;
                             background-color: #2d2d2e;
@@ -64,7 +64,7 @@ try {
                             font-family: "Roboto", sans-serif;
                             color: white;
                             margin: 3% 3% 1% 3%;
-                            font-size: 14px;
+                            font-size: 9px;
                         }
                         .imgMessage {
                             width: 80%;
@@ -88,6 +88,7 @@ try {
                             text-decoration: none;
                             padding-top: 5px;
                             border-radius: 5px;
+                            font-size: 14px !important;
                         }
                     </style>
                 </head>
@@ -97,7 +98,7 @@ try {
                             <img src="http://portal.workeysoportunidades.org/img/SideBySideWhiteVersion.png" alt="logo side by side">
                         </div>
                         <div class="bodyOfMeessage">
-                            <p>¡Hola nombre '.$PrimerNombre.'!</p>
+                            <p>¡Hola '.$PrimerNombre.'!</p>
                             <p>Hemos notado que aún no has subido tus notas del ciclo 01 2021 a la plataforma Side by Side, por lo cual le solicitados que las suba antes del '.$fechaSpanish.'.</p>
                             <p>Dudas o consultas puede escribir al correo: portalworkeys@oportunidades.org.sv</p>
                             <p>Att: Coach fase 2</p>
