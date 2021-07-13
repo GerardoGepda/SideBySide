@@ -105,11 +105,7 @@ try {
                             <img src="http://portal.workeysoportunidades.org/img/SideBySideWhiteVersion.png" alt="logo side by side">
                         </div>
                         <div class="bodyOfMeessage">
-<<<<<<< HEAD
                             <p>¡Hola '.$PrimerNombre.'!</p>
-=======
-                            <p>¡Hola ' . $PrimerNombre . '!</p>
->>>>>>> 4166ab4d7e468e5a036a86c57a16bf3303f8ec4d
                             <p>Hemos notado que aún no ha subido su carta de renovación de beca a la plataforma Side by Side, le pedimos que suba su carta antes del ' . $fechaSpanish . '.</p>
                             <p>Dudas o consultas puede escribir al correo: portalworkeys@oportunidades.org.sv</p>
                             <p>Att: Coach fase 2</p>
@@ -123,10 +119,6 @@ try {
                 </body>
                 </html>
                 ';
-<<<<<<< HEAD
-
-=======
->>>>>>> 4166ab4d7e468e5a036a86c57a16bf3303f8ec4d
                 // si el mensaje se envia aumentara en 1 el contador 
                 if (mail($to, $subject, $message, $headers)) {
                     $contador++;
