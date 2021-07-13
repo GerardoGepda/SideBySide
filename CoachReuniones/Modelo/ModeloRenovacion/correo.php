@@ -30,8 +30,16 @@ try {
                 $to = "$correo[$i]";
                 $from = "portalworkeys@oportunidades.org.sv";
                 // To send HTML mail, the Content-type header must be set
-                $headers  = 'MIME-Version: 1.0' . "\r\n";
-                $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+                $headers .= "Reply-To: '$from'\r\n";
+                $headers .= "Return-Path: $from\r\n";
+                $headers .= "From: $from\r\n";
+                $headers .= "Organization: Oportunidades\r\n";
+                $headers .= "MIME-Version: 1.0\r\n";
+                $headers .= "Content-type: text/html; charset=UFT-8\r\n";
+                $headers .= "X-Priority: 1\r\n";
+                $headers .= "X-MSMail-Priority: High\n";
+                $headers .= "Importance: High\n";
+                $headers .= "X-Mailer: PHP" . phpversion() . "\r\n";
 
                 // Create email headers
                 $headers .= 'From: ' . $from . "\r\n" . 'Reply-To: ' . $from . "\r\n" . 'X-Mailer: PHP/' . phpversion();
@@ -74,7 +82,7 @@ try {
                         }
                         .footerMessage {
                             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-                            font-size: 13px;
+                            font-size: 9px;
                             color: white;
                             margin-bottom: 1%;
                         }
@@ -97,7 +105,11 @@ try {
                             <img src="http://portal.workeysoportunidades.org/img/SideBySideWhiteVersion.png" alt="logo side by side">
                         </div>
                         <div class="bodyOfMeessage">
+<<<<<<< HEAD
                             <p>¡Hola '.$PrimerNombre.'!</p>
+=======
+                            <p>¡Hola ' . $PrimerNombre . '!</p>
+>>>>>>> 4166ab4d7e468e5a036a86c57a16bf3303f8ec4d
                             <p>Hemos notado que aún no ha subido su carta de renovación de beca a la plataforma Side by Side, le pedimos que suba su carta antes del ' . $fechaSpanish . '.</p>
                             <p>Dudas o consultas puede escribir al correo: portalworkeys@oportunidades.org.sv</p>
                             <p>Att: Coach fase 2</p>
@@ -111,9 +123,12 @@ try {
                 </body>
                 </html>
                 ';
+<<<<<<< HEAD
 
+=======
+>>>>>>> 4166ab4d7e468e5a036a86c57a16bf3303f8ec4d
                 // si el mensaje se envia aumentara en 1 el contador 
-                if (mail($to, $subject, utf8_decode($message), $headers)) {
+                if (mail($to, $subject, $message, $headers)) {
                     $contador++;
                 }
             }
