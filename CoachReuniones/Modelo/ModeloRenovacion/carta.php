@@ -22,6 +22,7 @@ $lN = "";
 $formato = "";
 $idRenovacion = "";
 $idcarta = "";
+$cambioDocumento;
 // fin de declarar variables
 
 if (isset($_POST['subirCarta'])) {
@@ -36,9 +37,10 @@ if (isset($_POST['subirCarta'])) {
     $size = $_FILES["archivo"]["size"];
     $direccion = $_FILES["archivo"]["tmp_name"];
     $idcarta = $_POST["idCarta"];
+    $cambioDocumento = $_POST["cambiarDocumento"];
     // fin de asignar valores
 
-    if ($size == 0) {
+    if ($size == 0 && $cambioDocumento == "true") {
         $_SESSION['message'] = "El tamaño del archivo no cumple el requerimiento, tamaño: $size";
         $_SESSION['message2'] = 'danger';
         header("Location: ../../Renovacion.php?id=$alumno");
@@ -99,24 +101,55 @@ if (isset($_POST['subirCarta'])) {
                 ]);
                 if ($result) {
                     $nuevo =  $archivero . "/" . $nombreArchivo;
-                    $resultado = rename($direccion, $archivero . "/" . $nombreArchivo);
 
-                    if ($resultado) {
-                        $documento =  ($archivero . "/" . $nombreArchivo);
-                        $info = chmod($documento, 0777);
-                        if ($info) {
-                            $_SESSION['message'] = 'Carta Actualizada';
-                            $_SESSION['message2'] = 'success';
-                            header("Location: ../../Renovacion.php?id=$alumno");
+                    if (file_exists($archivero)) {
+                        if ($cambioDocumento == "true") {
+                            if (move_uploaded_file($direccion, $nuevo)) {
+                                unlink("../../" . $ubication . $dir);
+                                $_SESSION['message'] = 'Renovación actualizada';
+                                $_SESSION['message2'] = 'success';
+                                header("Location: ../../Renovacion.php?id=$alumno");
+                            } else {
+                                $_SESSION['message'] = 'Error al mover carta de renovación (1)';
+                                $_SESSION['message2'] = 'danger';
+                                header("Location: ../../Renovacion.php?id=$alumno");
+                            }
                         } else {
-                            $_SESSION['message'] = 'Error de permisos';
-                            $_SESSION['message2'] = 'danger';
-                            header("Location: ../../Renovacion.php?id=$alumno");
+                            if (rename("../../../CoachReuniones/" . $ubication . $dir, $nuevo)) {
+                                $_SESSION['message'] = 'Renovación actualizada';
+                                $_SESSION['message2'] = 'success';
+                                header("Location: ../../Renovacion.php?id=$alumno");
+                            } else {
+                                $_SESSION['message'] = 'Error al mover carta de renovación (2)';
+                                $_SESSION['message2'] = 'danger';
+                                header("Location: ../../Renovacion.php?id=$alumno");
+                            }
                         }
                     } else {
-                        $_SESSION['message'] = 'No se pudo actualizar el documento';
-                        $_SESSION['message2'] = 'danger';
-                        header("Location: ../../Renovacion.php?id=$alumno");
+                        if (mkdir($archivero, 0777, true)) {
+                            if ($cambioDocumento == "true") {
+                                if (move_uploaded_file($direccion, $nuevo)) {
+                                    unlink("../../" . $ubication . $dir);
+                                    $_SESSION['message'] = 'Renovación actualizada';
+                                    $_SESSION['message2'] = 'success';
+                                    header("Location: ../../Renovacion.php?id=$alumno");
+                                } else {
+                                    $_SESSION['message'] = 'Error al mover carta de renovación (3)';
+                                    $_SESSION['message2'] = 'danger';
+                                    header("Location: ../../Renovacion.php?id=$alumno");
+                                }
+                            } else {
+                                if (rename("../../../CoachReuniones/" . $ubication . $dir, $nuevo)) {
+                                    $_SESSION['message'] = 'Renovación actualizada';
+                                    $_SESSION['message2'] = 'success';
+                                    header("Location: ../../Renovacion.php?id=$alumno");
+                                } else {
+                                    $_SESSION['message'] = 'Error al mover carta de renovación (4)';
+                                    $_SESSION['message2'] = 'danger';
+                                    header("Location: ../../Renovacion.php?id=$alumno");
+                                }
+                            }
+                        }
                     }
                 } else {
                     $_SESSION['message'] = 'No se pudo actualizar en la base de datos';

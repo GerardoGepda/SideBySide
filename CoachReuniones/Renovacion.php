@@ -261,9 +261,17 @@ if (isset($_SESSION['noti'])) {
           <label class="text-dark">Año</label>
           <input name="anio" placeholder="año" class="form-control w-3 p-2" value="<?php echo date("Y");  ?>"></input>
           <br>
+          <div class="form-check">
+            <input class="form-check-input" name="checkDocumento" type="checkbox" value="true" id="defaultCheck1" disabled>
+            <label class="form-check-label text-dark" for="defaultCheck1">
+              Modificación de documento
+            </label>
+            <input type="hidden" name="cambiarDocumento" value="" id="HcambiarDocumento">
+          </div>
+          <br>
           <div class="custom-file p-2">
-            <input type="file" class="custom-file-input" accept=".pdf" id="customFileLang" name="archivo" required>
-            <label class="custom-file-label" for="customFileLang" data-browse="Buscar">Seleccionar Carta</label>
+            <input type="file" class="custom-file-input" accept=".pdf" id="customFileLangActualizar" name="archivo">
+            <label class="custom-file-label" for="customFileLangActualizar" data-browse="Buscar">Seleccionar Carta</label>
             <center><small>El archivo no debe pesar más de 5MB</small></center>
           </div>
           <div>
@@ -358,9 +366,13 @@ if (isset($_SESSION['noti'])) {
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
 <script type="text/javascript">
-// $(document).ready(function() {
-//     bsCustomFileInput.init()
-// });
+  document.getElementById("customFileLangActualizar").addEventListener("change", () => {
+    let cant = document.getElementById("customFileLangActualizar").files.length;
+    if (cant > 0) {
+      document.getElementById("defaultCheck1").checked = true;
+      document.getElementById("HcambiarDocumento").value = "true";
+    }
+  });
 </script>
 
 </html>
