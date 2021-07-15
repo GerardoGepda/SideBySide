@@ -28,7 +28,7 @@ try {
                 $PrimerNombre =   implode(' ', array_slice(explode(' ',  $row['Nombre']), 0, 1));
                 // parametros para enviar correo
                 $to = "$correo[$i]";
-                $from = "portalworkeys@oportunidades.org.sv";
+                $from = "SideBySide@oportunidades.org.sv";
                 // To send HTML mail, the Content-type header must be set
                 $headers .= "Reply-To: '$from'\r\n";
                 $headers .= "Return-Path: $from\r\n";
@@ -107,7 +107,7 @@ try {
                         <div class="bodyOfMeessage">
                             <p>¡Hola '.$PrimerNombre.'!</p>
                             <p>Hemos notado que aún no ha subido su carta de renovación de beca a la plataforma Side by Side, le pedimos que suba su carta antes del ' . $fechaSpanish . '.</p>
-                            <p>Dudas o consultas puede escribir al correo: portalworkeys@oportunidades.org.sv</p>
+                            <p>Dudas o consultas puede escribir al correo: SideBySide@oportunidades.org.sv</p>
                             <p>Att: Coach fase 2</p>
                             <center><a class="btnportal" href="http://portal.workeysoportunidades.org/" target="_blank">Ir al portal</a></center>
                             <br>

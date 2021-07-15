@@ -1,6 +1,4 @@
-<?php
-include 'Modularidad/CabeceraInicio.php';
-?>
+<?php include 'Modularidad/CabeceraInicio.php'; ?>
 <title>Expdiente de alumno</title>
 <?php
 include 'Modularidad/EnlacesCabecera.php';
@@ -216,29 +214,17 @@ while ($fila15 = $stmt6->fetch()) {
     </ul>
   </div>
 </nav>
-<div class="container-fluid text-center" id="main">
-  <!--/.Navbar-->
-
-  <!--/.Navbar-->
-  <br>
-
+<div class="container-fluid text-center m-2" id="main">
   <div>
-    <?php
-    include "config/Alerta.php";
-    ?>
+    <?php include "config/Alerta.php";  ?>
   </div>
-
   <!--Información principal del estudiante-->
   <div class="row">
     <!--Comiezo de estructura de trabajo 2fila-->
     <div class="container-fluid text-center" ng-app="app">
-
       <div class="principal">
-
         <div class="alerta">
-          <?php
-          include "config/Alerta.php";
-          ?>
+          <?php  include "config/Alerta.php";  ?>
         </div>
 
         <!--Información principal del estudiante-->
@@ -246,9 +232,13 @@ while ($fila15 = $stmt6->fetch()) {
           <div class="row">
             <div class="text-center align-self-center" id="carnet">
               <br>
-              <img src="../img/imgUser/<?php echo $FotoAlumno ?>" alt="img de usuario" class="user">
-
-
+              <?php
+              if (file_exists("../img/imgUser/" . $FotoAlumno)) {
+                echo "<img src='../img/imgUser/$FotoAlumno' alt='img de usuario' class='user'>";
+              } else {
+                echo "<img src='../img/imgUser/imgDefault.png' alt='img de usuario' class='user'>";
+              }
+              ?>
               <h4 id="info1"><?php echo $Nombre_Alumno; ?></h4>
               <h4 id="info1"><?php echo $Carnet; ?></h4>
               <h6 id="info1" class="little"> <?php echo ($univerisdad); ?></h6>
@@ -348,29 +338,25 @@ while ($fila15 = $stmt6->fetch()) {
             <h3 class="subtitle"><?php echo  round($Promedio, 2) ?> %</h3>
             <span id="subtitle"><?php echo $EstadoBeca; ?></span>
           </div>
-          <!--<div class="status5">
-                    <p style="text-align: center;">Cambiar Imagen de <br>perfil</p>
-                    
-                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" id="button-info">
-             <i class="far fa-image"></i>
-          </button>
-                </div>-->
+          <div class="status5">
+            <p style="text-align: center;">Cambiar Imagen de <br>perfil</p>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal" id="button-info">
+              <i class="far fa-image"></i>
+            </button>
+          </div>
         </div>
         <?php
         if ($consulta11->rowCount() >= 1) {
           while ($fila11 = $consulta11->fetch()) {
             echo "
               <tr class='bg-light'>
-              <td>" . $fila11['Titulo'] . "</td>
-              <td>" . $fila11['Fecha'] . "</td>
-              <td>" . $fila11['asistencia'] . "</td>
-
+                <td>" . $fila11['Titulo'] . "</td>
+                <td>" . $fila11['Fecha'] . "</td>
+                <td>" . $fila11['asistencia'] . "</td>
               </tr>";
           }
         }
-
         ?>
-
         </tbody>
         </table>
       </div>
@@ -388,13 +374,10 @@ while ($fila15 = $stmt6->fetch()) {
               </tr>";
       }
     }
-
     ?>
-
     </tbody>
     </table>
   </div>
-
 </div>
 <?php
 if ($consulta13->rowCount() >= 1) {
@@ -411,9 +394,7 @@ if ($consulta13->rowCount() >= 1) {
               </tr>";
   }
 }
-
 ?>
-
 </tbody>
 </table>
 </div>
@@ -433,16 +414,13 @@ if ($consulta13->rowCount() >= 1) {
         <form method="POST" action="Modelo/ModeloPassword/CambiarImgAlumno.php" enctype="multipart/form-data">
           <!--IMG A Subir -->
           <div class="custom-file">
-            <div class="custom-file">
-
+            <div class="custom-file m-2">
               <input type="hidden" name="iduser" value="<?php echo $IDusuario ?>">
               <input type="hidden" name="idalumno" value="<?php echo $IDCooreoAlumno ?>">
               <input type="file" name="imgusu" id="imgusu" class="custom-file-input" accept="image/*" required />
               <label class="custom-file-label" for="customFileLang" data-browse="Buscar">Seleccionar Archivo</label>
             </div>
-
-            <br><br>
-            <input type="submit" name="SubirImg" id="SubirImg" class="btn btn-dark btn-block" value="Cambiar Foto" />
+            <input type="submit" name="SubirImg" id="SubirImg" class="btn btn-dark btn-block m-1 p-2" value="Cambiar Foto" />
           </div>
         </form>
       </div>
@@ -457,8 +435,4 @@ if ($consulta13->rowCount() >= 1) {
 <script src="main.js"></script>
 <?php include "../Alumno/GRAFICA.php" ?>
 <?php include "../Alumno/GRAFICA2.php" ?>
-
-<?php
-
-include 'Modularidad/PiePagina.php';
-?>
+<?php include 'Modularidad/PiePagina.php'; ?>
