@@ -89,7 +89,19 @@ if (isset($_SESSION['noti'])) {
 
     if ($condicion < 1) {
       echo " <thead><td colspan='4' style='font-size: 18px;font-weight: bold;''>" . $Alumno . "</td></thead>";
-      echo "<thead><td colspan='4'><img src='../img/imgUser/$FotoAlumno?>' alt='img de usuario' id='perfil'></td></thead>";
+
+      if (file_exists("../img/imgUser/$FotoAlumno")) {
+        echo "
+      <thead>
+        <td colspan='4'>
+          <img src='../img/imgUser/$FotoAlumno' alt='img de usuario' id='perfil'>
+        </td>
+      </thead>";
+      } else {
+        echo "<thead><td colspan='4'>
+      <img src='../img/imgUser/imgDefault.png'  alt='img de usuario' id='perfil'>
+      </td></thead>";
+      }
       echo "<td colspan='4' class='alert alert-danger'>Sin renovaciones de Beca</td>";
     } else {
     ?>
@@ -109,30 +121,26 @@ if (isset($_SESSION['noti'])) {
         </thead>
       <tbody>
         <?php
-
-        foreach ($dbh->query("SELECT idRenovacion,ciclo,year,direccion,Estado,ID_Alumno,tipo FROM renovacion 
-  WHERE ID_Alumno = '" . $ID . "' AND Estado != 'eliminado' ORDER BY year DESC,ciclo DESC") as $datos) {
-
+        foreach ($dbh->query("SELECT idRenovacion,ciclo,year,direccion,Estado,ID_Alumno,tipo FROM renovacion  WHERE ID_Alumno = '" . $ID . "' AND Estado != 'eliminado' ORDER BY year DESC,ciclo DESC") as $datos) {
           $n = 1;
-
         ?>
           <tr>
             <td><?php echo $datos["ciclo"] ?></td>
             <td><?php echo $datos["year"] ?></td>
             <td><?php echo ucfirst($datos["Estado"]); ?></td>
             <td>
-              <?php 
-                if ($datos["tipo"] == 'renovacion') {
-                  echo "Renovación de Beca";
-                }elseif ($datos["tipo"] == 'condicionamiento') {
-                  echo "Condicionamiento de Beca";
-                }elseif ($datos["tipo"] == 'cancelacion') {
-                  echo "Cancelación de Beca";
-                }elseif ($datos["tipo"] == 'pausa') {
-                  echo "Beca en Pausa";
-                }else {
-                  echo "Error en tipo";
-                }
+              <?php
+              if ($datos["tipo"] == 'renovacion') {
+                echo "Renovación de Beca";
+              } elseif ($datos["tipo"] == 'condicionamiento') {
+                echo "Condicionamiento de Beca";
+              } elseif ($datos["tipo"] == 'cancelacion') {
+                echo "Cancelación de Beca";
+              } elseif ($datos["tipo"] == 'pausa') {
+                echo "Beca en Pausa";
+              } else {
+                echo "Error en tipo";
+              }
               ?>
             </td>
             <td>

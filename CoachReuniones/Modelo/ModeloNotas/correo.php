@@ -106,7 +106,7 @@ try {
                             <p>¡Hola ' . $PrimerNombre . '!</p>
                             <p>Hemos notado que aún no has subido tus notas del ' . $ciclo . 'a la plataforma Side by Side, por lo cual le solicitados que las suba antes del ' . $fechaSpanish . '.</p>
                             <p>Dudas o consultas puede escribir al correo: SideBySide@oportunidades.org.sv</p>
-                            <p>Att: Team fase 2</p>
+                            <p>Att: Equipo fase 2</p>
                             <center><a class="btnportal" href="http://portal.workeysoportunidades.org/" target="_blank">Ir al portal</a></center>
                             <br>
                         </div>

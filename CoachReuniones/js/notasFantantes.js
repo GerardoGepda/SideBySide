@@ -4,6 +4,13 @@ let contador = 1;
 let listaFaltantes = [];
 let data = {};
 let contar = 0;
+
+function checkAll() {
+    var inputs = document.querySelectorAll('.pl');
+    for (var i = 0; i < inputs.length; i++) {
+        inputs[i].checked = true;
+    }
+}
 function grafica(cantidad, faltan) {
     google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(drawChart);
@@ -30,10 +37,10 @@ function createTemplate(ciclo) {
     <form action="Modelo/ModeloNotas/correo.php" method="post" style="background-color:#ADADB2">
         <button type="submit" class="btn btn-primary p-1" value="enviar"><i class="fa fa-paper-plane"></i>Enviar</button>
         <input type="text" value="${ciclo}" name="ciclo" hidden>
-        <table class="table  mx-auto mt-4 m-1 p-2" id="example" style="width:98%; border-radius:15px;" >
+        <table class="table  mx-auto mt-4 m-1 p-2 table-responsive" id="example" style="width:98%; border-radius:15px;" >
             <thead class="thead-dark table-bordered">
                 <th>#</th>
-                <th><input type='checkbox' name='' class='case' value="" id="todos">Todos</th>
+                <th><button type="button" class="btn btn-primary p-1 m-1" onclick="checkAll()">Todos</button></th>
                 <th>Nombre</th>
                 <th>Correo</th>
                 <th>Universidad</th>
@@ -91,7 +98,7 @@ function main() {
                     alumnos += `
                                 <tr>
                                     <td>${contador++}</td>
-                                    <td><input type='checkbox' name='ActuaAlumno[]' class='case' value="${e.correo}"></td>
+                                    <td><input type='checkbox' name='ActuaAlumno[]' class='pl' value="${e.correo}"></td>
                                     <td>${e.name}</td>
                                     <td>${e.correo}</td>
                                     <td>${e.ID_Empresa} </td>
@@ -107,22 +114,10 @@ function main() {
                 document.getElementById("alumnos").innerHTML = alumnos;
                 $(document).ready(function () {
                     $('#example').DataTable({
-                        "lengthMenu": [[5, 50, 100, -1], [5, 50, 100, "All"]]
+                        "lengthMenu": [[200, 300, 400, -1], [200, 300, 400, "All"]],
+
                     });
                 });
             }
         })
 }
-
-$("#todos").on("click", function () {
-    $(".case").prop("checked", this.checked);
-});
-
-// if all checkbox are selected, check the selectall checkbox and viceversa  
-$(".case").on("click", function () {
-    if ($(".case").length == $(".case:checked").length) {
-        $("#todos").prop("checked", true);
-    } else {
-        $("#todos").prop("checked", false);
-    }
-})
