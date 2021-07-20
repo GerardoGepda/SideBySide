@@ -44,7 +44,7 @@ try {
                 // Create email headers
                 $headers .= 'From: ' . $from . "\r\n" . 'Reply-To: ' . $from . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
-                $subject = utf8_decode("Aviso de renovación de beca");
+                $subject = "Aviso de renovación de beca";
                 // Compose a simple HTML email message
                 $message = '
                 <!DOCTYPE html>
@@ -108,7 +108,7 @@ try {
                             <p>¡Hola '.$PrimerNombre.'!</p>
                             <p>Hemos notado que aún no ha subido su carta de renovación de beca a la plataforma Side by Side, le pedimos que suba su carta antes del ' . $fechaSpanish . '.</p>
                             <p>Dudas o consultas puede escribir al correo: SideBySide@oportunidades.org.sv</p>
-                            <p>Att: Coach fase 2</p>
+                            <p>Att: Equipo fase 2</p>
                             <center><a class="btnportal" href="http://portal.workeysoportunidades.org/" target="_blank">Ir al portal</a></center>
                             <br>
                         </div>

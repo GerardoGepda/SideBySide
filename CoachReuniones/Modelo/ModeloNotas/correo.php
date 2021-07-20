@@ -119,7 +119,7 @@ try {
                 ';
 
                 // si el mensaje se envia aumentara en 1 el contador 
-                if (mail($to, $subject, ($message), $headers)) {
+                if (mail($to, $subject, $message, $headers)) {
                     $contador++;
                 }
             }
