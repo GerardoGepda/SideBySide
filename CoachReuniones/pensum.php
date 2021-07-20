@@ -128,7 +128,7 @@ if ($consulta->rowCount() >= 1) {
                                 echo "
                                         <tr class='table-light'>
                                             <th>" . $fila2['idMateria'] . "</th>  
-                                            <th>" . utf8_decode($fila2['nombreMateria']) . "</th>
+                                            <th>" . $fila2['nombreMateria'] . "</th>
                                             <td>
                                             <center><a href='Modelo/ModeloMaterias/delete.php?id=" . $fila2['idMateria'] . "&alumno=$id' class='btn btn-danger'><i class='fas fa-trash'></i></a></center>
                                             </td>
