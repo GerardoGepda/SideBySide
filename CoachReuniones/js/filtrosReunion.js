@@ -4,6 +4,11 @@ let ciclo;
 let titulo;
 // fin de declaración de variables
 
+// grafica 
+function LlenarGrafica(e) {
+    
+}
+
 // función para llenar los ciclos 
 function llenarCiclos(ciclos) {
     let template = "";
@@ -78,16 +83,17 @@ function procesar() {
         titulo = document.getElementById("nombre").value;
         if (titulo && tipo && ciclo) {
             fetch(
-                "Modelo/ModeloReportes/ModelReunion/getTitulo.php", {
-                method: 'POST', // or 'PUT'
-                body: JSON.stringify({ ciclo: ciclo }),
+                "Modelo/ModeloReportes/ModelReunion/procesar.php", {
+                method: 'POST', // or 'PUT', 'GET'
+                body: JSON.stringify({ titulo: titulo, tipo: tipo, ciclo: ciclo }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
+            //promise
                 .then(response => response.json())
                 .then(json => {
-                    llenarNombres(json.nombre)
+                    LlenarGrafica(json.nombre)
                 })
         } else {
             console.log("No hay valores suficientes");

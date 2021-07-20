@@ -42,7 +42,15 @@ require_once '../Conexion/conexion.php';
     </div>
 </div>
 <div class="container">
-    <div id="principal"></div>
+    <div id="principal">
+        <div>
+            <div></div>
+            <div></div>
+        </div>
+        <div>
+
+        </div>
+    </div>
 </div>
 </div>
 <div style="height:300px;">
