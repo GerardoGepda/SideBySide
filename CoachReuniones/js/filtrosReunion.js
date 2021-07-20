@@ -78,6 +78,7 @@ function ciclos() {
     tipo = document.getElementById("class").value;
     getciclos(tipo);
 }
+// funcion principal
 function procesar() {
     try {
         titulo = document.getElementById("nombre").value;
