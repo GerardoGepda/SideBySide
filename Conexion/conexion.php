@@ -1,6 +1,6 @@
 <?php
 try {
-    $dbname="oportuni_despega_v2";
+    $dbname="oportuni_despega";
     $user="oportuni_Admin";
     $password="UDB123456@";
     $dsn = "mysql:host=localhost;dbname=$dbname";
