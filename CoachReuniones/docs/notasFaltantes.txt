@@ -1,0 +1,4 @@
+<p>Hemos notado que aún no has subido tus notas a la plataforma Side by Side.</p>
+<p>Dudas o consultas puede escribir al correo: SideBySide@oportunidades.org.sv</p>
+<p>Att: Equipo fase 2</p>
+<center><a class="btnportal" href="http://portal.workeysoportunidades.org/" target="_blank">Ir al portal</a></center>
