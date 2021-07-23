@@ -7,9 +7,12 @@ require_once '../Conexion/conexion.php';
 ?>
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <link rel="stylesheet" type="text/css" href="css/modulos-moodle.css">
+<link rel="stylesheet" type="text/css" href="css/reporte.view.css">
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <div class="title  mb-2">
     <a href="javascript:history.back();" title=""><img src="../img/back.png" class="icon"></a>
     <h2 class="main-title">Reporteria Reuniones</h2>
@@ -41,21 +44,26 @@ require_once '../Conexion/conexion.php';
         </div>
     </div>
 </div>
-<div class="container">
-    <div id="principal">
-        <div>
-            <div></div>
-            <div></div>
-        </div>
-        <div>
+<div class="">
+    <div id="principal" class="row">
+        <div class="col-md-6 d-flex justify-content-center">
+            <div id="UDB" class="graficas"></div>
+        </div>      
 
-        </div>
     </div>
 </div>
-</div>
-<div style="height:300px;">
 
+
+
+
+
+
+
+<div style="height:300px;">
 </div>
+
+
+<script src="js/ReporteReunion.js">  </script>
 <!-- script principal -->
 <script async src="js/filtrosReunion.js"></script>
 
