@@ -13,6 +13,11 @@ $correo = [];
 // fin de declaración de variables
 
 try {
+    // extraer información de txt con mensaje
+    $file = "../../docs/notasFaltantes.txt";
+    $documento  = file_get_contents($file);
+    $prettyDocument = trim(($documento));
+
     // verificar el el array correo tenga información
     if (isset($_POST['ActuaAlumno'])) {
         $correo = $_POST['ActuaAlumno'];
@@ -54,14 +59,18 @@ try {
                     <link rel="preconnect" href="https://fonts.googleapis.com">
                     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
                     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet"> 
+                    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
                     <style>
                         .message {
-                            display: flex;
-                            flex-direction: column !important;
+                            /*display: flex;*/
+                            margin: 60px auto;
                             justify-content: center;
                             align-items: center;
                             background-color: #2d2d2e;
                             padding: 2%;
+                        }
+                        p, img{
+                            justify-content: center;
                         }
                         .bodyOfMeessage {
                             border-top: 3px #be0032 solid;
@@ -74,6 +83,7 @@ try {
                         .imgMessage {
                             width: 80%;
                             max-width: 350px;
+                            margin: 5px auto;
                         }
                         .imgMessage img {
                             width: 100%;
@@ -100,24 +110,24 @@ try {
                 <body>
                     <div class="message">
                         <div class="imgMessage">
-                            <img src="http://portal.workeysoportunidades.org/img/SideBySideWhiteVersion.png" alt="logo side by side">
+                            <center>
+                                <img  src="http://portal.workeysoportunidades.org/img/SideBySideWhiteVersion.png" alt="logo side by side">
+                            </center>
                         </div>
                         <div class="bodyOfMeessage">
-                            <p>¡Hola ' . $PrimerNombre . '!</p>
-                            <p>Hemos notado que aún no has subido tus notas del ' . $ciclo . 'a la plataforma Side by Side, por lo cual le solicitados que las suba antes del ' . $fechaSpanish . '.</p>
-                            <p>Dudas o consultas puede escribir al correo: SideBySide@oportunidades.org.sv</p>
-                            <p>Att: Equipo fase 2</p>
-                            <center><a class="btnportal" href="http://portal.workeysoportunidades.org/" target="_blank">Ir al portal</a></center>
-                            <br>
+                             <p>¡Hola ' . $PrimerNombre . '</p>
+                             ' . $prettyDocument . '
+                             <br>
+                             <p>Notas faltantes: ' . $ciclo . '</p>
+                             <p>Último día para subir: ' . $fechaSpanish . '</p>
                         </div>
                         <div class="footerMessage">
                             <center><b>Este mensaje ha sido generado automáticamente,  por favor no contestar</b></center>
                         </div>
                     </div>
                 </body>
-                </html>
+            </html>
                 ';
-
                 // si el mensaje se envia aumentara en 1 el contador 
                 if (mail($to, $subject, $message, $headers)) {
                     $contador++;

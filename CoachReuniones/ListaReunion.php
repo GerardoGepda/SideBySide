@@ -58,6 +58,7 @@ include 'Modularidad/EnlacesCabecera.php';
 include 'Modularidad/MenuHorizontal.php';
 include 'Modularidad/MenuVertical.php';
 ?>
+<script src="https://cdn.ckeditor.com/4.8.0/full-all/ckeditor.js"></script>
 <!--Comiezo de estructura de trabajo -->
 <div class="container-fluid text-center">
     <script type="text/javascript">
@@ -86,11 +87,41 @@ include 'Modularidad/MenuVertical.php';
                     <li class="nav-item">
                         <a class="nav-link active" href="LIS-Reunion.php">Regresar</a>
                     </li>
+                    <li class="nav-item">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Editar Mensaje</button>
+                    </li>
                 </ul>
                 <!-- Links -->
             </div>
             <!-- Collapsible content -->
         </nav>
+        <!-- Modal -->
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cambiar Mensaje <small><code>Los cambios son actualizados automáticamente</code></small></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <?php
+                        $file = "./docs/mensaje_reuniones.txt";
+                        $documento  = file_get_contents($file);
+                        $pretty = trim(($documento));
+                        ?>
+                        <textarea name="editor" id="editor" cols="60" rows="10">
+                            <?php echo $pretty; ?>
+                        </textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!--/.Navbar-->
         <?php if ($consulta->rowCount() >= 0) {
@@ -838,8 +869,42 @@ include 'Modularidad/MenuVertical.php';
             </div>
         </div>
     </div>
+    <script>
+        let template;
+        CKEDITOR.replace('editor');
+        CKEDITOR.on('instanceReady', function(evt) {
+            var editor = evt.editor;
 
+            editor.on('change', function(e) {
+                var contentSpace = editor.ui.space('contents');
+                var ckeditorFrameCollection = contentSpace.$.getElementsByTagName('iframe');
+                var ckeditorFrame = ckeditorFrameCollection[0];
+                var innerDoc = ckeditorFrame.contentDocument;
+                var innerDocTextAreaHeight = $(innerDoc.body).height();
+                var desc = CKEDITOR.instances['editor'].getData();
 
+                template = desc;
+                try {
+                    fetch(
+                            "Modelo/ModeloReunion/updateTxt.php", {
+                                method: 'POST', // or 'PUT'
+                                body: JSON.stringify({
+                                    template: template
+                                }),
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            })
+                        .then(response => response.json())
+                        .then(json => {
+                            console.log(json.result);
+                        })
+                } catch (error) {
+                    console.log(error);
+                }
+            });
+        });
+    </script>
     <script type="text/javascript">
         $("#todos").on("click", function() {
             $(".case").prop("checked", this.checked);

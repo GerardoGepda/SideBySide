@@ -10,10 +10,47 @@ require_once '../Conexion/conexion.php';
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <link rel="stylesheet" type="text/css" href="css/modulos-moodle.css">
+<script src="https://cdn.ckeditor.com/4.8.0/full-all/ckeditor.js"></script>
+
 <div class="title  mb-2">
     <a href="javascript:history.back();" title=""><img src="../img/back.png" class="icon"></a>
     <h2 class="main-title">Notas faltantes</h2>
     <div class="title2">
+        <button type="button" class="btn btn-primary p-1" data-toggle="modal" data-target=".bd-example-modal-lg">Editar Mensaje</button>
+        <!-- Modal -->
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cambiar Mensaje
+                            <br>
+                            <small><code>*Los cambios son actualizados automáticamente.</code></small>
+                            <br>
+                            <small><code>*El última día para subir las notas ya esta delimitado.</code></small>
+                            <br>
+                            <small><code>*El ciclo es generado aútomaticamente</code></small>
+                        </h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <?php
+                        $file = "./docs/notasFaltantes.txt";
+                        $documento  = file_get_contents($file);
+                        $pretty = trim(($documento));
+                        ?>
+                        <textarea name="editor" id="editor" cols="60" rows="10">
+                            <?php echo $pretty; ?>
+                        </textarea>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 <div class="float-right"> <?php include 'Modularidad/Alerta.php' ?></div>
@@ -52,7 +89,9 @@ require_once '../Conexion/conexion.php';
     </div>
 </div>
 <div>
-   <center><div id="donutchart" class="h-50 d-inline bg-light mx-auto" style="width: 55%;"></div></center>
+    <center>
+        <div id="donutchart" class="h-50 d-inline bg-light mx-auto" style="width: 55%;"></div>
+    </center>
     <div id="lista" class="d-inline h-50 w-75 mx-auto p-1" style="background-color:#ADADB2"></div>
 </div>
 </div>
@@ -60,4 +99,5 @@ require_once '../Conexion/conexion.php';
 
 </div>
 <script async src="js/notasFantantes.js"></script>
+<script async src="js/editor.js"></script>
 <?php include 'Modularidad/PiePagina.php'; ?>
