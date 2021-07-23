@@ -1,0 +1,23 @@
+ <p>&nbsp;</p>
+
+<div class="message">
+<div class="imgMessage"><img alt="logo side by side" src="http://portal.workeysoportunidades.org/img/SideBySideWhiteVersion.png" style="background-color:#2d2d2e" /></div>
+
+<div class="bodyOfMeessage"><!-- No cambiar el campo $PrimerNombre  -->
+<p>&iexcl;Hola chicos!</p>
+
+<p>Esta es una reuni&oacute;n de prueba, por favor no ignorar el mensaje</p>
+
+<p>Dudas o consultas puede escribir al correo: SideBySide@oportunidades.org.sv</p>
+
+<p>Att: Equipo fase 2</p>
+
+<p>&nbsp;</p>
+
+<p><a class="btnportal" href="http://portal.workeysoportunidades.org/" target="_blank">Ir al portal</a></p>
+</div>
+
+<div class="footerMessage">
+<p><strong>Este mensaje ha sido generado autom&aacute;ticamente, por favor no contestar</strong></p>
+</div>
+</div>
