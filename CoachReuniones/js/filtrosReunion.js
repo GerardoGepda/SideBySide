@@ -2,6 +2,7 @@
 let tipo;
 let ciclo;
 let titulo;
+let idreunion
 // fin de declaración de variables
 
 // grafica 
@@ -21,12 +22,12 @@ function llenarCiclos(ciclos) {
     document.getElementById("ciclo").innerHTML = option + template;
 }
 // función para llenar los nombres de reuniones
-function llenarNombres(nombre) {
+function llenarNombres(reuniones) {
     let template = "";
     let option = `<option class='dropdown-item' disabled selected>Nombre</option>`;
-    nombre.forEach(e => {
+    reuniones.forEach(e => {
         template +=
-            `<option class='dropdown-item'>${e.Titulo}</option>`;
+            `<option class='dropdown-item' value="${e.ID_Reunion}">${e.Titulo}</option>`;
     });
     document.getElementById("nombre").innerHTML = "";
     document.getElementById("nombre").innerHTML = option + template;
@@ -63,7 +64,7 @@ function getNombre(ciclo) {
         })
             .then(response => response.json())
             .then(json => {
-                llenarNombres(json.nombre)
+                llenarNombres(json)
             })
     } catch (e) {
         console.log(e);
@@ -81,12 +82,13 @@ function ciclos() {
 // funcion principal
 function procesar() {
     try {
-        titulo = document.getElementById("nombre").value;
-        if (titulo && tipo && ciclo) {
+        idreunion = document.getElementById("nombre").value;
+
+        if (idreunion != "") {
             fetch(
                 "Modelo/ModeloReportes/ModelReunion/procesar.php", {
                 method: 'POST', // or 'PUT', 'GET'
-                body: JSON.stringify({ titulo: titulo, tipo: tipo, ciclo: ciclo }),
+                body: JSON.stringify({ idreunion: idreunion, tipo: tipo, ciclo: ciclo }),
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -94,7 +96,8 @@ function procesar() {
             //promise
                 .then(response => response.json())
                 .then(json => {
-                    LlenarGrafica(json.nombre)
+                    //LlenarGrafica(json.nombre)
+                    console.log(json);
                 })
         } else {
             console.log("No hay valores suficientes");
