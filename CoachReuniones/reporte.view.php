@@ -44,12 +44,13 @@ require_once '../Conexion/conexion.php';
         </div>
     </div>
 </div>
-<div class="">
+<div>
+    <div>
+        <div id="main"></div>
+        <div id="tabla"></div>
+    </div>
     <div id="principal" class="row">
-        <div class="col-md-6 d-flex justify-content-center">
-            <div id="UDB" class="graficas"></div>
-        </div>      
-
+       
     </div>
 </div>
 
@@ -63,7 +64,7 @@ require_once '../Conexion/conexion.php';
 </div>
 
 
-<script src="js/ReporteReunion.js">  </script>
+<script src="js/ReporteReunion.js"> </script>
 <!-- script principal -->
 <script async src="js/filtrosReunion.js"></script>
 
