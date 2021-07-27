@@ -30,6 +30,17 @@ function LlenarGrafica(asistieron, NoAsistieron, NoInscritos) {
     }
 }
 
+function checkFileExist(urlToFile) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('HEAD', urlToFile, false);
+    xhr.send();
+
+    if (xhr.status == "404") {
+        return false;
+    } else {
+        return true;
+    }
+}
 function LlenarGraficaPorUniversidad(e, id) {
     google.charts.load("current", { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
@@ -58,13 +69,49 @@ function LlenarGraficaPorUniversidad(e, id) {
 function maquetar(alumnos, longitud) {
     let template = "";
     let modals = "";
+    let table1 = "", table2 = "", table3 = "";
+    let c1 = 1, c2 = 1, c3 = 1;
     let asistieron = [], inasistieron = [], noInscritos = []
+
+    for (let i = 0; i < longitud.length; i++) {
+        asistieron.push(alumnos[i].Asistieron)
+        inasistieron.push(alumnos[i].Inasistieron)
+        noInscritos.push(alumnos[i].No_inscritos)
+    }
+
+
     for (let index = 0; index < longitud.length; index++) {
 
-        asistieron.push(alumnos[index].Asistieron)
-        inasistieron.push(alumnos[index].Inasistieron)
-        noInscritos.push(alumnos[index].No_inscritos)
+        asistieron[index].forEach(e => {
+            let imagen;
+            let result = checkFileExist('../img/imgUser/'+e.imagen);
 
+            if (result == true) {
+                imagen = e.imagen;
+            } else {
+                imagen = "imgDefault.png"
+            }
+            table1 += `
+            <tr>
+                <td>${c1++}</td>
+                <td><img src='../img/imgUser/${imagen}' class='alumnos' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
+                <td>${e.nombre}</td>
+            </tr>`;
+        });
+        inasistieron[index].forEach(e => {
+            table2 += `
+                <tr>
+                    <td>${c2++}</td>
+                    <td>${e.nombre}</td>
+                </tr>`;
+        });
+        noInscritos[index].forEach(e => {
+            table3 += `
+                <tr>
+                    <td>${c3++}</td>
+                    <td>${e.nombre}</td>
+                </tr>`;
+        });
         template += `
                     <div class="col-md-6 justify-content-center grapp">
                         <div id="${longitud[index].replace(/\s/g, "-")}" class="datos p-1 graficas"></div>
@@ -100,7 +147,15 @@ function maquetar(alumnos, longitud) {
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                   ...
+                                  <table class="table text-center">
+                                    <thead class="thead-dark table-bordered">
+                                        <td>#</td>
+                                        <td>Nombre</td>
+                                    </thead>
+                                    <tbody class="table-striped table-bordered table-hover">
+                                    `+ table1 + `
+                                    </tbody>                                  
+                                  </table>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -120,7 +175,15 @@ function maquetar(alumnos, longitud) {
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                ...
+                                <table class="table text-center">
+                                    <thead class="thead-dark table-bordered">
+                                        <td>#</td>
+                                        <td>Nombre</td>
+                                    </thead>
+                                    <tbody class="table-striped table-hover table-bordered">
+                                    `+ table2 + `
+                                    </tbody>                                  
+                                  </table>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -140,7 +203,15 @@ function maquetar(alumnos, longitud) {
                                 </button>
                             </div>
                             <div class="modal-body">
-                            ...
+                            <table class="table text-center">
+                                    <thead class="thead-dark table-bordered">
+                                        <td>#</td>
+                                        <td>Nombre</td>
+                                    </thead>
+                                    <tbody class="table-striped table-bordered table-hover">
+                                    `+ table3 + `
+                                    </tbody>                                  
+                                  </table>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -208,8 +279,7 @@ function llenarNombres(reuniones) {
     let template = "";
     let option = `<option class='dropdown-item' disabled selected>Nombre</option>`;
     reuniones.forEach(e => {
-        template +=
-            `<option class='dropdown-item' value="${e.ID_Reunion}">${e.Titulo}</option>`;
+        template += `<option class='dropdown-item' value="${e.ID_Reunion}">${e.Titulo}</option>`;
     });
     document.getElementById("nombre").innerHTML = "";
     document.getElementById("nombre").innerHTML = option + template;

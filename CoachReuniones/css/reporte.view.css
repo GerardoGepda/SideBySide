@@ -33,3 +33,9 @@
 small {
   font-family: "Staatliches", cursive;
 }
+
+.alumnos {
+  width: 60px;
+  height: 60px;
+  border-radius: 45px;
+}
