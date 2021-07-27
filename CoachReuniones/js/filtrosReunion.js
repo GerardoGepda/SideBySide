@@ -20,7 +20,7 @@ function LlenarGrafica(asistieron, NoAsistieron, NoInscritos) {
         var options = {
             title: 'Resumen general de participación estudiantil',
             pieHole: 0.4,
-            colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3'],
+            colors: ['#54E38A', '#FF8C64', '#F2B90C', '#FF665A', '#9154E3'],
             width: 500,
             height: 300
         };
@@ -59,7 +59,7 @@ function LlenarGraficaPorUniversidad(e, id) {
             height: 325,
             bar: { groupWidth: "95%" },
             legend: { position: "right" },
-            colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3'],
+            colors: ['#54E38A', '#FF8C64', '#F2B90C', '#FF665A', '#9154E3'],
         };
         var chart = new google.visualization.ColumnChart(document.getElementById("tabla"));
         chart.draw(view, options);
@@ -69,6 +69,7 @@ function LlenarGraficaPorUniversidad(e, id) {
 function maquetar(alumnos, longitud) {
     let template = "";
     let modals = "";
+    let imagen = "";
     let table1 = "", table2 = "", table3 = "";
     let c1 = 1, c2 = 1, c3 = 1;
     let asistieron = [], inasistieron = [], noInscritos = []
@@ -78,26 +79,25 @@ function maquetar(alumnos, longitud) {
         inasistieron.push(alumnos[i].Inasistieron)
         noInscritos.push(alumnos[i].No_inscritos)
     }
+    for (const key in asistieron) {
+        let result = checkFileExist('../img/imgUser/' + asistieron[key]);
+        if (result == true) {
+            imagen = asistieron[key];
+        } else {
+            imagen = "imgDefault.png"
+        }
+        table1 += `
+        <tr>
+            <td>${c1++}</td>
+            <td><img src='../img/imgUser/${imagen}' class='alumnos' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
+            <td>${asistieron[key]}</td>
+        </tr>`;
+    }
 
-
+    
     for (let index = 0; index < longitud.length; index++) {
-
-        asistieron[index].forEach(e => {
-            let imagen;
-            let result = checkFileExist('../img/imgUser/'+e.imagen);
-
-            if (result == true) {
-                imagen = e.imagen;
-            } else {
-                imagen = "imgDefault.png"
-            }
-            table1 += `
-            <tr>
-                <td>${c1++}</td>
-                <td><img src='../img/imgUser/${imagen}' class='alumnos' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
-                <td>${e.nombre}</td>
-            </tr>`;
-        });
+        
+        console.log(asistieron[index]);
         inasistieron[index].forEach(e => {
             table2 += `
                 <tr>
@@ -125,7 +125,8 @@ function maquetar(alumnos, longitud) {
                                 <i class="fa fa-clipboard-check"></i>
                                 </button>
 
-                                <button type="button" id="u-${longitud[index].replace(/\s/g, "-")}" data-toggle="modal" data-target=".bd-example-u-${longitud[index].replace(/\s/g, "-")}-modal-lg" class="btn" style='background-color: #FFF587;'>
+                                <button type="button" id="u-${longitud[index].replace(/\s/g, "-")}" data-toggle="modal" data-target=".bd-example-u-${longitud[index].replace(/\s/g, "-")}-modal-lg" class="btn" style='background-color: #F2B90C;'>
+                                
                                 <i class="fa fa-clipboard-check"></i>
                                 </button>
                                 <div id="botones" class='exporting'>
@@ -137,7 +138,7 @@ function maquetar(alumnos, longitud) {
                         </div>
                         `;
         modals += `
-                    <div class="modal fade bd-example-y-${longitud[index].replace(/\s/g, "-")}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal fade bd-example-y-${longitud[index].replace(/\s/g, "-")}-modal-lg modal-dialog-scrollable" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -148,8 +149,9 @@ function maquetar(alumnos, longitud) {
                                 </div>
                                 <div class="modal-body">
                                   <table class="table text-center">
-                                    <thead class="thead-dark table-bordered">
+                                    <thead class="thead-dark table-bordered table-dark">
                                         <td>#</td>
+                                        <td>Imagen</td>
                                         <td>Nombre</td>
                                     </thead>
                                     <tbody class="table-striped table-bordered table-hover">
@@ -159,13 +161,12 @@ function maquetar(alumnos, longitud) {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="modal fade bd-example-n-${longitud[index].replace(/\s/g, "-")}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal fade bd-example-n-${longitud[index].replace(/\s/g, "-")}-modal-lg modal-dialog-scrollable" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
@@ -176,8 +177,9 @@ function maquetar(alumnos, longitud) {
                                 </div>
                                 <div class="modal-body">
                                 <table class="table text-center">
-                                    <thead class="thead-dark table-bordered">
+                                    <thead class="thead-dark table-bordered table-dark">
                                         <td>#</td>
+                                        <td>Imagen</td>
                                         <td>Nombre</td>
                                     </thead>
                                     <tbody class="table-striped table-hover table-bordered">
@@ -187,13 +189,12 @@ function maquetar(alumnos, longitud) {
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="button" class="btn btn-primary">Save changes</button>
                                 </div>
                             </div>
                         </div>
                 </div>
 
-                <div class="modal fade bd-example-u-${longitud[index].replace(/\s/g, "-")}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                <div class="modal fade bd-example-u-${longitud[index].replace(/\s/g, "-")}-modal-lg modal-dialog-scrollable" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -204,8 +205,9 @@ function maquetar(alumnos, longitud) {
                             </div>
                             <div class="modal-body">
                             <table class="table text-center">
-                                    <thead class="thead-dark table-bordered">
+                                    <thead class="thead-dark table-bordered table-dark">
                                         <td>#</td>
+                                        <td>Imagen</td>
                                         <td>Nombre</td>
                                     </thead>
                                     <tbody class="table-striped table-bordered table-hover">
@@ -215,7 +217,6 @@ function maquetar(alumnos, longitud) {
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
                             </div>
                         </div>
                     </div>
@@ -251,7 +252,7 @@ function LlenarGraficaIndividual(data, universidad) {
                         position: 'right',
                         alignment: 'center',
                     },
-                    colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3'],
+                    colors: ['#54E38A', '#FF8C64', '#F2B90C', '#FF665A', '#9154E3'],
                     width: 550,
                     height: 300,
                 },
@@ -353,7 +354,7 @@ function procesar() {
                     let data = [];
                     // listar asistieron
                     let asistieron = [], inasistieron = [], noInscritos = []
-                    console.log(json);
+
                     for (let index = 1; index < json.length; index++) {
                         asistieron.push(json[index].Asistieron)
                         inasistieron.push(json[index].Inasistieron)
