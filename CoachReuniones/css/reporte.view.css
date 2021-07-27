@@ -1,8 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Staatliches&display=swap");
 
-.graficas{
-    width: 95%; 
-    height: 400px;
-    border-radius: 1%;
-    object-position: center;
+.graficas {
+  width: 98%;
+  height: 350px;
+  border-radius: 1%;
+  object-position: center;
 }
 
+.datos {
+  border-radius: 1%;
+  border: #a29c9c 2px solid;
+}
+
+.separador {
+  height: 300px;
+}
+.btns {
+  position: relative;
+  z-index: 99;
+  left: 50px;
+  top: -55px;
+}
+.exporting {
+  position: relative;
+  z-index: 99;
+  left: 200px;
+  top: -40px;
+}
+.grapp {
+  z-index: 1;
+}
+small {
+  font-family: "Staatliches", cursive;
+}

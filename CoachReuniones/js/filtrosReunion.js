@@ -20,7 +20,9 @@ function LlenarGrafica(asistieron, NoAsistieron, NoInscritos) {
         var options = {
             title: 'Resumen general de participación estudiantil',
             pieHole: 0.4,
-            colors: ['#302044', '826290', '#be0032']
+            colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3'],
+            width: 500,
+            height: 300
         };
 
         var chart = new google.visualization.PieChart(document.getElementById('main'));
@@ -28,21 +30,133 @@ function LlenarGrafica(asistieron, NoAsistieron, NoInscritos) {
     }
 }
 
-function maquetar(longitud) {
-    let template = "";
+function LlenarGraficaPorUniversidad(e, id) {
+    google.charts.load("current", { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+    let info = [
+        ['Universidad', 'Asistieron', 'No Asistieron', 'No Inscribieron'],
+    ]
+    for (let i = 0; i < e.length; i++) {
+        info.push([id[i].replace(/\s/g, "-"), parseInt(e[i].Asistieron.length), parseInt(e[i].Inasistieron.length), parseInt(e[i].No_inscritos.length)])
+    }
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable(info);
+        var view = new google.visualization.DataView(data);
+        var options = {
+            title: "Resumen general de participación estudiantil por universidad",
+            width: 525,
+            height: 325,
+            bar: { groupWidth: "95%" },
+            legend: { position: "right" },
+            colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3'],
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById("tabla"));
+        chart.draw(view, options);
+    }
+}
 
+function maquetar(alumnos, longitud) {
+    let template = "";
+    let modals = "";
+    let asistieron = [], inasistieron = [], noInscritos = []
     for (let index = 0; index < longitud.length; index++) {
+
+        asistieron.push(alumnos[index].Asistieron)
+        inasistieron.push(alumnos[index].Inasistieron)
+        noInscritos.push(alumnos[index].No_inscritos)
+
         template += `
-                    <div class="col-md-6 d-flex justify-content-center">
-                        <div id="${longitud[index].replace(/\s/g, "-")}" class="graficas"></div>
+                    <div class="col-md-6 justify-content-center grapp">
+                        <div id="${longitud[index].replace(/\s/g, "-")}" class="datos p-1 graficas"></div>
+                        <div id="botones" class='btns'>
+                            <small class="text-center short" >Alumnos</small>
+                                <button type="button" data-toggle="modal" data-target=".bd-example-y-${longitud[index].replace(/\s/g, "-")}-modal-lg" id="y-${longitud[index].replace(/\s/g, "-")}" class="btn" style='background-color: #54E38A;'>
+                                <i class="fa fa-clipboard-check"></i>
+                                </button>
+
+                                <button type="button" data-toggle="modal" data-target=".bd-example-n-${longitud[index].replace(/\s/g, "-")}-modal-lg" id="n-${longitud[index].replace(/\s/g, "-")}" class="btn" style='background-color: #FF8C64;'>
+                                <i class="fa fa-clipboard-check"></i>
+                                </button>
+
+                                <button type="button" id="u-${longitud[index].replace(/\s/g, "-")}" data-toggle="modal" data-target=".bd-example-u-${longitud[index].replace(/\s/g, "-")}-modal-lg" class="btn" style='background-color: #FFF587;'>
+                                <i class="fa fa-clipboard-check"></i>
+                                </button>
+                                <div id="botones" class='exporting'>
+                                    <small class="text-center short" >Export</small>
+                                        <button type="button" class="btn btn-danger"><i class="fas fa-file-pdf"></i></button>
+                                        <button type="button" class="btn btn-success"><i class="fas fa-file-excel"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        `;
+        modals += `
+                    <div class="modal fade bd-example-y-${longitud[index].replace(/\s/g, "-")}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Asistieron ${longitud[index].replace(/\s/g, "-")}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                   ...
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
+
+                    <div class="modal fade bd-example-n-${longitud[index].replace(/\s/g, "-")}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">No Asistieron ${longitud[index].replace(/\s/g, "-")}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                ...
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+
+                <div class="modal fade bd-example-u-${longitud[index].replace(/\s/g, "-")}-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLongTitle">No Inscritos ${longitud[index].replace(/\s/g, "-")}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                            ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                     `;
     }
     document.getElementById("principal").innerHTML = template;
+    document.getElementById("modals").innerHTML = modals
 }
 
 function LlenarGraficaIndividual(data, universidad) {
-    maquetar(universidad);
+    maquetar(data, universidad);
 
     for (let index = 0; index < universidad.length; index++) {
         google.charts.load('current');
@@ -60,13 +174,15 @@ function LlenarGraficaIndividual(data, universidad) {
                     tooltip: {
                         text: 'percentage',
                         showColorCode: true,
-                        ignoreBounds: true
+                        ignoreBounds: true,
                     },
                     legend: {
                         position: 'right',
                         alignment: 'center',
                     },
-                    colors: ['#302044', '826290', '#be0032']
+                    colors: ['#54E38A', '#FF8C64', '#FFF587', '#FF665A', '#9154E3'],
+                    width: 550,
+                    height: 300,
                 },
                 containerId: universidad[index].replace(/\s/g, "-")
             });
@@ -75,8 +191,6 @@ function LlenarGraficaIndividual(data, universidad) {
     }
 
 }
-
-
 
 // función para llenar los ciclos 
 function llenarCiclos(ciclos) {
@@ -206,6 +320,7 @@ function procesar() {
 
                     LlenarGrafica(contador1, contador2, contador3)
                     LlenarGraficaIndividual(data, id)
+                    LlenarGraficaPorUniversidad(data, id)
                 })
         } else {
             console.log("No hay valores suficientes");
