@@ -15,7 +15,7 @@ if(isset($_POST['todoasis']))
 		header("Location: ListaReunion.php?id=".urlencode($IDTaller));
 	}
 
-	for ($i=0;$i<count($alumnos);$i++)
+	for ($i=0; $i<count($alumnos); $i++)
 	{
 
 		$consulta=$pdo->prepare("UPDATE inscripcionreunion  SET   asistencia=:asistencia   WHERE id_alumno =:id_alumno AND id_reunion = :id_reunion");
@@ -53,6 +53,7 @@ else if(isset($_POST['todoinasis']))
 		header("Location: ListaReunion.php?id=".urlencode($IDTaller));
 	}
 
+	$cont = 0;
 	for ($i=0;$i<count($alumnos);$i++)
 	{
 		$consulta=$pdo->prepare("UPDATE inscripcionreunion  SET   asistencia=:asistencia   WHERE id_alumno =:id_alumno AND id_reunion = :id_reunion");
@@ -63,16 +64,20 @@ else if(isset($_POST['todoinasis']))
         //Verifica si ha insertado los datos
 		if ($consulta->execute()) 
 		{   
-			sendMails($pdo, $alumnos, $IDTaller);
-		}
-		else
-		{
-			$_SESSION['message'] = 'No se colocó la inasistencia';
-			$_SESSION['message2'] = 'danger';
-			header("Location: ListaReunion.php?id=".urlencode($IDTaller));
+			$cont++;
 		}
 
 	}
+
+	if ($cont === count($alumnos)) {
+		sendMails($pdo, $alumnos, $IDTaller);
+	}else {
+		$_SESSION['message'] = 'No se colocaron todas  laa inasistencias. (No se enviarán correos)';
+		$_SESSION['message2'] = 'danger';
+		header("Location: ListaReunion.php?id=".urlencode($IDTaller));
+	}
+
+	//sendMails($pdo, $alumnos, $IDTaller);
 }
 
 
