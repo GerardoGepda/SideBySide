@@ -44,27 +44,18 @@ require_once '../Conexion/conexion.php';
         </div>
     </div>
 </div>
-<div class="">
-    <div id="principal" class="row">
-        <div class="col-md-6 d-flex justify-content-center">
-            <div id="UDB" class="graficas"></div>
-        </div>      
-
+<div class="card p-1">
+    <div class="row p-1 datos m-1 p-1">
+        <div id="main" class="col-md-6 d-flex justify-content-center"></div>
+        <div id="tabla" class="col-md-6 d-flex justify-content-center"></div>
     </div>
+    <div id="principal" class="row"></div>
 </div>
 
+<div class="separador" id="modals"></div>
 
 
-
-
-
-
-<div style="height:300px;">
-</div>
-
-
-<script src="js/ReporteReunion.js">  </script>
+<script src="js/ReporteReunion.js"> </script>
 <!-- script principal -->
 <script async src="js/filtrosReunion.js"></script>
-
 <?php include 'Modularidad/PiePagina.php'; ?>

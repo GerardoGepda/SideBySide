@@ -6,7 +6,7 @@ setlocale(LC_TIME, "spanish");
 
 // inicio de declaración de variables
 $fechaActual = date("d-m-Y");
-$fechaLimite = date('l jS F Y', strtotime($fechaActual . "+ 3 days"));
+$fechaLimite = date('l jS F Y', strtotime($fechaActual . "+ 5 days"));
 $fechaSpanish = strftime("%A, %d de %B de %Y", strtotime($fechaLimite));
 $contador = 0;
 $correo = [];

@@ -6,7 +6,7 @@
 <div class="bodyOfMeessage"><!-- No cambiar el campo $PrimerNombre  -->
 <p>&iexcl;Hola chicos!</p>
 
-<p>Esta es una reuni&oacute;n de prueba, por favor no ignorar el mensaje</p>
+<p>Esta es una reuni&oacute;n de prueba, por favor ignorar el mensaje</p>
 
 <p>Dudas o consultas puede escribir al correo: SideBySide@oportunidades.org.sv</p>
 
