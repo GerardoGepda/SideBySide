@@ -31,14 +31,18 @@ function LlenarGrafica(asistieron, NoAsistieron, NoInscritos) {
 }
 
 function checkFileExist(urlToFile) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('HEAD', urlToFile, false);
-    xhr.send();
+    try {
+        var xhr = new XMLHttpRequest();
+        xhr.open('HEAD', urlToFile, false);
+        xhr.send();
 
-    if (xhr.status == "404") {
-        return false;
-    } else {
-        return true;
+        if (xhr.status == "404") {
+            return false;
+        } else {
+            return true;
+        }
+    } catch (error) {
+
     }
 }
 function LlenarGraficaPorUniversidad(e, id) {
@@ -67,11 +71,13 @@ function LlenarGraficaPorUniversidad(e, id) {
 }
 
 function maquetar(alumnos, longitud) {
+    // variables
     let template = "";
     let modals = "";
     let imagen = "";
     let table1 = "", table2 = "", table3 = "";
     let c1 = 1, c2 = 1, c3 = 1;
+    let result;
     let asistieron = [], inasistieron = [], noInscritos = []
 
     for (let i = 0; i < longitud.length; i++) {
@@ -79,37 +85,51 @@ function maquetar(alumnos, longitud) {
         inasistieron.push(alumnos[i].Inasistieron)
         noInscritos.push(alumnos[i].No_inscritos)
     }
-    for (const key in asistieron) {
-        let result = checkFileExist('../img/imgUser/' + asistieron[key]);
-        if (result == true) {
-            imagen = asistieron[key];
-        } else {
-            imagen = "imgDefault.png"
-        }
-        table1 += `
-        <tr>
-            <td>${c1++}</td>
-            <td><img src='../img/imgUser/${imagen}' class='alumnos' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
-            <td>${asistieron[key]}</td>
-        </tr>`;
-    }
-   
 
 
     for (let index = 0; index < longitud.length; index++) {
+        table1 = "", table2 = "", table3 = "";
+        c1 = 1, c2 = 1, c3 = 1;
+        for (const key in asistieron[index]) {
+            result = checkFileExist('../img/imgUser/' + ((asistieron[index])[key]).imagen);
+            if (result == true) {
+                imagen = ((asistieron[index])[key]).imagen
+            } else {
+                imagen = "imgDefault.png"
+            }
+            table1 += `
+                <tr>
+                    <td>${c1++}</td>
+                    <td><img src='../img/imgUser/${imagen}' class='alumnos' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
+                    <td>${((asistieron[index])[key]).nombre}</td>
+                </tr>`;
+        }
 
-        console.log(asistieron[index]);
         inasistieron[index].forEach(e => {
+            result = checkFileExist('../img/imgUser/' + e.imagen);
+            if (result == true) {
+                imagen = e.imagen
+            } else {
+                imagen = "imgDefault.png"
+            }
             table2 += `
                 <tr>
                     <td>${c2++}</td>
+                    <td><img src='../img/imgUser/${imagen}' class='alumnos' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
                     <td>${e.nombre}</td>
                 </tr>`;
         });
         noInscritos[index].forEach(e => {
+            result = checkFileExist('../img/imgUser/' + e.imagen);
+            if (result == true) {
+                imagen = e.imagen
+            } else {
+                imagen = "imgDefault.png"
+            }
             table3 += `
                 <tr>
                     <td>${c3++}</td>
+                    <td><img src='../img/imgUser/${imagen}' class='alumnos' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
                     <td>${e.nombre}</td>
                 </tr>`;
         });

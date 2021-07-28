@@ -34,15 +34,15 @@ if (isset($input['ciclo']) && isset($input['idreunion']) && isset($input['tipo']
         $queryAsis = $dbh->prepare($sqlAsis);    
         $queryAsis->execute([$value[0]]);
         
-        $sqlInas = "SELECT al.id_alumno as id, al.Nombre as nombre, al.correo as correo, al.ID_Empresa as U, asistencia 
+        $sqlInas = "SELECT al.id_alumno as id, al.Nombre as nombre, al.correo as correo, u.imagen, al.ID_Empresa as U, asistencia 
         FROM inscripcionreunion inreu INNER JOIN alumnos al
-        ON inreu.id_alumno = al.id_alumno WHERE inreu.asistencia = 'Inasistencia' AND al.ID_Empresa = ?";
+        ON inreu.id_alumno = al.id_alumno INNER JOIN usuarios u on u.correo = al.correo WHERE inreu.asistencia = 'Inasistencia' AND al.ID_Empresa = ?";
         $queryInas = $dbh->prepare($sqlInas);    
         $queryInas->execute([$value[0]]);
 
-        $sqlNoins = "SELECT al.id_alumno as id, al.Nombre as nombre, al.correo as correo, al.ID_Empresa as U 
-        FROM inscripcionreunion inreu RIGHT JOIN alumnos al
-        ON inreu.id_alumno = al.id_alumno 
+        $sqlNoins = "SELECT al.id_alumno as id, al.Nombre as nombre, al.correo as correo, u.imagen, al.ID_Empresa as U 
+        FROM inscripcionreunion inreu  RIGHT JOIN alumnos al 
+        ON inreu.id_alumno = al.id_alumno  RIGHT JOIN usuarios u on u.correo = al.correo
         WHERE al.ID_Empresa = ? AND al.StatusActual = 'Becado' AND inreu.id_alumno IS NULL ORDER BY al.Nombre ASC";
         $queryNoins = $dbh->prepare($sqlNoins);
         $queryNoins->execute([$value[0]]);
