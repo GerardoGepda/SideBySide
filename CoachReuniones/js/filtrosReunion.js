@@ -93,10 +93,11 @@ function maquetar(alumnos, longitud) {
             <td>${asistieron[key]}</td>
         </tr>`;
     }
+   
 
-    
+
     for (let index = 0; index < longitud.length; index++) {
-        
+
         console.log(asistieron[index]);
         inasistieron[index].forEach(e => {
             table2 += `
@@ -131,8 +132,11 @@ function maquetar(alumnos, longitud) {
                                 </button>
                                 <div id="botones" class='exporting'>
                                     <small class="text-center short" >Export</small>
-                                        <button type="button" class="btn btn-danger"><i class="fas fa-file-pdf"></i></button>
-                                        <button type="button" class="btn btn-success"><i class="fas fa-file-excel"></i></button>
+
+                                            <button id="pdf" type="button" class="btn btn-danger"><i class="fas fa-file-pdf"></i></button>
+                                            <button id="excel" type="button" class="btn btn-success btn-excel"><i class="fas fa-file-excel"></i></button>
+                                    
+                                        
                                 </div>
                             </div>
                         </div>

@@ -58,4 +58,5 @@ require_once '../Conexion/conexion.php';
 <script src="js/ReporteReunion.js"> </script>
 <!-- script principal -->
 <script async src="js/filtrosReunion.js"></script>
+<script src="js/ExportarReporteReuExcel.js"></script>
 <?php include 'Modularidad/PiePagina.php'; ?>
