@@ -153,8 +153,8 @@ function maquetar(alumnos, longitud) {
                                 <div id="botones" class='exporting'>
                                     <small class="text-center short" >Export</small>
 
-                                            <button id="pdf" type="button" class="btn btn-danger"><i class="fas fa-file-pdf"></i></button>
-                                            <button id="excel" type="button" class="btn btn-success btn-excel"><i class="fas fa-file-excel"></i></button>
+                                            <button id="pdf" type="button" class="${longitud[index].replace(/\s/g, "-")} btn btn-danger"><i class="${longitud[index].replace(/\s/g, "-")} fas fa-file-pdf"></i></button>
+                                            <button id="excel" type="button" class="${longitud[index].replace(/\s/g, "-")} btn btn-success btn-excel"><i class="${longitud[index].replace(/\s/g, "-")} fas fa-file-excel"></i></button>
                                     
                                         
                                 </div>
@@ -248,7 +248,8 @@ function maquetar(alumnos, longitud) {
                     `;
     }
     document.getElementById("principal").innerHTML = template;
-    document.getElementById("modals").innerHTML = modals
+    document.getElementById("modals").innerHTML = modals;
+    ExportExcel(alumnos);
 }
 
 function LlenarGraficaIndividual(data, universidad) {
