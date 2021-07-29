@@ -1,3 +1,10 @@
+function CreateAnArrayBuffer(info) {
+    var buff = new ArrayBuffer(info.length); //convert info to arrayBuffer
+    var view = new Uint8Array(buff);  //create uint8array as viewer
+    for (var i = 0; i < info.length; i++) view[i] = info.charCodeAt(i) & 0xFF; //convert to octet
+    return buff;
+}
+
 function CreateExcel(data) {
     const fecha = new Date();
     var wb = XLSX.utils.book_new();
@@ -9,39 +16,53 @@ function CreateExcel(data) {
     }
     //Creación para asistieron
     wb.SheetNames.push("Asistieron");
-    var wsg = XLSX.utils.json_to_sheet(data.Asistieron);
+    var wsg = XLSX.utils.aoa_to_sheet(data[0]);
     wb.Sheets["Asistieron"] = wsg;
 
     //Creación de hoja No asistieron 
     wb.SheetNames.push("No asistieron");
-    var wsh = XLSX.utils.json_to_sheet(data.Inasistieron);
+    var wsh = XLSX.utils.aoa_to_sheet(data[1]);
     wb.Sheets["No asistieron"] = wsh;
 
-    //Creación de hoja No inscritos
+    //Creación de hoja No inscritos 
     wb.SheetNames.push("No inscritos");
-    var wsi = XLSX.utils.json_to_sheet(data.No_incritos);
-    wb.Sheets["No inscrtos"] = wsi;
+    var wsk = XLSX.utils.aoa_to_sheet(data[2]);
+    wb.Sheets["No inscritos"] = wsk;
 
     var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
     saveAs(new Blob([CreateAnArrayBuffer(wbout)], { type: "application/octet-stream" }), "Reporte Reunión" + ".xlsx");
 }
+
 function ExportExcel(data){
     const btnexcel = document.querySelectorAll((".btn-excel"));
     btnexcel.forEach(btn => btn.addEventListener("click",(e)=>{
        var idU = e.target.classList[0].replace("-"," "); 
        for (const key in data) {
            if(idU === data[key].universidad) {
-               //CreateExcel(data[key]);
-               Convert(data[key]);
+               CreateExcel(Convert(data[key]));
+               //Convert(data[key]);
                break;             
            }              
        }       
     }));  
 }
-function Convert(json) {
-    var resultado = [];
-    for (var i in json ) {
-        resultado.push([(json[i])]);
-    }    
-    console.log(resultado); 
+
+function Convert(json){
+    let result = [];
+    let arrayTmp = [];
+    let cont = 0;
+    delete json['universidad'];
+    
+    for (const key in json) {
+        arrayTmp = [];
+
+        cont = 1;
+        json[key].forEach(element => {
+            arrayTmp.push([cont++, element.nombre]);
+        });
+        result.push(arrayTmp);
+    }
+    console.table(result[0]);
+    console.log(result);
+    return result;
 }

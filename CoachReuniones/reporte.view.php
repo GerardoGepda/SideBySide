@@ -62,6 +62,7 @@ require_once '../Conexion/conexion.php';
 <script src="js/xlsx.full.min.js"></script>
 <!-- FileSaver -->
 <script src="js/FileSaver.js"></script>
+
 <script src="js/ReporteReunion.js"> </script>
 <!-- script principal -->
 <script src="js/ExportarReporteReuExcel.js"></script>
