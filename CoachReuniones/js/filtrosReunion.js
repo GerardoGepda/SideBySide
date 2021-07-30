@@ -42,7 +42,7 @@ function checkFileExist(urlToFile) {
             return true;
         }
     } catch (error) {
-
+        console.log(error);
     }
 }
 function LlenarGraficaPorUniversidad(e, id) {
@@ -153,7 +153,7 @@ function maquetar(alumnos, longitud) {
                                 <div id="botones" class='exporting'>
                                     <small class="text-center short" >Export</small>
 
-                                            <button id="pdf" type="button" class="${longitud[index].replace(/\s/g, "-")} btn btn-danger"><i class="${longitud[index].replace(/\s/g, "-")} fas fa-file-pdf"></i></button>
+                                    <button id="pdf" type="button" class="${longitud[index].replace(/\s/g, "-")} btn btn-danger btn-pdf"><i class="${longitud[index].replace(/\s/g, "-")} fas fa-file-pdf"></i></button>
                                             <button id="excel" type="button" class="${longitud[index].replace(/\s/g, "-")} btn btn-success btn-excel"><i class="${longitud[index].replace(/\s/g, "-")} fas fa-file-excel"></i></button>
                                     
                                         
@@ -250,6 +250,7 @@ function maquetar(alumnos, longitud) {
     document.getElementById("principal").innerHTML = template;
     document.getElementById("modals").innerHTML = modals;
     ExportExcel(alumnos);
+    ExportarPDF(alumnos);
 }
 
 function LlenarGraficaIndividual(data, universidad) {
@@ -374,6 +375,7 @@ function procesar() {
                 //promise
                 .then(response => response.json())
                 .then(json => {
+                    // console.log(json);
                     let contador1 = 0, contador2 = 0, contador3 = 0, id = []
                     let lista1 = [], lista2 = [], lista3 = [];
                     let data = [];

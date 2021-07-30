@@ -33,26 +33,31 @@ function CreateExcel(data) {
     saveAs(new Blob([CreateAnArrayBuffer(wbout)], { type: "application/octet-stream" }), "Reporte Reunión" + ".xlsx");
 }
 
-function ExportExcel(data){
-    const btnexcel = document.querySelectorAll((".btn-excel"));
-    btnexcel.forEach(btn => btn.addEventListener("click",(e)=>{
-       var idU = e.target.classList[0].replace("-"," "); 
-       for (const key in data) {
-           if(idU === data[key].universidad) {
-               CreateExcel(Convert(data[key]));
-               //Convert(data[key]);
-               break;             
-           }              
-       }       
-    }));  
+function ExportExcel(data) {
+    try {
+        const btnexcel = document.querySelectorAll((".btn-excel"));
+        btnexcel.forEach(btn => btn.addEventListener("click", (e) => {
+            var idU = e.target.classList[0].replace("-", " ");
+            for (const key in data) {
+                if (idU === data[key].universidad) {
+                    CreateExcel(Convert(data[key]));
+                    //Convert(data[key]);
+                    break;
+                }
+            }
+        }));
+    } catch (error) {
+        console.log(error);
+    }
+
 }
 
-function Convert(json){
+function Convert(json) {
     let result = [];
     let arrayTmp = [];
     let cont = 0;
     delete json['universidad'];
-    
+
     for (const key in json) {
         arrayTmp = [];
 
@@ -62,7 +67,5 @@ function Convert(json){
         });
         result.push(arrayTmp);
     }
-    console.table(result[0]);
-    console.log(result);
     return result;
 }
