@@ -1,6 +1,6 @@
 window.jsPDF = window.jspdf.jsPDF;
 //construyendo la información
-let data = {
+let dataPDF = {
     columns: [{
         No: "No.",
         nombre: "Alumno",
@@ -15,8 +15,8 @@ function ExportarPDF(data) {
             var idU = e.target.classList[0].replace("-", " ");
             for (const key in data) {
                 if (idU === data[key].universidad) {
-                    MakePDf(Convert(data[key]));
-                    //Convert(data[key]);
+                    MakePDf(PrepareArrayPdf(data[key]));
+                    //PrepareArrayPdf(data[key]);
                     break;
                 }
             }
@@ -28,7 +28,7 @@ function ExportarPDF(data) {
 }
 
 
-function Convert(json) {
+function PrepareArrayPdf(json) {
     let arrayTmp = [];
     let cont = 1;
     delete json['universidad'];
@@ -41,12 +41,12 @@ function Convert(json) {
             if (noInscritos === null || noInscritos === undefined || noInscritos === " ") {
                 noInscritos = "No Inscrito"
             }
-            data.rows.push([cont++, element.nombre, noInscritos]);
+            dataPDF.rows.push([cont++, element.nombre, noInscritos]);
         });
         // data.rows.push(arrayTmp);
     }
-    console.log(data.rows);
-    return data;
+    console.log(dataPDF.rows);
+    return dataPDF;
 }
 
 

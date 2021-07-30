@@ -40,8 +40,8 @@ function ExportExcel(data) {
             var idU = e.target.classList[0].replace("-", " ");
             for (const key in data) {
                 if (idU === data[key].universidad) {
-                    CreateExcel(Convert(data[key]));
-                    //Convert(data[key]);
+                    CreateExcel(PrepareArrayExcel(data[key]));
+                    //PrepareArrayExcel(data[key]);
                     break;
                 }
             }
@@ -52,7 +52,7 @@ function ExportExcel(data) {
 
 }
 
-function Convert(json) {
+function PrepareArrayExcel(json) {
     let result = [];
     let arrayTmp = [];
     let cont = 0;
