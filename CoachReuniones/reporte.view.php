@@ -64,8 +64,12 @@ require_once '../Conexion/conexion.php';
 <script src="js/FileSaver.js"></script>
 
 <script src="js/ReporteReunion.js"> </script>
+
+<!-- sweet alert cdn -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <!-- script principal -->
-<script async src="js/ExportarReporteReuExcel.js"></script>
-<script async src="js/ExportarReporteReuPdf.js"></script>
-<script async src="js/filtrosReunion.js"></script>
+<script src="js/ExportarReporteReuExcel.js"></script>
+<script src="js/ExportarReporteReuPdf.js"></script>
+<script src="js/filtrosReunion.js"></script>
 <?php include 'Modularidad/PiePagina.php'; ?>

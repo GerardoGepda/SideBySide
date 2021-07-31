@@ -249,8 +249,17 @@ function maquetar(alumnos, longitud) {
     }
     document.getElementById("principal").innerHTML = template;
     document.getElementById("modals").innerHTML = modals;
-    ExportExcel(alumnos);
-    ExportarPDF(alumnos);
+    try {
+        ExportExcel(alumnos);
+        ExportarPDF(alumnos);
+    } catch (error) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error de exportación',
+            text: error,
+            footer: '<b>Notique al administrador de sistema.</b>'
+        });
+    }
 }
 
 function LlenarGraficaIndividual(data, universidad) {

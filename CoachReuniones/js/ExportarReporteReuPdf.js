@@ -4,7 +4,12 @@ let dataPDF = {
     columns: [{
         No: "No.",
         nombre: "Alumno",
-        estado: "estado"
+        correo: "Correo",
+        u: 'Universidad', 
+        sede: 'Sede/Modalidad', 
+        estadoB: 'Estado Beca', 
+        class: 'Class',
+        estado: "Estado"
     }],
     rows: []
 };
@@ -12,11 +17,10 @@ function ExportarPDF(data) {
     try {
         const btnexcel = document.querySelectorAll((".btn-pdf"));
         btnexcel.forEach(btn => btn.addEventListener("click", (e) => {
-            var idU = e.target.classList[0].replace("-", " ");
+            const idU = e.target.classList[0].replace("-", " ");
             for (const key in data) {
                 if (idU === data[key].universidad) {
                     MakePDf(PrepareArrayPdf(data[key]));
-                    //PrepareArrayPdf(data[key]);
                     break;
                 }
             }
@@ -29,29 +33,30 @@ function ExportarPDF(data) {
 
 
 function PrepareArrayPdf(json) {
-    let arrayTmp = [];
     let cont = 1;
-    delete json['universidad'];
+    dataPDF.rows = [];
 
     for (const key in json) {
-        // arrayTmp = [];
-        // cont = 1;
-        json[key].forEach(element => {
-            let noInscritos = element.asistencia;
-            if (noInscritos === null || noInscritos === undefined || noInscritos === " ") {
-                noInscritos = "No Inscrito"
-            }
-            dataPDF.rows.push([cont++, element.nombre, noInscritos]);
-        });
-        // data.rows.push(arrayTmp);
+        if (key !== 'universidad') {
+            json[key].forEach(element => {
+                let asistenciaAlmn = element.asistencia;
+                if (asistenciaAlmn === null || asistenciaAlmn === undefined || asistenciaAlmn === " ") {
+                    asistenciaAlmn = "No Inscrito"
+                }
+                dataPDF.rows.push([cont++, element.nombre, element.correo, element.U, element.sede, element.estatus, element.Class, asistenciaAlmn]);
+            });
+        }
     }
-    console.log(dataPDF.rows);
     return dataPDF;
 }
 
 
 function MakePDf(data) {
-    var pdfdoc = new jsPDF("1", "pt");
+    var pdfdoc = new jsPDF({
+        unit: "pt",
+        orientation: "landscape"
+    });
+
     pdfdoc.setFontSize(12);
     pdfdoc.setTextColor(0);
     pdfdoc.text("Lista de asistencia", 40, 40);

@@ -37,7 +37,7 @@ function ExportExcel(data) {
     try {
         const btnexcel = document.querySelectorAll((".btn-excel"));
         btnexcel.forEach(btn => btn.addEventListener("click", (e) => {
-            var idU = e.target.classList[0].replace("-", " ");
+            const idU = e.target.classList[0].replace("-", " ");
             for (const key in data) {
                 if (idU === data[key].universidad) {
                     CreateExcel(PrepareArrayExcel(data[key]));
@@ -56,16 +56,17 @@ function PrepareArrayExcel(json) {
     let result = [];
     let arrayTmp = [];
     let cont = 0;
-    delete json['universidad'];
 
     for (const key in json) {
         arrayTmp = [];
-
-        cont = 1;
-        json[key].forEach(element => {
-            arrayTmp.push([cont++, element.nombre]);
-        });
-        result.push(arrayTmp);
+        arrayTmp.push(['#', 'Nombre', 'Correo', 'Universidad', 'Sede/Modalidad', 'Estatus Beca', 'Class']);
+        if (key !== 'universidad') {
+            cont = 1;
+            json[key].forEach(element => {
+                arrayTmp.push([cont++, element.nombre, element.correo, element.U, element.sede, element.estatus, element.Class]);
+            });
+            result.push(arrayTmp);
+        }
     }
     return result;
 }

@@ -28,19 +28,19 @@ if (isset($input['ciclo']) && isset($input['idreunion']) && isset($input['tipo']
 
     //recorreomos para extraer alumnos que asistieron, inasistieron y no se inscribieron
     foreach ($unis as $key => $value) {
-        $sqlAsis = "SELECT al.id_alumno as id, al.Nombre as nombre, al.correo as correo, u.imagen, al.ID_Empresa as U, asistencia 
+        $sqlAsis = "SELECT al.id_alumno as id, al.Nombre as nombre, al.correo as correo, u.imagen, al.ID_Empresa as U, asistencia, al.ID_Sede as sede, al.StatusActual as estatus, al.Class as Class 
         FROM inscripcionreunion inreu INNER JOIN alumnos al
         ON inreu.id_alumno = al.id_alumno INNER JOIN usuarios u on u.correo = al.correo  WHERE inreu.asistencia = 'Asistio' AND al.ID_Empresa = ?";
         $queryAsis = $dbh->prepare($sqlAsis);    
         $queryAsis->execute([$value[0]]);
         
-        $sqlInas = "SELECT al.id_alumno as id, al.Nombre as nombre, al.correo as correo, u.imagen, al.ID_Empresa as U, asistencia 
+        $sqlInas = "SELECT al.id_alumno as id, al.Nombre as nombre, al.correo as correo, u.imagen, al.ID_Empresa as U, asistencia, al.ID_Sede as sede, al.StatusActual as estatus, al.Class as Class 
         FROM inscripcionreunion inreu INNER JOIN alumnos al
         ON inreu.id_alumno = al.id_alumno INNER JOIN usuarios u on u.correo = al.correo WHERE inreu.asistencia = 'Inasistencia' AND al.ID_Empresa = ?";
         $queryInas = $dbh->prepare($sqlInas);    
         $queryInas->execute([$value[0]]);
 
-        $sqlNoins = "SELECT al.id_alumno as id, al.Nombre as nombre, al.correo as correo, u.imagen, al.ID_Empresa as U 
+        $sqlNoins = "SELECT al.id_alumno as id, al.Nombre as nombre, al.correo as correo, u.imagen, al.ID_Empresa as U, al.ID_Sede as sede, al.StatusActual as estatus, al.Class as Class 
         FROM inscripcionreunion inreu  RIGHT JOIN alumnos al 
         ON inreu.id_alumno = al.id_alumno  RIGHT JOIN usuarios u on u.correo = al.correo
         WHERE al.ID_Empresa = ? AND al.StatusActual = 'Becado' AND inreu.id_alumno IS NULL ORDER BY al.Nombre ASC";
