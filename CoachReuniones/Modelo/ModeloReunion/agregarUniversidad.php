@@ -59,34 +59,31 @@ try {
                 $alumnos = $result->fetchAll();
                 foreach ($alumnos as $key => $value) {
                     $correo = $value['correo'];
-                    if ($correo == "carlos.penate@oportunidades.org.sv") {
-                        // echo $correo;
+                    $cantidad = $contar++;
+                    // extraer el primer nombre
+                    $PrimerNombre =   implode(' ', array_slice(explode(' ',  $value['Nombre']), 0, 1));
 
-                        $cantidad = $contar++;
-                        // extraer el primer nombre
-                        $PrimerNombre =   implode(' ', array_slice(explode(' ',  $value['Nombre']), 0, 1));
+                    // parametros para enviar correo
+                    $to = "$correo";
+                    $from = "SideBySide@oportunidades.org.sv";
+                    // To send HTML mail, the Content-type header must be set
+                    $headers .= "Reply-To: '$from'\r\n";
+                    $headers .= "Return-Path: $from\r\n";
+                    $headers .= "From: $from\r\n";
+                    $headers .= "Organization: Oportunidades\r\n";
+                    $headers .= "MIME-Version: 1.0\r\n";
+                    $headers .= "Content-type: text/html; charset=UFT-8\r\n";
+                    $headers .= "X-Priority: 1\r\n";
+                    $headers .= "X-MSMail-Priority: High\n";
+                    $headers .= "Importance: High\n";
+                    $headers .= "X-Mailer: PHP" . phpversion() . "\r\n";
 
-                        // parametros para enviar correo
-                        $to = "$correo";
-                        $from = "SideBySide@oportunidades.org.sv";
-                        // To send HTML mail, the Content-type header must be set
-                        $headers .= "Reply-To: '$from'\r\n";
-                        $headers .= "Return-Path: $from\r\n";
-                        $headers .= "From: $from\r\n";
-                        $headers .= "Organization: Oportunidades\r\n";
-                        $headers .= "MIME-Version: 1.0\r\n";
-                        $headers .= "Content-type: text/html; charset=UFT-8\r\n";
-                        $headers .= "X-Priority: 1\r\n";
-                        $headers .= "X-MSMail-Priority: High\n";
-                        $headers .= "Importance: High\n";
-                        $headers .= "X-Mailer: PHP" . phpversion() . "\r\n";
+                    // Create email headers
+                    $headers .= 'From: ' . $from . "\r\n" . 'Reply-To: ' . $from . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
-                        // Create email headers
-                        $headers .= 'From: ' . $from . "\r\n" . 'Reply-To: ' . $from . "\r\n" . 'X-Mailer: PHP/' . phpversion();
-
-                        $subject = "Aviso de Reunion";
-                        // Compose a simple HTML email message
-                        $message = '
+                    $subject = "Aviso de Reunion";
+                    // Compose a simple HTML email message
+                    $message = '
                 <!DOCTYPE html>
                 <html lang="es">
                 <head>
@@ -144,9 +141,8 @@ try {
                </body>
                 </html>
                 ';
-                        if (mail($to, $subject, $message, $headers)) {
-                            $contador++;
-                        }
+                    if (mail($to, $subject, $message, $headers)) {
+                        $contador++;
                     }
                 }
 
