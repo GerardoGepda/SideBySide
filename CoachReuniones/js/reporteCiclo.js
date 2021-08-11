@@ -61,6 +61,7 @@ function procesar() {
     let clase = document.getElementById("clase").value
     MainGraphic(ciclo);
 
+    
 }
 
 function MainGraphic(ciclo) {
@@ -84,4 +85,19 @@ function MainGraphic(ciclo) {
         var chart = new google.visualization.PieChart(document.getElementById('main'));
         chart.draw(data, options);
     }
+}
+
+function GetAllData() {
+    fetch(
+        "Modelo/ModeloReportes/ModelCiclo/getclase.php", {
+        method: 'POST', // or 'PUT'
+        body: {},
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(json => {
+        
+    });
 }
