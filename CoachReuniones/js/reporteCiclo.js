@@ -60,8 +60,8 @@ function procesar() {
     let ciclo = document.getElementById("ciclo").value;
     let clase = document.getElementById("clase").value
     MainGraphic(ciclo);
-
-    
+    // 
+    GetAllData(ciclo, clase);
 }
 
 function MainGraphic(ciclo) {
@@ -87,17 +87,17 @@ function MainGraphic(ciclo) {
     }
 }
 
-function GetAllData() {
+function GetAllData(ciclo, clase) {
     fetch(
-        "Modelo/ModeloReportes/ModelCiclo/getclase.php", {
+        "Modelo/ModeloReportes/ModelCiclo/getPrincipalData.php", {
         method: 'POST', // or 'PUT'
-        body: {},
+        body: JSON.stringify({ ciclo: ciclo, clase: clase }),
         headers: {
             'Content-Type': 'application/json'
         }
     })
-    .then(response => response.json())
-    .then(json => {
-        
-    });
+        .then(response => response.json())
+        .then(json => {
+            console.log(json);
+        });
 }
