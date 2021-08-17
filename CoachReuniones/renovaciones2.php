@@ -178,7 +178,28 @@ if (isset($_POST['mostrar'])) {
                         <td><?php echo $ausentes['correo'] ?></td>
                         <td><?php echo $ausentes['nombre'] ?></td>
                         <td><?php echo $ausentes['Class'] ?></td>
-                        <td><?php echo $ausentes['ID_Empresa'] ?></td>
+                        <td>
+                            <?php 
+                                if($ausentes['ID_Empresa'] == 'ECdCI')
+                                    echo "ECCI";
+                                else if($ausentes['ID_Empresa'] == 'INICAES')
+                                    echo "UNICAES";
+                                else if($ausentes['ID_Empresa'] == 'UFGS')
+                                    echo "UFG SA";
+                                else if($ausentes['ID_Empresa'] == 'UFGSS')
+                                    echo "UFG SS";
+                                else if($ausentes['ID_Empresa'] == 'UNDESA')
+                                    echo "UES SA";
+                                else if($ausentes['ID_Empresa'] == 'UNDESM')
+                                    echo "UES SM";
+                                else if($ausentes['ID_Empresa'] == 'UNDESS')
+                                    echo "UES SS";
+                                else if($ausentes['ID_Empresa'] == 'UDJMD')
+                                    echo "UJMD";
+                                else 
+                                    echo $ausentes['ID_Empresa'];
+                            ?>
+                        </td>
                         <td><?php echo $ausentes['ID_Sede'] ?></td>
                     </tr>
             <?php
