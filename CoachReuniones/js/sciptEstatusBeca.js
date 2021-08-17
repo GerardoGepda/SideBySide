@@ -32,13 +32,29 @@ function CreateTableData(data) {
     let templete = '';
 
     data.forEach(element => {
+        idUniversidad = element[6];
+        
+        if (idUniversidad == 'UNDESA') {
+            idUniversidad = 'UES SA';
+        } else if (idUniversidad == 'UNDESS') {
+            idUniversidad = 'UES';
+        }else if(idUniversidad == 'UFGSS'){
+            idUniversidad = 'UFG SS';
+        }else if(idUniversidad == 'ECdCI'){
+            idUniversidad = 'ECCI';
+        }else if(idUniversidad == 'INICAES'){
+            idUniversidad = 'UNICAES';
+        }else if(idUniversidad == 'UDJMD'){
+            idUniversidad = 'UJMD';
+        }
+
         templete += `
             <tr class='table-light'>
                 <td>${element[0]}</td>
                 <td>${element[1]}</td>
                 <td>${element[2]}</td>
                 <td>${element[3]}</td>
-                <td>${element[6]}</td>
+                <td>${idUniversidad}</td>
                 <td>${element[5]}</td>
                 <td>${element[7]}</td>
                 <td>${element[4]}</td>
