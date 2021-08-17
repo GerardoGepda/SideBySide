@@ -53,6 +53,7 @@ require_once '../Conexion/conexion.php';
         <div id="main" class="col-md-6 d-flex justify-content-center"></div>
         <div id="tabla" class="col-md-6 d-flex justify-content-center"></div>
     </div>
+    <div id="principal" class="row"></div>
 
 </div>
 

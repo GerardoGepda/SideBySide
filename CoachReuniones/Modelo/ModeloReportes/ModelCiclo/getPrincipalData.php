@@ -39,9 +39,9 @@ if (isset($input['ciclo']) && isset($input['clase'])) {
 
     //-------------------primer paso 
     $sql2 = "SELECT a.Nombre as nombre, CONCAT(COUNT(a.ID_Alumno),'/', ? ) as cantidad,
-     ROUND(((COUNT(a.ID_Alumno)/ ? )*100),2) as promedio, a.ID_Empresa FROM alumnos a 
+     ROUND(((COUNT(a.ID_Alumno)/ ? )*100),2) as promedio, a.ID_Empresa, us.imagen FROM alumnos a 
      INNER JOIN inscripcionreunion i on i.id_alumno = a.ID_Alumno INNER JOIN reuniones 
-     r ON r.ID_Reunion = i.id_reunion WHERE i.asistencia = ? AND r.ID_Ciclo = ?
+     r ON r.ID_Reunion = i.id_reunion INNER JOIN usuarios us ON us.correo = a.correo WHERE i.asistencia = ? AND r.ID_Ciclo = ?
       AND a.ID_Empresa = ? AND a.Class = ? GROUP by i.id_alumno";
 
     foreach ($data as  $row) {

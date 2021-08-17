@@ -95,13 +95,25 @@ function main() {
                 alumnos = "";
                 listaFaltantes.forEach(e => {
                     contar++;
+                    let nombre = e.ID_Empresa;
+                    if (nombre == 'UNDESA') {
+                        nombre = 'UES SA';
+                    } else if (nombre == 'UNDESS') {
+                        nombre = 'UES';
+                    }else if(nombre == 'UFGSS'){
+                        nombre = 'UFG SS';
+                    }else if(nombre == 'ECdCI'){
+                        nombre = 'ECCI';
+                    }else if(nombre == 'INICAES'){
+                        nombre = 'UNICAES';
+                    }
                     alumnos += `
                                 <tr>
                                     <td>${contador++}</td>
                                     <td><input type='checkbox' name='ActuaAlumno[]' class='pl' value="${e.correo}"></td>
                                     <td>${e.name}</td>
                                     <td>${e.correo}</td>
-                                    <td>${e.ID_Empresa} </td>
+                                    <td>${nombre} </td>
                                     <td>${e.nombre} </td>
                                     <td>${e.Class} </td>
                                     <td>${e.ID_Sede} </td>

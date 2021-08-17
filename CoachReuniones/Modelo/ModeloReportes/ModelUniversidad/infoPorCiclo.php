@@ -18,10 +18,10 @@ $alumnos = implode(",", $idsAlumnos);
 //echo $alumnos;
  
 try {
-    $sqlls = "SELECT al.ID_Alumno, al.Nombre, al.correo, al.ID_Empresa, al.Class, al.StatusActual, al.FuenteFinacimiento FROM alumnos al
+    $sqlls = "SELECT al.ID_Alumno, al.Nombre, al.correo, e.Nombre as universidad, al.Class, al.StatusActual, al.FuenteFinacimiento FROM alumnos al
     INNER JOIN expedienteu eu
-    ON al.ID_Alumno = eu.ID_Alumno
-    WHERE al.ID_Alumno IN ($alumnos)";
+    ON al.ID_Alumno = eu.ID_Alumno INNER JOIN empresas e on e.ID_Empresa = al.ID_Empresa 
+    WHERE al.ID_Alumno IN  ($alumnos)";
 
     $queryls = $pdo->prepare($sqlls);
     $queryls->execute();
@@ -51,7 +51,7 @@ foreach ($ciclos as $key => $value) {
         $query1->execute();
 
         //materias retiradas de cada alumno
-        $sql2 = "SELECT al.ID_Alumno, al.Nombre, al.correo, al.ID_Empresa, al.Class, al.StatusActual, al.FuenteFinacimiento, im.estado, ic.cicloU, GROUP_CONCAT(ma.nombreMateria SEPARATOR ', ') AS materias, COUNT(ma.nombreMateria) AS cantidad
+        $sql2 = "SELECT al.ID_Alumno, al.Nombre, al.correo, e.Nombre as universidad, al.Class, al.StatusActual, al.FuenteFinacimiento, im.estado, ic.cicloU, GROUP_CONCAT(ma.nombreMateria SEPARATOR ', ') AS materias, COUNT(ma.nombreMateria) AS cantidad
         FROM inscripcionmateria im 
         INNER JOIN inscripcionciclos ic
         ON ic.Id_InscripcionC = im.Id_InscripcionC
@@ -61,6 +61,7 @@ foreach ($ciclos as $key => $value) {
         ON al.ID_Alumno = eu.ID_Alumno
         INNER JOIN materias ma
         ON ma.idMateria = im.idMateria
+        INNER JOIN empresas e on e.ID_Empresa = al.ID_Empresa
         WHERE im.estado = 'Retirada' AND ic.cicloU = '$value' AND al.ID_Alumno IN ($alumnos) 
         GROUP BY al.ID_Alumno";
 
@@ -68,7 +69,7 @@ foreach ($ciclos as $key => $value) {
         $query2->execute();
 
         //materias reprobadas de cada alumno
-        $sql3 = "SELECT al.ID_Alumno, al.Nombre, al.correo, al.ID_Empresa, al.Class, al.StatusActual, al.FuenteFinacimiento, im.estado, ic.cicloU, GROUP_CONCAT(ma.nombreMateria SEPARATOR ', ') AS materias, COUNT(ma.nombreMateria) AS cantidad
+        $sql3 = "SELECT al.ID_Alumno, al.Nombre, al.correo,e.Nombre as universidad, al.Class, al.StatusActual, al.FuenteFinacimiento, im.estado, ic.cicloU, GROUP_CONCAT(ma.nombreMateria SEPARATOR ', ') AS materias, COUNT(ma.nombreMateria) AS cantidad
         FROM inscripcionmateria im 
         INNER JOIN inscripcionciclos ic
         ON ic.Id_InscripcionC = im.Id_InscripcionC
@@ -78,6 +79,7 @@ foreach ($ciclos as $key => $value) {
         ON al.ID_Alumno = eu.ID_Alumno
         INNER JOIN materias ma
         ON ma.idMateria = im.idMateria
+        INNER JOIN empresas e on e.ID_Empresa = al.ID_Empresa
         WHERE im.estado = 'Reprobada' AND ic.cicloU = '$value' AND al.ID_Alumno IN ($alumnos) 
         GROUP BY al.ID_Alumno";
 

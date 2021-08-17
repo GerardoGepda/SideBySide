@@ -24,7 +24,8 @@ try {
         ORDER BY name asc";
 
         // cantidad de alumnos de la class seleccionada
-        $stmt2 = "SELECT COUNT(ID_Alumno) FROM alumnos WHERE Class = $clase AND alumnos.StatusActual = '$estado' ";
+        $stmt2 = "SELECT COUNT(a.ID_Alumno) FROM alumnos a INNER JOIN expedienteu e 
+        on e.ID_Alumno = a.ID_Alumno WHERE a.Class = $clase AND a.StatusActual = '$estado'";
 
         //inicio de ejecutar consultas
         $query1 = $dbh->query($stmt);
