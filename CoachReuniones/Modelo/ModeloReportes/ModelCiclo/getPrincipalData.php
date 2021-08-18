@@ -38,15 +38,32 @@ if (isset($input['ciclo']) && isset($input['clase'])) {
     $data = $query->fetchAll(PDO::FETCH_ASSOC);
 
     //-------------------primer paso 
-    $sql2 = "SELECT a.Nombre as nombre, CONCAT(COUNT(a.ID_Alumno),'/', ? ) as cantidad,
-     ROUND(((COUNT(a.ID_Alumno)/ ? )*100),2) as promedio, a.ID_Empresa, us.imagen FROM alumnos a 
-     INNER JOIN inscripcionreunion i on i.id_alumno = a.ID_Alumno INNER JOIN reuniones 
-     r ON r.ID_Reunion = i.id_reunion INNER JOIN usuarios us ON us.correo = a.correo WHERE i.asistencia = ? AND r.ID_Ciclo = ?
-      AND a.ID_Empresa = ? AND a.Class = ? GROUP by i.id_alumno";
+    $sql2 = "
+        SELECT a.Nombre as nombre, CONCAT(COUNT(a.ID_Alumno),'/', ? ) as cantidad,
+        ROUND(((COUNT(a.ID_Alumno)/ ? )*100),2) as promedio, a.ID_Empresa, us.imagen FROM alumnos a 
+        INNER JOIN inscripcionreunion i on i.id_alumno = a.ID_Alumno INNER JOIN reuniones 
+        r ON r.ID_Reunion = i.id_reunion INNER JOIN usuarios us ON us.correo = a.correo WHERE i.asistencia 
+        = ? AND r.ID_Ciclo = ? AND a.ID_Empresa = ? AND a.Class = ? GROUP by i.id_alumno 
+        UNION      
+        SELECT a.Nombre as nombre, CONCAT(0,'/', ? )  as cantidad,  ROUND(0,2)
+         as promedio, a.ID_Empresa, us.imagen FROM alumnos a  INNER JOIN inscripcionreunion i on i.id_alumno 
+         = a.ID_Alumno INNER JOIN reuniones  r ON r.ID_Reunion = i.id_reunion INNER JOIN usuarios
+        us ON us.correo = a.correo WHERE i.asistencia = ? AND r.ID_Ciclo = ?
+        AND a.ID_Empresa = ? AND a.Class = ? AND A.ID_Alumno NOT IN
+        (
+            SELECT a.ID_Alumno FROM alumnos a 
+            INNER JOIN inscripcionreunion i on i.id_alumno = a.ID_Alumno INNER JOIN reuniones 
+            r ON r.ID_Reunion = i.id_reunion INNER JOIN usuarios us ON us.correo = a.correo WHERE
+             i.asistencia = ? AND r.ID_Ciclo = ?
+            AND a.ID_Empresa = ? AND a.Class = ? GROUP by i.id_alumno   
+        ) GROUP by i.id_alumno
+        ";
 
     foreach ($data as  $row) {
         $query3 = $dbh->prepare($sql2);
-        $query3->execute([$row['cantidad'], $row['cantidad'], 'Asistio', $ciclo, $row['universidad'], $clase]);
+        $query3->execute([$row['cantidad'], $row['cantidad'], 'Asistio', $ciclo, $row['universidad'], $clase,
+                          $row['cantidad'], 'Inasistencia', $ciclo, $row['universidad'],$clase, 'Asistio', $ciclo,
+                          $row['universidad'], $clase ]);
         $alumnos[] = array_merge($query3->fetchAll(PDO::FETCH_ASSOC));
     }
 

@@ -178,12 +178,15 @@ function maquetarModal(longitud, alumnos) {
 }
 
 function graficaIndividual(data, universidad) {
-    let nombre = [], valor = [];
-    for (let index = 0; index < data.length; index++) {
-        valor.push((data[index])[0]);
-    }
+    console.log(data);
 
     for (let index = 0; index < universidad.length; index++) {
+        let nombre = ['',], valor = ['',];
+
+        for (const i in data[index]) {
+            nombre.push(i);
+            valor.push((data[index])[i]);
+        }
 
         google.charts.load('current');
         google.charts.setOnLoadCallback(drawVisualization);
@@ -192,8 +195,8 @@ function graficaIndividual(data, universidad) {
             var wrapper = new google.visualization.ChartWrapper({
                 chartType: 'ColumnChart',
                 dataTable: [
-                    ['', "100%", "50%"],
-                    ['', 2, 5]
+                    nombre,
+                    valor
                 ],
                 options: {
                     'title': (universidad[index])['universidad'].replace(/\s/g, "-"),
@@ -215,7 +218,6 @@ function graficaIndividual(data, universidad) {
             wrapper.draw();
         }
     }
-    console.log(valor);
 }
 
 
@@ -242,10 +244,11 @@ function GetAllData(ciclo, clase) {
                     };
                     return counts;
                 };
-                modificarArray.push([countUnique(arr)]);
+                modificarArray.push(countUnique(arr));
             }
+
             maquetarModal(json.data, json.alumnos);
             graficaIndividual(modificarArray, json.data);
-
+            // console.log(modificarArray);
         });
 }
