@@ -56,6 +56,15 @@ $(document).ready(function () {
     getciclos();
 });
 
+function onlyUnique(value, index, self) {
+    if (self.indexOf(value) === index) {
+        return self.indexOf(value) === index
+    } else {
+        return 0;
+    }
+}
+
+
 function procesar() {
     let ciclo = document.getElementById("ciclo").value;
     let clase = document.getElementById("clase").value
@@ -177,9 +186,59 @@ function maquetarModal(longitud, alumnos) {
 
 }
 
-function graficaIndividual(data, universidad) {
-    console.log(data);
+function graficaByU(e, universidad) {
+    google.charts.load("current", { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+    let nombre = ['Universidad',], valor = [], agrupar = [], longitud = [];
 
+    for (let index = 0; index < universidad.length; index++) {
+        valor = [];
+        lenghtData = 0;
+        for (const i in e[index]) {
+            nombre.push([i]);
+            lenghtData += 1;
+            valor.push((e[index])[i]);
+        }
+        agrupar.push(valor);
+        longitud.push(lenghtData);
+    }
+    console.log(agrupar);
+    console.log(longitud.sort().reverse());
+    //obtener valores unicos
+    let unique = nombre.filter(onlyUnique)
+    let info = [
+        unique,
+    ]
+    for (let i = 0; i < e.length; i++) {
+        info.push([(universidad[i])['universidad'].replace(/\s/g, "-"),
+        parseInt(5),
+        parseInt(7),
+        parseInt(2)]);
+    }
+
+    for (let index = 0; index < array.length; index++) {
+        const element = array[index];
+        
+    }
+
+    info.push(['ITCA-SS',0,5,0]);
+    function drawChart() {
+        var data = google.visualization.arrayToDataTable(info);
+        var view = new google.visualization.DataView(data);
+        var options = {
+            title: "Resumen general de participación estudiantil por universidad",
+            width: 525,
+            height: 325,
+            bar: { groupWidth: "95%" },
+            legend: { position: "right" },
+            colors: ['#54E38A', '#FF8C64', '#F2B90C', '#FF665A', '#9154E3'],
+        };
+        var chart = new google.visualization.ColumnChart(document.getElementById("tabla"));
+        chart.draw(view, options);
+    }
+}
+
+function graficaIndividual(data, universidad) {
     for (let index = 0; index < universidad.length; index++) {
         let nombre = ['',], valor = ['',];
 
@@ -195,8 +254,8 @@ function graficaIndividual(data, universidad) {
             var wrapper = new google.visualization.ChartWrapper({
                 chartType: 'ColumnChart',
                 dataTable: [
-                    nombre,
-                    valor
+                    nombre.sort(),
+                    valor.sort()
                 ],
                 options: {
                     'title': (universidad[index])['universidad'].replace(/\s/g, "-"),
@@ -209,7 +268,7 @@ function graficaIndividual(data, universidad) {
                         position: 'right',
                         alignment: 'center',
                     },
-                    colors: ['#54E38A', '#FF8C64', '#F2B90C', '#FF665A', '#9154E3'],
+                    colors: ['#FF8C64', '#54E38A', '#F2B90C', '#FF665A', '#9154E3'],
                     width: 550,
                     height: 300,
                 },
@@ -223,8 +282,6 @@ function graficaIndividual(data, universidad) {
 
 function GetAllData(ciclo, clase) {
     let modificarArray = [];
-    let nombre = ['',];
-    let porcentaje = ['',];
     fetch(
         "Modelo/ModeloReportes/ModelCiclo/getPrincipalData.php", {
         method: 'POST', // or 'PUT'
@@ -246,9 +303,8 @@ function GetAllData(ciclo, clase) {
                 };
                 modificarArray.push(countUnique(arr));
             }
-
             maquetarModal(json.data, json.alumnos);
             graficaIndividual(modificarArray, json.data);
-            // console.log(modificarArray);
+            graficaByU(modificarArray, json.data);
         });
 }

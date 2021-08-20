@@ -858,11 +858,26 @@ include 'Modularidad/MenuVertical.php';
                                 ?>
                             </select>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <?php
-                            echo "<button type='submit' class='btn btn-primary'>Agregar</button>";
-                            ?>
+                        <div class=" Imfo float-left text-dark mr-4">
+                            <small>Este campo define a cual sede se enviaran los correos</small>
+                            <div class="form-check m-1">
+                                <input class="form-check-input" type="checkbox" name ="SS" value="SSFT" id="defaultCheck1">
+                                <label class="form-check-label text-dark" for="defaultCheck1">
+                                    San Salvador
+                                </label>
+                            </div>
+                            <div class="form-check mr-4 ">
+                                <input class="form-check-input" type="checkbox" name= "SA" value="SAFT" id="defaultCheck2">
+                                <label class="form-check-label text-dark" for="defaultCheck2">
+                                    Santa Ana
+                                </label>
+                            </div>
+                        </div>
+                        <br><br><br><br>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <?php
+                        echo "<button type='submit' class='btn btn-primary'>Agregar</button>";
+                        ?>
                     </form>
 
                 </div>

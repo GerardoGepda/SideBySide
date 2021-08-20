@@ -3,6 +3,8 @@
 require_once "../../../BaseDatos/conexion.php";
 $idEmpresa = $_POST['idempresa'];
 $idReunion = $_POST['idReunion'];
+@$SA = $_POST['SA'];
+@$SS = $_POST['SS'];
 $idEmpresa;
 $idReunion;
 $contar = 0;
@@ -22,7 +24,7 @@ $prettyDocument = trim(($documento));
 
 // inicio de creación de consultas
 
-$stmt2 = "SELECT alumnos.Nombre, alumnos.correo FROM alumnos INNER JOIN
+$stmt2 = "SELECT alumnos.Nombre, alumnos.correo, alumnos.ID_Sede AS sede FROM alumnos INNER JOIN
 empresas on empresas.ID_Empresa = alumnos.ID_Empresa WHERE alumnos.StatusActual = 'Becado'
 AND alumnos.ID_Empresa = ? ";
 
@@ -59,90 +61,93 @@ try {
                 $alumnos = $result->fetchAll();
                 foreach ($alumnos as $key => $value) {
                     $correo = $value['correo'];
-                    $cantidad = $contar++;
-                    // extraer el primer nombre
-                    $PrimerNombre =   implode(' ', array_slice(explode(' ',  $value['Nombre']), 0, 1));
+                    $sede = $value['sede'];
+                        if ($sede == $SA or $sede == $SS) {
+                            $cantidad = $contar++;
+                            // extraer el primer nombre
+                            $PrimerNombre =   implode(' ', array_slice(explode(' ',  $value['Nombre']), 0, 1));
 
-                    // parametros para enviar correo
-                    $to = "$correo";
-                    $from = "SideBySide@oportunidades.org.sv";
-                    // To send HTML mail, the Content-type header must be set
-                    $headers .= "Reply-To: '$from'\r\n";
-                    $headers .= "Return-Path: $from\r\n";
-                    $headers .= "From: $from\r\n";
-                    $headers .= "Organization: Oportunidades\r\n";
-                    $headers .= "MIME-Version: 1.0\r\n";
-                    $headers .= "Content-type: text/html; charset=UFT-8\r\n";
-                    $headers .= "X-Priority: 1\r\n";
-                    $headers .= "X-MSMail-Priority: High\n";
-                    $headers .= "Importance: High\n";
-                    $headers .= "X-Mailer: PHP" . phpversion() . "\r\n";
+                            // parametros para enviar correo
+                            $to = "$correo";
+                            $from = "SideBySide@oportunidades.org.sv";
+                            // To send HTML mail, the Content-type header must be set
+                            $headers .= "Reply-To: '$from'\r\n";
+                            $headers .= "Return-Path: $from\r\n";
+                            $headers .= "From: $from\r\n";
+                            $headers .= "Organization: Oportunidades\r\n";
+                            $headers .= "MIME-Version: 1.0\r\n";
+                            $headers .= "Content-type: text/html; charset=UFT-8\r\n";
+                            $headers .= "X-Priority: 1\r\n";
+                            $headers .= "X-MSMail-Priority: High\n";
+                            $headers .= "Importance: High\n";
+                            $headers .= "X-Mailer: PHP" . phpversion() . "\r\n";
 
-                    // Create email headers
-                    $headers .= 'From: ' . $from . "\r\n" . 'Reply-To: ' . $from . "\r\n" . 'X-Mailer: PHP/' . phpversion();
+                            // Create email headers
+                            $headers .= 'From: ' . $from . "\r\n" . 'Reply-To: ' . $from . "\r\n" . 'X-Mailer: PHP/' . phpversion();
 
-                    $subject = "Aviso de Reunion";
-                    // Compose a simple HTML email message
-                    $message = '
-                <!DOCTYPE html>
-                <html lang="es">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <link rel="preconnect" href="https://fonts.googleapis.com">
-                    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-                    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet"> 
-                    <style>
-                        .message {
-                            display: flex;
-                            flex-direction: column !important;
-                            justify-content: center;
-                            align-items: center;
-                            background-color: #2d2d2e;
-                            padding: 2%;
-                        }
-                        .bodyOfMeessage {
-                            border-top: 3px #be0032 solid;
-                            border-bottom: 3px #be0032 solid;
-                            font-family: "Roboto", sans-serif;
-                            color: white;
-                            margin: 3% 3% 1% 3%;
-                            font-size: 9px;
-                        }
-                        .imgMessage {
-                            width: 80%;
-                            max-width: 350px;
-                        }
-                        .imgMessage img {
-                            width: 100%;
-                        }
-                        .footerMessage {
-                            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-                            font-size: 9px;
-                            color: white;
-                            margin-bottom: 1%;
-                        }
-                        .btnportal {
-                            background-color: #be0032;
-                            color: white;
-                            display: inline-block;
-                            width: 100px;
-                            height: 25px;
-                            text-decoration: none;
-                            padding-top: 5px;
-                            border-radius: 5px;
-                            font-size: 14px !important;
-                        }
-                    </style>
-                </head>
-                <body>
-                  ' . $prettyDocument . '
-               </body>
-                </html>
-                ';
-                    if (mail($to, $subject, $message, $headers)) {
-                        $contador++;
+                            $subject = "Aviso de Reunion";
+                            // Compose a simple HTML email message
+                            $message = '
+                    <!DOCTYPE html>
+                    <html lang="es">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <link rel="preconnect" href="https://fonts.googleapis.com">
+                        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet"> 
+                        <style>
+                            .message {
+                                display: flex;
+                                flex-direction: column !important;
+                                justify-content: center;
+                                align-items: center;
+                                background-color: #2d2d2e;
+                                padding: 2%;
+                            }
+                            .bodyOfMeessage {
+                                border-top: 3px #be0032 solid;
+                                border-bottom: 3px #be0032 solid;
+                                font-family: "Roboto", sans-serif;
+                                color: white;
+                                margin: 3% 3% 1% 3%;
+                                font-size: 9px;
+                            }
+                            .imgMessage {
+                                width: 80%;
+                                max-width: 350px;
+                            }
+                            .imgMessage img {
+                                width: 100%;
+                            }
+                            .footerMessage {
+                                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                                font-size: 9px;
+                                color: white;
+                                margin-bottom: 1%;
+                            }
+                            .btnportal {
+                                background-color: #be0032;
+                                color: white;
+                                display: inline-block;
+                                width: 100px;
+                                height: 25px;
+                                text-decoration: none;
+                                padding-top: 5px;
+                                border-radius: 5px;
+                                font-size: 14px !important;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                      ' . $prettyDocument . '
+                   </body>
+                    </html>
+                    ';
+                            if (mail($to, $subject, $message, $headers)) {
+                                $contador++;
+                            }
                     }
                 }
 
@@ -151,7 +156,7 @@ try {
                     $_SESSION['message2'] = 'success';
                     header("Location: ../../ListaReunion.php?id=" . urlencode($idReunion));
                 } else {
-                    $_SESSION['message'] = 'No se pudieron enviar los correos a los alumnos de la universida' . $idEmpresa;
+                    $_SESSION['message'] = "No hay alumnos de la universidad: " . $idEmpresa . "\n en la sede de " . $SS . "," . $SA;
                     $_SESSION['message2'] = 'danger';
                     header("Location: ../../ListaReunion.php?id=" . urlencode($idReunion));
                 }
