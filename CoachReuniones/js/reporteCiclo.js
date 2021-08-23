@@ -295,7 +295,6 @@ function graficaByU(e, universidad) {
                 nombre.push(i); 
             }
         }
-<<<<<<< HEAD
     }
 
     //recorremos las universidades y al mismo tiempo los datos en la variable "e"
@@ -324,29 +323,6 @@ function graficaByU(e, universidad) {
     //añadimos el array nombre al inicio del array finalData
     finalData.unshift(nombre);
 
-=======
-        agrupar.push(valor);
-        longitud.push(lenghtData);
-    }
-    //obtener valores unicos
-    let unique = nombre.filter(onlyUnique)
-    let info = [
-        unique,
-    ]
-    for (let i = 0; i < e.length; i++) {
-        info.push([(universidad[i])['universidad'].replace(/\s/g, "-"),
-        parseInt(5),
-        parseInt(7),
-        parseInt(2)]);
-    }
-
-    for (let index = 0; index < array.length; index++) {
-        const element = array[index];
-
-    }
-
-    info.push(['ITCA-SS', 0, 5, 0]);
->>>>>>> 4406227411b14ca9015688980f68b24b70666498
     function drawChart() {
         var data = google.visualization.arrayToDataTable(finalData);
         var view = new google.visualization.DataView(data);
