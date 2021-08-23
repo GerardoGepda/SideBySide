@@ -15,6 +15,43 @@ let dataPDF = {
     rows: []
 };
 
+function CreateExcel(data) {
+    const fecha = new Date();
+    var wb = XLSX.utils.book_new();
+    wb.Props = {
+        Title: "Reporte Reunion Ciclo",
+        Subject: "Reporte",
+        Author: "Coach reuniones",
+        CreateDate: new Date(fecha.toLocaleString()),
+    }
+
+    wb.SheetNames.push("informacion");
+    var wsg = XLSX.utils.aoa_to_sheet(data);
+    wb.Sheets["informacion"] = wsg;
+
+    var wbout = XLSX.write(wb, { bookType: 'xlsx', type: 'binary' });
+    saveAs(new Blob([CreateAnArrayBuffer(wbout)], { type: "application/octet-stream" }), "Reporte Reunion Ciclo.xlsx");
+}
+
+function CreateAnArrayBuffer(info) {
+    var buff = new ArrayBuffer(info.length); //convert info to arrayBuffer
+    var view = new Uint8Array(buff);  //create uint8array as viewer
+    for (var i = 0; i < info.length; i++) view[i] = info.charCodeAt(i) & 0xFF; //convert to octet
+    return buff;
+}
+
+function PrepareArrayExcel(json) {
+    let result = [];
+    let cont = 1;
+    result.push(['#', 'Nombre', 'Correo', 'Universidad', 'Sede/Modalidad', 'Status', 'Class', 'Cantidad', 'Porcentaje']);
+
+    for (const key in json) {
+        result.push([cont++, json[key].nombre, json[key].correo,
+        json[key].univeridad, json[key].ID_Sede, json[key].StatusActual,
+        json[key].Class, json[key].cantidad, json[key].promedio]);
+    }
+    return result;
+}
 
 function ExportarPDF(data, ids) {
     try {
@@ -36,7 +73,7 @@ function ExportarPDF(data, ids) {
 }
 function ExportExcel(data, ids) {
     try {
-        const btnexcel = document.querySelectorAll((".btn-pdf"));
+        const btnexcel = document.querySelectorAll((".btn-excel"));
         btnexcel.forEach(btn => btn.addEventListener("click", (e) => {
             const idU = e.target.classList[0].replace("-", " ");
 
@@ -170,8 +207,9 @@ function MainGraphic(ciclo) {
     function drawChart() {
         var data = google.visualization.arrayToDataTable([
             ['Option', 'Value'],
-            ['Completo: ' + 70.2, 70.2],
-            ['Incompleto: ' + 29.8, 29.2],
+            ['0%: ' + 10, 10],
+            ['100%: ' + 2, 2],
+            ['50%: ' + 5, 5],
         ]);
 
         var options = {
@@ -277,6 +315,7 @@ function maquetarModal(longitud, alumnos) {
 
 
     ExportarPDF(alumnos, longitud);
+    ExportExcel(alumnos, longitud);
 
 }
 
@@ -292,7 +331,7 @@ function graficaByU(e, universidad) {
         for (const i in e[index]) {
             //se verifica si esta incluido, para solo añadirlo una vez
             if (!nombre.includes(i)) {
-                nombre.push(i); 
+                nombre.push(i);
             }
         }
     }
@@ -309,7 +348,7 @@ function graficaByU(e, universidad) {
             //al array tmp, si no contiene ese propiedad se añade cero (0)
             if (e[index].hasOwnProperty(element)) {
                 tmp.push(e[index][element]);
-            }else{
+            } else {
                 tmp.push(0);
             }
         });
@@ -332,7 +371,7 @@ function graficaByU(e, universidad) {
             height: 325,
             bar: { groupWidth: "95%" },
             legend: { position: "right" },
-            colors: ['#54E38A', '#FF8C64', '#F2B90C', '#FF665A', '#9154E3'],
+            colors: ['#F2B90C', '#54E38A', '#FF8C64', '#FF665A', '#9154E3'],
         };
         var chart = new google.visualization.ColumnChart(document.getElementById("tabla"));
         chart.draw(view, options);
@@ -406,6 +445,6 @@ function GetAllData(ciclo, clase) {
             }
             maquetarModal(json.data, json.alumnos);
             graficaIndividual(modificarArray, json.data);
-            // graficaByU(modificarArray, json.data);
+            graficaByU(modificarArray, json.data);
         });
 }
