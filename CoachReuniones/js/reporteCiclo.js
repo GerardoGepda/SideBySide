@@ -189,41 +189,48 @@ function maquetarModal(longitud, alumnos) {
 function graficaByU(e, universidad) {
     google.charts.load("current", { packages: ['corechart'] });
     google.charts.setOnLoadCallback(drawChart);
-    let nombre = ['Universidad',], valor = [], agrupar = [], longitud = [];
+    //variables
+    let nombre = [], finalData = [];
 
+    //ciclo for que me extrae las claves de los objetos que son los porcentajes de asistencias
+    //esto se guarda en el array nombre
     for (let index = 0; index < universidad.length; index++) {
-        valor = [];
-        lenghtData = 0;
         for (const i in e[index]) {
-            nombre.push([i]);
-            lenghtData += 1;
-            valor.push((e[index])[i]);
+            //se verifica si esta incluido, para solo añadirlo una vez
+            if (!nombre.includes(i)) {
+                nombre.push(i); 
+            }
         }
-        agrupar.push(valor);
-        longitud.push(lenghtData);
-    }
-    console.log(agrupar);
-    console.log(longitud.sort().reverse());
-    //obtener valores unicos
-    let unique = nombre.filter(onlyUnique)
-    let info = [
-        unique,
-    ]
-    for (let i = 0; i < e.length; i++) {
-        info.push([(universidad[i])['universidad'].replace(/\s/g, "-"),
-        parseInt(5),
-        parseInt(7),
-        parseInt(2)]);
     }
 
-    for (let index = 0; index < array.length; index++) {
-        const element = array[index];
-        
+    //recorremos las universidades y al mismo tiempo los datos en la variable "e"
+    for (let index = 0; index < universidad.length; index++) {
+        let tmp = []; //array temporal
+        tmp.push(universidad[index].universidad); //se añade primero la universidad
+
+        //recorremos la claves en el array nombre (porcentajes)
+        nombre.forEach(element => {
+            //accedemos a los datos en "e" por cada universidad y verificamos is este objeto
+            //contiene la clave (porcentaje) element en sus propiedades, de ser así se añade su valor
+            //al array tmp, si no contiene ese propiedad se añade cero (0)
+            if (e[index].hasOwnProperty(element)) {
+                tmp.push(e[index][element]);
+            }else{
+                tmp.push(0);
+            }
+        });
+
+        //se agrega el array tmp al array finalData que contendra los datos finales
+        finalData.push(tmp);
     }
 
-    info.push(['ITCA-SS',0,5,0]);
+    //en el array nombre con las claves de porcentajes le añadimos la palabra "porcentaje" al inicio
+    nombre.unshift('porcentaje');
+    //añadimos el array nombre al inicio del array finalData
+    finalData.unshift(nombre);
+
     function drawChart() {
-        var data = google.visualization.arrayToDataTable(info);
+        var data = google.visualization.arrayToDataTable(finalData);
         var view = new google.visualization.DataView(data);
         var options = {
             title: "Resumen general de participación estudiantil por universidad",
@@ -254,8 +261,8 @@ function graficaIndividual(data, universidad) {
             var wrapper = new google.visualization.ChartWrapper({
                 chartType: 'ColumnChart',
                 dataTable: [
-                    nombre.sort(),
-                    valor.sort()
+                    nombre,
+                    valor
                 ],
                 options: {
                     'title': (universidad[index])['universidad'].replace(/\s/g, "-"),

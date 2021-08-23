@@ -36,7 +36,6 @@ else if (isset($_POST['NombreReunion']))
 
 		$NombreReunion = $_POST['NombreReunion'];
 		$FechaReunion = $_POST['fecha'];
-		$LugarReunion = $_POST['idempresa'];
 		$encargado = $_POST['encargado'];
 		$Ciclo = $_POST['idCICLO'];
 		$Tipo = $_POST['tipo'];
@@ -64,12 +63,8 @@ else if (isset($_POST['NombreReunion']))
     	$Mes1  =  $FechaReunion[5];
     	$Mes2  =  $FechaReunion[6];  
     	$año = date("y");
-    	$sigla1 = $LugarReunion[0];
-    	$sigla2 = $LugarReunion[1];
-    	$sigla3 = $LugarReunion[2];
 
     	$Fecha = $año.$dia1.$dia2.$Mes1.$Mes2;
-    	$siglaCompleta = $sigla1.$sigla2.$sigla3; 
     	$IDReunion = $Fecha.rand(1000,9999);
 	
 
