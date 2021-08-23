@@ -1,3 +1,94 @@
+window.jsPDF = window.jspdf.jsPDF;
+
+let dataPDF = {
+    columns: [{
+        No: "No.",
+        nombre: "Alumno",
+        correo: "Correo",
+        u: 'Universidad',
+        sede: 'Sede/Modalidad',
+        estadoB: 'Estado Beca',
+        class: 'Class',
+        cantidad: 'Cantidad',
+        porcentaje: "Porcentaje"
+    }],
+    rows: []
+};
+
+
+function ExportarPDF(data, ids) {
+    try {
+        const btnexcel = document.querySelectorAll((".btn-pdf"));
+        btnexcel.forEach(btn => btn.addEventListener("click", (e) => {
+            const idU = e.target.classList[0].replace("-", " ");
+
+            for (let key = 0; key < ids.length; key++) {
+                if (idU === (ids[key])['universidad']) {
+                    MakePDf(PrepareArrayPdf(data[key]));
+                    break;
+                }
+            }
+        }));
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+function ExportExcel(data, ids) {
+    try {
+        const btnexcel = document.querySelectorAll((".btn-pdf"));
+        btnexcel.forEach(btn => btn.addEventListener("click", (e) => {
+            const idU = e.target.classList[0].replace("-", " ");
+
+            for (let key = 0; key < ids.length; key++) {
+                if (idU === (ids[key])['universidad']) {
+                    CreateExcel(PrepareArrayExcel(data[key]));
+                    break;
+                }
+            }
+        }));
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+
+function PrepareArrayPdf(json) {
+    let cont = 1;
+    dataPDF.rows = [];
+    for (const key in json) {
+        dataPDF.rows.push([cont++, json[key].nombre, json[key].correo,
+        json[key].univeridad, json[key].ID_Sede, json[key].StatusActual,
+        json[key].Class, json[key].cantidad, json[key].promedio]);
+    }
+    return dataPDF;
+}
+
+function MakePDf(data) {
+    var pdfdoc = new jsPDF({
+        unit: "pt",
+        orientation: "landscape"
+    });
+
+    pdfdoc.setFontSize(12);
+    pdfdoc.setTextColor(0);
+    pdfdoc.text("Reporte Reuniones", 40, 40);
+
+    //creando la tabla
+    pdfdoc.autoTable({
+        head: data.columns,
+        body: data.rows,
+        theme: 'grid',
+        headStyles: {
+            fillColor: [157, 18, 14],
+        },
+        margin: { top: 60 },
+    });
+
+    pdfdoc.save("Reporte Reuniones.pdf");
+}
+
 function getciclos() {
     let temp = "";
     let op = `<option class='dropdown-item' disabled selected>Ciclo</option>`;
@@ -184,6 +275,9 @@ function maquetarModal(longitud, alumnos) {
     document.getElementById("principal").innerHTML = template;
     document.getElementById("modals").innerHTML = modals;
 
+
+    ExportarPDF(alumnos, longitud);
+
 }
 
 function graficaByU(e, universidad) {
@@ -202,8 +296,6 @@ function graficaByU(e, universidad) {
         agrupar.push(valor);
         longitud.push(lenghtData);
     }
-    console.log(agrupar);
-    console.log(longitud.sort().reverse());
     //obtener valores unicos
     let unique = nombre.filter(onlyUnique)
     let info = [
@@ -218,10 +310,10 @@ function graficaByU(e, universidad) {
 
     for (let index = 0; index < array.length; index++) {
         const element = array[index];
-        
+
     }
 
-    info.push(['ITCA-SS',0,5,0]);
+    info.push(['ITCA-SS', 0, 5, 0]);
     function drawChart() {
         var data = google.visualization.arrayToDataTable(info);
         var view = new google.visualization.DataView(data);
@@ -305,6 +397,6 @@ function GetAllData(ciclo, clase) {
             }
             maquetarModal(json.data, json.alumnos);
             graficaIndividual(modificarArray, json.data);
-            graficaByU(modificarArray, json.data);
+            // graficaByU(modificarArray, json.data);
         });
 }
