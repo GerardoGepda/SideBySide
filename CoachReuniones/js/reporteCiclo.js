@@ -159,9 +159,10 @@ function onlyUnique(value, index, self) {
 function procesar() {
     let ciclo = document.getElementById("ciclo").value;
     let clase = document.getElementById("clase").value
+    let sedes = $('.sedes').val().map(x => "'".concat(x, "'")).join(",");
     MainGraphic(ciclo);
     // 
-    GetAllData(ciclo, clase);
+    GetAllData(ciclo, clase, sedes);
 }
 
 function MainGraphic(ciclo) {
@@ -381,12 +382,12 @@ function graficaIndividual(data, universidad) {
 }
 
 
-function GetAllData(ciclo, clase) {
+function GetAllData(ciclo, clase, sedes) {
     let modificarArray = [];
     fetch(
         "Modelo/ModeloReportes/ModelCiclo/getPrincipalData.php", {
         method: 'POST', // or 'PUT'
-        body: JSON.stringify({ ciclo: ciclo, clase: clase }),
+        body: JSON.stringify({ ciclo: ciclo, clase: clase , sedes: sedes}),
         headers: {
             'Content-Type': 'application/json'
         }

@@ -12,9 +12,10 @@ function convertir($e)
     return "'" . $e['id'] . "'";
 }
 
-if (isset($input['ciclo']) && isset($input['clase'])) {
+if (isset($input['ciclo']) && isset($input['clase']) && isset($input['sedes'])) {
     $ciclo = trim($input['ciclo']);
     $clase = trim($input['clase']);
+    $sedes = trim($input['sedes']);
     $stmt = "SELECT DISTINCT u.ID_Empresa as id FROM universidadreunion u INNER JOIN reuniones 
     r ON r.ID_Reunion = u.ID_Reunion WHERE r.ID_Ciclo = ? ";
 
@@ -38,11 +39,11 @@ if (isset($input['ciclo']) && isset($input['clase'])) {
     $data = $query->fetchAll(PDO::FETCH_ASSOC);
 
     //-------------------primer -----------------------
-    $sql2 = "CALL CONSULTAR_ASISTENCIA(?, ?, ?, ?, ?)";
+    $sql2 = "CALL CONSULTAR_ASISTENCIA(?, ?, ?, ?, ?, ?)";
 
     foreach ($data as  $row) {
         $query3 = $dbh->prepare($sql2);
-        $query3->execute([$row['cantidad'], $ciclo, $clase, $row['universidad'], 'Asistio']);
+        $query3->execute([$row['cantidad'], $ciclo, $clase, $row['universidad'], 'Asistio', $sedes]);
         $alumnos[] = array_merge($query3->fetchAll(PDO::FETCH_ASSOC));
     }
 

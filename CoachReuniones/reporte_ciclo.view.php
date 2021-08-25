@@ -16,6 +16,8 @@ require_once '../Conexion/conexion.php';
 <link rel="stylesheet" type="text/css" href="css/Alumnos.css">
 <link rel="stylesheet" type="text/css" href="css/Menu.css">
 <link rel="stylesheet" href="css/main.css">
+<!-- style para select multiple -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
 <nav class="navbar navbar-expand-lg navbar-light" id="row">
     <a href="javascript:history.back();"><img src="../img/back.png" class="icon"></a>
     <a class="navbar-brand" id="T1">REPORTE REUNIONES</a>
@@ -35,13 +37,19 @@ require_once '../Conexion/conexion.php';
 <div class="float-right"> <?php include 'Modularidad/Alerta.php' ?></div>
 <div class="card p-2 ">
     <div class='row'>
-        <div class="col-sm m-1">
-            <select id="clase" class="browser-default bg-light custom-select">
+        <div class="col-sm m-6">
+            <select id="clase" class="browser-default bg-light custom-select" style="height: 47.25px !important;">
                 <option class='dropdown-item' disabled selected>Class</option>
             </select>
         </div>
-        <div class="col-sm m-1">
-            <select id="ciclo" class="browser-default bg-light custom-select" onchange="procesar();">
+        <div class="col-sm m-6">
+            <select class="browser-default bg-light custom-select sedes" id="choices-multiple-remove-button" placeholder="Seleccionar sede" multiple>
+                <option value="SSFT">SSFT</option>
+                <option value="SAFT">SAFT</option>
+            </select> 
+        </div>
+        <div class="col-sm m-6">
+            <select id="ciclo" class="browser-default bg-light custom-select" style="height: 47.25px !important;" onchange="procesar();">
                 <option class='dropdown-item' disabled selected>Ciclo</option>
             </select>
         </div>
@@ -71,5 +79,22 @@ require_once '../Conexion/conexion.php';
 <script src="js/reporteCiclo.js"></script>
 <!-- sweet alert cdn -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- script para select multiple -->
+<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
+<!-- script para select multiple -->
+<script>
+    $(document).ready(function(){
+
+    var multipleCancelButton = new Choices('#choices-multiple-remove-button', {
+    removeItemButton: true,
+    maxItemCount:5,
+    searchResultLimit:5,
+    renderChoiceLimit:5
+    });
+
+    });
+</script>
 
 <?php include 'Modularidad/PiePagina.php'; ?>
