@@ -35,7 +35,7 @@ require_once '../Conexion/conexion.php';
             </li>
             <li class="navbar">
                 <label class="text-uppercase" style="color: black;">
-                    <marquee behavior="Slide"> Los datos que se muestran aqui son solo de alumnos becados</marquee>
+                    <marquee behavior="Slide"> Los datos que se muestran aquí son solo de alumnos becados</marquee>
                 </label>
             </li>
         </ul>

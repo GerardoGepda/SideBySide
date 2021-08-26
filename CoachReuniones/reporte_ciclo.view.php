@@ -29,13 +29,13 @@ require_once '../Conexion/conexion.php';
                     REPORTE CICLO
                 </a>
             </li>
-            <li id="anuncio" class="navbar navbar-dark bg-dark ">
+            <li id="anuncio" class="navbar navbar-dark bg-dark mb-1">
 
                 <label class="text-uppercase" style="font-size: 15px;">Anuncio</label>
             </li>
             <li class="navbar">
-                <label style="color: black;">
-                    <marquee behavior="Slide"> Los datos que se muestran aqui son solo de alumnos becados</marquee>
+                <label class="text-uppercase" style="color: black;">
+                    <marquee behavior="Slide"> Los datos que se muestran aquí son solo de alumnos becados</marquee>
                 </label>
             </li>
         </ul>

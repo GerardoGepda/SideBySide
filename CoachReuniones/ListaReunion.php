@@ -708,7 +708,7 @@ include 'Modularidad/MenuVertical.php';
                                             <tbody class="table-hover">
                                                 <?php
                                                 if ($consulta4->rowCount() >= 1) {
-                                                    while ($fila4 = $consulta4->fetch()) {
+                                                    while ($fila4 = $consulta2->fetch()) {
                                                         echo "
                                                         <tr class='table-light'>
                                                             <th>" . $fila4['Nombre'] . "</th>";                                          
@@ -721,7 +721,7 @@ include 'Modularidad/MenuVertical.php';
                                                         }else{
                                                             echo "<th>". $fila4['HorarioInicio']."</th>";
                                                         }    
-                                                        echo "<th>" . $fila4['telefono'] . "</th>     
+                                                        echo"<th>" . $fila4['telefono'] . "</th>     
                                                         
                                                         </tr>";
                                                     }
