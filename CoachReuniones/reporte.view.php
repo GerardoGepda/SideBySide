@@ -17,20 +17,29 @@ require_once '../Conexion/conexion.php';
 <link rel="stylesheet" type="text/css" href="css/Menu.css">
 <link rel="stylesheet" href="css/main.css">
 <nav class="navbar navbar-expand-lg navbar-light" id="row">
-	<a href="javascript:history.back();"><img src="../img/back.png" class="icon"></a>
-	<a class="navbar-brand" id="T1">REPORTE REUNIONES</a>
-	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-		<span class="navbar-toggler-icon"></span>
-	</button>
-	<div class="collapse navbar-collapse" id="navbarNav">
-		<ul class="navbar-nav">
-			<li class="nav-item" id="bloque">
-				<a class="nav-link" href="reporte_ciclo.view.php">
-                    REPORTE  CICLO 
+    <a href="javascript:history.back();"><img src="../img/back.png" class="icon"></a>
+    <a class="navbar-brand" id="T1">REPORTE REUNIONES</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+            <li class="nav-item" id="bloque">
+                <a class="nav-link" href="reporte_ciclo.view.php">
+                    REPORTE CICLO
                 </a>
-			</li>
-		</ul>
-	</div>
+            </li>
+            <li id="anuncio" class="navbar navbar-dark bg-dark mb-1">
+
+                <label class="text-uppercase" style="font-size: 15px;">Anuncio</label>
+            </li>
+            <li class="navbar">
+                <label class="text-uppercase" style="color: black;">
+                    <marquee behavior="Slide"> Los datos que se muestran aqui son solo de alumnos becados</marquee>
+                </label>
+            </li>
+        </ul>
+    </div>
 </nav>
 <div class="float-right"> <?php include 'Modularidad/Alerta.php' ?></div>
 <div class="card p-2 ">
@@ -60,7 +69,7 @@ require_once '../Conexion/conexion.php';
 <div class="card p-1">
     <div class="row p-1 datos m-1 p-1">
         <div id="main" class="col-md-6 d-flex justify-content-center"></div>
-        <div id="tabla"  class="col-md-6 d-flex justify-content-center"></div>
+        <div id="tabla" class="col-md-6 d-flex justify-content-center"></div>
     </div>
     <div id="principal" class="row"></div>
 </div>

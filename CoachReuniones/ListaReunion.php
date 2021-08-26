@@ -50,7 +50,7 @@ if (isset($_GET['id'])) {
 ?>
 
 
-    <title>Detalles de la reunión</title>
+<title>Detalles de la reunión</title>
 <?php
 //Modularaidad para extraere los enlaces en HEAD
 include 'Modularidad/EnlacesCabecera.php';
@@ -58,73 +58,73 @@ include 'Modularidad/EnlacesCabecera.php';
 include 'Modularidad/MenuHorizontal.php';
 include 'Modularidad/MenuVertical.php';
 ?>
-    <script src="https://cdn.ckeditor.com/4.8.0/full-all/ckeditor.js"></script>
-    <!--Comiezo de estructura de trabajo -->
-    <div class="container-fluid text-center">
-        <script type="text/javascript">
-            $(document).ready(function() {
-                bsCustomFileInput.init()
-            });
-        </script>
+<script src="https://cdn.ckeditor.com/4.8.0/full-all/ckeditor.js"></script>
+<!--Comiezo de estructura de trabajo -->
+<div class="container-fluid text-center">
+    <script type="text/javascript">
+        $(document).ready(function() {
+            bsCustomFileInput.init()
+        });
+    </script>
 
-        <div class="float-right">
-            <?php include 'Modularidad/Alerta.php' ?></div>
+    <div class="float-right">
+        <?php include 'Modularidad/Alerta.php' ?></div>
 
-        <div class="container-fluid">
-            <!--Navbar-->
-            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-                <a class="navbar-brand" href="#">Detalles de la Reunión</a>
-                <!-- Collapse button -->
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+    <div class="container-fluid">
+        <!--Navbar-->
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" href="#">Detalles de la Reunión</a>
+            <!-- Collapse button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav" aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                <!-- Collapsible content -->
-                <div class="collapse navbar-collapse" id="basicExampleNav">
+            <!-- Collapsible content -->
+            <div class="collapse navbar-collapse" id="basicExampleNav">
 
-                    <!-- Links -->
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="LIS-Reunion.php">Regresar</a>
-                        </li>
-                        <li class="nav-item">
-                            <!-- Button trigger modal -->
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Editar Mensaje</button>
-                        </li>
-                    </ul>
-                    <!-- Links -->
-                </div>
-                <!-- Collapsible content -->
-            </nav>
-            <!-- Modal -->
-            <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Cambiar Mensaje <small><code>Los cambios son actualizados automáticamente</code></small></h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <?php
-                            $file = "./docs/mensaje_reuniones.txt";
-                            $documento  = file_get_contents($file);
-                            $pretty = trim(($documento));
-                            ?>
-                            <textarea name="editor" id="editor" cols="60" rows="10">
+                <!-- Links -->
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="LIS-Reunion.php">Regresar</a>
+                    </li>
+                    <li class="nav-item">
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Editar Mensaje</button>
+                    </li>
+                </ul>
+                <!-- Links -->
+            </div>
+            <!-- Collapsible content -->
+        </nav>
+        <!-- Modal -->
+        <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Cambiar Mensaje <small><code>Los cambios son actualizados automáticamente</code></small></h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <?php
+                        $file = "./docs/mensaje_reuniones.txt";
+                        $documento  = file_get_contents($file);
+                        $pretty = trim(($documento));
+                        ?>
+                        <textarea name="editor" id="editor" cols="60" rows="10">
                             <?php echo $pretty; ?>
                         </textarea>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <!--/.Navbar-->
-            <?php if ($consulta->rowCount() >= 0) {
+        <!--/.Navbar-->
+        <?php if ($consulta->rowCount() >= 0) {
             $fila = $consulta->fetch() ?>
             <br>
             <!-- Modal -->
@@ -283,201 +283,201 @@ include 'Modularidad/MenuVertical.php';
                     <form>
                         <table class="table">
                             <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">Identificación</th>
-                                <th scope="col">Estado</th>
-                                <th scope="col">Tipo</th>
-                                <th scope="col">Acción</th>
-                                <th scope="col">Horarios</th>
-                                <th scope="col">Lista</th>
-                                <th scope="col">Comprobante</th>
-                                <th scope="col">Universidad</th>
-                                <th scope="col">Plantilla</th>
-                                <th scope="col">Eliminar</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">Identificación</th>
+                                    <th scope="col">Estado</th>
+                                    <th scope="col">Tipo</th>
+                                    <th scope="col">Acción</th>
+                                    <th scope="col">Horarios</th>
+                                    <th scope="col">Lista</th>
+                                    <th scope="col">Comprobante</th>
+                                    <th scope="col">Universidad</th>
+                                    <th scope="col">Plantilla</th>
+                                    <th scope="col">Eliminar</th>
+                                </tr>
                             </thead>
                             <tbody>
 
-                            <tr class="table-light">
-                                <th scope="row"><?php echo $fila['ID_Reunion']; ?></th>
-                                <td><?php echo $fila['Estado']; ?></td>
-                                <td><?php echo $fila['Tipo']; ?></td>
-                                <td>
+                                <tr class="table-light">
+                                    <th scope="row"><?php echo $fila['ID_Reunion']; ?></th>
+                                    <td><?php echo $fila['Estado']; ?></td>
+                                    <td><?php echo $fila['Tipo']; ?></td>
+                                    <td>
+                                        <?php
+
+                                        $consulta8 = $pdo->prepare("SELECT COUNT(`id_alumno`) AS 'Total2' FROM inscripcionreunion WHERE id_reunion = ? ");
+                                        $consulta8->execute(array($id));
+                                        $TotalAlumnosLista = 0;
+
+                                        if ($consulta8->rowCount() >= 0) {
+                                            $fila8 = $consulta8->fetch();
+                                            $TotalAlumnosLista = $fila8['Total2'];
+                                        }
+
+
+                                        if ($fila['Estado'] == "Finalizado") {
+                                            echo "<button type='button' class='btn btn-dark' data-toggle='modal' data-target='#exampleModal2' disabled>
+								  	Finalizar
+								  	</button>";
+                                        } else if ($TotalAlumnosLista == 0) {
+
+                                            echo "<button type='button' class='btn btn-dark' data-toggle='modal' data-target='#exampleModal2' disabled>
+								  	Finalizar
+								  	</button>";
+                                        } else {
+                                            echo "<button type='button' class='btn btn-dark' data-toggle='modal' data-target='#exampleModal2' style='background: black'>
+								  	Finalizar
+								  	</button>";
+                                        }
+
+                                        ?>
+
+
+                                    </td>
+                                    <td>
+
+                                        <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal3" style="background: black">
+                                            <i class="fas fa-clock"></i>
+                                        </button>
+                                    </td>
+
                                     <?php
 
-                                    $consulta8 = $pdo->prepare("SELECT COUNT(`id_alumno`) AS 'Total2' FROM inscripcionreunion WHERE id_reunion = ? ");
-                                    $consulta8->execute(array($id));
-                                    $TotalAlumnosLista=0;
-
-                                    if ($consulta8->rowCount() >= 0) {
-                                        $fila8 = $consulta8->fetch();
-                                        $TotalAlumnosLista = $fila8['Total2'];
-                                    }
-
-
-                                    if ($fila['Estado'] == "Finalizado") {
-                                        echo "<button type='button' class='btn btn-dark' data-toggle='modal' data-target='#exampleModal2' disabled>
-								  	Finalizar
-								  	</button>";
-                                    } else if ($TotalAlumnosLista == 0) {
-
-                                        echo "<button type='button' class='btn btn-dark' data-toggle='modal' data-target='#exampleModal2' disabled>
-								  	Finalizar
-								  	</button>";
-                                    } else {
-                                        echo "<button type='button' class='btn btn-dark' data-toggle='modal' data-target='#exampleModal2' style='background: black'>
-								  	Finalizar
-								  	</button>";
-                                    }
-
-                                    ?>
-
-
-                                </td>
-                                <td>
-
-                                    <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal3" style="background: black">
-                                        <i class="fas fa-clock"></i>
-                                    </button>
-                                </td>
-
-                                <?php
 
 
 
 
-
-                                if ($TotalAlumnosLista == 0) {
-                                    echo "<td><a href='#'>
+                                    if ($TotalAlumnosLista == 0) {
+                                        echo "<td><a href='#'>
 									<button type='button' class='btn btn-danger px-3' disabled>
 									<i class='fas fa-file-pdf'></i></button>
 									</a></td>";
-                                } else {
-                                    echo "<td><a href='Reportes/ListaAsistenciaReunion.php?id=" . $fila['ID_Reunion'] . "'>
+                                    } else {
+                                        echo "<td><a href='Reportes/ListaAsistenciaReunion.php?id=" . $fila['ID_Reunion'] . "'>
 									<button type='button' class='btn btn-danger px-3'>
 									<i class='fas fa-file-pdf'></i></button>
 									</a></td>";
-                                }
-                                ?>
+                                    }
+                                    ?>
 
 
-                                <?php
+                                    <?php
 
-                                if ($fila['ComprobanteLista'] == null) {
+                                    if ($fila['ComprobanteLista'] == null) {
 
-                                    echo "<td><a href='#'>
+                                        echo "<td><a href='#'>
 									<button type='button' class='btn btn-danger px-3' disabled>
 									<i class='fas fa-times'></i></button>
 									</a></td>";
-                                } else {
-                                    echo "<td><a href='../pdfListaReunion/" . $fila['ComprobanteLista'] . "'>
+                                    } else {
+                                        echo "<td><a href='../pdfListaReunion/" . $fila['ComprobanteLista'] . "'>
 									<button type='button' class='btn btn-success px-3'>
 									<i class='fas fa-check'></i></button>
 									</a></td>";
-                                }
+                                    }
 
-                                ?>
-                                <?php
+                                    ?>
+                                    <?php
 
 
-                                echo "<td><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalLong'>
+                                    echo "<td><button type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModalLong'>
 						<i class='fas fa-university'></i>
 					  </button>
 					  </td>";
-                                ?>
-                                <?php
-                                $consulta7 = $pdo->prepare("SELECT COUNT(`id_alumno`) AS 'Total' FROM inscripcionreunion WHERE id_reunion = ? ");
-                                $consulta7->execute(array($id));
-                                $TotalAlumnos=0;
+                                    ?>
+                                    <?php
+                                    $consulta7 = $pdo->prepare("SELECT COUNT(`id_alumno`) AS 'Total' FROM inscripcionreunion WHERE id_reunion = ? ");
+                                    $consulta7->execute(array($id));
+                                    $TotalAlumnos = 0;
 
-                                if ($consulta7->rowCount() >= 0) {
-                                    $fila7 = $consulta7->fetch();
-                                    $TotalAlumnos = $fila7['Total'];
-                                }
+                                    if ($consulta7->rowCount() >= 0) {
+                                        $fila7 = $consulta7->fetch();
+                                        $TotalAlumnos = $fila7['Total'];
+                                    }
 
 
-                                if ($TotalAlumnos == 0) {
-                                    echo "<td><button type='button' class='btn btn-info px-3' disabled >
+                                    if ($TotalAlumnos == 0) {
+                                        echo "<td><button type='button' class='btn btn-info px-3' disabled >
 									<i class='fas fa-arrow-alt-circle-down'></i></button>
 									</td>";
-                                } else {
-                                    echo "<td><a href='ReportesExcel/ReportesExcelReunion.php?id=" . $fila['ID_Reunion'] . "''><button type='button' class='btn btn-info px-3' >
+                                    } else {
+                                        echo "<td><a href='ReportesExcel/ReportesExcelReunion.php?id=" . $fila['ID_Reunion'] . "''><button type='button' class='btn btn-info px-3' >
 									<i class='fas fa-arrow-alt-circle-down'></i></button></a>
 									</td>";
-                                }
+                                    }
 
 
 
 
 
-                                ?>
+                                    ?>
 
-                                <?php
-                                if ($TotalAlumnos != 0) {
+                                    <?php
+                                    if ($TotalAlumnos != 0) {
 
-                                    echo "<td><button type='button' class='btn btn-danger' data-toggle='modal' data-target='#exampleModal4' disabled>
+                                        echo "<td><button type='button' class='btn btn-danger' data-toggle='modal' data-target='#exampleModal4' disabled>
 										<i class='fas fa-trash-alt'></i>
 										</button></td>";
-                                } else {
-                                    echo "<td><button type='button' class='btn btn-danger' data-toggle='modal' data-target='#exampleModal4'>
+                                    } else {
+                                        echo "<td><button type='button' class='btn btn-danger' data-toggle='modal' data-target='#exampleModal4'>
 										<i class='fas fa-trash-alt'></i>
 										</button></td>";
-                                }
+                                    }
 
 
 
-                                ?>
+                                    ?>
 
-                            </tr>
+                                </tr>
                             </tbody>
                         </table>
                     </form>
                 </div>
             </div>
-        </div>
+    </div>
 
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel" style="color: black;">Elininar Reunión</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="color: black;">Elininar Reunión</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
-                        <form method="POST" action="Modelo/ModeloReunion/EliminarReunion.php" class="form-inline">
+                    <form method="POST" action="Modelo/ModeloReunion/EliminarReunion.php" class="form-inline">
 
-                            <input type="hidden" name="idreunion3" id="idreunion3" value="<?php echo $fila['ID_Reunion']; ?>" />
-                            <div class="form-group mb-2">
-                                <label style="color: black">¿Seguro qué desea eliminar la reunión?</label>
+                        <input type="hidden" name="idreunion3" id="idreunion3" value="<?php echo $fila['ID_Reunion']; ?>" />
+                        <div class="form-group mb-2">
+                            <label style="color: black">¿Seguro qué desea eliminar la reunión?</label>
 
-                            </div>
-                            <input type="submit" name="EliminarTaller" id="EliminarTaller" value="Confirmar" class="btn btn-primary mb-2" style="padding: 5px; margin-left:25px; ">
+                        </div>
+                        <input type="submit" name="EliminarTaller" id="EliminarTaller" value="Confirmar" class="btn btn-primary mb-2" style="padding: 5px; margin-left:25px; ">
 
-                        </form>
+                    </form>
 
 
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
+    </div>
 
 
-        <div class="card">
-            <h5 class="card-header" style="color: black;">Lista De Asistencia
-                <span class="float-right">
+    <div class="card">
+        <h5 class="card-header" style="color: black;">Lista De Asistencia
+            <span class="float-right">
                 <?php
 
                 $consulta9 = $pdo->prepare("SELECT COUNT(`id_alumno`) AS 'Total2' FROM inscripcionreunion WHERE id_reunion = ? ");
                 $consulta9->execute(array($id));
-                $TotalAlum =0;
+                $TotalAlum = 0;
 
                 if ($consulta9->rowCount() >= 0) {
                     $fila9 = $consulta9->fetch();
@@ -516,17 +516,17 @@ include 'Modularidad/MenuVertical.php';
 
                 </td>
             </span>
-            </h5>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <form action="TodosasignarAsis.php" method="POST">
+        </h5>
+        <div class="card-body">
+            <div class="table-responsive">
+                <form action="TodosasignarAsis.php" method="POST">
                     <span class="float-left">
                         <input type="submit" name="todoasis" value="Asistió" class="btn btn-primary btn-sm">
                         <input type="submit" name="todoinasis" value="Inasistencia" class="btn btn-primary btn-sm">
                         <input type="hidden" name="idtaller" value="<?php echo $id; ?>">
                     </span>
-                        <table id="tableUser2" class="table table-hover table-sm table-bordered table-fixed">
-                            <thead class="table-secondary">
+                    <table id="tableUser2" class="table table-hover table-sm table-bordered table-fixed">
+                        <thead class="table-secondary">
                             <tr>
                                 <th scope="col"><input type='checkbox' name='' class='case' value="" id="todos">Todos
                                 </th>
@@ -538,8 +538,8 @@ include 'Modularidad/MenuVertical.php';
                                 <th scope="col">Asistencia</th>
                                 <th scope="col"> No Asistencia</th>
                             </tr>
-                            </thead>
-                            <tfoot class="table-secondary">
+                        </thead>
+                        <tfoot class="table-secondary">
                             <tr>
                                 <th scope="col">Todos</th>
                                 <th scope="col">Alumno</th>
@@ -550,14 +550,14 @@ include 'Modularidad/MenuVertical.php';
                                 <th scope="col">Asistencia</th>
                                 <th scope="col"> No Asistencia</th>
                             </tr>
-                            </tfoot>
-                            <tbody>
+                        </tfoot>
+                        <tbody>
                             <?php
 
                             if ($consulta2->rowCount() >= 1) {
                                 while ($fila2 = $consulta2->fetch()) {
 
-                                    $asiste= "";
+                                    $asiste = "";
                                     if ($fila2['asistencia'] == "Asistio") {
                                         $asiste = "Asistió";
                                     } else {
@@ -587,70 +587,70 @@ include 'Modularidad/MenuVertical.php';
                             }
                             ?>
 
-                            </tbody>
-                        </table>
+                        </tbody>
+                    </table>
 
-                </div>
-                <!--Fin de la caja responsivo de la tabla-->
-                </form>
             </div>
+            <!--Fin de la caja responsivo de la tabla-->
+            </form>
         </div>
-        <br>
-        <!-- Button trigger modal-->
+    </div>
+    <br>
+    <!-- Button trigger modal-->
 
 
-        <!-- Modal: modalCart -->
-        <div class="modal fade" id="modalCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <!--Header-->
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="myModalLabel">Panel De Horarios </h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <!--Body-->
-                    <div class="modal-body">
+    <!-- Modal: modalCart -->
+    <div class="modal fade" id="modalCart" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <!--Header-->
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Panel De Horarios </h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <!--Body-->
+                <div class="modal-body">
 
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Horarios</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Inscritos</a>
-                            </li>
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Horarios</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Inscritos</a>
+                        </li>
 
-                        </ul>
-                        <div class="tab-content" id="myTabContent">
-                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                                <br>
-                                <div class="card">
-                                    <h5 class="card-header" style="color: black;">Horarios Asignados</h5>
-                                    <div class="card-body">
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <br>
+                            <div class="card">
+                                <h5 class="card-header" style="color: black;">Horarios Asignados</h5>
+                                <div class="card-body">
 
 
-                                        <div class="table-responsive">
-                                            <br>
+                                    <div class="table-responsive">
+                                        <br>
 
-                                            <table id="tableUser" class="table table-bordered">
-                                                <thead class="table-secondary">
+                                        <table id="tableUser" class="table table-bordered">
+                                            <thead class="table-secondary">
                                                 <tr>
                                                     <th scope="col">Hora Inicio</th>
                                                     <th scope="col">Hora Finalización</th>
                                                     <th scope="col">Cantidad</th>
                                                     <th scope="col">Eliminar</th>
                                                 </tr>
-                                                </thead>
-                                                <tfoot class="table-secondary">
+                                            </thead>
+                                            <tfoot class="table-secondary">
                                                 <tr>
                                                     <th scope="col">Hora Inicio</th>
                                                     <th scope="col">Hora Finalización</th>
                                                     <th scope="col">Cantidad</th>
                                                     <th scope="col">Eliminar</th>
                                                 </tr>
-                                                </tfoot>
-                                                <tbody class="table-hover">
+                                            </tfoot>
+                                            <tbody class="table-hover">
                                                 <?php
 
                                                 if ($consulta3->rowCount() >= 1) {
@@ -672,103 +672,112 @@ include 'Modularidad/MenuVertical.php';
                                                     }
                                                 }
                                                 ?>
-                                                </tbody>
-                                            </table>
+                                            </tbody>
+                                        </table>
 
-                                        </div>
-                                        <!--Fin de la caja responsivo de la tabla-->
                                     </div>
+                                    <!--Fin de la caja responsivo de la tabla-->
                                 </div>
                             </div>
+                        </div>
 
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <br>
-                                <div class="card">
-                                    <h5 class="card-header" style="color: black;">Horarios Alumnos</h5>
-                                    <div class="card-body">
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <br>
+                            <div class="card">
+                                <h5 class="card-header" style="color: black;">Horarios Alumnos</h5>
+                                <div class="card-body">
 
 
-                                        <div class="table-responsive">
-                                            <br>
-                                            <table id="tableUser3" class="table table-bordered">
-                                                <thead class="table-secondary">
+                                    <div class="table-responsive">
+                                        <br>
+                                        <table id="tableUser3" class="table table-bordered">
+                                            <thead class="table-secondary">
                                                 <tr>
                                                     <th scope="col">Alumno</th>
                                                     <th scope="col">Horario</th>
                                                     <th scope="col">Contacto</th>
                                                 </tr>
-                                                </thead>
-                                                <tfoot class="table-secondary">
+                                            </thead>
+                                            <tfoot class="table-secondary">
                                                 <tr>
                                                     <th scope="col">Alumno</th>
                                                     <th scope="col">Horario</th>
                                                     <th scope="col">Contacto</th>
                                                 </tr>
-                                                </tfoot>
-                                                <tbody class="table-hover">
+                                            </tfoot>
+                                            <tbody class="table-hover">
                                                 <?php
                                                 if ($consulta4->rowCount() >= 1) {
                                                     while ($fila4 = $consulta4->fetch()) {
                                                         echo "
-										<tr class='table-light'>
-                                            <th>" . $fila4['Nombre'] . "</th>
-                                            <th>" . $fila4['HorarioInicio'] . "</th>
-                                            <th>" . $fila4['telefono'] . "</th>
-										</tr>";
+                                                        <tr class='table-light'>
+                                                            <th>" . $fila4['Nombre'] . "</th>";                                          
+                                                           
+                                                        
+
+                                                        if ($fila4['Tipo'] == 'Sesión individual' or $fila4['Tipo'] == 'Otro') {
+                                                            # code...horainicio y horafin
+                                                            echo "<th>". $fila4['horainicio']."-". $fila4['horafin'] ."</th>";
+                                                        }else{
+                                                            echo "<th>". $fila4['HorarioInicio']."</th>";
+                                                        }    
+                                                        echo "<th>" . $fila4['telefono'] . "</th>     
+                                                        
+                                                        </tr>";
                                                     }
                                                 }
                                                 ?>
-                                                </tbody>
-                                            </table>
+                                            </tbody>
+                                        </table>
 
-                                        </div>
-                                        <!--Fin de la caja responsivo de la tabla-->
                                     </div>
+                                    <!--Fin de la caja responsivo de la tabla-->
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--Footer-->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">salir</button>
+                </div>
+                <!--Footer-->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal">salir</button>
 
-                    </div>
                 </div>
             </div>
         </div>
-        <!-- Modal: modalCart -->
-        <br>
+    </div>
+    <!-- Modal: modalCart -->
+    <br>
 
-        <!-- Modal de universidades   -->
-        <!-- Modal -->
-        <div class="modal fade" id="universidades" role="dialog">
-            <div class="modal-dialog">
+    <!-- Modal de universidades   -->
+    <!-- Modal -->
+    <div class="modal fade" id="universidades" role="dialog">
+        <div class="modal-dialog">
 
-                <!-- Modal content-->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Lista de Universidades</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Lista de Universidades</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-                    </div>
-                    <div class="modal-body">
-                        <div class="table-responsive">
-                            <br>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <br>
 
-                            <table id="tableUser" class="table table-bordered">
-                                <thead class="table-secondary">
+                        <table id="tableUser" class="table table-bordered">
+                            <thead class="table-secondary">
                                 <tr>
                                     <th scope="col">Nombre de Universidad</th>
                                     <th scope="col">Eliminar</th>
                                 </tr>
-                                </thead>
-                                <tfoot class="table-secondary">
+                            </thead>
+                            <tfoot class="table-secondary">
                                 <tr>
                                     <th scope="col">Nombre de Universidad</th>
                                     <th scope="col">Eliminar</th>
                                 </tr>
-                                </tfoot>
-                                <tbody class="table-hover">
+                            </tfoot>
+                            <tbody class="table-hover">
                                 <?php
                                 if ($consulta77->rowCount() >= 1) {
                                     while ($fila3 = $consulta77->fetch()) {
@@ -780,129 +789,129 @@ include 'Modularidad/MenuVertical.php';
                                     }
                                 }
                                 ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
-
-
-            <!-- Modal -->
-            <div class="modal fade" id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel" style="color:black;">Importar Asistencia</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-
-
-
-                            <form method="post" id="addproduct" action="ImportarArchivo/importReunion.php" enctype="multipart/form-data" role="form">
-
-                                <label id="lblimg" style="color: black;">Seleccione un Archivo Excel en Formato
-                                    (.xlsx)</label>
-                                <br><br>
-                                <div class="custom-file">
-                                    <div class="custom-file">
-                                        <input type="file" name="name" id="name2" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="custom-file-input" required />
-                                        <label class="custom-file-label" for="customFileLang" data-browse="Buscar">Seleccionar
-                                            Archivo</label>
-                                    </div>
-                                </div>
-
-                                <input type="hidden" name="MantenerID" value="<?php echo $fila['ID_Reunion'];
-                                } ?>">
-                                <br><br>
-                                <div id="alerta5"></div>
-                                <button type="submit" class="btn btn-primary btn-rounded btn-block my-4 waves-effect z-depth-0" id="importarExcel">Importar Datos</button>
-
-                            </form>
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
-        <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Agregar Universidad</h5>
+                        <h5 class="modal-title" id="exampleModalLabel" style="color:black;">Importar Asistencia</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="Modelo/ModeloReunion/agregarUniversidad.php">
-                            <div class="Imfo">
-                                <label for="materialRegisterFormFirstName" class="text-dark">Agregar universidad</label>
-                                <select id="idempresa" name="idempresa" class="form-control" required>
-                                    <?php
-                                    echo '<option value="0" disabled selected >Seleccione la opción</option>';
-                                    foreach ($pdo->query("SELECT * FROM  empresas  WHERE  Tipo =  'Universidad' ORDER by nombre asc") as $row) {
-                                        echo '<option value="' . $row['ID_Empresa'] . '">' . ($row['Nombre']) . '</option>';
-                                    }
-                                    echo '</select>';
-                                    echo "<input type='hidden' name='idReunion' value='" . $_GET['id'] . "'>";
 
-                                    ?>
-                                </select>
-                            </div>
-                            <div class=" Imfo float-left text-dark mr-4">
-                                <small>Este campo define a cual sede se enviaran los correos</small>
-                                <div class="form-check m-1">
-                                    <input class="form-check-input" type="checkbox" name ="SS" value="SSFT" id="defaultCheck1">
-                                    <label class="form-check-label text-dark" for="defaultCheck1">
-                                        San Salvador
-                                    </label>
-                                </div>
-                                <div class="form-check mr-4 ">
-                                    <input class="form-check-input" type="checkbox" name= "SA" value="SAFT" id="defaultCheck2">
-                                    <label class="form-check-label text-dark" for="defaultCheck2">
-                                        Santa Ana
-                                    </label>
+
+
+                        <form method="post" id="addproduct" action="ImportarArchivo/importReunion.php" enctype="multipart/form-data" role="form">
+
+                            <label id="lblimg" style="color: black;">Seleccione un Archivo Excel en Formato
+                                (.xlsx)</label>
+                            <br><br>
+                            <div class="custom-file">
+                                <div class="custom-file">
+                                    <input type="file" name="name" id="name2" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="custom-file-input" required />
+                                    <label class="custom-file-label" for="customFileLang" data-browse="Buscar">Seleccionar
+                                        Archivo</label>
                                 </div>
                             </div>
-                            <br><br><br><br>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <?php
-                            echo "<button type='submit' class='btn btn-primary'>Agregar</button>";
-                            ?>
+
+                            <input type="hidden" name="MantenerID" value="<?php echo $fila['ID_Reunion'];
+                                                                        } ?>">
+                            <br><br>
+                            <div id="alerta5"></div>
+                            <button type="submit" class="btn btn-primary btn-rounded btn-block my-4 waves-effect z-depth-0" id="importarExcel">Importar Datos</button>
+
                         </form>
 
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
             </div>
         </div>
-        <script>
-            let template;
-            CKEDITOR.replace('editor');
-            CKEDITOR.on('instanceReady', function(evt) {
-                var editor = evt.editor;
 
-                editor.on('change', function(e) {
-                    var contentSpace = editor.ui.space('contents');
-                    var ckeditorFrameCollection = contentSpace.$.getElementsByTagName('iframe');
-                    var ckeditorFrame = ckeditorFrameCollection[0];
-                    var innerDoc = ckeditorFrame.contentDocument;
-                    var innerDocTextAreaHeight = $(innerDoc.body).height();
-                    var desc = CKEDITOR.instances['editor'].getData();
+    </div>
+    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Agregar Universidad</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="POST" action="Modelo/ModeloReunion/agregarUniversidad.php">
+                        <div class="Imfo">
+                            <label for="materialRegisterFormFirstName" class="text-dark">Agregar universidad</label>
+                            <select id="idempresa" name="idempresa" class="form-control" required>
+                                <?php
+                                echo '<option value="0" disabled selected >Seleccione la opción</option>';
+                                foreach ($pdo->query("SELECT * FROM  empresas  WHERE  Tipo =  'Universidad' ORDER by nombre asc") as $row) {
+                                    echo '<option value="' . $row['ID_Empresa'] . '">' . ($row['Nombre']) . '</option>';
+                                }
+                                echo '</select>';
+                                echo "<input type='hidden' name='idReunion' value='" . $_GET['id'] . "'>";
 
-                    template = desc;
-                    try {
-                        fetch(
+                                ?>
+                            </select>
+                        </div>
+                        <div class=" Imfo float-left text-dark mr-4">
+                            <small>Este campo define a cual sede se enviaran los correos</small>
+                            <div class="form-check m-1">
+                                <input class="form-check-input" type="checkbox" name="SS" value="SSFT" id="defaultCheck1">
+                                <label class="form-check-label text-dark" for="defaultCheck1">
+                                    San Salvador
+                                </label>
+                            </div>
+                            <div class="form-check mr-4 ">
+                                <input class="form-check-input" type="checkbox" name="SA" value="SAFT" id="defaultCheck2">
+                                <label class="form-check-label text-dark" for="defaultCheck2">
+                                    Santa Ana
+                                </label>
+                            </div>
+                        </div>
+                        <br><br><br><br>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <?php
+                        echo "<button type='submit' class='btn btn-primary'>Agregar</button>";
+                        ?>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        let template;
+        CKEDITOR.replace('editor');
+        CKEDITOR.on('instanceReady', function(evt) {
+            var editor = evt.editor;
+
+            editor.on('change', function(e) {
+                var contentSpace = editor.ui.space('contents');
+                var ckeditorFrameCollection = contentSpace.$.getElementsByTagName('iframe');
+                var ckeditorFrame = ckeditorFrameCollection[0];
+                var innerDoc = ckeditorFrame.contentDocument;
+                var innerDocTextAreaHeight = $(innerDoc.body).height();
+                var desc = CKEDITOR.instances['editor'].getData();
+
+                template = desc;
+                try {
+                    fetch(
                             "Modelo/ModeloReunion/updateTxt.php", {
                                 method: 'POST', // or 'PUT'
                                 body: JSON.stringify({
@@ -912,32 +921,32 @@ include 'Modularidad/MenuVertical.php';
                                     'Content-Type': 'application/json'
                                 }
                             })
-                            .then(response => response.json())
-                            .then(json => {
-                                console.log(json.result);
-                            })
-                    } catch (error) {
-                        console.log(error);
-                    }
-                });
-            });
-        </script>
-        <script type="text/javascript">
-            $("#todos").on("click", function() {
-                $(".case").prop("checked", this.checked);
-            });
-
-            // if all checkbox are selected, check the selectall checkbox and viceversa
-            $(".case").on("click", function() {
-                if ($(".case").length == $(".case:checked").length) {
-                    $("#todos").prop("checked", true);
-                } else {
-                    $("#todos").prop("checked", false);
+                        .then(response => response.json())
+                        .then(json => {
+                            console.log(json.result);
+                        })
+                } catch (error) {
+                    console.log(error);
                 }
             });
-        </script>
+        });
+    </script>
+    <script type="text/javascript">
+        $("#todos").on("click", function() {
+            $(".case").prop("checked", this.checked);
+        });
 
-<?php
-//Incluir el footer
-include 'Modularidad/PiePagina.php';
-?>
+        // if all checkbox are selected, check the selectall checkbox and viceversa
+        $(".case").on("click", function() {
+            if ($(".case").length == $(".case:checked").length) {
+                $("#todos").prop("checked", true);
+            } else {
+                $("#todos").prop("checked", false);
+            }
+        });
+    </script>
+
+    <?php
+    //Incluir el footer
+    include 'Modularidad/PiePagina.php';
+    ?>
