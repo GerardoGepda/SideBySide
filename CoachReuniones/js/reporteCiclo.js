@@ -168,11 +168,19 @@ function getclass() {
             .then(json => {
                 json.clase.forEach(e => {
                     template +=
-                        `<option class='dropdown-item'>${e.Class}</option>`;
+                        `<option value="${e.Class}">${e.Class}</option>`;
                 });
 
-                document.getElementById("clase").innerHTML = "";
-                document.getElementById("clase").innerHTML = option + template;
+                document.querySelector('.clases').innerHTML = "";
+                document.querySelector('.clases').innerHTML = template;
+
+                //inicializando selección multiple para las clases
+                var multipleCancelButton = new Choices('#choices-multiple-remove-button-class', {
+                    removeItemButton: true,
+                    maxItemCount:8,
+                    searchResultLimit:8,
+                    renderChoiceLimit:8
+                });
             })
     } catch (e) {
         console.log(e);
@@ -195,11 +203,12 @@ function onlyUnique(value, index, self) {
 
 function procesar() {
     let ciclo = document.getElementById("ciclo").value;
-    let clase = document.getElementById("clase").value
+    let clases = $('.clases').val().map(x => "'".concat(x, "'")).join(",");
     let sedes = $('.sedes').val().map(x => "'".concat(x, "'")).join(",");
+    let financiamientos = $('.financiamientos').val().map(x => "'".concat(x, "'")).join(",");
     MainGraphic(ciclo);
     // 
-    GetAllData(ciclo, clase, sedes);
+    GetAllData(ciclo, clases, sedes, financiamientos);
 }
 
 function MainGraphic(ciclo) {
@@ -250,6 +259,7 @@ function maquetarModal(longitud, alumnos) {
     for (let index = 0; index < longitud.length; index++) {
         table = "";
         c = 1;
+        
         alumnos[index].forEach(e => {
             result = checkFileExist('../img/imgUser/' + e.imagen);
             if (result == true) {
@@ -257,15 +267,31 @@ function maquetarModal(longitud, alumnos) {
             } else {
                 imagen = "imgDefault.png"
             }
+            if (e.nombre !== undefined || e.nombre !== null) {
+                table += `
+                <tr>
+                    <td>${c++}</td>
+                    <td><img src='../img/imgUser/${imagen}' class='alumnos' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
+                    <td>${e.nombre}</td>
+                    <td>${e.cantidad}</td>
+                    <td>${e.promedio}</td>
+                    <td>${e.Class}</td>
+                </tr>`;
+            }else {
+                table += `
+                <tr>
+                    <td colspan="5">No hay datos</td>
+                </tr>`;
+            }
+        });
+
+        if (alumnos[index].length === 0) {
             table += `
             <tr>
-                <td>${c++}</td>
-                <td><img src='../img/imgUser/${imagen}' class='alumnos' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
-                <td>${e.nombre}</td>
-                <td>${e.cantidad}</td>
-                <td>${e.promedio}</td>
+                <td colspan="5">No hay datos</td>
             </tr>`;
-        });
+        }
+
         template += `
         <div class="col-md-6 justify-content-center grapp">
             <div id="${(longitud[index])['universidad'].replace(/\s/g, "-")}" class="datos p-1 graficas"></div>
@@ -297,6 +323,7 @@ function maquetarModal(longitud, alumnos) {
                                 <td>Nombre</td>
                                 <td>Cantidad</td>
                                 <td>Promedio</td>
+                                <td>Class</td>
                             </thead>
                             <tbody class="table-striped table-bordered table-hover">
                             `+ table + `
@@ -321,7 +348,7 @@ function maquetarModal(longitud, alumnos) {
 }
 
 function graficaByU(e, universidad) {
-    google.charts.load("current", { packages: ['corechart'] });
+    google.charts.load("current", { 'packages': ['bar'] });
     google.charts.setOnLoadCallback(drawChart);
     //variables
     let nombre = [], finalData = [];
@@ -365,27 +392,27 @@ function graficaByU(e, universidad) {
 
     function drawChart() {
         var data = google.visualization.arrayToDataTable(finalData);
-        var view = new google.visualization.DataView(data);
         var options = {
             title: "Resumen general de participación estudiantil por universidad",
-            width: 525,
-            height: 325,
-            bar: { groupWidth: "95%" },
             legend: { position: "right" },
-            colors: ['#F2B90C', '#54E38A', '#FF8C64', '#FF665A', '#9154E3'],
+            colors: ['#be0032', '#343a40', '#adadb2', '#FF665A', '#9154E3'],
         };
-        var chart = new google.visualization.ColumnChart(document.getElementById("tabla"));
-        chart.draw(view, options);
+        var chart = new google.charts.Bar(document.getElementById("tabla"));
+        chart.draw(data, google.charts.Bar.convertOptions(options));
     }
 }
 
 function graficaIndividual(data, universidad) {
     for (let index = 0; index < universidad.length; index++) {
         let nombre = ['',], valor = ['',];
-
-        for (const i in data[index]) {
-            nombre.push(i);
-            valor.push((data[index])[i]);
+        if (Object.values(data[index]).length > 0) {
+            for (const i in data[index]) {
+                nombre.push(i);
+                valor.push((data[index])[i]);
+            }
+        }else {
+            nombre.push('0');
+            valor.push(0);
         }
 
         google.charts.load('current');
@@ -421,12 +448,13 @@ function graficaIndividual(data, universidad) {
 }
 
 
-function GetAllData(ciclo, clase, sedes) {
+function GetAllData(ciclo, clases, sedes, financiamientos) {
+    console.log(financiamientos);
     let modificarArray = [];
     fetch(
         "Modelo/ModeloReportes/ModelCiclo/getPrincipalData.php", {
         method: 'POST', // or 'PUT'
-        body: JSON.stringify({ ciclo: ciclo, clase: clase , sedes: sedes}),
+        body: JSON.stringify({ ciclo: ciclo, clases: clases , sedes: sedes, financiamientos: financiamientos}),
         headers: {
             'Content-Type': 'application/json'
         }
