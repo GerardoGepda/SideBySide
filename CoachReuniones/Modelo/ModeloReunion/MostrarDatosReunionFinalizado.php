@@ -14,8 +14,10 @@ $FinalDep = $varLugar [1]; // Extraemos la segunda letra
 $FullTime = "FT";
 $LugarFT=$InicialDep . $FinalDep . $FullTime; //Ejemplo SSFT
 
-$consulta=$pdo->prepare("SELECT `ID_Reunion` , `Titulo` , `Fecha` , e.Nombre AS 'uni' , `ID_Ciclo`, `Estado` , `ID_Sede`,`Lugar`  FROM reuniones r INNER JOIN empresas e on r.ID_Empresa = e.ID_Empresa WHERE  Estado = 'Finalizado' AND YEAR(`Fecha`) = ? AND MONTH (Fecha) = ? AND `ID_Sede` = ? ");
-$consulta->execute(array($YearActual,$MesActual,$LugarFT));
+$consulta=$pdo->prepare("SELECT r.ID_Reunion , r.Titulo , r.Fecha , 
+ID_Ciclo, Estado , ID_Sede,Lugar  FROM reuniones r  WHERE  Estado 
+  = 'Finalizado' AND YEAR(`Fecha`) = ? AND `ID_Sede` = ? ");
+$consulta->execute(array($YearActual,$LugarFT));
 
 
 
