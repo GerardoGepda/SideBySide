@@ -68,8 +68,8 @@ require_once '../Conexion/conexion.php';
 </div>
 <div class="card p-1">
     <div class="row p-1 datos m-1 p-1">
-        <div id="main" class="col-md-6 d-flex justify-content-center"></div>
-        <div id="tabla" class="col-md-6 d-flex justify-content-center"></div>
+        <div id="main" class="col-md-5 d-flex justify-content-center"></div>
+        <div id="tabla" class="col-md-7 d-flex justify-content-center" style="width: 100%;"></div>
     </div>
     <div id="principal" class="row"></div>
 </div>

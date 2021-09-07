@@ -46,7 +46,7 @@ function checkFileExist(urlToFile) {
     }
 }
 function LlenarGraficaPorUniversidad(e, id) {
-    google.charts.load("current", { packages: ['corechart'] });
+    google.charts.load("current", { 'packages': ['bar'] });
     google.charts.setOnLoadCallback(drawChart);
     let info = [
         ['Universidad', 'Asistieron', 'No Asistieron', 'No Inscribieron'],
@@ -56,17 +56,12 @@ function LlenarGraficaPorUniversidad(e, id) {
     }
     function drawChart() {
         var data = google.visualization.arrayToDataTable(info);
-        var view = new google.visualization.DataView(data);
         var options = {
             title: "Resumen general de participación estudiantil por universidad",
-            width: 525,
-            height: 325,
-            bar: { groupWidth: "95%" },
-            legend: { position: "right" },
             colors: ['#54E38A', '#FF8C64', '#F2B90C', '#FF665A', '#9154E3'],
         };
         var chart = new google.visualization.ColumnChart(document.getElementById("tabla"));
-        chart.draw(view, options);
+        chart.draw(data, google.charts.Bar.convertOptions(options));
     }
 }
 
