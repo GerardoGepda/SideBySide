@@ -29,7 +29,7 @@ require_once '../Conexion/conexion.php';
                     REPORTE CICLO
                 </a>
             </li>
-            <li id="anuncio" class="navbar navbar-dark bg-dark mb-1">
+            <li id="anuncio" class="navbar navbar-dark bg-dark">
 
                 <label class="text-uppercase" style="font-size: 15px;">Anuncio</label>
             </li>

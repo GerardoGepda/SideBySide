@@ -206,26 +206,48 @@ function procesar() {
     let clases = $('.clases').val().map(x => "'".concat(x, "'")).join(",");
     let sedes = $('.sedes').val().map(x => "'".concat(x, "'")).join(",");
     let financiamientos = $('.financiamientos').val().map(x => "'".concat(x, "'")).join(",");
-    MainGraphic(ciclo);
     // 
     GetAllData(ciclo, clases, sedes, financiamientos);
 }
 
-function MainGraphic(ciclo) {
+function MainGraphic(ciclo, data) {
     google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(drawChart);
+
+    let claves = [], finalData = [];
+
+    for (let index = 0; index < data.length; index++) {
+        for (const i in data[index]) {
+            //se verifica si esta incluido, para solo añadirlo una vez
+            if (!claves.includes(i)) {
+                claves.push(i);
+            }
+        }
+    }
+    
+    //recorremos la claves en el array nombre (porcentajes)
+    claves.forEach((element, indx) => {
+        finalData.push(['', 0]);
+
+        for (let index = 0; index < data.length; index++) {
+            if (data[index].hasOwnProperty(element)) {
+                finalData[indx][1] += parseInt(data[index][element]);
+            } 
+        }
+
+        finalData[indx][0] = element.concat("%: ", finalData[indx][1])
+    });
+
+    console.log(finalData);
+    finalData.unshift(['Porcentaje', 'Cantidad']);
+
     function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-            ['Option', 'Value'],
-            ['0%: ' + 10, 10],
-            ['100%: ' + 2, 2],
-            ['50%: ' + 5, 5],
-        ]);
+        var data = google.visualization.arrayToDataTable(finalData);
 
         var options = {
             title: 'Resumen general de participación estudiantil ciclo ' + ciclo,
             pieHole: 0.4,
-            colors: ['#54E38A', '#FF8C64', '#F2B90C', '#FF665A', '#9154E3'],
+            colors: ['#be0032', '#343a40', '#adadb2', '#FF665A', '#9154E3'],
             width: 500,
             height: 300
         };
@@ -253,8 +275,9 @@ function checkFileExist(urlToFile) {
 
 
 function maquetarModal(longitud, alumnos) {
-    template = '';
-    table = '';
+    let template = '';
+    let table = '';
+    let modals = '';
 
     for (let index = 0; index < longitud.length; index++) {
         table = "";
@@ -436,7 +459,7 @@ function graficaIndividual(data, universidad) {
                         position: 'right',
                         alignment: 'center',
                     },
-                    colors: ['#FF8C64', '#54E38A', '#F2B90C', '#FF665A', '#9154E3'],
+                    colors: ['#be0032', '#343a40', '#adadb2', '#FF665A', '#9154E3'],
                     width: 550,
                     height: 300,
                 },
@@ -449,7 +472,6 @@ function graficaIndividual(data, universidad) {
 
 
 function GetAllData(ciclo, clases, sedes, financiamientos) {
-    console.log(financiamientos);
     let modificarArray = [];
     fetch(
         "Modelo/ModeloReportes/ModelCiclo/getPrincipalData.php", {
@@ -472,6 +494,7 @@ function GetAllData(ciclo, clases, sedes, financiamientos) {
                 };
                 modificarArray.push(countUnique(arr));
             }
+            MainGraphic(ciclo, modificarArray);
             maquetarModal(json.data, json.alumnos);
             graficaIndividual(modificarArray, json.data);
             graficaByU(modificarArray, json.data);
