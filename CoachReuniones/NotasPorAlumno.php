@@ -248,7 +248,8 @@ $stmt16584->execute(array($idExpedienteU));
           <tr>
             <th scope="col">ID</th>
             <th scope="col">Ciclo Universidad</th>
-            <th scope="col">Comprobante</th>
+            <th scope="col">Comprobante inscripcion</th>
+            <th scope="col">Comprobante notas</th>
             <th scope="col">Detalles</th>
           </tr>
         </thead>
@@ -268,7 +269,8 @@ $stmt16584->execute(array($idExpedienteU));
             $pdfCiclo = $fila9['comprobante'];
             $prueba = $fila9["cicloU"];
             $ciclou = $fila9["Id_InscripcionC"];
-            $nota = $fila[""];
+            $nota = $fila9["pdfnotas"];
+
             //consulta para obtener nota de materia
             $stmt1658484 = $dbh->prepare("SELECT * FROM `inscripcionmateria` WHERE  `Id_InscripcionC` = ?");
             $stmt1658484->execute(array($ciclou));
@@ -279,13 +281,25 @@ $stmt16584->execute(array($idExpedienteU));
             echo " <tr class='table-dark' style ='color: black;'>
                       <td scope=\"row\">" . $fila9["Id_InscripcionC"] . "</td>
                       <td>" . $fila9["cicloU"] . "</td>";
+
+            // PDF INSCRIPCION
             if ($pdfCiclo == null) {
               echo "<th><button type='button' class='btn btn-danger'  disabled> 
             <img src='../img/PDF.png' width='25px' height='25px'></button></th>";
             } else {
-              echo "<th><a href='../pdfCicloInscripcion/$pdfCiclo' target='_blank' class='btn btn-danger '>
+              echo "<th><a href='../pdfCicloInscripcion/$pdfCiclo.pdf' target='_blank' class='btn btn-danger '>
               <img src='../img/PDF.png' width='25px' height='25px>'</a> </th>";
             }
+
+            //PDF NOTAS
+              if ($nota == null) {
+                  echo "<th><button type='button' class='btn btn-danger'  disabled> 
+            <img src='../img/PDF.png' width='25px' height='25px'></button></th>";
+              } else {
+                  echo "<th><a href='../pdfNotas/$nota' target='_blank' class='btn btn-danger '>
+              <img src='../img/PDF.png' width='25px' height='25px>'</a> </th>";
+              }
+
             $num2 = 1;
             echo "<td>
             <button type='button' class='btn btn-info' data-toggle='modal' data-target='#exampleModalCenter" . ($numero++) . "'>
