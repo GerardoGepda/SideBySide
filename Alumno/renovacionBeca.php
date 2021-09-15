@@ -287,7 +287,7 @@ style="border-radius: 20px;
         </select>
         <br>
         <label >Año</label>
-        <input name="year" placeholder="año" readonly class="form-control" value="<?php echo date("Y");  ?>" ></input>
+        <input name="year" type="number" placeholder="año" class="form-control" value="<?php echo date("Y");  ?>" ></input>
         <br>
           <div class="custom-file" style="color:black;">
           <input type="file" class="custom-file-input" accept=".pdf" id="customFileLang" name="archivo" required style="color:black;">

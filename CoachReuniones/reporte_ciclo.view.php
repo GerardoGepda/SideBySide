@@ -33,19 +33,13 @@ require_once '../Conexion/conexion.php';
 
 <nav class="navbar navbar-expand-lg navbar-light" id="row">
     <a href="javascript:history.back();"><img src="../img/back.png" class="icon"></a>
-    <a class="navbar-brand" id="T1">REPORTE REUNIONES</a>
+    <a class="navbar-brand" id="T1">REPORTE REUNIONES - CICLO</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-            <li class="nav-item" id="bloque">
-                <a class="nav-link" href="RecordAlumnos.php">
-                    REPORTE CICLO
-                </a>
-            </li>
-            <li id="anuncio" class="navbar navbar-dark bg-dark mb-1">
-
+            <li id="anuncio" class="navbar navbar-dark bg-dark">
                 <label class="text-uppercase" style="font-size: 15px;">Anuncio</label>
             </li>
             <li class="navbar">

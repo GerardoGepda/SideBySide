@@ -20,7 +20,7 @@ function LlenarGrafica(asistieron, NoAsistieron, NoInscritos) {
         var options = {
             title: 'Resumen general de participación estudiantil',
             pieHole: 0.4,
-            colors: ['#54E38A', '#FF8C64', '#F2B90C', '#FF665A', '#9154E3'],
+            colors: ['#be0032', '#343a40', '#adadb2', '#FF665A', '#9154E3'],
             width: 500,
             height: 300
         };
@@ -58,7 +58,7 @@ function LlenarGraficaPorUniversidad(e, id) {
         var data = google.visualization.arrayToDataTable(info);
         var options = {
             title: "Resumen general de participación estudiantil por universidad",
-            colors: ['#54E38A', '#FF8C64', '#F2B90C', '#FF665A', '#9154E3'],
+            colors: ['#be0032', '#343a40', '#adadb2', '#FF665A', '#9154E3'],
         };
         var chart = new google.visualization.ColumnChart(document.getElementById("tabla"));
         chart.draw(data, google.charts.Bar.convertOptions(options));
@@ -133,15 +133,15 @@ function maquetar(alumnos, longitud) {
                         <div id="${longitud[index].replace(/\s/g, "-")}" class="datos p-1 graficas"></div>
                         <div id="botones" class='btns'>
                             <small class="text-center short" >Alumnos</small>
-                                <button type="button" data-toggle="modal" data-target=".bd-example-y-${longitud[index].replace(/\s/g, "-")}-modal-lg" id="y-${longitud[index].replace(/\s/g, "-")}" class="btn" style='background-color: #54E38A;'>
+                                <button type="button" data-toggle="modal" data-target=".bd-example-y-${longitud[index].replace(/\s/g, "-")}-modal-lg" id="y-${longitud[index].replace(/\s/g, "-")}" class="btn text-white" style='background-color: #be0032;'>
                                 <i class="fa fa-clipboard-check"></i>
                                 </button>
 
-                                <button type="button" data-toggle="modal" data-target=".bd-example-n-${longitud[index].replace(/\s/g, "-")}-modal-lg" id="n-${longitud[index].replace(/\s/g, "-")}" class="btn" style='background-color: #FF8C64;'>
+                                <button type="button" data-toggle="modal" data-target=".bd-example-n-${longitud[index].replace(/\s/g, "-")}-modal-lg" id="n-${longitud[index].replace(/\s/g, "-")}" class="btn text-white" style='background-color: #343a40;'>
                                 <i class="fa fa-clipboard-check"></i>
                                 </button>
 
-                                <button type="button" id="u-${longitud[index].replace(/\s/g, "-")}" data-toggle="modal" data-target=".bd-example-u-${longitud[index].replace(/\s/g, "-")}-modal-lg" class="btn" style='background-color: #F2B90C;'>
+                                <button type="button" id="u-${longitud[index].replace(/\s/g, "-")}" data-toggle="modal" data-target=".bd-example-u-${longitud[index].replace(/\s/g, "-")}-modal-lg" class="btn" style='background-color: #adadb2;'>
                                 
                                 <i class="fa fa-clipboard-check"></i>
                                 </button>
@@ -282,7 +282,7 @@ function LlenarGraficaIndividual(data, universidad) {
                         position: 'right',
                         alignment: 'center',
                     },
-                    colors: ['#54E38A', '#FF8C64', '#F2B90C', '#FF665A', '#9154E3'],
+                    colors: ['#be0032', '#343a40', '#adadb2', '#FF665A', '#9154E3'],
                     width: 550,
                     height: 300,
                 },
