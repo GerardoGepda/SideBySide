@@ -74,13 +74,11 @@ function maquetar(alumnos, longitud) {
     let c1 = 1, c2 = 1, c3 = 1;
     let result;
     let asistieron = [], inasistieron = [], noInscritos = []
-
     for (let i = 0; i < longitud.length; i++) {
         asistieron.push(alumnos[i].Asistieron)
         inasistieron.push(alumnos[i].Inasistieron)
         noInscritos.push(alumnos[i].No_inscritos)
     }
-
 
     for (let index = 0; index < longitud.length; index++) {
         table1 = "", table2 = "", table3 = "";
@@ -93,11 +91,17 @@ function maquetar(alumnos, longitud) {
                 imagen = "imgDefault.png"
             }
             table1 += `
-                <tr>
-                    <td>${c1++}</td>
-                    <td><img src='../img/imgUser/${imagen}' class='alumnos' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
-                    <td>${((asistieron[index])[key]).nombre}</td>
-                </tr>`;
+                        <div class='contenido-alumno'>
+                            <img src='../img/imgUser/${imagen}' alt='foto del alumno'
+                                class='img-perfil'>
+                            <div class='alumno-info-content'>
+                                <h3 class='name'>${((asistieron[index])[key]).nombre}</h3>
+                                <p class='description-alumno'>
+                                     ${((asistieron[index])[key]).id}
+                                    <span>${((asistieron[index])[key]).correo}</span>
+                                </p>
+                            </div>
+                        </div>`;
         }
 
         inasistieron[index].forEach(e => {
@@ -108,11 +112,17 @@ function maquetar(alumnos, longitud) {
                 imagen = "imgDefault.png"
             }
             table2 += `
-                <tr>
-                    <td>${c2++}</td>
-                    <td><img src='../img/imgUser/${imagen}' class='alumnos' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
-                    <td>${e.nombre}</td>
-                </tr>`;
+                        <div class='contenido-alumno'>
+                            <img src='../img/imgUser/${imagen}' alt='foto del alumno'
+                                class='img-perfil'>
+                            <div class='alumno-info-content'>
+                                <h3 class='name'>${e.nombre}</h3>
+                                <p class='description-alumno'>
+                                        ${e.id}
+                                    <span>${e.correo}</span>
+                                </p>
+                            </div>
+                        </div>`;
         });
         noInscritos[index].forEach(e => {
             result = checkFileExist('../img/imgUser/' + e.imagen);
@@ -122,11 +132,17 @@ function maquetar(alumnos, longitud) {
                 imagen = "imgDefault.png"
             }
             table3 += `
-                <tr>
-                    <td>${c3++}</td>
-                    <td><img src='../img/imgUser/${imagen}' class='alumnos' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
-                    <td>${e.nombre}</td>
-                </tr>`;
+            <div class='contenido-alumno'>
+                <img src='../img/imgUser/${imagen}' alt='foto del alumno'
+                    class='img-perfil'>
+                <div class='alumno-info-content'>
+                    <h3 class='name'>${e.nombre}</h3>
+                    <p class='description-alumno'>
+                            ${e.id}
+                        <span>${e.correo}</span>
+                    </p>
+                </div>
+            </div>`;
         });
         template += `
                     <div class="col-md-6 justify-content-center grapp">
@@ -154,9 +170,10 @@ function maquetar(alumnos, longitud) {
                                         
                                 </div>
                             </div>
-                        </div>
-                        `;
+                        </div>`;
+
         modals += `
+                    <!-- Modal 1 Asistieron -->
                     <div class="modal fade bd-example-y-${longitud[index].replace(/\s/g, "-")}-modal-lg modal-dialog-scrollable" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -168,11 +185,6 @@ function maquetar(alumnos, longitud) {
                                 </div>
                                 <div class="modal-body">
                                   <table class="table text-center">
-                                    <thead class="thead-dark table-bordered table-dark">
-                                        <td>#</td>
-                                        <td>Imagen</td>
-                                        <td>Nombre</td>
-                                    </thead>
                                     <tbody class="table-striped table-bordered table-hover">
                                     `+ table1 + `
                                     </tbody>                                  
@@ -185,6 +197,8 @@ function maquetar(alumnos, longitud) {
                         </div>
                     </div>
 
+                    <!-- Modal 2 No Asistieron -->
+
                     <div class="modal fade bd-example-n-${longitud[index].replace(/\s/g, "-")}-modal-lg modal-dialog-scrollable" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
@@ -195,12 +209,7 @@ function maquetar(alumnos, longitud) {
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                <table class="table text-center">
-                                    <thead class="thead-dark table-bordered table-dark">
-                                        <td>#</td>
-                                        <td>Imagen</td>
-                                        <td>Nombre</td>
-                                    </thead>
+                                <table class="table text-center">  
                                     <tbody class="table-striped table-hover table-bordered">
                                     `+ table2 + `
                                     </tbody>                                  
@@ -213,6 +222,8 @@ function maquetar(alumnos, longitud) {
                         </div>
                 </div>
 
+                <!-- Modal 3 No inscriptos -->
+
                 <div class="modal fade bd-example-u-${longitud[index].replace(/\s/g, "-")}-modal-lg modal-dialog-scrollable" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                         <div class="modal-content">
@@ -224,15 +235,10 @@ function maquetar(alumnos, longitud) {
                             </div>
                             <div class="modal-body">
                             <table class="table text-center">
-                                    <thead class="thead-dark table-bordered table-dark">
-                                        <td>#</td>
-                                        <td>Imagen</td>
-                                        <td>Nombre</td>
-                                    </thead>
-                                    <tbody class="table-striped table-bordered table-hover">
-                                    `+ table3 + `
-                                    </tbody>                                  
-                                  </table>
+                                <tbody class="table-striped table-bordered table-hover">
+                                `+ table3 + `
+                                </tbody>                                  
+                            </table>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
