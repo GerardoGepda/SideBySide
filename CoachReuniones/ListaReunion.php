@@ -42,7 +42,7 @@ if (isset($_GET['id'])) {
     $consulta77->execute(array($id));
 
 
-    $consulta4 = $pdo->prepare("SELECT alu.Nombre ,inr.horainicio,inr.horafin,inr.telefono, re.Tipo FROM inscripcionreunion inr inner join alumnos alu on inr.`id_alumno`= alu.`id_alumno` left join horariosreunion hora on inr.`Horario` = hora.`IDHorRunion` INNER JOIN reuniones re ON re.ID_Reunion = hora.ID_Reunion WHERE inr.`id_reunion` = :id_reunion ORDER BY `hora`.`HorarioInicio` ASC ");
+    $consulta4 = $pdo->prepare("SELECT alu.Nombre,inr.horainicio,inr.horafin,inr.telefono, re.Tipo, hora.HorarioInicio AS Horario FROM inscripcionreunion inr INNER JOIN alumnos alu on inr.`id_alumno`= alu.`id_alumno` left join horariosreunion hora on inr.`Horario` = hora.`IDHorRunion` INNER JOIN reuniones re ON re.ID_Reunion = hora.ID_Reunion WHERE inr.`id_reunion` = :id_reunion ORDER BY `hora`.`HorarioInicio` ASC ");
     $consulta4->bindParam(":id_reunion", $id);
     $consulta4->execute();
 }
@@ -708,19 +708,21 @@ include 'Modularidad/MenuVertical.php';
                                             </tfoot>
                                             <tbody class="table-hover">
                                                 <?php
-                                                if ($consulta4->rowCount() >= 1) {
+                                                if ($consulta4->rowCount() >= 1) {                                                    
                                                     while ($fila4 = $consulta4->fetch()) {
                                                         echo "
                                                         <tr class='table-light'>
                                                             <th>" . $fila4['Nombre'] . "</th>";
-
-
-
                                                         if ($fila4['Tipo'] == 'Sesión individual' or $fila4['Tipo'] == 'Otro') {
                                                             # code...horainicio y horafin
                                                             echo "<th>" . $fila4['horainicio'] . " - " . $fila4['horafin'] . "</th>";
-                                                        } else {
-                                                            echo "<th>" . $fila4['HorarioInicio'] . "</th>";
+                                                        } else  {
+                                                            if ($fila4['Horario'] == '' or !isset($fila4['Horario']) or $fila4['Horario'] == null) {
+                                                                echo "<th> Datos no encontrado </th>";
+                                                            }else{
+                                                                echo "<th>" . $fila4['Horario'] . "</th>";
+                                                            }
+                                                            
                                                         }
                                                         echo "<th>" . $fila4['telefono'] . "</th>     
                                                         
