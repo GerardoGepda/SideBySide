@@ -96,6 +96,7 @@ include 'Modularidad/MenuVertical.php';
             </div>
             <!-- Collapsible content -->
         </nav>
+        
         <!-- Modal -->
         <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -122,6 +123,7 @@ include 'Modularidad/MenuVertical.php';
                 </div>
             </div>
         </div>
+
 
         <!--/.Navbar-->
         <?php if ($consulta->rowCount() >= 0) {
@@ -276,7 +278,11 @@ include 'Modularidad/MenuVertical.php';
                     </div>
                 </div>
             </div>
+            <!-- Nombre de la reunión -->
+            <div class="container mb-4 justify-center">
+                <h3> Título: <?php echo $fila['Titulo'];?></h3>
 
+            </div>
             <!--Ejemplo tabla con DataTables-->
             <div class="table-responsive">
                 <div class="container">
@@ -287,6 +293,7 @@ include 'Modularidad/MenuVertical.php';
                                     <th scope="col">Identificación</th>
                                     <th scope="col">Estado</th>
                                     <th scope="col">Tipo</th>
+                                    <th scope="col">Fecha</th>
                                     <th scope="col">Acción</th>
                                     <th scope="col">Horarios</th>
                                     <th scope="col">Lista</th>
@@ -302,6 +309,7 @@ include 'Modularidad/MenuVertical.php';
                                     <th scope="row"><?php echo $fila['ID_Reunion']; ?></th>
                                     <td><?php echo $fila['Estado']; ?></td>
                                     <td><?php echo $fila['Tipo']; ?></td>
+                                    <td><?php echo $fila['Fecha']?></td>
                                     <td>
                                         <?php
 
@@ -471,13 +479,15 @@ include 'Modularidad/MenuVertical.php';
 
 
     <div class="card">
-        <h5 class="card-header" style="color: black;">Lista De Asistencia
+        <h5 class="card-header" style="color: black;">Lista De Asistencia </label>
             <span class="float-right">
                 <?php
 
                 $consulta9 = $pdo->prepare("SELECT COUNT(`id_alumno`) AS 'Total2' FROM inscripcionreunion WHERE id_reunion = ? ");
                 $consulta9->execute(array($id));
                 $TotalAlum = 0;
+                
+
 
                 if ($consulta9->rowCount() >= 0) {
                     $fila9 = $consulta9->fetch();

@@ -225,7 +225,7 @@
               <div class="collapse" id="collapseExample10">
                 <ul>
                   <li><a href="reporte.view.php" class="list-group-item list-group-item-action" id="submenu">Reuniones</a></li>
-                  <li><a href="reporteriaUniversidad.php" class="list-group-item list-group-item-action" id="submenu">Universidad</a></li>
+                  <li><a href="reporteriaUniversidad.php" class="list-group-item list-group-item-action" id="submenu">Notas</a></li>
                   <li><a href="EstatusBeca.php" class="list-group-item list-group-item-action" id="submenu" title="Becas canceladas y declinadas">Becas CANC/DECL</a></li>
                   <li><a href="notasFantantes.php" class="list-group-item list-group-item-action" id="submenu" title="Notas Faltantes">Notas Faltantes</a></li>
                   <!--<li><a href="ReporteRenovacion.php" class="list-group-item list-group-item-action" id="submenu">Reporteria</a></li>-->
