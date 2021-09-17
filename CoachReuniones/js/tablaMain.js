@@ -460,7 +460,7 @@ function loadUniversity(datos) {
     let retiradas = [];
 
 
-    let cum1 = [];
+    
     let listaAprobados = [];
     let listaReprobados = [];
     let listaRetirados = [];
@@ -476,7 +476,7 @@ function loadUniversity(datos) {
     let cum = [];
 
     // cum global 
-    let cumGlobal
+    let cumGlobal = 0;
 
 
     let one = [];
@@ -492,7 +492,6 @@ function loadUniversity(datos) {
         aprobadas.push(parseInt(dato.aprobadas));
         reprobadas.push(parseInt(dato.reprobadas));
         retiradas.push(parseInt(dato.retiradas));
-        cum1.push((parseFloat(dato.cum)));
         listaAprobados.push(dato.listaAprobado);
         listaReprobados.push(dato.listaReprobado);
         listaRetirados.push(dato.listaRetirado);
@@ -504,15 +503,19 @@ function loadUniversity(datos) {
         two.push(dato.alumnosReprobados);
         three.push(dato.alumnosRetirados);
     });
+    cum.forEach(e => {
+        cumGlobal += parseFloat(e.cum);
+    });
 
-
+    cumGlobal = cumGlobal/cum.length;
+    
     graficasByAlumno(one, two, three, ids);
     GraficaCUM(ids, cum);
 
 
     // calcular cum global
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    cumGlobal = (cum1.reduce(reducer)) / cum1.length;
+    
     CreateModals(nombres.length, nombres, lista1, lista2, lista3);
     CreatDivs(nombres.length, ids);
     CumGeneral(cumGlobal.toFixed(1));
@@ -544,7 +547,8 @@ function loadUniversity(datos) {
 
 
     cum.forEach(e => {
-        show.push(parseFloat(e.cum).toFixed(1));
+        console.log(e);
+        show.push(parseFloat(e.cum).toFixed(2));
     });
     // este for sirve para cargar las graficas de todas las universidades
     for (let index = 0; index < nombres.length; index++) {
@@ -609,7 +613,7 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes, status) {
             "financiamientos": financiamiento,
             "sedes": sedes,
             "status": status
-        },
+        },        
         success: function (response) {
             try {
                 spinner.innerHTML = "";

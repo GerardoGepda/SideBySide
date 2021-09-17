@@ -42,7 +42,7 @@ if (isset($_GET['id'])) {
     $consulta77->execute(array($id));
 
 
-    $consulta4 = $pdo->prepare("SELECT alu.Nombre ,inr.horainicio,inr.horafin,inr.telefono, re.Tipo FROM inscripcionreunion inr inner join alumnos alu on inr.`id_alumno`= alu.`id_alumno` left join horariosreunion hora on inr.`Horario` = hora.`IDHorRunion` INNER JOIN reuniones re ON re.ID_Reunion = hora.ID_Reunion WHERE inr.`id_reunion` = :id_reunion ORDER BY `hora`.`HorarioInicio` ASC ");
+    $consulta4 = $pdo->prepare("SELECT alu.Nombre,inr.horainicio,inr.horafin,inr.telefono, re.Tipo, hora.HorarioInicio AS Horario FROM inscripcionreunion inr INNER JOIN alumnos alu on inr.`id_alumno`= alu.`id_alumno` left join horariosreunion hora on inr.`Horario` = hora.`IDHorRunion` INNER JOIN reuniones re ON re.ID_Reunion = hora.ID_Reunion WHERE inr.`id_reunion` = :id_reunion ORDER BY `hora`.`HorarioInicio` ASC ");
     $consulta4->bindParam(":id_reunion", $id);
     $consulta4->execute();
 }
@@ -96,6 +96,7 @@ include 'Modularidad/MenuVertical.php';
             </div>
             <!-- Collapsible content -->
         </nav>
+        
         <!-- Modal -->
         <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -122,6 +123,7 @@ include 'Modularidad/MenuVertical.php';
                 </div>
             </div>
         </div>
+
 
         <!--/.Navbar-->
         <?php if ($consulta->rowCount() >= 0) {
@@ -276,7 +278,11 @@ include 'Modularidad/MenuVertical.php';
                     </div>
                 </div>
             </div>
+            <!-- Nombre de la reunión -->
+            <div class="container mb-4 justify-center">
+                <h3> Título: <?php echo $fila['Titulo'];?></h3>
 
+            </div>
             <!--Ejemplo tabla con DataTables-->
             <div class="table-responsive">
                 <div class="container">
@@ -287,6 +293,7 @@ include 'Modularidad/MenuVertical.php';
                                     <th scope="col">Identificación</th>
                                     <th scope="col">Estado</th>
                                     <th scope="col">Tipo</th>
+                                    <th scope="col">Fecha</th>
                                     <th scope="col">Acción</th>
                                     <th scope="col">Horarios</th>
                                     <th scope="col">Lista</th>
@@ -302,6 +309,7 @@ include 'Modularidad/MenuVertical.php';
                                     <th scope="row"><?php echo $fila['ID_Reunion']; ?></th>
                                     <td><?php echo $fila['Estado']; ?></td>
                                     <td><?php echo $fila['Tipo']; ?></td>
+                                    <td><?php echo $fila['Fecha']?></td>
                                     <td>
                                         <?php
 
@@ -471,13 +479,15 @@ include 'Modularidad/MenuVertical.php';
 
 
     <div class="card">
-        <h5 class="card-header" style="color: black;">Lista De Asistencia
+        <h5 class="card-header" style="color: black;">Lista De Asistencia </label>
             <span class="float-right">
                 <?php
 
                 $consulta9 = $pdo->prepare("SELECT COUNT(`id_alumno`) AS 'Total2' FROM inscripcionreunion WHERE id_reunion = ? ");
                 $consulta9->execute(array($id));
                 $TotalAlum = 0;
+                
+
 
                 if ($consulta9->rowCount() >= 0) {
                     $fila9 = $consulta9->fetch();
@@ -708,19 +718,21 @@ include 'Modularidad/MenuVertical.php';
                                             </tfoot>
                                             <tbody class="table-hover">
                                                 <?php
-                                                if ($consulta4->rowCount() >= 1) {
+                                                if ($consulta4->rowCount() >= 1) {                                                    
                                                     while ($fila4 = $consulta4->fetch()) {
                                                         echo "
                                                         <tr class='table-light'>
                                                             <th>" . $fila4['Nombre'] . "</th>";
-
-
-
                                                         if ($fila4['Tipo'] == 'Sesión individual' or $fila4['Tipo'] == 'Otro') {
                                                             # code...horainicio y horafin
                                                             echo "<th>" . $fila4['horainicio'] . " - " . $fila4['horafin'] . "</th>";
-                                                        } else {
-                                                            echo "<th>" . $fila4['HorarioInicio'] . "</th>";
+                                                        } else  {
+                                                            if ($fila4['Horario'] == '' or !isset($fila4['Horario']) or $fila4['Horario'] == null) {
+                                                                echo "<th> Datos no encontrado </th>";
+                                                            }else{
+                                                                echo "<th>" . $fila4['Horario'] . "</th>";
+                                                            }
+                                                            
                                                         }
                                                         echo "<th>" . $fila4['telefono'] . "</th>     
                                                         

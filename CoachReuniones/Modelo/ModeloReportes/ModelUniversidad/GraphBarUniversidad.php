@@ -8,6 +8,11 @@ $json = array();
 $json2 = array();
 $contador = 0;
 
+function PrepareArrays($pre)
+{
+   return "'".$pre."'";
+}
+
 
 // extracion de datos
 // arrays con las listas de ciclos,clases, financiamiento y sedes
@@ -24,6 +29,13 @@ $contarCiclos = count($ciclos);
 $contarClases = count($clases);
 $contarfinanciamientos = count($financiamientos);
 $contarSedes = count($sedes);
+
+//preparar arrays para sonsulta de promedio de notas con operardor IN
+$PCiclos = implode(",",array_map("PrepareArrays",$ciclos));
+$PSedes = implode(",",array_map("PrepareArrays",$sedes));
+$PFinanciamiento = implode(",",array_map("PrepareArrays",$financiamientos));
+$PClases = implode(",",array_map("PrepareArrays",$clases));
+$PStatus = implode(",",array_map("PrepareArrays",$status));
 
 // declaracion de fragmentos
 $fragmento1 = "";
@@ -62,6 +74,7 @@ if ($contarSedes >= 1) {
 } else {
     $conditions2 = " ";
 }
+
 // ********************************
 
 // condicion para clases
@@ -85,6 +98,7 @@ if ($contarfinanciamientos >= 1) {
 } else {
     $conditions4 = " ";
 }
+
 
 // consultas
 $sql = "SELECT * FROM empresas WHERE Tipo = 'Universidad' ";
@@ -117,18 +131,20 @@ ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.I
 IM.estado = 'Retirada' AND ($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4) AND (a.StatusActual IN ($listaStatus)) 
 AND a.ID_Empresa  = '$univeridades' ";
 
-
-    $sql5 = "SELECT DISTINCT (SUM(e.cum))/COUNT(e.cum) AS cum FROM inscripcionmateria IM INNER JOIN 
-    inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER JOIN expedienteu e
-    ON e.idExpedienteU  = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno WHERE 
-($fragmento1) AND ($fragmento2)  AND ($fragmento3) AND ($fragmento4)  AND (a.StatusActual IN ($listaStatus))";
+    
 
 
-    $sql15 = "SELECT (SUM(e.cum))/COUNT(e.cum) AS cum
-    FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC INNER
-     JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno 
-     JOIN materias m ON m.idMateria = IM.idMateria INNER JOIN usuarios u ON u.correo = a.correo  WHERE (IM.estado = 'Aprobada') AND ($fragmento1) AND 
-     ($fragmento2)  AND ($fragmento3) AND ($fragmento4)  AND (a.StatusActual IN ($listaStatus)) AND a.ID_Empresa  = '$univeridades'";
+    $sql15 = "SELECT ROUND((SUM(IM.nota))/COUNT(IM.nota),2) AS cum FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC = IC.Id_InscripcionC
+    JOIN expedienteu e ON e.idExpedienteU = IC.idExpedienteU 
+    INNER JOIN alumnos a ON a.ID_Alumno = e.ID_Alumno
+    INNER JOIN materias m ON m.idMateria = IM.idMateria
+    WHERE IM.estado IN ('Aprobada','Reprobada') 
+        AND IC.cicloU IN ($PCiclos) 
+        AND a.ID_Sede IN ($PSedes) 
+        AND a.Class IN ($PClases)
+        AND a.StatusActual IN ($PStatus)
+        AND a.FuenteFinacimiento IN ($PFinanciamiento)
+        AND a.ID_Empresa = '$univeridades'";
 
 
     // extraer datos por universidad (nombre, nota, estado y materia)
@@ -226,9 +242,9 @@ FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
     // FIM DE CUM POR UNIVERSIDAD
 
     // OBTENER CUM
-    $stmt4 = $pdo->prepare($sql5);
-    $stmt4->execute();
-    $result4 = $stmt4->fetch();
+    // $stmt4 = $pdo->prepare($sql5);
+    // $stmt4->execute();
+    // $result4 = $stmt4->fetch();
 
     $stmt8 = $pdo->prepare($sql9);
     $stmt8->execute();
@@ -286,7 +302,6 @@ FROM inscripcionmateria IM INNER JOIN inscripcionciclos IC ON IM.Id_InscripcionC
         "aprobadas" => $result[0],
         "reprobadas" => $result2[0],
         "retiradas" => $result3[0],
-        "cum" => $result4['cum'],
         "listaAprobado" => $result8,
         "listaReprobado" => $result9,
         "listaRetirado" => $result10,
