@@ -172,7 +172,7 @@ function ExtraerInfoPorCiclo(ids, idU) {
                             //de lo contrario pondremos "NA"
                             const datoEncontrado = datosGeneral[key].find(element => element[0] === x[0]);
                             if (datoEncontrado !== undefined) {
-                                x.push(datoEncontrado[1]);
+                                x.push(parseFloat(datoEncontrado[1]).toFixed(2));
                             } else {
                                 x.push("NA");
                             }
