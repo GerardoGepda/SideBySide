@@ -52,6 +52,7 @@
 <script type="text/javascript" src="../js/ValidarPassword.js"></script>
 <script type="text/javascript" src="../js/alerta.js"></script>
 <script type="text/javascript" src="../js/cargando.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </head>
 

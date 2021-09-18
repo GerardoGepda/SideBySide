@@ -1,4 +1,5 @@
 	<?php 
+	if(isset($_SESSION['message']))
 	if (isset($_SESSION['message'])){?>
 		<div id="EstiloAlerta" class="alert alert-<?= $_SESSION['message2']?> alert-dismissible fade show" role="alert" >
 			<?= $_SESSION['message']?>
@@ -11,5 +12,7 @@
 		{
 			$Vaciar = null;
 			$_SESSION['message']=$Vaciar;
-		}	}
+		}	
+	}
+
 		?>

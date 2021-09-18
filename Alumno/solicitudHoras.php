@@ -7,6 +7,11 @@
 
 <title>Horas de vinculación</title>
 <style type="text/css">
+.Errorproyect, .Errorhoras, .Errorfecha, .Errorencar{ display: none; font-size: 0.8em; color: red;}
+span {
+  display: block;
+   padding-top:10px; 
+}
     .title{
 background-color: #c7c7c7;
 margin-top: -1px;
@@ -77,54 +82,13 @@ width: 100%;
   <a href="../Alumno/AlumnoInicio.php"> <img src="../img/proximo.svg" class="icon"></a>
   <h2 class="main-title" >Horas de Vinculación</h2>
 </div>
-  <div class="row"  >
+  <!-- <div class="row"  >
     <div class="alert alert-danger" id="mensaje">
       
-    </div>
+    </div> -->
   </div>
   <div class="container-fluid text-center" style="background-color: white;">
 <center>
-  <script type="text/javascript">
-  $(document).ready(function () {
-    bsCustomFileInput.init()
-  });
-  </script>
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $("#mensaje").hide();
-      $("#horasSoc").focusout(function() {
-        horas=$("#horasSoc").val();
-        if (horas>40) {
-
-          $("#horasSoc").focus();
-          var html = "<p><span style='font-weight: bold;''>Alerta: </span>Las horas no deben exceder a 40</p>"
-          $('#mensaje').html(html);
-          $("#mensaje").show();
-          
-          setTimeout(function() {
-            $("#mensaje").fadeOut(1500);
-          },1500);
-          
-        }
-      });
-      $(".fechaFinal").focusout(function() {
-               var FechaInicial = $(".fechaInicial").val();
-        var Final = $(".fechaFinal").val();
-        if (Date.parse(FechaInicial) > Date.parse(Final)) 
-        {
-          $(".fechaInicial").focus();
-          var html = "<p><span style='font-weight: bold;''>Alerta: </span>La Fecha Inicial no puede ser mayor que la fecha Final</p>"
-          $('#mensaje').html(html);
-          $("#mensaje").show();
-          setTimeout(function() {
-            $("#mensaje").fadeOut(1500);
-          },1500);
-;
-        }
-      });
-
-    });
-  </script>
 
 <h3 style="text-align: center;font-weight:bold;font-size: 25px;letter-spacing: 2px;">Detalles del Proyecto</h3>
 <!-- Informacion de alumno-->
@@ -140,7 +104,8 @@ width: 100%;
 <div id="proyecto_name" style="margin-top: 30px;display: inline-block;">
 <label style="font-weight: bold;color: black;">Nombre de Proyecto</label>
 <br>
-<input type="text" name="dato1" style="background-color: #c7c7c7;width: 340px;border-radius: 8px;border-color: white;">
+<input id="NombreProyecto" type="text" pattern="^[A-Za-z\s]+$" name="dato1" style="background-color: #c7c7c7;width: 340px;border-radius: 8px;border-color: white;">
+<span role="alert" class="Errorproyect" id="errorproyect" aria-hidden="true">  </span>
 </div>
 
 </div>
@@ -149,27 +114,29 @@ width: 100%;
 <div id="div2" style="margin-top: 10px;display: inline-block;">
 <label style="font-weight: bold;color: black;">Cantidad de Horas</label>
 <br>
-<input type="text" name="cantidad" style="background-color: #c7c7c7;width: 150px;border-radius: 8px;border-color: white;" id="horasSoc">
-
+<input type="text" name="cantidad" pattern="^[0-9]$" required title="Debes ingresar un formato en numeros" style="background-color: #c7c7c7;width: 150px; border-radius: 8px; border-color: white;" id="horasSoc">
+<span role="alert" class="Errorhoras" id="errorhoras" aria-hidden="true">  </span>
 </div>
 <div id="div2" style="margin-top: 10px;display: inline-block;margin-left: 20px;">
 <label style="font-weight: bold;color: black;">Encargado</label>
 <br>
-<input type="text" name="Encargado" style="background-color: #c7c7c7;width: 165px;border-radius: 8px;border-color: white;">
+<input type="text" id="encargado" pattern="^[A-Za-z\s]+$" required title="Debes ingresar un formato en letras de A-Z"  name="Encargado" style="background-color: #c7c7c7;width: 165px;border-radius: 8px;border-color: white;"> 
+<span role="alert" class="Errorencar" id="errorencar" aria-hidden="true">  </span>
 </div>
 <!--Parte 3 -->
 <div class="Fechas">
 <div id="div2" style="margin-top: 10px;display: inline-block;">
 <label style="font-weight: bold;color: black;">Fecha de Inicio</label>
 <br>
-<input type="date" name="fecInicio" style="background-color: #c7c7c7;width: 150px;border-radius: 8px;border-color: white;" class="fechaInicial">
+<input type="date" name="fecInicio" id="fechaInicial" style="background-color: #c7c7c7;width: 150px;border-radius: 8px;border-color: white;" class="fechaInicial">
 
 </div>
 <div id="div2" style="margin-top: 10px;display: inline-block;margin-left: 20px;">
 <label style="font-weight: bold;color: black;">Fecha de Finalización</label>
 <br>
-<input type="date" name="fecFin" style="background-color: #c7c7c7;width: 165px;border-radius: 8px;border-color: white;" class="fechaFinal">
+<input type="date" id="fechaFinal" name="fecFin" style="background-color: #c7c7c7;width: 165px;border-radius: 8px;border-color: white;" class="fechaFinal">
 </div>
+<span role="alert" class="Errorfecha" id="errorfecha" aria-hidden="true">  </span>
 </div>
 <div id="proyecto_name" style="margin-top: 10px;display: inline-block;">
 <label style="font-weight: bold;color: black;">Comentario</label>
@@ -181,13 +148,13 @@ width: 100%;
 <input type="file" class="form-control-file" name="archivo" value="Enviar">
 <br>
 </div>
-<input type="submit" class="btn btn-primary btn-block" name="Enviar" value="Enviar" style="background: #BE0032;height: 33px;width: 150px;color: white;border-radius: 30px;font-size: 15px;font-weight: bold; text-align: center;">
+<input type="submit" id="submit" disabled="disabled" class="btn btn-primary btn-block" name="Enviar" value="Enviar" style="background: #BE0032;height: 33px;width: 150px;color: white;border-radius: 30px;font-size: 15px;font-weight: bold; text-align: center;">
 <br>
 </div>
 
 
 
-
+<script src="JS/solicitudHoras.js"></script>
 
 
 <?php
