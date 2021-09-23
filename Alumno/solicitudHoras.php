@@ -114,7 +114,7 @@ width: 100%;
 <div id="div2" style="margin-top: 10px;display: inline-block;">
 <label style="font-weight: bold;color: black;">Cantidad de Horas</label>
 <br>
-<input type="text" name="cantidad" pattern="^[0-9]$" required title="Debes ingresar un formato en numeros" style="background-color: #c7c7c7;width: 150px; border-radius: 8px; border-color: white;" id="horasSoc">
+<input type="number" name="cantidad"  required title="Debes ingresar un formato en numeros" style="background-color: #c7c7c7;width: 150px; border-radius: 8px; border-color: white;" id="horasSoc">
 <span role="alert" class="Errorhoras" id="errorhoras" aria-hidden="true">  </span>
 </div>
 <div id="div2" style="margin-top: 10px;display: inline-block;margin-left: 20px;">
