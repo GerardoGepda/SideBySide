@@ -18,7 +18,7 @@
       font-size: 14px;
     }
   .row{
-      margin-left: 200px;
+      margin-left: 205px;
     }
   </style>
   <div>
