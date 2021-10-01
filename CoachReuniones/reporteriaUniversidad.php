@@ -26,15 +26,7 @@ $stmt4 = $pdo->query("SELECT DISTINCT StatusActual FROM alumnos ORDER BY StatusA
 $stmt4->execute();
 
 ?>
-<!-- jsPDF -->
-<script src="js/jspdf.umd.js"></script>
-<!-- jsPDF Autotable -->
-<script src="js/jspdf.plugin.autotable.js"></script>
-<!-- SheetJs -->
-<script src="js/xlsx.full.min.js"></script>
-<!-- FileSaver -->
-<script src="js/FileSaver.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <link rel="stylesheet" type="text/css" href="css/Renovacion.css">
 <div class="title mb-2">
     <a href="javascript:history.back();"><img src="../img/back.png" class="icon"></a>
@@ -51,7 +43,8 @@ $stmt4->execute();
                         <div class="mb-1">
                             <label class="form-label">Ciclo</label>
                             <div class="pl-3 tex-center">
-                                <select class="js-example-basic-single form-control" id="ciclo" multiple="multiple" onchange=" main(), GraphBarraU()">
+                                <select class="js-example-basic-single form-control" id="ciclo" multiple="multiple"
+                                    onchange=" main(), GraphBarraU()">
                                     <?php
                                     while ($row = $stmt->fetch()) {
                                         echo "<option >" . $row['cicloU'] . "</option>";
@@ -68,7 +61,8 @@ $stmt4->execute();
                         <div class="mb-1">
                             <label class="form-label">Class</label>
                             <div class="tex-center">
-                                <select class="js-example-basic-single form-control" id="clase" multiple="multiple" onchange=" main(), GraphBarraU()">
+                                <select class="js-example-basic-single form-control" id="clase" multiple="multiple"
+                                    onchange=" main(), GraphBarraU()">
                                     <?php
                                     while ($row2 = $stmt2->fetch()) {
                                         echo "<option>" . $row2['Class'] . "</option>";
@@ -84,11 +78,13 @@ $stmt4->execute();
                     <fieldset>
                         <div class="mb-1 tex-center">
                             <label class="form-label">Financiamiento</label>
-                            <select class="form-select form-control" id="financiamiento" multiple="" onchange=" main(), GraphBarraU()">
+                            <select class="form-select form-control" id="financiamiento" multiple=""
+                                onchange=" main(), GraphBarraU()">
                                 <option value="FGK" class="dropdown-item">FGK</option>
                                 <option value="BORJA" class="dropdown-item">BORJA</option>
                                 <option value="FOM" class="dropdown-item">FOM</option>
-                                <option value="Financiamiento Propio" class="dropdown-item">Financiamiento propio</option>
+                                <option value="Financiamiento Propio" class="dropdown-item">Financiamiento propio
+                                </option>
                             </select>
                             <input class="form-check-input" type="checkbox" id="checkbox3">Select All</input>
                         </div>
@@ -98,7 +94,8 @@ $stmt4->execute();
                     <fieldset>
                         <div class="mb-1 w-75 pl-1">
                             <label class="form-label">Sede</label>
-                            <select class="form-select form-control" id="sede" multiple="" onchange=" main(), GraphBarraU()">
+                            <select class="form-select form-control" id="sede" multiple=""
+                                onchange=" main(), GraphBarraU()">
                                 <?php
                                 while ($row3 = $stmt3->fetch()) {
                                     echo "<option>" . $row3['ID_Sede'] . "</option>";
@@ -113,8 +110,9 @@ $stmt4->execute();
                     <fieldset>
                         <div class="mb-1 w-75 pl-3">
                             <label class="form-label">Status</label>
-                            <select class="form-select form-control" id="status" multiple="" onchange=" main(), GraphBarraU()">
-                            <?php
+                            <select class="form-select form-control" id="status" multiple=""
+                                onchange=" main(), GraphBarraU()">
+                                <?php
                                     while ($row2 = $stmt4->fetch()) {
                                         echo "<option>" . $row2['StatusActual'] . "</option>";
                                     }
@@ -149,7 +147,8 @@ $stmt4->execute();
         </select>
     </div>
     <div class="form-group float-right m-4">
-        <button class='btn btn-danger' id="pdfExport" onclick="ExportarGeneralPDF()"><i class="fas fa-file-pdf"></i></button>
+        <button class='btn btn-danger' id="pdfExport" onclick="ExportarGeneralPDF()"><i
+                class="fas fa-file-pdf"></i></button>
         <button class='btn btn-success' id="excelexport" onclick="exportar()"><i class="fas fa-file-excel"></i></button>
     </div>
 </div>
@@ -157,7 +156,6 @@ $stmt4->execute();
 
 <div id="showData" style="display: hidden;"></div>
 
-<br><br><br><br><br><br>
 
 <!-- proceso de graficas -->
 <!-- Select2 -->
@@ -175,6 +173,16 @@ $stmt4->execute();
 <script src="js/exportpdfreporte.js"></script>
 <!-- js para exportar a Excel -->
 <script src="js/exportexcelreporte.js"></script>
+
+<!-- jsPDF -->
+<script src="js/jspdf.umd.js"></script>
+<!-- jsPDF Autotable -->
+<script src="js/jspdf.plugin.autotable.js"></script>
+<!-- SheetJs -->
+<script src="js/xlsx.full.min.js"></script>
+<!-- FileSaver -->
+<script src="js/FileSaver.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- fin de proceso de  graficas -->
 <!-- **************************************** Fin de estructura de trabajo **************************** -->

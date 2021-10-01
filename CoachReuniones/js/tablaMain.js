@@ -98,148 +98,26 @@ function CreateModals(e, universidad, l1, l2, l3) {
         let c1 = 1;
         let c2 = 1;
         let c3 = 1;
+
         for (const dato of f1[index]) {
-            table1 += `<tr>
-                        <td>${c1++}</td>
-                        <td><img src='../img/imgUser/${dato[1]}' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
-                        <td>${dato[0]}</td>
-                        <td>${dato[2]}</td>
-                        <td>${dato[3]}</td>
-                        <td> <a class='btn btn-info' href='AlumnoInicio.php?id=${dato[4]}'>ver</a></td>
-                    </tr>`;
+            table1 += templatePanel(dato, universidad[index]);
         }
 
         for (const dato of f2[index]) {
-            table2 += `<tr>
-                        <td>${c2++}</td>
-                        <td><img src='../img/imgUser/${dato[1]}' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
-                        <td>${dato[0]}</td>
-                        <td>${dato[2]}</td>
-                        <td>${dato[3]}</td>
-                        <td> <a class='btn btn-info' href='AlumnoInicio.php?id=${dato[4]}'>ver</a></td>
-                    </tr>`;
+            table2 += templatePanel(dato, universidad[index]);
         }
+
         for (const dato of f3[index]) {
-            table3 += `<tr>
-                        <td>${c3++}</td>
-                        <td><img src='../img/imgUser/${dato[1]}' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
-                        <td>${dato[0]}</td>
-                        <td>${dato[2]}</td>
-                        <td>${dato[3]}</td>
-                        <td> <a class='btn btn-info' href='AlumnoInicio.php?id=${dato[4]}'>ver</a></td>
-                    </tr>`;
+            table3 += templatePanel(dato, universidad[index]);
         }
 
 
-        template += `
-    <div class="modal fade " id="aprobados-${contador1++}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-             <center>
-                <h5 class="modal-title" id="exampleModalLabel">Listado: ${universidad[index]} &nbsp;&nbsp;&nbsp;<code>Materias Aprobadas</code></h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-             </center>
-            </div>
-            <div class="modal-body">
-               <table class='table' >
-                    <thead class='table-dark'>
-                        <tr>
-                            <th>#</th>
-                            <th>img</th>
-                            <th>Nombre</th>
-                            <th>Materias aprobadas</th>
-                            <th>Promedio materias aprobadas</th>
-                            <th>Expediente</th>
-                        </tr>
-                    </thead>
-                    <tbody class='table-light table-bordered table-striped table-hover'> 
-                        ${table1}
-                    </tbody>     
-               </table>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" >Save</button>
-            </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="reprobadas-${contador2++}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <div class="modal-header">
-         <center>
-            <h5 class="modal-title" id="exampleModalLabel">Listado: ${universidad[index]} &nbsp; &nbsp; &nbsp;<code>Materias Reprobadas </code></h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-            </button>
-         </center>
-        </div>
-        <div class="modal-body">
-   <table class='table' >
-                    <thead class='table-dark'>
-                        <tr>
-                            <th>#</th>
-                            <th>img</th>
-                            <th>Nombre</th>
-                            <th>Materias reprobadas</th>
-                            <th>Promedio materias reprobadas</th>
-                            <th>Expediente</th>
-                        </tr>
-                    </thead>
-                    <tbody class='table-light table-bordered table-striped table-hover'> 
-                        ${table2}
-                    </tbody>     
-               </table>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="retiradas-${contador3++}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-    <div class="modal-header">
-     <center>
-        <h5 class="modal-title" id="exampleModalLabel">Listado: ${universidad[index]}&nbsp; &nbsp; &nbsp; <code>Materias Retiradas</code></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-        </button>
-     </center>
-    </div>
-    <div class="modal-body">
-<table class='table' >
-                    <thead class='table-dark'>
-                        <tr>
-                            <th>#</th>
-                            <th>img</th>
-                            <th>Nombre</th>
-                            <th>Materias retiradas</th>
-                            <th>Promedio Materias aprobadas</th>
-                            <th>Expediente</th>
-                        </tr>
-                    </thead>
-                    <tbody class='table-light table-bordered table-striped table-hover'> 
-                        ${table3}
-                    </tbody>     
-               </table>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-    </div>
-    </div>
-</div>
-</div>
-    `;
+        template += modalForStudentInfo(`aprobados-${contador1++}`, universidad[index], table1);
+        template += modalForStudentInfo(`reprobadas-${contador2++}`, universidad[index], table2);
+        template += modalForStudentInfo(`retiradas-${contador3++}`, universidad[index], table3);
+
+        document.getElementById('showData').innerHTML = template;
     }
-    document.getElementById('showData').innerHTML = template;
 }
 
 function CreatDivs(e, ids) {
@@ -250,7 +128,7 @@ function CreatDivs(e, ids) {
     let cont3 = 4;
     for (let index = 0; index < e; index++) {
         templete += `
-            <div class='uni-content my-1 ${ids[index].replace(/\s/g, "-")}' style='height: 285px; position:relative; z-index:1;'>
+                    <div class='uni-content my-1 ${ids[index].replace(/\s/g, "-")}' style = 'height: 285px; position:relative; z-index:1;' >
                 <div id='u-${contador++}' style='height: 220px;'></div>
                 <div style='height: 60px; margin: 0px auto;'>
                     <center>
@@ -265,20 +143,20 @@ function CreatDivs(e, ids) {
                     <button class=' ${ids[index].replace(/\s/g, "-")} btn btn-success d-block p-3 btnexpExcel'><i class="fas fa-file-excel"></i></button>
                 </div>
             </div>
-        `;
+                `;
     }
     document.getElementById('universidades').innerHTML = templete;
 }
 
 function CumGeneral(cum) {
     let template = '';
-    template = ` <div class='text-white details' id='cum2'>
-                        <div>
-                            <h5 >` + cum + `</h5>
-                            <br><br>
-                        </div>
+    template = ` <div class='text-white details' id = 'cum2' >
+                <div>
+                    <h5 >` + cum + `</h5>
+                    <br><br>
                     </div>
-                `;
+                </div>
+            `;
 
     document.getElementById('cumGeneral').innerHTML = template;
 }
@@ -460,7 +338,7 @@ function loadUniversity(datos) {
     let retiradas = [];
 
 
-    
+
     let listaAprobados = [];
     let listaReprobados = [];
     let listaRetirados = [];
@@ -507,15 +385,15 @@ function loadUniversity(datos) {
         cumGlobal += parseFloat(e.cum);
     });
 
-    cumGlobal = cumGlobal/cum.length;
-    
+    cumGlobal = cumGlobal / cum.length;
+
     graficasByAlumno(one, two, three, ids);
     GraficaCUM(ids, cum);
 
 
     // calcular cum global
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
-    
+
     CreateModals(nombres.length, nombres, lista1, lista2, lista3);
     CreatDivs(nombres.length, ids);
     CumGeneral(cumGlobal.toFixed(1));
@@ -597,12 +475,12 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes, status) {
     let datos;
     spinner = document.getElementById("universidades")
     spinner.innerHTML = `
-            <div class="d-flex justify-content-center">
-                <div class="spinner-border " style="color: #B01D33"  role="status">
-                    <span class="sr-only" >Loading...</span>
+                <div class="d-flex justify-content-center" >
+                    <div class="spinner-border " style="color: #B01D33" role="status">
+                        <span class="sr-only" >Loading...</span>
+                    </div>
                 </div>
-            </div>
-            `;
+                `;
 
     $.ajax({
         type: "POST",
@@ -613,7 +491,7 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes, status) {
             "financiamientos": financiamiento,
             "sedes": sedes,
             "status": status
-        },        
+        },
         success: function (response) {
             try {
                 spinner.innerHTML = "";
@@ -643,4 +521,69 @@ function graphicsByUniversity(ciclos, clases, financiamiento, sedes, status) {
             console.log("some error in ajax" + "\n" + XMLHttpRequest + "\n" + textStatus + "\n" + errorThrown);
         }
     });
+}
+/*
+    Funcion del panel de datos
+*/
+function mostrarpanel(e) {
+    console.log(e.target.parentNode.parentNode.classList.toggle("mostrarpanel"));
+    e.target.innerHTML = (e.target.textContent == "Ver detalles") ? "Ocultar detalles" : "Ver detalles";
+}
+
+/**
+ * Template de los datos de alumnos
+ */
+
+function templatePanel(datos, universidad) {
+    let template = `<div class='contenidoAlumno' id = 'contenidoAlumno' >
+                        <div class='contenido-informacion'>
+                            <img src='../img/imgUser/${datos[1]}' alt='Imagen del alumno'
+                                class='img-responsive'>
+                            <h2 class ='title-name'>
+                            ${datos[0]}
+                            <span>${universidad} </span>
+                            </h2>
+                            <button class ='btn btn-link btn-detalles' id='btn-detalles' onclick='mostrarpanel(event)'>Ver detalles</button>
+                            <div class ='informacionAlumno'>
+                            <ul>
+                                <li><strong>Materias Aprobadas: </strong> ${datos[2]}</li>
+                                <li><strong>Promedio materias: </strong> ${datos[3]}</li>
+                            </ul>
+                                <a href='AlumnoInicio.php?id=${datos[4]}' id='expediente'>Ver expediente</a>
+                            </div>
+                        </div>
+                    </div > `;
+    return template;
+}
+
+function capitalizarPrimeraLetra(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function modalForStudentInfo(numeroId, universidad, datosAlumno) {
+    let title = numeroId.match(/[\w]/g).join('');
+    title = title.match(/[\D]/g).join('');
+
+    let template = `<div class="modal fade " id="${numeroId}" tabindex=" - 1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" >
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Listado: ${universidad} <span class="tipo-nota">${capitalizarPrimeraLetra(title.toLowerCase())}</span> </h5>
+                                    
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                </div>
+                                <div class="modal-body">
+                                    ${datosAlumno}
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary" >Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div > `;
+
+    return template;
 }
