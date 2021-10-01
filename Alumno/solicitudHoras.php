@@ -104,7 +104,7 @@ width: 100%;
 <div id="proyecto_name" style="margin-top: 30px;display: inline-block;">
 <label style="font-weight: bold;color: black;">Nombre de Proyecto</label>
 <br>
-<input id="NombreProyecto" type="text" pattern="^[A-Za-z\s]+$" name="dato1" style="background-color: #c7c7c7;width: 340px;border-radius: 8px;border-color: white;">
+<input id="NombreProyecto" type="text" name="dato1" style="background-color: #c7c7c7;width: 340px;border-radius: 8px;border-color: white;">
 <span role="alert" class="Errorproyect" id="errorproyect" aria-hidden="true">  </span>
 </div>
 
@@ -114,13 +114,13 @@ width: 100%;
 <div id="div2" style="margin-top: 10px;display: inline-block;">
 <label style="font-weight: bold;color: black;">Cantidad de Horas</label>
 <br>
-<input type="text" name="cantidad" pattern="^[0-9]$" required title="Debes ingresar un formato en numeros" style="background-color: #c7c7c7;width: 150px; border-radius: 8px; border-color: white;" id="horasSoc">
+<input type="number" name="cantidad"  required title="Debes ingresar un formato en numeros" style="background-color: #c7c7c7;width: 150px; border-radius: 8px; border-color: white;" id="horasSoc">
 <span role="alert" class="Errorhoras" id="errorhoras" aria-hidden="true">  </span>
 </div>
 <div id="div2" style="margin-top: 10px;display: inline-block;margin-left: 20px;">
 <label style="font-weight: bold;color: black;">Encargado</label>
 <br>
-<input type="text" id="encargado" pattern="^[A-Za-z\s]+$" required title="Debes ingresar un formato en letras de A-Z"  name="Encargado" style="background-color: #c7c7c7;width: 165px;border-radius: 8px;border-color: white;"> 
+<input type="text" id="encargado" required title="Debes ingresar un formato en letras de A-Z"  name="Encargado" style="background-color: #c7c7c7;width: 165px;border-radius: 8px;border-color: white;"> 
 <span role="alert" class="Errorencar" id="errorencar" aria-hidden="true">  </span>
 </div>
 <!--Parte 3 -->

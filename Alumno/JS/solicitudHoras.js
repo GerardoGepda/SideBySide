@@ -10,32 +10,6 @@ $(document).ready(function () {
     $("#errorproyect").hide();
     $("#errorencar").hide();
 
-    // $("#NombreProyecto").focusout(function() {
-    //     if(!expnombre.test($("#NombreProyecto").val())){
-    //       $("#NombreProyecto").focus();
-    //       var html ="Ingrese el nombre del proyecto"
-    //       $('#errorproyect').html(html);
-    //       $("#errorproyect").show();
-          
-    //       setTimeout(function() {
-    //         $("#errorproyect").fadeOut(1700);
-    //       },1700);
-    //     }
-    //   });
-
-    //   $("#encargado").focusout(function() {
-    //     if(!expnombre.test($("#encargado").val())){
-    //       $("#encargado").focus();
-    //       var html ="Ingrese el nombre del encargado"
-    //       $('#errorencar').html(html);
-    //       $("#errorencar").show();
-          
-    //       setTimeout(function() {
-    //         $("#errorencar").fadeOut(1700);
-    //       },1700);
-    //     }
-    //   });
-
     $("#horasSoc").focusout(function() {
       horas=$("#horasSoc").val();
       if (horas>20) {
@@ -49,16 +23,7 @@ $(document).ready(function () {
         },1700);
         
     }
-        // else if(!exphoras.test($("#horasSoc").val())){
-    //     $("#horasSoc").focus();
-    //     var html ="Ingrese hora de vinculación"
-    //     $('#errorhoras').html(html);
-    //     $("#errorhoras").show();
-        
-    //     setTimeout(function() {
-    //       $("#errorhoras").fadeOut(1700);
-    //     },1700);
-    //   }
+     
     });
     $(".fechaFinal").focusout(function() {
       var FechaInicial = $(".fechaInicial").val();
