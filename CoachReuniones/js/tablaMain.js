@@ -546,7 +546,7 @@ function templatePanel(datos, universidad) {
                             <button class ='btn btn-link btn-detalles' id='btn-detalles' onclick='mostrarpanel(event)'>Ver detalles</button>
                             <div class ='informacionAlumno'>
                             <ul>
-                                <li><strong>Materias Aprobadas: </strong> ${datos[2]}</li>
+                                <li><strong>Cantidad materias: </strong> ${datos[2]}</li>
                                 <li><strong>Promedio materias: </strong> ${datos[3]}</li>
                             </ul>
                                 <a href='AlumnoInicio.php?id=${datos[4]}' id='expediente'>Ver expediente</a>
