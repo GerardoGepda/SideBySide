@@ -18,7 +18,7 @@ if (isset($_GET['id'])) {
     $consulta->execute();
 
     $consulta2 = $pdo->prepare("SELECT reu.ID_Reunion, alu.ID_Alumno , alu.ID_Sede as sede, alu.Nombre ,
-     reu.Titulo ,reu.Tipo, asistencia , HR.HorarioInicio , IR.telefono, IR.horainicio, IR.horafin FROM inscripcionreunion IR 
+     reu.Titulo ,reu.Tipo, asistencia , HR.HorarioInicio , IR.telefono, IR.horainicio, IR.horafin, alu.correo as correo FROM inscripcionreunion IR 
      INNER JOIN alumnos alu on IR.id_alumno = alu.ID_Alumno LEFT JOIN reuniones reu 
      on IR.id_reunion = reu.ID_Reunion LEFT JOIN horariosreunion HR ON IR.Horario = 
      HR.IDHorRunion WHERE IR.id_reunion = ? ORDER BY `HR`.`HorarioInicio` DESC ");
@@ -577,7 +577,7 @@ include 'Modularidad/MenuVertical.php';
                                     echo "
 							<tr class='table-light'>
 							<td><input type='checkbox' name='ActuaAlumno[]' class='case' value=" . $fila2['ID_Alumno'] . "></td>
-							<th>" . $fila2['Nombre'] . "</th>
+							<th> <a href='AlumnoInicio.php?id=".$fila2['correo']."' target='_blank'>" . $fila2['Nombre'] . "</a></th>
 							<th>" . $fila2['sede'] . "</th>
 							<th>" . $fila2['telefono'] . "</th>";
 
