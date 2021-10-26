@@ -5,6 +5,7 @@ include 'Modularidad/EnlacesCabecera.php';
 include 'Modularidad/MenuHorizontal.php';
 require_once '../Conexion/conexion.php';
 ?>
+
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -14,6 +15,7 @@ require_once '../Conexion/conexion.php';
 <link rel="stylesheet" type="text/css" href="css/reporte.view.css">
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <link rel="stylesheet" type="text/css" href="css/Alumnos.css">
+<link rel="stylesheet" type="text/css" href="css/Renovacion.css">
 <link rel="stylesheet" type="text/css" href="css/Menu.css">
 <link rel="stylesheet" href="css/main.css">
 <!-- style para select multiple -->
@@ -28,6 +30,12 @@ require_once '../Conexion/conexion.php';
 
     .choices[data-type*="select-multiple"] .choices__button, .choices[data-type*="text"] .choices__button {
         border-left: 1px solid black;
+    }
+
+    
+    .img-responsive{
+        width: 90px;
+        height: 90px;
     }
 </style>
 

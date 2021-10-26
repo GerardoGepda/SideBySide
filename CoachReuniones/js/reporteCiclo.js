@@ -273,6 +273,10 @@ function checkFileExist(urlToFile) {
     }
 }
 
+function mostrarpanel(e) {
+    console.log(e.target.parentNode.parentNode.classList.toggle("mostrarpanel"));
+    e.target.innerHTML = (e.target.textContent == "Ver detalles") ? "Ocultar detalles" : "Ver detalles";
+}
 
 function maquetarModal(longitud, alumnos) {
     let template = '';
@@ -292,14 +296,24 @@ function maquetarModal(longitud, alumnos) {
             }
             if (e.nombre !== undefined || e.nombre !== null) {
                 table += `
-                <tr>
-                    <td>${c++}</td>
-                    <td><img src='../img/imgUser/${imagen}' class='alumnos' alt='Alumno' style='width:60px; height:60px; border-radius: 45px;'></td>
-                    <td>${e.nombre}</td>
-                    <td>${e.cantidad}</td>
-                    <td>${e.promedio}</td>
-                    <td>${e.Class}</td>
-                </tr>`;
+                <div class='contenidoAlumno' id = 'contenidoAlumno' >
+                    <div class='contenido-informacion'>
+                        <img src='../img/imgUser/${imagen}' alt='Imagen del alumno'
+                            class='img-responsive'>
+                        <h2 class ='title-name'>
+                        ${e.nombre}
+                        <span style='font-size:1.2rem'><strong>Class: </strong>${e.Class} </span>
+                        </h2>
+                        <button class ='btn btn-link btn-detalles' id='btn-detalles' onclick='mostrarpanel(event)'>Ver detalles</button>
+                        <div class ='informacionAlumno'>
+                        <ul>
+                            <li><strong>Cantidad: </strong> ${e.cantidad}</li>
+                            <li><strong>Promedio: </strong> ${e.promedio}</li>
+                        </ul>
+                        </div>
+                    </div>
+                </div >     
+                `;
             }else {
                 table += `
                 <tr>
@@ -339,19 +353,7 @@ function maquetarModal(longitud, alumnos) {
                             </button>
                         </div>
                         <div class="modal-body">
-                          <table class="table text-center">
-                            <thead class="thead-dark table-bordered table-dark">
-                                <td>#</td>
-                                <td>Imagen</td>
-                                <td>Nombre</td>
-                                <td>Cantidad</td>
-                                <td>Promedio</td>
-                                <td>Class</td>
-                            </thead>
-                            <tbody class="table-striped table-bordered table-hover">
-                            `+ table + `
-                            </tbody>                                  
-                          </table>
+                          `+ table + `
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
