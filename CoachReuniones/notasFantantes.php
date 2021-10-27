@@ -10,7 +10,14 @@ require_once '../Conexion/conexion.php';
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <link rel="stylesheet" type="text/css" href="css/modulos-moodle.css">
+
 <script src="https://cdn.ckeditor.com/4.8.0/full-all/ckeditor.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Roboto:400,100,300,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- style para select multiple -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.css">
+<link rel="stylesheet" type="text/css" href="css/notasfaltantes.css">
 
 <div class="title  mb-2">
     <a href="javascript:history.back();" title=""><img src="../img/back.png" class="icon"></a>
@@ -57,31 +64,38 @@ require_once '../Conexion/conexion.php';
 <div class="card p-2 ">
     <div class='row'>
         <div class="col-sm m-1">
-            <select id="class" class="browser-default bg-light custom-select" name="class" onchange="main();">
-                <option class='dropdown-item' disabled selected>Class</option>
+            <select id="class" class="browser-default bg-light custom-select choices-multiple-remove-button" name="class" onchange="main();"  placeholder="Seleccionar class" multiple>
+                <!-- <option class='dropdown-item' disabled selected>Class</option> -->
                 <?php
-                foreach ($dbh->query("SELECT DISTINCT(Class) FROM alumnos ORDER BY Class DESC") as $alumnos) {
-                    echo '<option value="' . $alumnos['Class'] . '">' . $alumnos["Class"] . '</option>';
+                $consult1 = $dbh->query("SELECT DISTINCT(Class) FROM alumnos ORDER BY Class DESC");
+                foreach ($consult1 as $alumnos) {
+                    $clase = $alumnos['Class'];
+                    echo '<option  value="' . $clase . '">' . $clase . '</option>';
                 }
                 ?>
             </select>
         </div>
         <div class="col-sm m-1">
-            <select id="ciclo" class="browser-default bg-light custom-select" name="ciclo" onchange="main();">
-                <option class='dropdown-item' disabled selected>Ciclo</option>
+            <select id="ciclo" class="browser-default bg-light custom-select choices-multiple-remove-button" name="ciclo" onchange="main();" placeholder="Seleccionar ciclo" multiple>
+                <!-- <option class='dropdown-item' disabled selected>Ciclo</option> -->
                 <?php
-                foreach ($dbh->query("SELECT DISTINCT cicloU FROM inscripcionciclos WHERE cicloU != '' ORDER BY cicloU ASC") as $alumnos) {
-                    echo '<option value="' . $alumnos['cicloU'] . '">' . $alumnos['cicloU'] . '</option>';
+                // $consult2 = $dbh->query("SELECT DISTINCT cicloU FROM inscripcionciclos WHERE cicloU != '' ORDER BY cicloU ASC");
+                $consult2 = $dbh->query("SELECT DISTINCT cicloU FROM inscripcionciclos ORDER BY cicloU ASC");
+                foreach ( $consult2 as $alumnos) {
+                    $ciclo = $alumnos['cicloU'];
+                    echo '<option value="' . $ciclo . '">' . $ciclo . '</option>';
                 }
                 ?>
             </select>
         </div>
         <div class="col-sm m-1">
-            <select id="status" class="browser-default bg-light custom-select" name="status" onchange="main();">
-                <option class='dropdown-item' disabled selected>Status</option>
+            <select id="status" class="browser-default bg-light custom-select choices-multiple-remove-button" name="status" onchange="main();" placeholder="Seleccionar status" multiple>
+                <!-- <option class='dropdown-item' disabled selected>Status</option> -->
                 <?php
-                foreach ($dbh->query("SELECT DISTINCT StatusActual FROM alumnos ORDER BY StatusActual ASC") as $alumnos) {
-                    echo '<option value="' . $alumnos['StatusActual'] . '">' . $alumnos['StatusActual'] . '</option>';
+                $consult3 = $dbh->query("SELECT DISTINCT StatusActual FROM alumnos ORDER BY StatusActual ASC");
+                foreach ($consult3 as $alumnos) {
+                    $status = $alumnos['StatusActual'] ;
+                    echo '<option value="' .$status . '">' . $status . '</option>';
                 }
                 ?>
             </select>
@@ -89,15 +103,34 @@ require_once '../Conexion/conexion.php';
     </div>
 </div>
 <div>
-    <center>
-        <div id="donutchart" class="h-50 d-inline bg-light mx-auto" style="width: 55%;"></div>
-    </center>
+    <div id="grafica">
+    <div id="donutchart" class="h-50 d-inline bg-light mx-auto"></div>
+    </div>
+    
     <div id="lista" class="d-inline h-50 w-75 mx-auto p-1" style="background-color:#ADADB2"></div>
 </div>
-</div>
-<div style="height:300px;">
+
+<div style="height:300px; " id="canal">
 
 </div>
 <script async src="js/notasFantantes.js"></script>
 <script async src="js/editor.js"></script>
+
+<!-- script para select multiple -->
+<script src="https://cdn.jsdelivr.net/gh/bbbootstrap/libraries@main/choices.min.js"></script>
+
+<!-- script para select multiple -->
+<script>
+    $(document).ready(function(){
+
+    var multipleCancelButton = new Choices('.choices-multiple-remove-button', {
+    removeItemButton: true,
+    maxItemCount:5,
+    searchResultLimit:5,
+    renderChoiceLimit:50
+    });
+    
+    });
+</script>
+
 <?php include 'Modularidad/PiePagina.php'; ?>
