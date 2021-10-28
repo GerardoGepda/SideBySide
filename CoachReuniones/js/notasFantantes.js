@@ -11,7 +11,7 @@ function checkAll() {
         inputs[i].checked = true;
     }
 }
-function descheckAll() {
+function uncheckAll() {
     var inputs = document.querySelectorAll('.pl');
     for (var i = 0; i < inputs.length; i++) {
         inputs[i].checked = false;
@@ -41,18 +41,21 @@ function createTemplate(ciclo) {
     template = `
     <div id="caja" class="w-75 mx-auto m-1 p-1">
     <form action="Modelo/ModeloNotas/correo.php" method="post" id="caja2">
-        <button type="submit" class="btn btn-primary p-1" value="enviar"><i class="fa fa-paper-plane"></i>Enviar</button>
+        <button type="submit" id="enviar" class="btn btn-primary p-1" value="enviar"><i class="fa fa-paper-plane"></i>Enviar</button>
         <input type="text" value="${ciclo}" name="ciclo" hidden>
-        <table class="table  mx-auto mt-4 m-1 p-2 table-responsive" id="example" style="width:98%; border-radius:15px;" >
-            <thead class="thead-dark table-bordered">
-                <th>#</th>
-                <th><button type="button" class="btn btn-primary p-1 m-1" onclick="checkAll()">Todos</button></th>
-                <th>Nombre</th>
-                <th>Correo</th>
-                <th>Universidad</th>
-                <th>Carrera</th>
-                <th>Class</th>
-                <th>Sede</th>
+        <table class="table table-responsive"  id="example"  >
+            <thead >
+                <th scope="col">#</th>
+                <th scope="col" id="che">
+                <button type="button" id="check" class="btn p-1 m-1" onclick="checkAll()"><p>✓</p></button>
+                <button type="button" id="uncheck" class="btn p-1 m-1" onclick="uncheckAll()"><p>X</p></i></button>
+                </th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Universidad</th>
+                <th scope="col">Carrera</th>
+                <th scope="col">Class</th>
+                <th scope="col">Sede</th>
             </thead>
             <tbody class='table table-striped table-hover table-bordered' id='alumnos'>
                 <tr>
