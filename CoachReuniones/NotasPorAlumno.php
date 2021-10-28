@@ -302,7 +302,7 @@ $stmt16584->execute(array($idExpedienteU));
               echo "<th><button type='button' class='btn btn-danger'  disabled> 
             <img src='../img/PDF.png' width='25px' height='25px'></button></th>";
             } else {
-              echo "<th><a href='../pdfCicloInscripcion/$pdfCiclo.pdf' target='_blank' class='btn btn-danger '>
+              echo "<th><a href='../pdfCicloInscripcion/$pdfCiclo' target='_blank' class='btn btn-danger '>
               <img src='../img/PDF.png' width='25px' height='25px>'</a> </th>";
             }
 
