@@ -30,13 +30,11 @@ if ($consulta->rowCount() >= 1) {
 //Extraer ID Inscripcion ciclo 
 // Consulta que muestra el idciclo del expediente correspondiente
 //dependiendo del expediente asi se l mostrara los datos
-$consultaIC = $pdo->prepare("SELECT Id_InscripcionC FROM inscripcionciclos WHERE idExpedienteU = ? ");
+$consultaIC = $pdo->prepare("SELECT Id_InscripcionC, cicloU FROM inscripcionciclos WHERE idExpedienteU = ? ");
 $consultaIC->execute(array($idExpedienteU));
-$Id_InscripcionC;
+$inscrpCiclos;
 if ($consultaIC->rowCount() >= 1) {
-    while ($fila = $consultaIC->fetch()) {
-        $Id_InscripcionC = $fila['Id_InscripcionC'];
-    }
+    $inscrpCiclos = $consultaIC->fetchAll(PDO::FETCH_ASSOC);
 }
 setlocale(LC_TIME, 'es_SV.UTF-8');
 
@@ -262,7 +260,17 @@ while ($fila = $stmt1->fetch()) {
                             Comprobante</label>
                         <center><small>El archivo no debe pesar más de 5MB</small></center>
                     </div>
-                    <br><br>
+                    <div class="form-group">
+                        <label class="" for="ciclo">Ciclo:</label>
+                        <select name="idInscripcionCiclo" class="form-control">
+                            <?php
+                                foreach ($inscrpCiclos as $key => $value) {
+                                    echo '<option value="'.$value['Id_InscripcionC'].'">'.$value['cicloU'].'</option>';        
+                                }
+                            ?>
+                        </select>
+                    </div>
+                    <br>
                     <div>
                         <?php
                         $stmt1 = $dbh->prepare("SELECT `ID_Alumno`  FROM `alumnos` WHERE correo='" . $_SESSION['Email'] . "'");
@@ -275,7 +283,6 @@ while ($fila = $stmt1->fetch()) {
                         <input type="hidden" name="alumno" value="<?php echo $alumno; ?>">
                         <!--id expedente-->
                         <input type="hidden" name="expediente" value="<?php echo $idExpedienteU; ?>">
-                        <input type="hidden" name="idInscripcionCiclo" value="<?php echo $Id_InscripcionC; ?>">
                     </div>
             </div>
             <div class="modal-footer">
@@ -347,7 +354,6 @@ while ($fila = $stmt1->fetch()) {
                             </select>
                         </div>
                         <input type="hidden" name="expedienteu" value="<?php echo $idExpedienteU; ?>">
-                        <input type="hidden" name="idInscripcionCiclo" value="<?php echo $Id_InscripcionC; ?>">
                         <input type="hidden" name="idInscripcionM" value="<?php echo $IdInsM; ?>">
                     </div>
                     <input class="btn btn-primary btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="Actualizar_Notas" value="Actualizar Nota" id="Actualizar_Notas">
