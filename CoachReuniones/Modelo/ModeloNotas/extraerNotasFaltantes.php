@@ -20,12 +20,12 @@ try {
         alumnos.ID_Empresa FROM alumnos  JOIN carrera ON carrera.Id_Carrera = alumnos.ID_Carrera JOIN expedienteu ON
         expedienteu.ID_Alumno = alumnos.ID_Alumno  WHERE expedienteu.idExpedienteU 
         NOT IN( SELECT i.idExpedienteU FROM inscripcionciclos i LEFT JOIN expedienteu e ON  e.idExpedienteU 
-        = i.idExpedienteU  WHERE i.cicloU = '$ciclos') AND alumnos.StatusActual = '$estado'   AND alumnos.Class = $clase AND alumnos.StatusActual = '$estado'
+        = i.idExpedienteU  WHERE i.cicloU IN ($ciclos)) AND alumnos.StatusActual IN ($estado)   AND alumnos.Class IN ($clase)
         ORDER BY name asc";
 
         // cantidad de alumnos de la class seleccionada
         $stmt2 = "SELECT COUNT(a.ID_Alumno) FROM alumnos a INNER JOIN expedienteu e 
-        on e.ID_Alumno = a.ID_Alumno WHERE a.Class = $clase AND a.StatusActual = '$estado'";
+        on e.ID_Alumno = a.ID_Alumno WHERE a.Class IN ($clase) AND a.StatusActual IN ($estado)";
 
         //inicio de ejecutar consultas
         $query1 = $dbh->query($stmt);

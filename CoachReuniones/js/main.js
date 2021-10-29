@@ -18,7 +18,7 @@ function main() {
     ShowSelected(listaCiclos, listaClases, listaFinanciamiento, listaSede, listaStatus);
     graphicsByUniversity(listaCiclos, listaClases, listaFinanciamiento, listaSede, listaStatus);
     // fin de procesar consultas
-    
+
 }
 
 function GraphBarraU() {

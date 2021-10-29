@@ -43,3 +43,117 @@ text-align: center;
 	margin: 0 auto;
 	border-radius: 50%;
 }
+
+#filtros{
+  margin:15px;
+}
+
+/*
+  Estilos de la presentacion de datos de la renovionUniversidad.php
+  
+*/
+
+.btn{
+    outline: none;
+}
+
+.container{
+    width: 80%;
+    margin: 0 auto;
+    padding: 50px 0; 
+}
+
+.img-responsive{
+    width:60px;
+    height:60px;
+    border-radius: 10px;
+    grid-area: img;
+    margin: 0 auto; 
+}
+
+.contenidoAlumno{
+    width: 100%;
+    height:125px;
+    margin: 20px auto;
+    padding:20px;
+    border-radius: 10px;
+    box-shadow: 3px 4px 5px 5px rgba(150, 150, 150, 0.315);
+    position: relative;
+    overflow-y: hidden;
+    transition: all 0.8s;
+}
+
+
+.contenido-informacion{
+    display:grid;
+    grid-template:
+                    "img nombre link"
+                    "contenido contenido contenido";
+    grid-gap: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.title-name{
+    grid-area: nombre;
+    font-size:1.4rem;
+    color: rgb(71, 71, 71);
+}
+
+.title-name span{
+    display:block;
+    font-size: 0.9rem;
+    color: rgb(92, 92, 92);
+    font-weight: lighter;
+}
+
+.btn-detalles{
+    width: 140px;
+    height: 30px;
+    outline:none;
+    margin-top:3rem;
+    transition: all 0.5s;
+    grid-area: link;
+}
+
+.informacionAlumno{
+    width: 90%;
+    height: auto;
+    padding: 10px;
+    background-color:rgb(219, 219, 219);
+    grid-area: contenido;
+    border-radius:10px;
+    position: relative;
+    margin: 10px auto;
+}
+
+.informacionAlumno ul{
+    list-style: none;
+    color:rgb(75, 75, 75);
+}
+
+#expediente{
+    color: rgb(255, 72, 72);
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+}
+
+.tipo-nota{
+    font-size:1.2rem;
+    color: #7e7e7e;
+    margin:0.5px;
+    display: block;
+}
+/*
+    Estilos para mostrar el panel
+*/
+
+.mostrarpanel{
+    height:250px;
+}
+
+.modal-dialog , .modal-content , .modal-header , .modal-body{
+  width:100%;
+  min-width: 650px;
+}

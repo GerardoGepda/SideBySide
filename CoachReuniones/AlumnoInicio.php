@@ -345,18 +345,18 @@ while ($fila15 = $stmt6->fetch()) {
             </button>
           </div>
         </div>
-        <?php
-        if ($consulta11->rowCount() >= 1) {
-          while ($fila11 = $consulta11->fetch()) {
-            echo "
-              <tr class='bg-light'>
-                <td>" . $fila11['Titulo'] . "</td>
-                <td>" . $fila11['Fecha'] . "</td>
-                <td>" . $fila11['asistencia'] . "</td>
-              </tr>";
-          }
-        }
-        ?>
+        <!-- <?php
+        // if ($consulta11->rowCount() >= 1) {
+        //   while ($fila11 = $consulta11->fetch()) {
+        //     echo "
+        //       <tr class='bg-light'>
+        //         <td>" . $fila11['Titulo'] . "</td>
+        //         <td>" . $fila11['Fecha'] . "</td>
+        //         <td>" . $fila11['asistencia'] . "</td>
+        //       </tr>";
+        //   }
+        // }
+        ?> -->
         </tbody>
         </table>
       </div>

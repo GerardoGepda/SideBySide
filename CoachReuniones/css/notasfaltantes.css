@@ -1,0 +1,227 @@
+@font-face { 
+    font-family: letra; 
+    src: url(http://sitename.com/wp-content/themes/themename/fonts/font-name.ttf); 
+    font-weight: normal; 
+    }
+
+.choices__list--multiple .choices__item {
+    background-color: #BE0032;
+    border: 1px solid #BE0032;
+}
+
+.choices[data-type*="select-multiple"] .choices__button, .choices[data-type*="text"] .choices__button {
+    border-left: 1px solid black;
+}
+select {
+    width:200; 
+    font-family:courier; 
+    font-size:13px;
+}
+#donutchart{
+    position: absolute;
+    right: 3px;
+    top: 40%;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px #999;
+    -webkit-box-shadow: 2px 2px 5px #999;
+    -moz-box-shadow: 2px 2px 5px #999;
+    filter: progid:DXImageTransform.Microsoft.Shadow(color='#666666', Direction=135, Strength=4);
+}
+#lista{
+    position: relative;
+    right: 15%;
+}
+#caja{
+    border-radius: 8px;
+    max-width: 68%;
+    box-shadow: 2px 2px 5px #999;
+    -webkit-box-shadow: 2px 2px 5px #999;
+    -moz-box-shadow: 2px 2px 5px #999;
+    filter: progid:DXImageTransform.Microsoft.Shadow(color='#666666', Direction=135, Strength=4);
+    
+}
+#example_length label{
+    color: black;
+    position: relative;
+    left: 180%;
+    bottom: 20px;
+}
+#example_filter{
+    position: relative;
+    bottom: 30px;
+}
+#example_filter label{
+    color: white;
+    font-weight: 700;
+    background: #2b303b;
+    border-radius: 5px;
+    border-left: 10px solid #2b303b;
+}
+#example_filter input{
+    width: 200px;
+  height: 40px;
+  font-size: 10pt;
+  font-weight: bold;
+  background: white;
+  color: #63717f;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-bottom-right-radius: 5px;
+   border-top-right-radius: 5px;
+   border-bottom-right-radius: 5px;
+}
+#example{
+    width:98%; 
+    
+}
+#example thead{
+    background: #4f5b66;
+    color: white;
+}
+
+#example td{
+    border-left: initial;
+    border-right: initial;
+    font-weight: 500;
+    font-family: "letra", Helvetica, sans-serif; 
+}
+#example tr{
+    margin: 20px auto;
+}
+#example_paginate span a{
+    background: #F20544;
+    
+}
+
+#example_wrapper{
+    width: 100%;
+}
+#che{
+    width: 70px  ;
+}
+#check{
+    display: inline-block;
+    background: #40bfc1;
+    color: white;
+    height: 20px;
+    width: 20px;
+    margin: 1px;
+
+}
+#uncheck{
+    display: inline-block;
+    background: #BE0032;
+    color: white;
+    height: 20px;
+    width: 20px;
+    margin: 1px;
+}
+#check p,
+#uncheck p{
+    font-size: 9px;
+    font-weight: 900;
+}
+#enviar{
+    position: relative;
+    top: 10px;
+    width: 150px;
+    height: 50px;
+    font-size: 12pt;
+  font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.checkbox-wrap {
+    display: block;
+    position: relative;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 500;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+    margin: 15px 30px;
+}
+    
+
+/* Hide the browser's default checkbox */
+.checkbox-wrap input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0; 
+}
+  
+  /* Create a custom checkbox */
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0; }
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+  .checkmark:after {
+    content: "\f0c8";
+    font-family: "FontAwesome";
+    position: absolute;
+    color: rgba(0, 0, 0, 0.1);
+    font-size: 20px;
+    margin-top: -14px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s; }
+    @media (prefers-reduced-motion: reduce) {
+      .checkmark:after {
+        -webkit-transition: none;
+        -o-transition: none;
+        transition: none; 
+    } 
+    }
+  
+  /* Show the checkmark when checked */
+  .checkbox-wrap input:checked ~ .checkmark:after {
+    display: block;
+    content: "\f14a";
+    font-family: "FontAwesome";
+    color: rgba(0, 0, 0, 0.2); }
+  
+  /* Style the checkmark/indicator */
+  .checkbox-primary {
+    color: #40bfc1;
+}
+    .checkbox-primary input:checked ~ .checkmark:after {
+      color: #40bfc1; 
+    }
+  
+
+
+  
