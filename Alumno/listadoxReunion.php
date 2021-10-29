@@ -6,7 +6,7 @@ require_once 'templates/MenuHorizontal.php';
 require '../Conexion/conexion.php';
 setlocale(LC_TIME, 'es_SV.UTF-8');
 $taller = $_GET["reunion"];
-
+$Validacion = $_GET['inscrito'];
 //Extraemos el carnet del estudiante
 $stmt1 = $dbh->prepare("SELECT * FROM `alumnos` WHERE correo='" . $_SESSION['Email'] . "'");
 // Ejecutamos
@@ -16,7 +16,10 @@ while ($fila = $stmt1->fetch()) {
   $alumno = $fila["ID_Alumno"];
   $name = $fila["Nombre"];
 }
-
+//consulta para obtener el link de la reunión.
+$id = $_GET["reunion"];
+$stmt5 = $dbh->prepare("SELECT `link` FROM horariosreunion AS hr WHERE hr.ID_Reunion = $id ");
+$stmt5->execute();
 
 // consulta para saber si un alumno se ha inscrito a más de un cupo
 $stmt4 = $dbh->query("SELECT COUNT(*) FROM `inscripcionreunion` WHERE id_alumno = '$alumno' AND  id_reunion  = " . $_GET["reunion"] . " ");
@@ -93,6 +96,45 @@ while ($row = $stmt4->fetch()) {
           } ?>
         </tbody>
       </table>
+
+      <?php
+
+      while ($i = $stmt5->fetch()) {
+        $lin = $i['link'];
+      }
+
+
+      if ($Validacion == "true") {
+
+        echo "<div class='modal fade' id='staticBackdrop' data-backdrop='static' data-keyboard='false' tabindex='-1' aria-labelledby='staticBackdropLabel' aria-hidden='true'>
+        <div class='modal-dialog'>
+          <div class='modal-content'>
+            <div class='modal-header'>
+              <h5 class='modal-title' id='staticBackdropLabel'>Link de la reuinón</h5>
+              <button type='button' class='close' data-dismiss='modal' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+              </button>
+            </div>
+            <div class='modal-body'>
+            <p>Link de la Reunión</p>
+            <input type='text' class='form-control text-primary' readonly id='link' value='$lin'>
+            </div>
+            <div class='modal-footer'>
+              <button class='btn btn-dark' data-dismiss='modal' onclick='CopiarLink()'>Copiar link</button>
+              <button type='button' class='btn btn-danger' data-dismiss='modal'>Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>";
+      }
+      ?>
+      <script>
+        function CopiarLink() {
+          let Link = document.getElementById('link');
+          Link.select();
+          document.execCommand('copy');
+        }
+      </script>
     </div>
   </div>
 </div>
@@ -105,5 +147,10 @@ while ($row = $stmt4->fetch()) {
 </script>
 <!-- consultas para reuniones -->
 <script async src="JS/vue.js"></script>
+<script>
+  window.onload = () => {
+    $('#staticBackdrop').modal('show');
+  }
+</script>
 
 <?php require_once 'templates/footer.php'; ?>

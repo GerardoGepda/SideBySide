@@ -111,9 +111,11 @@ var reunion = new Vue({
                 success: function (response) {
                     const result = JSON.parse(response);
                     if (result.estado == "ok") {
-                        $("#TmodalAlerta").html("Respuesta");
-                        $("#modalAlerta-content").html(result.mensaje);
-                        $('#modalAlerta').modal('show');
+                        $("#TmodalAlerta").html("Respuesta"); 
+                        $("#modalAlerta-content").html(`<p style='text-align: center;'>${result.mensaje}</p>` + `<p style='text-align: center;'>Link de la reunión: </p> <input type='text' class='form-control text-primary' readonly id='link' value='${result.Link}'>`);
+                        $('#modalAlerta').modal('show');      
+                        document.getElementById('BtnLink').classList.remove("d-none");
+                        document.getElementById('BtnAceptar').classList.add("d-none");
                     } else {
                         $("#TmodalAlerta").html("Respuesta");
                         $("#modalAlerta-content").html(result.mensaje);
@@ -164,6 +166,8 @@ var ObjDelteInscr = new Vue({
                         $("#TmodalAlerta").html("Respuesta");
                         $("#modalAlerta-content").html(result.mensaje);
                         $('#modalAlerta').modal('show');
+                        document.getElementById('BtnLink').classList.add("d-none");
+                        document.getElementById('BtnAceptar').classList.remove("d-none");
                     } else {
                         $("#TmodalAlerta").html("Respuesta");
                         $("#modalAlerta-content").html(result.mensaje);

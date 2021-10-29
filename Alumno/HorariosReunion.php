@@ -100,7 +100,8 @@ while ($fila = $stmt1->fetch()) {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Aceptar</button>
+        <button type="button" class="btn btn-danger" id="BtnAceptar"  data-dismiss="modal">Aceptar</button>
+        <button type="button" onclick="CopiarLink()" id="BtnLink" class="btn btn-danger d-none"  data-dismiss="modal">Copiar Link</button>
       </div>
     </div>
   </div>
@@ -133,6 +134,13 @@ while ($fila = $stmt1->fetch()) {
   const taller = <?php echo $taller; ?>;
   const tiporeunion = '<?php echo $tipoReunion; ?>';
   const a = '<?php echo $alumno; ?>';
+</script>
+<script>
+  function CopiarLink() {
+          let Link = document.getElementById('link');
+          Link.select();
+          document.execCommand('copy');
+        }
 </script>
 
 <script async src="JS/CrearHorario.js"></script>

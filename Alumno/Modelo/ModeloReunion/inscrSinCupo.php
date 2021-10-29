@@ -30,8 +30,14 @@ if (isset($_POST['inscribir'])) {
             echo 'Error: ' . $e->getMessage();
         }
         if ($ingresado) {
-            $respuesta = array("estado" => "ok", "mensaje" => "¡Inscripción exitosa!");
+            //Consulta para optener el link de la reunión.
+            $sqlLink ="SELECT `link` FROM horariosreunion AS hr WHERE hr.ID_Reunion = $reunion";
+            $queryLink = $pdo->prepare($sqlLink);
+            $queryLink->execute();
+            $resultadoLink = $queryLink->fetch();
+            $respuesta = array("estado" => "ok", "mensaje" => "¡Inscripción exitosa!", "Link" => $resultadoLink["link"]);
             $jsnResponse = json_encode($respuesta);
+
             echo $jsnResponse;
         } else {
             $respuesta = array("estado" => "err", "mensaje" => "Erro al guardar su inscripción en, intente de nuevo.");
@@ -58,7 +64,7 @@ if (isset($_POST['inscribir'])) {
         echo $jsnResponse;
     }
 
-    $respuesta = array("estado" => "ok", "mensaje" => "Se borro su inscripción.");
+    $respuesta = array("estado" => "ok", "mensaje" => "Se borro su inscripción.", "Link" => null);
     $jsnResponse = json_encode($respuesta);
     echo $jsnResponse;
 } else {

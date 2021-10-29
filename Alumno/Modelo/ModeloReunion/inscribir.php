@@ -27,7 +27,7 @@ if (isset($_POST['inscribir'])) {
         $sql3 = "UPDATE `horariosreunion` SET `Canitdad`= ? WHERE ID_Reunion = ? and 	IDHorRunion = ?";
 
         if ($pdo->prepare($sql3)->execute([$result, $reunion, $horario])) {
-            header("Location: ../../listadoxReunion.php?id=$horario&reunion=$reunion");
+            header("Location: ../../listadoxReunion.php?id=$horario&reunion=$reunion&inscrito=true");            
             $_SESSION['message'] = 'La inscripción se ha guardado';
             $_SESSION['message2'] = 'success';
         } else {
