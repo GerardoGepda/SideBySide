@@ -63,7 +63,7 @@ if (isset($_POST['EnviarDato'])) {
 					font-family: "Roboto", sans-serif;
 					color: white;
 					margin: 3% 3% 1% 3%;
-					font-size: 9px;
+					font-size: 10px;
 				}
 				.imgMessage {
 					width: 80%;
@@ -98,7 +98,7 @@ if (isset($_POST['EnviarDato'])) {
 				</div>
 				<div class="bodyOfMeessage">
 					<p>¡Hola '.$PrimerNombre.'!</p>
-					<p>Hemos recibido tu solicitud de horas de vinculación. Tu solicitud ya fue revisada y el estado de esta es: '.$Estado.'</p>
+					<p>Hemos recibido tu solicitud de horas de vinculación. Tu solicitud ya fue revisada y el estado de esta es: <b>'.$Estado.'</b></p>
 					<p>Dudas o consultas puede escribir al correo: SideBySide@oportunidades.org.sv</p>
 					<p>Att: Equipo fase 2</p>
 					<center><a class="btnportal" href="http://portal.workeysoportunidades.org/" target="_blank">Ir al portal</a></center>
@@ -114,7 +114,7 @@ if (isset($_POST['EnviarDato'])) {
 		
 		//Verifica si ha insertado los datos
 		if ($consulta->execute()) {
-			if (mail($to, $subject, $message, $headers)) {
+			if (mail($to, utf8_decode($subject), $message, $headers)) {
 				//Si todo fue correcto muestra el resultado con exito;
 				$_SESSION['message'] = 'Solicitud Actualizada con exito';
 				$_SESSION['message2'] = 'success';
