@@ -70,9 +70,15 @@ while ($fila = $stmt1->fetch()) {
     </div>
   </div>
 
+  <div class="my-5">
+    <div class="alert alert-warning w-75 m-auto">
+        Las incripciones a cada horario se cerrarán <strong>2 horas antes</strong> de su respectivo inicio
+    </div>
+  </div>
+
 </div>
 <!-- /#page-content-wrapper -->
-<br><br><br><br><br><br><br><br><br><br>
+<br><br><br>
 </div>
 
 <div id="dReunionDiv">

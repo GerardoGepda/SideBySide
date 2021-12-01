@@ -26,10 +26,7 @@ $fecha = new DateTime();
 
 
 while ($row = $stmt2->fetch()) {
-    if (strtotime($fecha->format('Y-m-d')) < strtotime($row['Fecha'])) {
-        $data[] = $row;
-    }
-    
+    $data[] = $row;
 }
 
 

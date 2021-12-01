@@ -4,6 +4,8 @@
 //('2019','2015','2014','2016','2017','2018','2020')
 //('AHSAT','CHSAT','SAFT','SASAT','SMSAT','SSFT','SSSAT')
 //(02-2021)
+$fixedData = array();
+
 function convertir($e)
 {
     return "'" . $e . "'";
@@ -44,5 +46,10 @@ function extractCantReu($unis, $ciclo, $clases, $sedes, PDO $dbh)
     $queryCantReu = $dbh->prepare($sqlCounReus);
     $queryCantReu->execute([":ciclo" => $ciclo]);
     
-    return $queryCantReu->fetchAll(PDO::FETCH_ASSOC);
+    foreach ($queryCantReu->fetchAll(PDO::FETCH_ASSOC) as $value) {
+        //colocamos el id del alumno como key de cada elemento.
+        $fixedData[$value["IdAlumno"]] = $value;
+    }
+
+    return $fixedData;
 }
