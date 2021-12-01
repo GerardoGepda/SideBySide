@@ -10,24 +10,25 @@ $incripcionCiclo= $_GET['id'];
 <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets1/css1/style.css">
 <link rel="stylesheet" href="CSS/modificarMateria.css">
-<?php  
-  
-  //Manda  allamar plantillas
-  require_once 'templates/header.php';
-  require_once 'templates/MenuHorizontal.php';
-  require '../Conexion/conexion.php';
+<?php
+        //Manda  allamar plantillas
+        require_once 'templates/header.php';
+        require_once 'templates/MenuHorizontal.php';
+        require '../Conexion/conexion.php';
+
+
 
         //Carnet del alumno
         $stmt1 =$dbh->prepare("SELECT `ID_Alumno`  FROM `alumnos` WHERE correo='".$_SESSION['Email']."'");
         $stmt1->execute();
          while($fila = $stmt1->fetch()){
            $alumno=$fila["ID_Alumno"];
-         }//Fin de while 
+         }//Fin de while
 
          // Expediente U
         $consulta=$pdo->prepare("SELECT idExpedienteU  FROM expedienteu WHERE ID_Alumno = ? AND estado = 'Activo'");  
         $consulta->execute(array($alumno));
-        $idExpedienteU;
+
          if ($consulta->rowCount()>=1)
          {
            while ($fila=$consulta->fetch())
@@ -47,7 +48,9 @@ $incripcionCiclo= $_GET['id'];
 
         //extraer materias disponibles para inscribir
         $consulta5=$pdo->prepare("SELECT * FROM materias WHERE idExpedienteU = ?  ");
-        $consulta5->execute(array($idExpedienteU));   
+        $consulta5->execute(array($idExpedienteU));
+
+
          
 ?>
 
@@ -63,7 +66,7 @@ $incripcionCiclo= $_GET['id'];
     </div>
     <div class="alerta">
         <?php
-    include "config/Alerta.php";
+            include "config/Alerta.php";
       ?>
     </div>
     <!--///////////////////////////////////////////////-->
@@ -85,9 +88,14 @@ $incripcionCiclo= $_GET['id'];
                     <!--Primera columna-->
                     <div class="col-sm" style="color: #343434;">
                         <!-- incluir estilo -->
-                        <?php include "CSS/modificarInscripcion.php";?>
+                        <?php
+
+                        include "CSS/modificarInscripcion.php";
+
+                        ?>
 
                         <div class='centerTable '>
+                            <h1 class="text-center" style="font-family: 'Anton', sans-serif;">CICLO</h1>
                             <table id="makeEditable">
                                 <thead class="table table-striped table-bordered">
                                     <tr>
@@ -101,37 +109,38 @@ $incripcionCiclo= $_GET['id'];
 
                                 <tbody>
 
-                                    <?php    
-    if ($consulta2->rowCount()>=1)
-        {
-          while ($fila2=$consulta2->fetch())
-          { 
-            $pdfCiclo = $fila2['comprobante'];
-            $pdfnotas = $fila2['pdfnotas'];
-            $idciclo =  $fila2['Id_InscripcionC'];
-            $ciclo = $fila2['cicloU'];
-                      
-              echo "<tr>
-                      <td >".$fila2['Id_InscripcionC']."</td>
-                      <td class='oscuro'>".$fila2['cicloU']." 
-                      <button class='btn btn-warning ' type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal2'><i class=\"fas fa-edit\"></i></button></td> 
-                      </td>
-                      <td>
-                      <a href='../pdfCicloInscripcion/$pdfCiclo' target='_blank' class='btn btn-danger '>
-                      <img src='../img/PDF.png' width='25px' height='25px '/></a> 
-                      <button class='btn btn-warning ' type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal'><i class=\"fas fa-edit\"></i></button></td> 
-                      
-                      <td><a href='../pdfNotas/$pdfnotas' target='_blank' class='btn btn-danger '>
-                      <img src='../img/PDF.png' width='25px' height='25px' /></a> 
-                      <button class='btn btn-warning ' comprobante type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal3'><i class=\"fas fa-edit\"></i></button></td> 
-                      </td> 
-                 </tr>";     
-              }//fin de while
-           }else{
-             echo "<tr><td colspan='6'>No ha agregado ninguna Asignatura</td></tr>";
-           }//fin de else-if
-                                 
-           ?>
+                                    <?php
+                                        if ($consulta2->rowCount()>=1)
+                                            {
+
+                                              while ($fila2=$consulta2->fetch())
+                                              {
+                                                $pdfCiclo = $fila2['comprobante'];
+                                                $pdfnotas = $fila2['pdfnotas'];
+                                                $idciclo =  $fila2['Id_InscripcionC'];
+                                                $ciclo = $fila2['cicloU'];
+
+                                                  echo "<tr>
+                                                          <td >".$fila2['Id_InscripcionC']."</td>
+                                                          <td class='oscuro'>".$fila2['cicloU']." 
+                                                          <button class='btn btn-warning ' type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal2'><i class=\"fas fa-edit\"></i></button></td> 
+                                                          </td>
+                                                          <td>
+                                                          <a href='../pdfCicloInscripcion/$pdfCiclo' target='_blank' class='btn btn-danger '>
+                                                          <img src='../img/PDF.png' width='25px' height='25px '/></a> 
+                                                          <button class='btn btn-warning ' type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal'><i class=\"fas fa-edit\"></i></button></td> 
+                                                          
+                                                          <td><a href='../pdfNotas/$pdfnotas' target='_blank' class='btn btn-danger '>
+                                                          <img src='../img/PDF.png' width='25px' height='25px' /></a> 
+                                                          <button class='btn btn-warning ' comprobante type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal3'><i class=\"fas fa-edit\"></i></button></td> 
+                                                          </td> 
+                                                     </tr>";
+                                                  }//fin de while
+                                               }else{
+                                                 echo "<tr><td colspan='6'>No ha agregado ninguna Asignatura</td></tr>";
+                                               }//fin de else-if
+
+                                               ?>
                                 </tbody>
 
                                 <tfoot>
@@ -144,10 +153,12 @@ $incripcionCiclo= $_GET['id'];
 
                         <h1 class="text-center" style="font-family: 'Anton', sans-serif;">Materias Inscritas</h1>
                         <br>
+
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal33">
                             Agregar Materias
                         </button>
+
                         <div class='centerTable '>
                             <table id="makeEditable">
                                 <thead class="table table-striped table-bordered">
@@ -163,46 +174,62 @@ $incripcionCiclo= $_GET['id'];
                                 </thead>
 
                                 <tbody>
+                                    <!--
+                                      ====================================================================
+                                      CUERPO TABLA DE LAS MATERIAS
+                                      ====================================================================
+                                      -->
+                                    <?php
+                                        if ($consulta3->rowCount()>=1)
+                                            {
+                                                session_start();
+                                                $cantidadMaterias = 0;
+                                                $isFirtsTime = false;
 
-                                    <?php    
-    if ($consulta3->rowCount()>=1)
-        {
-          while ($fila2=$consulta3->fetch())
-          { 
+                                              while ($fila2=$consulta3->fetch())
+                                              {
 
-            $materia1 = $fila2['nombreMateria'];
-              echo "<tr>                    
-                      <td class='oscuro'>".$fila2['idMateria']." </td>
-                      <td >".$fila2['nombreMateria']."</td>
-                      <td>".$fila2['nota']."
-                      <td>".$fila2['matricula']."</td>
-                      ";
-                      if($fila2['estado']== 'Aprobada'){
-                        echo "<td class='bg-success text-white'>".$fila2['estado']."</td> ";
-                      }elseif($fila2['estado']== 'Inscrita'){
-                        echo "<td class='bg-info text-white'>".$fila2['estado']."</td> ";
-                      }elseif($fila2['estado']== 'Retirada'){
-                        echo "<td class='bg-warning text-white'>".$fila2['estado']."</td> ";
-                      }else{
-                        echo "<td class='bg-danger text-white'>".$fila2['estado']."</td> ";
-                      }
-                      echo " 
-                      <td>
-                       <button type='button' id=".$fila2['idMateria']." class='btn ' data-toggle='modal'
-                        data-target='#ModalMateria' onclick='mandarId(id)' ><i class='fa fa-pen'></i>
+                                                  $isFirtsTime = ($fila2['estado'] == 'Inscrita');
 
-                        <a href='Modelo/ModeloMaterias/eliminarMateria.php?idciclo=$idciclo&alumno=$idExpedienteU&id=".$fila2['idMateria']."'>
-                        <button class='btn text-dark '  type='button'  data-toggle='modal' data-target='#exampleModal4'>
-                        <i class=\"fas fa-trash\"></i></button></a>
-                        </td> 
-                      </td>
-                 </tr>";   
-              }//fin de while
-           }else{
-             echo "<tr><td colspan='6'>No ha agregado ninguna Asignatura</td></tr>";
-           }//fin de else-if
-                                 
-           ?>
+                                                $materia1 = $fila2['nombreMateria'];
+                                                  echo "<tr>                    
+                                                          <td class='oscuro'>".$fila2['idMateria']." </td>
+                                                          <td >".$fila2['nombreMateria']."</td>
+                                                          <td>".$fila2['nota']."
+                                                          <td>".$fila2['matricula']."</td>
+                                                          ";
+                                                          if($fila2['estado']== 'Aprobada'){
+                                                            echo "<td class='bg-success text-white'>".$fila2['estado']."</td> ";
+                                                          }elseif($fila2['estado']== 'Inscrita'){
+                                                            echo "<td class='bg-info text-white'>".$fila2['estado']."</td> ";
+                                                          }elseif($fila2['estado']== 'Retirada'){
+                                                            echo "<td class='bg-warning text-white'>".$fila2['estado']."</td> ";
+                                                          }else{
+                                                            echo "<td class='bg-danger text-white'>".$fila2['estado']."</td> ";
+                                                          }
+                                                          echo " 
+                                                          <td>
+                                                           <button type='button' id=".$fila2['idMateria']." class='btn ' data-toggle='modal'
+                                                            data-target='#ModalMateria' onclick='mandarId(id)' ><i class='fa fa-pen'></i>
+                                    
+                                                            <a href='Modelo/ModeloMaterias/eliminarMateria.php?idciclo=$idciclo&alumno=$idExpedienteU&id=".$fila2['idMateria']."'>
+                                                            <button class='btn text-dark '  type='button'  data-toggle='modal' data-target='#exampleModal4'>
+                                                            <i class=\"fas fa-trash\"></i></button></a>
+                                                            </td> 
+                                                          </td>
+                                                     </tr>";
+
+                                                          $cantidadMaterias++;
+                                                  }//fin de while
+
+                                                $_SESSION['cantidadMaterias'] = $cantidadMaterias;
+                                                $_SESSION['isFirtsTime'] = $isFirtsTime;
+
+                                            }else{
+                                                 echo "<tr><td colspan='6'>No ha agregado ninguna Asignatura</td></tr>";
+                                               }//fin de else-if
+
+                                   ?>
                                 </tbody>
                                 <tfoot>
 
@@ -217,7 +244,7 @@ $incripcionCiclo= $_GET['id'];
                 </div>
                 <!--Fin de row-->
 
-                <a class="btn btn-success" href="expedienteU.php" rel="noopener noreferrer">Guardar Cambios</a>
+                <a class="btn btn-success" href="./Modelo/ModeloMaterias/ActualizarNotas.php?expediente=<?php echo $idExpedienteU;?>&&idInscripcionCiclo=<?=$incripcionCiclo?>" rel="noopener noreferrer">Guardar Cambios</a>
             </div>
             <!--Fin de container-->
         </div>
@@ -379,7 +406,6 @@ $incripcionCiclo= $_GET['id'];
             </div>
             <div class="modal-body">
                 <form action="Modelo/ModeloMaterias/ActualizarNota2.php" method="POST" accept-charset="utf-8">
-                    <div id="alerta5"></div>
                     <div class="col">
 
                         <script type="text/javascript">
@@ -525,6 +551,16 @@ $incripcionCiclo= $_GET['id'];
         </div>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="./JS/selector.js"></script>
-<?php  require_once 'templates/footer.php';?>
+
+
+    <!--
+     ==================================================
+     JS FILES
+     ==================================================
+     -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="./JS/selector.js"></script>
+
+<?php
+require_once 'templates/footer.php';?>

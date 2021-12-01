@@ -1,36 +1,42 @@
 <?php
 error_reporting(0);
-require_once "../../../BaseDatos/conexion.php";
 header('Content-Type: text/html; charset=utf-8');
-session_start(); 
-$idMateria=$_POST['materia'];
-$nota=$_POST['nota'];
-$estado=$_POST['estado'];
+session_start();
 
-$idInscripcionCiclo=$_POST['idInscripcionCiclo'];
-$idInscripcionM=$_POST['idInscripcionM'];
-$idExpedienteU=$_POST['expedienteu'];
 
-$sql = "UPDATE inscripcionmateria SET  nota=?, estado = ? WHERE idMateria=? AND Id_InscripcionC = ?";
+// Obtenemos los datos de la variable POST
+$cantidadMaterias = $_SESSION['cantidadMaterias'];
+$idMateria=$_POST['materia']; // Posicion 0
+$nota=$_POST['nota']; // Posicion 1
+$estado=$_POST['estado']; // Posicion 2
+$idInscripcionCiclo=$_POST['idInscripcionCiclo']; // Posicion 3
+$idExpedienteU=$_POST['expedienteu']; // Posicion 4
 
-if($pdo->prepare($sql)->execute([ $nota, $estado,$idMateria, $idInscripcionCiclo])){
+if (!isset($_COOKIE['datosAlumnos'])){
+    $datosAlumno = [$idMateria , $nota , $estado ];
+    setcookie("datosAlumnos" , json_encode(array($datosAlumno)));
 
-    $sql2 = "UPDATE materias SET estadoM = ? WHERE idMateria=?";
-    if($pdo->prepare($sql2)->execute([$estado,$idMateria])){
-        $_SESSION['message'] = 'Nota actualizada';
-        $_SESSION['message2'] = 'success';
-    header("Location: ../../ModificarInscripcio.php?id=$idInscripcionCiclo&idAlumno=$idExpedienteU");
-    }
-    else{
-        $_SESSION['message'] = 'No se pudo actualizar la nota';
-        $_SESSION['message2'] = 'Error';
-    
-        header("Location: ../../ModificarInscripcio.php?id=$idInscripcionCiclo&idAlumno=$idExpedienteU");
-    
-    }
-}else{
-    $_SESSION['message'] = 'No se pudo actualizar la materia';
-    $_SESSION['message2'] = 'Error';
+    $_SESSION['message'] = 'Nota agregada para actualizar. Esperamos a que guardes cambios.';
+    $_SESSION['message2'] = 'success';
     header("Location: ../../ModificarInscripcio.php?id=$idInscripcionCiclo&idAlumno=$idExpedienteU");
 }
+
+if (isset($_COOKIE['datosAlumnos'])){
+    $datosCookie = json_decode($_COOKIE['datosAlumnos']);
+
+    $datosAux = array([$idMateria , $nota , $estado]);
+
+    foreach ($datosCookie as $dato){
+        if ($dato[0] != $idMateria){
+            $datosAux[] = $dato;
+        }
+    }
+
+    $_SESSION['message'] = 'Nota agregada para actualizar. Esperamos a que guardes cambios.';
+    $_SESSION['message2'] = 'success';
+    setcookie("datosAlumnos" , json_encode($datosAux));
+
+    header("Location: ../../ModificarInscripcio.php?id=$idInscripcionCiclo&idAlumno=$idExpedienteU");
+}
+
 ?>

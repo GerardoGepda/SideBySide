@@ -22,30 +22,6 @@ SET time_zone = "+00:00";
 -- Base de datos: `oportuni_despega`
 --
 
-DELIMITER $$
---
--- Procedimientos
---
-CREATE DEFINER=`oportunidad`@`localhost` PROCEDURE `CREAR_CUPOS` (IN `id_reu` CHAR(10), IN `id_horario` INT, IN `horainicio` TIME, IN `horafin` TIME, IN `cant` INT, IN `tiempo` INT)  NO SQL
-WHILE(cant > 0) DO
-	
-    SET horafin = DATE_ADD(horainicio,INTERVAL (tiempo*60) SECOND);
-    
-	INSERT INTO `inscripcionreunion` (`id_alumno`, `id_reunion`, `Horario`, `telefono`, `asistencia`, `horainicio`, `horafin`, `estado`, `is_typing`, `last_acativity`) VALUES (NULL, id_reu, id_horario, '0000-0000', NULL, horainicio, horafin, 'disponible', 'no', current_timestamp());
-    
-    SET horainicio = DATE_ADD(horainicio,INTERVAL (tiempo*60) SECOND);
-	SET cant = cant - 1;
-END WHILE$$
-
-CREATE DEFINER=`oportunidad`@`localhost` PROCEDURE `CREAR_CUPOS_MISMO_HORARIO` (IN `id_reu` CHAR(10), IN `id_horario` INT, IN `horainicio` TIME, IN `horafin` TIME, IN `cant` INT, IN `tiempo` INT)  NO SQL
-WHILE(cant > 0) DO
-	INSERT INTO `inscripcionreunion` (`id_alumno`, `id_reunion`, `Horario`, `telefono`, `asistencia`, `horainicio`, `horafin`, `estado`, `is_typing`, `last_acativity`) VALUES (NULL, id_reu, id_horario, '0000-0000', NULL, horainicio, horafin, 'disponible', 'no', current_timestamp());
-    
-	SET cant = cant - 1;
-END WHILE$$
-
-DELIMITER ;
-
 -- --------------------------------------------------------
 
 --
@@ -1252,42 +1228,42 @@ INSERT INTO `alumnos` (`ID_Alumno`, `Nombre`, `Class`, `correo`, `ID_Carrera`, `
 DELIMITER $$
 CREATE TRIGGER `AfterUpdateStatus` AFTER UPDATE ON `alumnos` FOR EACH ROW BEGIN
 
-DECLARE x INT(11); 
+DECLARE x INT(11);
 SET x = (SELECT COUNT(ID_Alumno) FROM statusbeca WHERE ID_Alumno =  NEW.ID_Alumno);
- 
+
 IF !(x >= 1) THEN
-           
+
 	IF (NEW.StatusActual = 'Beca Cancelada' OR NEW.StatusActual = 'Declinado' )	THEN
 
 		IF (MONTH(CURRENT_DATE()) >= 1 OR MONTH(CURRENT_DATE()) <= 5) THEN
-    
+
 			INSERT INTO statusbeca (ID_Alumno, ciclo) VALUES (NEW.ID_Alumno,  CONCAT('Ciclo 01-',YEAR(CURRENT_DATE))  );
-        
+
 		ELSEIF(MONTH(CURRENT_DATE()) >= 6 OR MONTH(CURRENT_DATE()) <= 7    )   THEN
-          
-        	 	INSERT INTO statusbeca (ID_Alumno, ciclo) VALUES (NEW.ID_Alumno,  CONCAT('Ciclo 03-',YEAR(CURRENT_DATE))  );  
-          
+
+        	 	INSERT INTO statusbeca (ID_Alumno, ciclo) VALUES (NEW.ID_Alumno,  CONCAT('Ciclo 03-',YEAR(CURRENT_DATE))  );
+
 	ELSEIF (MONTH(CURRENT_DATE()) >= 8 OR MONTH(CURRENT_DATE()) <= 12    )   THEN
-       
+
        	   	INSERT INTO statusbeca (ID_Alumno, ciclo) VALUES (NEW.ID_Alumno,  CONCAT('Ciclo 02-',YEAR(CURRENT_DATE))  );
-          
-	END IF;    
+
+	END IF;
 END IF;
 ELSE
 IF (MONTH(CURRENT_DATE()) >= 1 OR MONTH(CURRENT_DATE()) <= 5) THEN
-    
+
 UPDATE statusbeca SET ciclo = CONCAT('Ciclo 01-',YEAR(CURRENT_DATE)) WHERE ID_Alumno = NEW.ID_Alumno;
-        
+
 		ELSEIF(MONTH(CURRENT_DATE()) >= 6 OR MONTH(CURRENT_DATE()) <= 7    )   THEN
-          
+
 UPDATE statusbeca SET ciclo = CONCAT('Ciclo 03-',YEAR(CURRENT_DATE)) WHERE ID_Alumno = NEW.ID_Alumno;
-          
+
 	ELSEIF (MONTH(CURRENT_DATE()) >= 8 OR MONTH(CURRENT_DATE()) <= 12    )   THEN
-       
+
 UPDATE statusbeca SET ciclo = CONCAT('Ciclo 02-',YEAR(CURRENT_DATE)) WHERE ID_Alumno = NEW.ID_Alumno;
-          
+
 	END IF;
-	
+
 END IF;
 
 END
@@ -2497,19 +2473,19 @@ INSERT INTO `horariosreunion` (`IDHorRunion`, `ID_Reunion`, `HorarioInicio`, `Ho
 --
 DELIMITER $$
 CREATE TRIGGER `TRIGGER_CUPOS` AFTER INSERT ON `horariosreunion` FOR EACH ROW BEGIN
-  
+
     DECLARE x VARCHAR(100);
-  
+
   	SET x = (SELECT r.Tipo from reuniones r WHERE r.ID_Reunion = NEW.ID_Reunion);
-            
+
     IF (x = 'Otro' OR x = "Sesión individual") THEN
     	CALL CREAR_CUPOS(NEW.ID_Reunion, NEW.IDHorRunion, NEW.HorarioInicio, NEW.HorarioFinalizado, NEW.Canitdad, NEW.TiempoReunion);
     END IF;
-    
+
     IF (x = "Sesión Grupal" ) THEN
     CALL CREAR_CUPOS_MISMO_HORARIO(NEW.ID_Reunion, NEW.IDHorRunion, NEW.HorarioInicio, NEW.HorarioFinalizado, NEW.Canitdad, NEW.TiempoReunion);
     END IF;
-    
+
 END
 $$
 DELIMITER ;
