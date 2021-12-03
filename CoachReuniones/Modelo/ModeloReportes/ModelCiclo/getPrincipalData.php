@@ -53,7 +53,8 @@ if (isset($input['ciclo']) && isset($input['clases']) && isset($input['sedes']) 
             a.StatusActual,
             a.FuenteFinacimiento,
             a.ID_Sede,
-            a.Class as Class
+            a.Class as Class,
+            GROUP_CONCAT(date_format(r.Fecha, '%d-%m-%Y') SEPARATOR ', ') as fechas
         FROM alumnos a
             INNER JOIN empresas em ON em.ID_Empresa = a.ID_Empresa
             INNER JOIN inscripcionreunion i on i.id_alumno = a.ID_Alumno
@@ -79,7 +80,8 @@ if (isset($input['ciclo']) && isset($input['clases']) && isset($input['sedes']) 
             a.StatusActual,
             a.FuenteFinacimiento,
             a.ID_Sede,
-            a.Class
+            a.Class,
+            'NA' as fechas
         FROM alumnos a
             INNER JOIN empresas em ON em.ID_Empresa = a.ID_Empresa
             INNER JOIN inscripcionreunion i on i.id_alumno = a.ID_Alumno
@@ -119,7 +121,8 @@ if (isset($input['ciclo']) && isset($input['clases']) && isset($input['sedes']) 
             al.StatusActual,
             al.FuenteFinacimiento,
             al.ID_Sede,
-            al.Class
+            al.Class,
+            'NA' as fechas
         FROM alumnos al
             INNER JOIN usuarios u ON al.correo = u.correo
             INNER JOIN empresas em ON em.ID_Empresa = al.ID_Empresa

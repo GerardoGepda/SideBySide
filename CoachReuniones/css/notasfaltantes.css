@@ -18,22 +18,16 @@ select {
     font-size:13px;
 }
 #donutchart{
-    position: absolute;
-    right: 3px;
-    top: 40%;
     border-radius: 10px;
     box-shadow: 2px 2px 5px #999;
     -webkit-box-shadow: 2px 2px 5px #999;
     -moz-box-shadow: 2px 2px 5px #999;
     filter: progid:DXImageTransform.Microsoft.Shadow(color='#666666', Direction=135, Strength=4);
 }
-#lista{
-    position: relative;
-    right: 15%;
-}
+
 #caja{
     border-radius: 8px;
-    max-width: 68%;
+    width: 90%;
     box-shadow: 2px 2px 5px #999;
     -webkit-box-shadow: 2px 2px 5px #999;
     -moz-box-shadow: 2px 2px 5px #999;
@@ -72,7 +66,7 @@ select {
    border-bottom-right-radius: 5px;
 }
 #example{
-    width:98%; 
+    width:100%; 
     
 }
 #example thead{

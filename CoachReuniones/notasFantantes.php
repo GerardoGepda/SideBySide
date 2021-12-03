@@ -76,15 +76,25 @@ require_once '../Conexion/conexion.php';
             </select>
         </div>
         <div class="col-sm m-1">
-            <select id="ciclo" class="browser-default bg-light custom-select choices-multiple-remove-button" name="ciclo" onchange="main();" placeholder="Seleccionar ciclo" multiple>
+            <select id="sede" class="browser-default bg-light custom-select choices-multiple-remove-button" name="sedes" onchange="main();"  placeholder="Seleccionar sede" multiple>
+                <?php
+                $consultSede = $dbh->query("SELECT DISTINCT ID_Sede FROM sedes ORDER BY ID_Sede DESC");
+                foreach ($consultSede as $sedes) {
+                    $sede = $sedes['ID_Sede'];
+                    echo '<option  value="' . $sede . '">' . $sede . '</option>';
+                }
+                ?>
+            </select>
+        </div>
+        <div class="col-sm m-1">
+            <select id="ciclo" class="browser-default bg-light custom-select choices-multiple-remove-button" name="ciclo" onchange="main();" placeholder="Seleccionar ciclo">
                 <!-- <option class='dropdown-item' disabled selected>Ciclo</option> -->
                 <?php
-                // $consult2 = $dbh->query("SELECT DISTINCT cicloU FROM inscripcionciclos WHERE cicloU != '' ORDER BY cicloU ASC");
-                $consult2 = $dbh->query("SELECT DISTINCT cicloU FROM inscripcionciclos ORDER BY cicloU ASC");
-                foreach ( $consult2 as $alumnos) {
-                    $ciclo = $alumnos['cicloU'];
-                    echo '<option value="' . $ciclo . '">' . $ciclo . '</option>';
-                }
+                    $consult2 = $dbh->query("SELECT DISTINCT cicloU FROM inscripcionciclos WHERE cicloU LIKE 'C%' ORDER BY cicloU ASC");
+                    foreach ( $consult2 as $alumnos) {
+                        $ciclo = $alumnos['cicloU'];
+                        echo '<option value="' . $ciclo . '">' . $ciclo . '</option>';
+                    }
                 ?>
             </select>
         </div>
@@ -103,9 +113,9 @@ require_once '../Conexion/conexion.php';
     </div>
 </div>
 <div>
-    <div id="donutchart" class="h-50 d-inline bg-light mx-auto"></div>
+    <div id="donutchart" class="w-50 bg-light mx-auto my-4 d-none" style="height:300px"></div>
     
-    <div id="lista" class="d-inline h-50 w-75 mx-auto p-1" style="background-color:#ADADB2"></div>
+    <div id="lista" class="h-50 w-100 p-1"></div>
 </div>
 
 <div style="height:300px; " id="canal">

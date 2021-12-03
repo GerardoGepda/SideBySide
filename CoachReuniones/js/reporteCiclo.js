@@ -43,12 +43,13 @@ function CreateAnArrayBuffer(info) {
 function PrepareArrayExcel(json) {
     let result = [];
     let cont = 1;
-    result.push(['#', 'Nombre', 'Correo', 'Universidad', 'Sede/Modalidad', 'Status', 'Class', 'Cantidad', 'Porcentaje']);
+    result.push(['#', 'Nombre', 'Correo', 'Universidad', 'Sede/Modalidad', 'Status', 'Class', 'Cantidad', 'Asistencias', 'Porcentaje', 'Fechas de asistencia']);
 
     for (const key in json) {
         result.push([cont++, json[key].nombre, json[key].correo,
         json[key].univeridad, json[key].ID_Sede, json[key].StatusActual,
-        json[key].Class, json[key].cantidad, json[key].promedio]);
+        json[key].Class, json[key].cantidad, json[key].cantidad.substring(0, json[key].cantidad.indexOf('/')), 
+        json[key].promedio, json[key].fechas]);
     }
     return result;
 }
@@ -71,6 +72,19 @@ function ExportarPDF(data, ids) {
     }
 
 }
+
+function ExportAllExcel(data) {
+    //adding event listener for btnExoportAllExcel
+    document.getElementById('btnExoportAllExcel').addEventListener('click', () => {
+        const btnExoportAllExcel = document.getElementById('btnExoportAllExcel');
+        btnExoportAllExcel.innerHTML = '<i class="fas fa-spinner rotated"></i> Cargando...';
+
+        CreateExcel(PrepareArrayExcel(data));
+
+        btnExoportAllExcel.innerHTML = '<i class="fas fa-file-excel"></i> Exportar registros';
+    });
+}
+
 function ExportExcel(data, ids) {
     try {
         const btnexcel = document.querySelectorAll((".btn-excel"));
@@ -238,7 +252,6 @@ function MainGraphic(ciclo, data) {
         finalData[indx][0] = element.concat("%: ", finalData[indx][1])
     });
 
-    console.log(finalData);
     finalData.unshift(['Porcentaje', 'Cantidad']);
 
     function drawChart() {
@@ -274,7 +287,7 @@ function checkFileExist(urlToFile) {
 }
 
 function mostrarpanel(e) {
-    console.log(e.target.parentNode.parentNode.classList.toggle("mostrarpanel"));
+    e.target.parentNode.parentNode.classList.toggle("mostrarpanel");
     e.target.innerHTML = (e.target.textContent == "Ver detalles") ? "Ocultar detalles" : "Ver detalles";
 }
 
@@ -369,7 +382,9 @@ function maquetarModal(longitud, alumnos) {
 
     ExportarPDF(alumnos, longitud);
     ExportExcel(alumnos, longitud);
-
+    ExportAllExcel(alumnos.flat());
+    //mostrando boton para exportar todo a excel
+    document.getElementById('btnExoportAllExcel').classList.remove('d-none');
 }
 
 function graficaByU(e, universidad) {

@@ -37,6 +37,22 @@ require_once '../Conexion/conexion.php';
         width: 90px;
         height: 90px;
     }
+
+    .rotated{
+        animation-name: rotation;
+        animation-duration: 3s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+
+    @keyframes rotation {
+        0% {
+            transform:rotate(0deg);
+        }
+        100% {
+            transform:rotate(360deg);
+        }
+    }
 </style>
 
 <nav class="navbar navbar-expand-lg navbar-light" id="row">
@@ -90,6 +106,11 @@ require_once '../Conexion/conexion.php';
     <div class="row p-1 datos m-1 p-1">
         <div id="main" class="col-md-6 d-flex justify-content-center"></div>
         <div id="tabla" class="col-md-6 d-flex justify-content-center"></div>
+        <div class="col-md-12 d-flex justify-content-center">
+            <button id="btnExoportAllExcel" class="btn btn-success d-none">
+                <i class="fas fa-file-excel"></i> Exportar registros
+            </button>
+        </div>
     </div>
     <div id="principal" class="row"></div>
 

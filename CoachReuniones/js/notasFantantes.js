@@ -1,6 +1,5 @@
 // declaración de variables
-let template, clase, ciclo, status;
-let contador = 1;
+let template, clase, ciclo, status, sedes;
 let listaFaltantes = [];
 let data = {};
 let contar = 0;
@@ -18,6 +17,7 @@ function uncheckAll() {
     }
 }
 function grafica(cantidad, faltan) {
+    document.getElementById('donutchart').classList.remove('d-none');
     google.charts.load("current", { packages: ["corechart"] });
     google.charts.setOnLoadCallback(drawChart);
     function drawChart() {
@@ -39,7 +39,7 @@ function grafica(cantidad, faltan) {
 }
 function createTemplate(ciclo) {
     template = `
-    <div id="caja" class="w-75 mx-auto m-1 p-1">
+    <div id="caja" class="mx-auto p-1">
     <form action="Modelo/ModeloNotas/correo.php" method="post" id="caja2">
         <button type="submit" id="enviar" class="btn btn-primary p-1" value="enviar"><i class="fa fa-paper-plane"></i>Enviar</button>
         <input type="text" value="${ciclo}" name="ciclo" hidden>
@@ -56,6 +56,8 @@ function createTemplate(ciclo) {
                 <th scope="col">Carrera</th>
                 <th scope="col">Class</th>
                 <th scope="col">Sede</th>
+                <th scope="col">PDF</th>
+                <th scope="col">N. Faltantes</th>
             </thead>
             <tbody class='table table-striped table-hover table-bordered' id='alumnos'>
                 <tr>
@@ -82,16 +84,18 @@ function main() {
     clase = $("#class").val();
     ciclo = $("#ciclo").val();
     status = $("#status").val();
+    sedes = $("#sede").val();
     // fin de extraer valores de los filtros   
 
     if (clase.length > 0 && ciclo.length > 0 && status.length > 0) {
 
         const classtxt = clase.map(x => "'" + x + "'").join(",");
-        const ciclotxt = ciclo.map(x => "'" + x + "'").join(",");
+        const ciclotxt = "'"+ciclo.trim()+"'";
         const statustxt = status.map(x => "'" + x + "'").join(",");
+        const sedestxt = sedes.map(x => "'" + x + "'").join(",");
 
         data = {
-            clase: classtxt, ciclos: ciclotxt, estado: statustxt
+            clase: classtxt, ciclos: ciclotxt, estado: statustxt, sedes: sedestxt
         };
         // buscar la lista de los alumnos que no han subido sus notas
         fetch(
@@ -109,9 +113,9 @@ function main() {
                 createTemplate(json.ciclos);
                 if (listaFaltantes) {
                     alumnos = "";
+                    let contador = 1;
                     listaFaltantes.forEach(e => {
-                        contar++;
-                        let nombre = e.ID_Empresa;
+                        let nombre = e.Universidad;
                         if (nombre == 'UNDESA') {
                             nombre = 'UES SA';
                         } else if (nombre == 'UNDESS') {
@@ -130,18 +134,22 @@ function main() {
                                             <label class='checkbox-wrap checkbox-primary'>
 										  <input type='checkbox' class='pl' name='ActuaAlumno[]' value='${e.correo}'>
 										  <span class='checkmark'></span></label></td>
-                                        <td>${e.name}</td>
+                                        <td>${e.Nombre}</td>
                                         <td>${e.correo}</td>
                                         <td>${nombre} </td>
-                                        <td>${e.nombre} </td>
+                                        <td>${e.Carrera} </td>
                                         <td>${e.Class} </td>
-                                        <td>${e.ID_Sede} </td>
+                                        <td>${e.Sede} </td>
+                                        <td>${
+                                            e.pdfnotas != null ? '<span class="badge badge-success">Con PDF</span>' : '<span class="badge badge-danger">Sin PDF</span>'
+                                        } </td>
+                                        <td>${
+                                            e.NotasFalt > 0 ? '<span class="badge badge-danger">'+e.NotasFalt+'</span>' : '<span class="badge badge-success">0</span>'
+                                        } </td>
                                     </tr>
                                     `
                     });
-                    let subieron = 0;
-                    subieron = parseInt(json.cantidad) - contar;
-                    grafica(subieron, contar);
+                    grafica(parseInt(json.completos), parseInt(json.faltantes));
                     document.getElementById("alumnos").innerHTML = alumnos;
                     $(document).ready(function () {
                         $('#example').DataTable({
