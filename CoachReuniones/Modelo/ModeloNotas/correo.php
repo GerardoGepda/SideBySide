@@ -36,7 +36,7 @@ try {
                 $to = "$correo[$i]";
                 $from = "SideBySide@oportunidades.org.sv";
                 // To send HTML mail, the Content-type header must be set
-                $headers .= "Reply-To: '$from'\r\n";
+                $headers = "Reply-To: '$from'\r\n";
                 $headers .= "Return-Path: $from\r\n";
                 $headers .= "From: $from\r\n";
                 $headers .= "Organization: Oportunidades\r\n";
@@ -78,7 +78,7 @@ try {
                             font-family: "Roboto", sans-serif;
                             color: white;
                             margin: 3% 3% 1% 3%;
-                            font-size: 9px;
+                            font-size: 10px;
                         }
                         .imgMessage {
                             width: 80%;
@@ -90,7 +90,7 @@ try {
                         }
                         .footerMessage {
                             font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-                            font-size: 9px;
+                            font-size: 10px;
                             color: white;
                             margin-bottom: 1%;
                         }
@@ -103,7 +103,7 @@ try {
                             text-decoration: none;
                             padding-top: 5px;
                             border-radius: 5px;
-                            font-size: 14px !important;
+                            font-size: 13px !important;
                         }
                     </style>
                 </head>
@@ -118,8 +118,10 @@ try {
                              <p>¡Hola ' . $PrimerNombre . '</p>
                              ' . $prettyDocument . '
                              <br>
-                             <p>Notas faltantes: ' . $ciclo . '</p>
-                             <p>Último día para subir: ' . $fechaSpanish . '</p>
+                             <p><b>Notas faltantes:</b> ' . $ciclo . '</p>
+                             <p><b>Último día para subir:</b> ' . $fechaSpanish . '</p>
+                             <center><a class="btnportal" href="http://portal.workeysoportunidades.org/" target="_blank">Ir al portal</a></center>
+                             <br>
                         </div>
                         <div class="footerMessage">
                             <center><b>Este mensaje ha sido generado automáticamente,  por favor no contestar</b></center>

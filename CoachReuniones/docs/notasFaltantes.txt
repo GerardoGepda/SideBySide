@@ -1,4 +1,7 @@
-<p>Hemos notado que aún no has subido tus notas a la plataforma Side by Side.</p>
+ <p>Hemos notado que a&uacute;n no has subido tus notas o su comprobante (PDF) a la plataforma Side by Side, por lo cual te solicitamos que ingreses la informaci&oacute;n solicitada antes de la fecha&nbsp;indicada.&nbsp;</p>
+
 <p>Dudas o consultas puede escribir al correo: SideBySide@oportunidades.org.sv</p>
+
+<p>Saludos Coordiales.</p>
+
 <p>Att: Equipo fase 2</p>
-<center><a class="btnportal" href="http://portal.workeysoportunidades.org/" target="_blank">Ir al portal</a></center>

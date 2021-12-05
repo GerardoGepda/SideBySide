@@ -25,7 +25,7 @@ if (isset($_POST['EnviarDato'])) {
 		$to = "$Correo";
 		$from = "SideBySide@oportunidades.org.sv";
 		// To send HTML mail, the Content-type header must be set
-		$headers .= "Reply-To: '$from'\r\n";
+		$headers = "Reply-To: '$from'\r\n";
 		$headers .= "Return-Path: $from\r\n";
 		$headers .= "From: $from\r\n";
 		$headers .= "Organization: Oportunidades\r\n";
@@ -50,12 +50,15 @@ if (isset($_POST['EnviarDato'])) {
 			<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet"> 
 			<style>
 				.message {
-					display: flex;
-					flex-direction: column !important;
+					/*display: flex;*/
+					margin: 60px auto;
 					justify-content: center;
 					align-items: center;
 					background-color: #2d2d2e;
 					padding: 2%;
+				}
+				p, img{
+					justify-content: center;
 				}
 				.bodyOfMeessage {
 					border-top: 3px #be0032 solid;
@@ -68,13 +71,14 @@ if (isset($_POST['EnviarDato'])) {
 				.imgMessage {
 					width: 80%;
 					max-width: 350px;
+					margin: 5px auto;
 				}
 				.imgMessage img {
 					width: 100%;
 				}
 				.footerMessage {
 					font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-					font-size: 9px;
+					font-size: 10px;
 					color: white;
 					margin-bottom: 1%;
 				}
@@ -87,14 +91,16 @@ if (isset($_POST['EnviarDato'])) {
 					text-decoration: none;
 					padding-top: 5px;
 					border-radius: 5px;
-					font-size: 14px !important;
+					font-size: 13px !important;
 				}
 			</style>
 		</head>
 		<body>
 			<div class="message">
 				<div class="imgMessage">
-					<img src="http://portal.workeysoportunidades.org/img/SideBySideWhiteVersion.png" alt="logo side by side">
+					<center>
+						<img src="http://portal.workeysoportunidades.org/img/SideBySideWhiteVersion.png" alt="logo side by side">
+					</center>
 				</div>
 				<div class="bodyOfMeessage">
 					<p>¡Hola '.$PrimerNombre.'!</p>
