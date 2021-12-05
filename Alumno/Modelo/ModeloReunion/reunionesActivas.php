@@ -17,8 +17,8 @@ while ($fila = $stmt1->fetch()) {
     $sede = $fila["ID_Sede"];
 }
 
-$stmt2 = $pdo->prepare("SELECT r.ID_Reunion AS 'id', r.Titulo, r.Fecha, r.encargado, r.Tipo
-FROM reuniones r INNER JOIN universidadreunion u ON r.ID_Reunion = u.ID_Reunion WHERE u.ID_Empresa= '" . $universidad . "' and r.Estado='Activo' AND r.ID_Sede = '$sede'");
+$stmt2 = $pdo->prepare("SELECT r.ID_Reunion AS 'id', r.Titulo, r.Fecha, r.encargado, r.Tipo, ID_Sede
+FROM reuniones r INNER JOIN universidadreunion u ON r.ID_Reunion = u.ID_Reunion WHERE u.ID_Empresa= '" . $universidad . "' and r.Estado='Activo'");
 // Ejecutamos
 $stmt2->execute();
 //Obtenemos la fecha de hoy
@@ -26,7 +26,13 @@ $fecha = new DateTime();
 
 
 while ($row = $stmt2->fetch()) {
-    $data[] = $row;
+    if ($row["Tipo"] == 'Charla Informativa' || $row["Tipo"] == "Reunión General") {
+        $data[] = $row;
+    } else {
+        if ($row["ID_Sede"] == $sede) {
+            $data[] = $row;
+        }
+    }
 }
 
 

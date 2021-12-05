@@ -205,10 +205,10 @@
                                 }
                                 if ($materia != "") {
 
-                                    echo " <li><a href='IndicacionesMaterias.php' class='list-group-item list-group-item-action'>  <i class='fas fa-book'></i> Materias</a></li>
-      <li><a href='Notas.php' class='list-group-item list-group-item-action'>  <i class='fas fa-check'></i> Notas</a></li>
-
-      <li><a href='IndicacionesRetiros.php' class='list-group-item list-group-item-action'>  <i class='fas fa-ban'></i> Retiros</a></li>";
+                                    echo " <li><a href='IndicacionesMaterias.php' class='list-group-item list-group-item-action'>  <i class='fas fa-book'></i> Nuevo Ciclo</a></li>";
+                                    //Comentado porque ya no se utilizará
+                                    //echo "<li><a href='Notas.php' class='list-group-item list-group-item-action'>  <i class='fas fa-check'></i> Notas</a></li>";
+                                    echo "<li><a href='IndicacionesRetiros.php' class='list-group-item list-group-item-action'>  <i class='fas fa-ban'></i> Retiros</a></li>";
                                 }
                                 ?>
 
