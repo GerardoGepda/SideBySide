@@ -96,7 +96,7 @@ error_reporting(0);
          {
                 //Si todo fue correcto muestra el resultado con exito;
           // header("Location: ../../HistorialNotas.php?id=". $IdCiclo);
-          header("Location: ../../expedienteU.php");
+          header("Location: ../../ModificarInscripcio.php?id=$IdCiclo&idAlumno=$idExpedienteU");
           $_SESSION['message'] = 'Comprobante de notas actualizado';
           $_SESSION['message2'] = 'success';
            

@@ -14,7 +14,7 @@ $idExpedienteU=$_POST['expedienteu']; // Posicion 4
 
 if (!isset($_COOKIE['datosAlumnos'])){
     $datosAlumno = [$idMateria , $nota , $estado ];
-    setcookie("datosAlumnos" , json_encode(array($datosAlumno)));
+    setcookie("datosAlumnos" , json_encode(array($datosAlumno)), 0, '/');
 
     $_SESSION['message'] = 'Nota agregada para actualizar. Esperamos a que guardes cambios.';
     $_SESSION['message2'] = 'success';
@@ -34,7 +34,7 @@ if (isset($_COOKIE['datosAlumnos'])){
 
     $_SESSION['message'] = 'Nota agregada para actualizar. Esperamos a que guardes cambios.';
     $_SESSION['message2'] = 'success';
-    setcookie("datosAlumnos" , json_encode($datosAux));
+    setcookie("datosAlumnos" , json_encode($datosAux), 0, '/');
 
     header("Location: ../../ModificarInscripcio.php?id=$idInscripcionCiclo&idAlumno=$idExpedienteU");
 }

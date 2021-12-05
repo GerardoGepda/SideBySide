@@ -1,7 +1,7 @@
 <?php
 
 //extraer datos de la inscripcion
-$incripcionCiclo= $_GET['id'];
+$incripcionCiclo = $_GET['id'];
 
 ?>
 <?php require_once 'templates/head.php'; ?>
@@ -11,47 +11,45 @@ $incripcionCiclo= $_GET['id'];
 <link rel="stylesheet" href="assets1/css1/style.css">
 <link rel="stylesheet" href="CSS/modificarMateria.css">
 <?php
-        //Manda  allamar plantillas
-        require_once 'templates/header.php';
-        require_once 'templates/MenuHorizontal.php';
-        require '../Conexion/conexion.php';
+//Manda  allamar plantillas
+require_once 'templates/header.php';
+require_once 'templates/MenuHorizontal.php';
+require '../Conexion/conexion.php';
 
 
 
-        //Carnet del alumno
-        $stmt1 =$dbh->prepare("SELECT `ID_Alumno`  FROM `alumnos` WHERE correo='".$_SESSION['Email']."'");
-        $stmt1->execute();
-         while($fila = $stmt1->fetch()){
-           $alumno=$fila["ID_Alumno"];
-         }//Fin de while
+//Carnet del alumno
+$stmt1 = $dbh->prepare("SELECT `ID_Alumno`  FROM `alumnos` WHERE correo='" . $_SESSION['Email'] . "'");
+$stmt1->execute();
+while ($fila = $stmt1->fetch()) {
+    $alumno = $fila["ID_Alumno"];
+} //Fin de while
 
-         // Expediente U
-        $consulta=$pdo->prepare("SELECT idExpedienteU  FROM expedienteu WHERE ID_Alumno = ? AND estado = 'Activo'");  
-        $consulta->execute(array($alumno));
+// Expediente U
+$consulta = $pdo->prepare("SELECT idExpedienteU  FROM expedienteu WHERE ID_Alumno = ? AND estado = 'Activo'");
+$consulta->execute(array($alumno));
 
-         if ($consulta->rowCount()>=1)
-         {
-           while ($fila=$consulta->fetch())
-           {   
-             $idExpedienteU = $fila['idExpedienteU'];
-           }
-         }//fin de condicion
+if ($consulta->rowCount() >= 1) {
+    while ($fila = $consulta->fetch()) {
+        $idExpedienteU = $fila['idExpedienteU'];
+    }
+} //fin de condicion
 
-         //extraer inscripción de alumno
-         $consulta2=$pdo->prepare("SELECT * FROM inscripcionciclos WHERE Id_InscripcionC=?");
-         $consulta2->execute(array($incripcionCiclo));
+//extraer inscripción de alumno
+$consulta2 = $pdo->prepare("SELECT * FROM inscripcionciclos WHERE Id_InscripcionC=?");
+$consulta2->execute(array($incripcionCiclo));
 
-        //extraer notas de la inscripcion del alumno
-        $consulta3=$pdo->prepare("SELECT * FROM inscripcionmateria INNER JOIN materias on inscripcionmateria.idMateria = materias.idMateria 
+//extraer notas de la inscripcion del alumno
+$consulta3 = $pdo->prepare("SELECT * FROM inscripcionmateria INNER JOIN materias on inscripcionmateria.idMateria = materias.idMateria 
         WHERE Id_InscripcionC =? ORDER BY nota DESC ");
-        $consulta3->execute(array($incripcionCiclo));
+$consulta3->execute(array($incripcionCiclo));
 
-        //extraer materias disponibles para inscribir
-        $consulta5=$pdo->prepare("SELECT * FROM materias WHERE idExpedienteU = ?  ");
-        $consulta5->execute(array($idExpedienteU));
+//extraer materias disponibles para inscribir
+$consulta5 = $pdo->prepare("SELECT * FROM materias WHERE idExpedienteU = ?  ");
+$consulta5->execute(array($idExpedienteU));
 
 
-         
+
 ?>
 
 
@@ -66,15 +64,15 @@ $incripcionCiclo= $_GET['id'];
     </div>
     <div class="alerta">
         <?php
-            include "config/Alerta.php";
-      ?>
+        include "config/Alerta.php";
+        ?>
     </div>
     <!--///////////////////////////////////////////////-->
     <!--Para ver el nombre del archivo que sube-->
     <script type="text/javascript">
-    $(document).ready(function() {
-        bsCustomFileInput.init()
-    });
+        $(document).ready(function() {
+            bsCustomFileInput.init()
+        });
     </script>
 
     <!--Fin de funcion-->
@@ -110,37 +108,40 @@ $incripcionCiclo= $_GET['id'];
                                 <tbody>
 
                                     <?php
-                                        if ($consulta2->rowCount()>=1)
-                                            {
+                                    if ($consulta2->rowCount() >= 1) {
 
-                                              while ($fila2=$consulta2->fetch())
-                                              {
-                                                $pdfCiclo = $fila2['comprobante'];
-                                                $pdfnotas = $fila2['pdfnotas'];
-                                                $idciclo =  $fila2['Id_InscripcionC'];
-                                                $ciclo = $fila2['cicloU'];
+                                        while ($fila2 = $consulta2->fetch()) {
+                                            $pdfCiclo = $fila2['comprobante'];
+                                            $pdfnotas = $fila2['pdfnotas'];
+                                            $idciclo =  $fila2['Id_InscripcionC'];
+                                            $ciclo = $fila2['cicloU'];
 
-                                                  echo "<tr>
-                                                          <td >".$fila2['Id_InscripcionC']."</td>
-                                                          <td class='oscuro'>".$fila2['cicloU']." 
-                                                          <button class='btn btn-warning ' type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal2'><i class=\"fas fa-edit\"></i></button></td> 
-                                                          </td>
-                                                          <td>
-                                                          <a href='../pdfCicloInscripcion/$pdfCiclo' target='_blank' class='btn btn-danger '>
-                                                          <img src='../img/PDF.png' width='25px' height='25px '/></a> 
-                                                          <button class='btn btn-warning ' type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal'><i class=\"fas fa-edit\"></i></button></td> 
-                                                          
-                                                          <td><a href='../pdfNotas/$pdfnotas' target='_blank' class='btn btn-danger '>
-                                                          <img src='../img/PDF.png' width='25px' height='25px' /></a> 
-                                                          <button class='btn btn-warning ' comprobante type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal3'><i class=\"fas fa-edit\"></i></button></td> 
-                                                          </td> 
-                                                     </tr>";
-                                                  }//fin de while
-                                               }else{
-                                                 echo "<tr><td colspan='6'>No ha agregado ninguna Asignatura</td></tr>";
-                                               }//fin de else-if
+                                            echo "<tr>
+                                                        <td >" . $fila2['Id_InscripcionC'] . "</td>
+                                                        <td class='oscuro'>" . $fila2['cicloU'] . " 
+                                                        <button class='btn btn-warning ' type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal2'><i class=\"fas fa-edit\"></i></button></td> 
+                                                        </td>
+                                                        <td>
+                                                        <a href='../pdfCicloInscripcion/$pdfCiclo' target='_blank' class='btn btn-danger '>
+                                                        <img src='../img/PDF.png' width='25px' height='25px '/></a> 
+                                                        <button class='btn btn-warning ' type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal'><i class=\"fas fa-edit\"></i></button></td>
+                                                        <td>";
+                                                        if ($pdfnotas != null) {
+                                                            echo "<a href='../pdfNotas/$pdfnotas' target='_blank' class='btn btn-danger '>
+                                                                <img src='../img/PDF.png' width='25px' height='25px' /></a> ";
+                                                        }else{
+                                                            echo "<button class='btn btn-danger' disabled>
+                                                                <img src='../img/PDF.png' width='25px' height='25px' /></button> ";
+                                                        } 
+                                            echo "  <button class='btn btn-warning ' comprobante type='button' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal3'><i class=\"fas fa-edit\"></i></button></td> 
+                                                </td>
+                                            <tr>";
+                                        } //fin de while
+                                    } else {
+                                        echo "<tr><td colspan='6'>No ha agregado ninguna Asignatura</td></tr>";
+                                    } //fin de else-if
 
-                                               ?>
+                                    ?>
                                 </tbody>
 
                                 <tfoot>
@@ -150,6 +151,15 @@ $incripcionCiclo= $_GET['id'];
                         </div>
                         <br>
                         <br>
+
+                        <?php
+                            if ($pdfnotas == null) {
+                                echo "<div class='alert alert-danger' role='alert'>
+                                    <i class='fas fa-exclamation-triangle'></i>
+                                    Primero debes de agregar tu comprobante de notas para poder editar las materias
+                                </div>";
+                            }
+                        ?>
 
                         <h1 class="text-center" style="font-family: 'Anton', sans-serif;">Materias Inscritas</h1>
                         <br>
@@ -180,56 +190,76 @@ $incripcionCiclo= $_GET['id'];
                                       ====================================================================
                                       -->
                                     <?php
-                                        if ($consulta3->rowCount()>=1)
-                                            {
-                                                session_start();
-                                                $cantidadMaterias = 0;
+                                    if ($consulta3->rowCount() >= 1) {
+                                        session_start();
+                                        //cantidad de materias con estado de inscritas.
+                                        $cantidadMaterias = 0;
+                                        $isFirtsTime = true;
+
+                                        //verificamos si hay materias temporales en la cookie
+                                        $datosTmp = isset($_COOKIE['datosAlumnos']) ? json_decode($_COOKIE['datosAlumnos']) : null;
+
+                                        while ($fila2 = $consulta3->fetch()) {
+                                            //buscamos si la materia de la consulta esta como temporal en la cookie
+                                            $materiaTmp = null;
+                                            if ($datosTmp != null) {
+                                                foreach ($datosTmp as $dato) {
+                                                    if ($dato[0] == $fila2['idMateria']) {
+                                                        $materiaTmp = $dato;
+                                                    }
+                                                }
+                                            }
+
+                                            if ($fila2['estado'] != 'Inscrita') {
                                                 $isFirtsTime = false;
-
-                                              while ($fila2=$consulta3->fetch())
-                                              {
-
-                                                  $isFirtsTime = ($fila2['estado'] == 'Inscrita');
-
-                                                $materia1 = $fila2['nombreMateria'];
-                                                  echo "<tr>                    
-                                                          <td class='oscuro'>".$fila2['idMateria']." </td>
-                                                          <td >".$fila2['nombreMateria']."</td>
-                                                          <td>".$fila2['nota']."
-                                                          <td>".$fila2['matricula']."</td>
-                                                          ";
-                                                          if($fila2['estado']== 'Aprobada'){
-                                                            echo "<td class='bg-success text-white'>".$fila2['estado']."</td> ";
-                                                          }elseif($fila2['estado']== 'Inscrita'){
-                                                            echo "<td class='bg-info text-white'>".$fila2['estado']."</td> ";
-                                                          }elseif($fila2['estado']== 'Retirada'){
-                                                            echo "<td class='bg-warning text-white'>".$fila2['estado']."</td> ";
-                                                          }else{
-                                                            echo "<td class='bg-danger text-white'>".$fila2['estado']."</td> ";
-                                                          }
-                                                          echo " 
-                                                          <td>
-                                                           <button type='button' id=".$fila2['idMateria']." class='btn ' data-toggle='modal'
-                                                            data-target='#ModalMateria' onclick='mandarId(id)' ><i class='fa fa-pen'></i>
-                                    
-                                                            <a href='Modelo/ModeloMaterias/eliminarMateria.php?idciclo=$idciclo&alumno=$idExpedienteU&id=".$fila2['idMateria']."'>
-                                                            <button class='btn text-dark '  type='button'  data-toggle='modal' data-target='#exampleModal4'>
-                                                            <i class=\"fas fa-trash\"></i></button></a>
-                                                            </td> 
-                                                          </td>
-                                                     </tr>";
-
-                                                          $cantidadMaterias++;
-                                                  }//fin de while
-
-                                                $_SESSION['cantidadMaterias'] = $cantidadMaterias;
-                                                $_SESSION['isFirtsTime'] = $isFirtsTime;
-
                                             }else{
-                                                 echo "<tr><td colspan='6'>No ha agregado ninguna Asignatura</td></tr>";
-                                               }//fin de else-if
+                                                $cantidadMaterias++;
+                                            }
 
-                                   ?>
+                                            $materia1 = $fila2['nombreMateria'];
+                                            echo "<tr>                    
+                                                    <td class='oscuro'>" . $fila2['idMateria'] . " </td>
+                                                    <td >" . $fila2['nombreMateria'] . "</td>
+                                            ";
+
+                                            if ($materiaTmp != null) {
+                                                echo "<td style='background: #fff3cd;'>".$materiaTmp[1]."</td>";
+                                                echo "<td>" . $fila2['matricula'] . "</td>";
+                                                echo "<td style='background: #fff3cd; class='text-dark'>".$materiaTmp[2]."</td> ";
+                                            }else{
+                                                echo "<td>".$fila2['nota']."</td>";
+                                                echo "<td>" . $fila2['matricula'] . "</td>";
+                                                if ($fila2['estado'] == 'Aprobada') {
+                                                    echo "<td class='bg-success text-white'>" . $fila2['estado'] . "</td> ";
+                                                } elseif ($fila2['estado'] == 'Inscrita') {
+                                                    echo "<td class='bg-info text-white'>" . $fila2['estado'] . "</td> ";
+                                                } elseif ($fila2['estado'] == 'Retirada') {
+                                                    echo "<td class='bg-warning text-white'>" . $fila2['estado'] . "</td> ";
+                                                } else {
+                                                    echo "<td class='bg-danger text-white'>" . $fila2['estado'] . "</td> ";
+                                                }
+                                            }
+
+                                            echo " 
+                                                <td>
+                                                    <button type='button' id=" . $fila2['idMateria'] . " class='btn ' data-toggle='modal' data-target='#ModalMateria' onclick='mandarId(id)' ><i class='fa fa-pen'></i>
+                                                    <a href='Modelo/ModeloMaterias/eliminarMateria.php?idciclo=$idciclo&alumno=$idExpedienteU&id=" . $fila2['idMateria'] . "'>
+                                                        <button class='btn text-dark '  type='button'  data-toggle='modal' data-target='#exampleModal4'>
+                                                            <i class=\"fas fa-trash\"></i>
+                                                        </button>
+                                                    </a> 
+                                                </td>
+                                            </tr>";
+
+                                        } //fin de while
+
+                                        $_SESSION['cantidadMaterias'] = $cantidadMaterias;
+                                        $_SESSION['isFirtsTime'] = $isFirtsTime;
+                                    } else {
+                                        echo "<tr><td colspan='6'>No ha agregado ninguna Asignatura</td></tr>";
+                                    } //fin de else-if
+
+                                    ?>
                                 </tbody>
                                 <tfoot>
 
@@ -243,8 +273,21 @@ $incripcionCiclo= $_GET['id'];
                     <br>
                 </div>
                 <!--Fin de row-->
-
-                <a class="btn btn-success" href="./Modelo/ModeloMaterias/ActualizarNotas.php?expediente=<?php echo $idExpedienteU;?>&&idInscripcionCiclo=<?=$incripcionCiclo?>" rel="noopener noreferrer">Guardar Cambios</a>
+                <?php
+                    if (isset($_COOKIE['datosAlumnos'])) {
+                        echo '<div class="alert alert-warning" role="alert">
+                            <i class="fas fa-exclamation-circle"></i>
+                            Advertencia: materias con este color indican cambios sin guardar, guarda cambios al terminar de editar.
+                        </div>';
+                    }
+                    
+                    if ($pdfnotas != null) {
+                        echo "<a class='btn btn-success' href='./Modelo/ModeloMaterias/ActualizarNotas.php?expediente=$idExpedienteU&idInscripcionCiclo=$incripcionCiclo' rel='noopener noreferrer'>Guardar Cambios</a>";
+                    }else{
+                        echo "<button class='btn btn-success' disabled>Guardar Cambios</button>";
+                    }
+                ?>
+                <a class="btn btn-danger" href="./Modelo/ModeloMaterias/ActualizarNotas.php?expediente=<?php echo $idExpedienteU; ?>&idInscripcionCiclo=<?= $incripcionCiclo ?>&cancel=true" rel="noopener noreferrer">Cancelar y Regresar</a>
             </div>
             <!--Fin de container-->
         </div>
@@ -282,11 +325,9 @@ $incripcionCiclo= $_GET['id'];
                     Para que su solicitud sea terminada con exito agregue su comprobante de notas.
                 </div>
                 <br />
-                <form action="Modelo/ModeloMaterias/comprobanteInscripcion.php" method="post"
-                    enctype="multipart/form-data">
+                <form action="Modelo/ModeloMaterias/comprobanteInscripcion.php" method="post" enctype="multipart/form-data">
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" accept=".pdf" id="customFileLang" name="archivo"
-                            required>
+                        <input type="file" class="custom-file-input" accept=".pdf" id="customFileLang" name="archivo" required>
                         <label class="custom-file-label" for="customFileLang" data-browse="Buscar">Seleccionar
                             Comprobante</label>
                         <center><small>El archivo no debe pesar más de 5MB</small></center>
@@ -294,24 +335,22 @@ $incripcionCiclo= $_GET['id'];
                     <br><br>
                     <div>
                         <!--idalumnos-->
-                        <input type="hidden" name="alumno" value="<?php echo $alumno;?>">
+                        <input type="hidden" name="alumno" value="<?php echo $alumno; ?>">
                         <!--id expedente-->
-                        <input type="hidden" name="expediente" value="<?php echo $idExpedienteU;?>">
+                        <input type="hidden" name="expediente" value="<?php echo $idExpedienteU; ?>">
                         <!-- ciclo -->
-                        <input type="hidden" name="ciclo" value="<?php echo $ciclo;?>">
+                        <input type="hidden" name="ciclo" value="<?php echo $ciclo; ?>">
                         <!-- comprobante cicloU -->
-                        <input type="hidden" name="comprobante" value="<?php echo $pdfCiclo;?>">
+                        <input type="hidden" name="comprobante" value="<?php echo $pdfCiclo; ?>">
                         <!-- id ciclo -->
-                        <input type="hidden" name="idInscripcionCiclo" value="<?php echo $idciclo;?>">
+                        <input type="hidden" name="idInscripcionCiclo" value="<?php echo $idciclo; ?>">
 
                     </div>
 
             </div>
             <div class="modal-footer">
-                <input class="btn btn-primary btn-rounded" type="submit" name="actualizar" value="Cerrar "
-                    data-dismiss="modal">
-                <input class="btn btn-primary btn-rounded" type="submit" name="actualizar" value="Guardar Cambios "
-                    id="actualizar">
+                <input class="btn btn-primary btn-rounded" type="submit" name="actualizar" value="Cerrar " data-dismiss="modal">
+                <input class="btn btn-primary btn-rounded" type="submit" name="actualizar" value="Guardar Cambios " id="actualizar">
 
             </div>
 
@@ -394,8 +433,7 @@ $incripcionCiclo= $_GET['id'];
 
 <!-- MODAL Materias -->
 <!--**************-->
-<div class="modal fade " id="ModalMateria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade " id="ModalMateria" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -405,22 +443,22 @@ $incripcionCiclo= $_GET['id'];
                 </button>
             </div>
             <div class="modal-body">
-                <form action="Modelo/ModeloMaterias/ActualizarNota2.php" method="POST" accept-charset="utf-8">
+                <form action="Modelo/ModeloMaterias/ActualizarNota2.php" method="POST" accept-charset="utf-8" id="updateSubject">
                     <div class="col">
 
                         <script type="text/javascript">
-                        function mandarId(id) {
-                            var prueba = id;
-                            var prueba2 = id;
+                            function mandarId(id) {
+                                var prueba = id;
+                                var prueba2 = id;
 
-                            document.getElementById("mate").innerHTML = prueba2;
-                            document.getElementById("Materia").value = prueba;
+                                document.getElementById("mate").innerHTML = prueba2;
+                                document.getElementById("Materia").value = prueba;
 
-                        }
+                            }
                         </script>
                         <div class="form-group">
                             <label class="" for="Materia">Codigo de materia:</label>
-                            <input type="text" name="materia" id="Materia" class="Materia form-control">
+                            <input type="text" name="materia" id="Materia" class="Materia form-control" readonly required>
                         </div>
 
 
@@ -431,26 +469,26 @@ $incripcionCiclo= $_GET['id'];
 
                         <div class="form-group">
                             <label class="" for="nota">Nota:</label>
-                            <input type="text" name="nota" placeholder="0.00" class="nota form-control" id="nota">
+                            <input type="number" name="nota" placeholder="0.00" max="10" min="0" step="0.01" class="nota form-control" id="nota" required>
+                            <center><small>La nota debe ser expresada en un rango 0 - 10</small></center>
                         </div>
 
                         <div class="form-group ">
                             <label for="inputCity">Estado materia:</label>
                             <select id="estado" name="estado" class="form-control" required>
-                                <option selected>Seleccione una opción...</option>
+                                <option selected disabled>Seleccione una opción...</option>
                                 <option value="Aprobada">Aprobada</option>
                                 <option value="Reprobada">Reprobada</option>
                                 <option value="Retirada">Retirada</option>
                             </select>
                         </div>
 
-                        <input type="hidden" name="expedienteu" value="<?php echo $idExpedienteU;?>">
-                        <input type="hidden" name="idInscripcionCiclo" value="<?php echo $idciclo;?>">
+                        <input type="hidden" name="expedienteu" value="<?php echo $idExpedienteU; ?>">
+                        <input type="hidden" name="idInscripcionCiclo" value="<?php echo $idciclo; ?>">
 
                     </div>
 
-                    <input class="btn btn-primary btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit"
-                        name="Actualizar_Notas" value="Actualizar Nota" id="Actualizar_Notas">
+                    <input class="btn btn-primary btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit" name="Actualizar_Notas" value="Actualizar Nota" id="Actualizar_Notas">
                 </form>
             </div>
         </div>
@@ -461,8 +499,7 @@ $incripcionCiclo= $_GET['id'];
 
 
 <!-- Modal Pensum carrera -->
-<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-    aria-hidden="true">
+<div class="modal fade" id="exampleModal3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -485,8 +522,7 @@ $incripcionCiclo= $_GET['id'];
 
 
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" accept=".pdf" id="customFileLang" name="archivo"
-                            required>
+                        <input type="file" class="custom-file-input" accept=".pdf" id="customFileLang" name="archivo" required>
                         <label class="custom-file-label" for="customFileLang" data-browse="Buscar">Seleccionar
                             Comprobante</label>
                         <center><small>El archivo no debe pesar más de 5MB</small></center>
@@ -494,11 +530,11 @@ $incripcionCiclo= $_GET['id'];
                     <br><br>
                     <div>
                         <!--idalumnos-->
-                        <input type="hidden" name="alumno" value="<?php echo $alumno;?>">
+                        <input type="hidden" name="alumno" value="<?php echo $alumno; ?>">
                         <!--id expedente-->
-                        <input type="hidden" name="expediente" value="<?php echo $idExpedienteU;?>">
+                        <input type="hidden" name="expediente" value="<?php echo $idExpedienteU; ?>">
                         <!-- id incripcion ciclo -->
-                        <input type="hidden" name="idInscripcionCiclo" value="<?php echo $idciclo;?>">
+                        <input type="hidden" name="idInscripcionCiclo" value="<?php echo $idciclo; ?>">
                     </div>
             </div>
             <div class="modal-footer">
@@ -527,16 +563,15 @@ $incripcionCiclo= $_GET['id'];
             </div>
             <div class="modal-body">
                 <form action="Modelo/ModeloMaterias/agregarMateria.php" method="post">
-                    <input type="hidden" name="idInscripcion" value="<?php  echo $incripcionCiclo;?>">
-                    <input type="hidden" name="idalumno" value="<?php  echo $idExpedienteU;?>">
+                    <input type="hidden" name="idInscripcion" value="<?php echo $incripcionCiclo; ?>">
+                    <input type="hidden" name="idalumno" value="<?php echo $idExpedienteU; ?>">
                     <div class="searchable">
-                        <input type="text" name='idMateria' placeholder="Buscar materia"
-                            onkeyup="filterFunction(this,event)">
+                        <input type="text" name='idMateria' placeholder="Buscar materia" onkeyup="filterFunction(this,event)">
                         <ul>
                             <?php
                             while ($row = $consulta5->fetch()) {
-                                if($row['estadoM'] != 'Aprobada' ){
-                                    echo "<li>".$row['nombreMateria']."</li>";
+                                if ($row['estadoM'] != 'Aprobada') {
+                                    echo "<li>" . $row['nombreMateria'] . "</li>";
                                 }
                             }
                             ?>
@@ -553,14 +588,31 @@ $incripcionCiclo= $_GET['id'];
 </div>
 
 
-    <!--
+<!--
      ==================================================
      JS FILES
      ==================================================
      -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="./JS/selector.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="./JS/selector.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    const formMateria = document.getElementById('updateSubject');
+    formMateria.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (document.getElementById('estado').selectedIndex < 1) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Debes de seleccionar un estado para esta materia',
+                confirmButtonColor: '#dc3545'
+            })
+        }else {
+            formMateria.submit();
+        }
+    });
+</script>
 
 <?php
-require_once 'templates/footer.php';?>
+require_once 'templates/footer.php'; ?>
