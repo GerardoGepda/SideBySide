@@ -31,7 +31,7 @@ while ($fila = $stmt1->fetch()) {
   </div>
   <div class="row">
     <div class="col">
-      <table class="table table-responsive-lg w-75 mx-auto float-center">
+      <table class="table table-responsive-lg w-75 mx-auto float-center telInputs">
         <thead class="thead-dark" id="columnas">
           <tr>
             <th v-for="e in columns"> {{e}} </th>
@@ -44,18 +44,18 @@ while ($fila = $stmt1->fetch()) {
             <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro' && e.Tipo  != 'Sesión Grupal' ">Ilimitado</td>
             <td v-else="">{{e.Canitdad}} </td>
             <td>{{e.TiempoReunion}} Minutos</td>
-            <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'  && e.Tipo  != 'Sesión Grupal' ">
-              <input type="text" id='txttel' name="txttel" class="form-control-sm" v-on:keypress='validarTelefono($event)' v-model="valor" value="valor" placeholder="0000-0000" maxlength='9' required>
+            <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro'  && e.Tipo  != 'Sesión Grupal' " id="idTelInput">
+              <input type="text" id='txttel' name="txttel" class="form-control-sm" placeholder="0000-0000" maxlength='9' required>
             </td>
             <td v-if="e.Tipo != 'Sesión individual' && e.Tipo != 'Otro' && e.Tipo != 'Sesión Grupal' ">
               <div v-if="verificado == 0">
-                <button class='btn btn-warning' id='btninscribir' v-on:click='inscribir' title='Inscribir' value='btninscribir'>
-                  <i class='fas fa-pen'></i></button>
+                <button class='btn btn-warning' id='btninscribir' v-on:click='inscribir($event)' title='Inscribir' value='btninscribir'>
+                  <i class='fas fa-pen' style="pointer-events: none;" tabindex="-1"></i></button>
                 <!-- añadimos el boton desinscribir pero oculto para evitar errores en JS -->
                 <button style='display: none' id='btndesinscribir' v-on:click='cancelar' value='btndesinscribir'></button>
               </div>
               <div v-else="">
-                <button class='btn btn-danger' id='btndesinscribir' value='btndesinscribir' v-on:click='cancelar' title='Desinscribir'><i class='fas fa-ban'></i></button>
+                <button class='btn btn-danger' id='btndesinscribir' value='btndesinscribir' v-on:click='cancelar' title='Desinscribir'><i class='fas fa-ban' style="pointer-events: none;" tabindex="-1"></i></button>
                 <!-- añadimos el boton inscribir pero oculto para evitar errores en JS -->
                 <button style='display: none' id='btninscribir' v-on:click='inscribir' value='btninscribir'></button>
               </div>
@@ -147,6 +147,21 @@ while ($fila = $stmt1->fetch()) {
           Link.select();
           document.execCommand('copy');
         }
+
+  const telInputs = document.querySelector('.telInputs');
+  telInputs.addEventListener('keypress', (e) => {
+    if (e.target.tagName == 'INPUT') {
+      if (RegExp("([0-9])").test(e.key)) {
+        if (e.target.value.length == 4) {
+          e.target.value += "-";
+        }
+      }else{
+        e.preventDefault();
+      }
+    }
+  });
+
+
 </script>
 
 <script async src="JS/CrearHorario.js"></script>

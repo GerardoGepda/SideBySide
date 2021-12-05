@@ -66,8 +66,9 @@ var reunion = new Vue({
             return this.tmp;
         },
 
-        inscribir: function () {
+        inscribir: function (e) {
             console.log("iniciando");
+            this.valor = e.target.parentElement.parentElement.parentElement.childNodes[8].childNodes[0].value;
             if (exprs.test((this.valor))) {
                 this.GuardarCupo(this.valor);
             } else {
@@ -78,16 +79,6 @@ var reunion = new Vue({
         },
         cancelar: function () {
             $('#modalDes').modal('show');
-        },
-        validarTelefono: function (e) {
-            const tel = document.querySelector('#txttel');
-            if (RegExp("([0-9])").test(e.key)) {
-                if (tel.value.length == 4) {
-                    tel.value += "-";
-                }
-            }else{
-                e.preventDefault();
-            }
         },
         GuardarCupo: function (telefono) {
             const horario = document.getElementById("idhorario").value;
@@ -154,7 +145,6 @@ var ObjDelteInscr = new Vue({
                 idreunion: re,
                 desinscribir: true
             };
-            console.log(datos);
             $.ajax({
                 type: "POST",
                 url: "Modelo/ModeloReunion/inscrSinCupo.php",

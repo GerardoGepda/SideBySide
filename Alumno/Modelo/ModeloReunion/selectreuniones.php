@@ -14,10 +14,11 @@ $query = $pdo->query($sql);
 
 while ($r = $query->fetch(PDO::FETCH_ASSOC)) {
     $reuFecha = new DateTime($r["Fecha"] . " " . $r["HorarioInicio"]);
-    if ($fechaNow->getTimestamp() < $reuFecha->getTimestamp()) {
-        if ($reuFecha->diff($fechaNow)->h >= 2) {
-            $data[] = $r;
-        }
+    //obtenesmos los segundos unix de las fechas y los restamos para validar que se muestren los horarios
+    //solo si la diferencia de tiempo enre las 2 fechas (actual y reunión) tienen una separación de
+    //2 horas (7200 segundos) o más
+    if (($reuFecha->getTimestamp() - $fechaNow->getTimestamp()) >= 7200) {
+        $data[] = $r;
     }  
 }
 echo json_encode(array("reunion" => $data));

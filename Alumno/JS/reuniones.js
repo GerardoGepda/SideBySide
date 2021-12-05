@@ -23,12 +23,7 @@ var columnas = new Vue({
         validarTH: function () {
             if (this.tipo != "Sesión individual" && this.tipo != "Otro" && this.tipo != "Sesión Grupal") {
                 this.columns.push("Teléfono");
-
-                if (this.result == 0) {
-                    this.columns.push("Inscribir")
-                } else {
-                    this.columns.push("Desinscribir")
-                }
+                this.columns.push("Acción")
             } else {
                 this.columns.push("Horarios")
             }
