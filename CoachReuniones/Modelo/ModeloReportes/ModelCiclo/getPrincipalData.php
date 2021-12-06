@@ -1,8 +1,9 @@
 <?php
 include_once "../../../../Conexion/conexion.php";
-session_start();
 
 header("Content-type: application/json; charset=utf-8");
+session_start();
+
 $input = json_decode(file_get_contents("php://input"), true);
 $data = array();
 $ids = array();
@@ -93,7 +94,7 @@ if (isset($input['ciclo']) && isset($input['clases']) && isset($input['sedes']) 
             AND a.ID_Empresa = :id
             AND a.Class IN ($clases)
             AND a.FuenteFinacimiento IN ($financiamiento)
-            AND A.ID_Alumno NOT IN (
+            AND a.ID_Alumno NOT IN (
                 SELECT a.ID_Alumno
                 FROM alumnos a
                     INNER JOIN inscripcionreunion i on i.id_alumno = a.ID_Alumno
