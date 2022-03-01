@@ -278,6 +278,11 @@ $n6=mt_rand(1,9);
                                 <option value='Ciclo 01-2021'>Ciclo 01-2021</option>
                                 <option value='Ciclo 02-2021'>Ciclo 02-2021</option>
                                 <option value='Ciclo 03-2021' title="Interciclo">Ciclo 03-2021</option>
+								<!-- año 2022 -->
+                                <option disabled>2022</option>
+                                <option value='Ciclo 01-2022'>Ciclo 01-2022</option>
+                                <option value='Ciclo 02-2022'>Ciclo 02-2022</option>
+                                <option value='Ciclo 03-2022' title="Interciclo">Ciclo 03-2022</option>
                             </select>
                             <input type="hidden" name="expediente" value="<?php echo  $idExpedienteU; ?>">
                             <input type="hidden" name="inscriCiclo" value="<?php echo  $inscriC; ?>">

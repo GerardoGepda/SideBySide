@@ -112,6 +112,7 @@ include 'Modularidad/MenuVertical.php';
                                     <option value="Cristina Guerrero">Cristina Guerrero</option>
                                     <option value="Rogelio Gonzalez">Rogelio Gonzalez </option>
                                     <option value="Geo Albanés">Geo Albanés</option>
+									<option value="Susana Anzora">Susana Anzora</option>
                                 </select>
                             </div>
                         </div>
