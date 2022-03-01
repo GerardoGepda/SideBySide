@@ -132,7 +132,7 @@ include 'Modularidad/MenuVertical.php';
 
                     <tbody>
 
-                        <?php include 'Modelo/ModeloReunion/MostrarDatosReunionFinalizado.php' ?>
+                        <?php include 'Modelo/ModeloReunion/ReunionesFinalizados.php' ?>
 
                     </tbody>
                 </table>

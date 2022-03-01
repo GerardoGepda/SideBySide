@@ -25,8 +25,8 @@ if ($consulta->rowCount()>=1)
 	<th>".$fila['Lugar']."</th>
 	<th>".$fila['ID_Ciclo']."</th>
 	<th>".$fila['Estado']."</th>
-	<td><a href='Vistas/VistaReunion/ActualizarReunion.php?id=".$fila['ID_Reunion']."' class='fas fa-pencil-alt  btn btn-success'></a> </td>
-	<td><a href='ListaReunion.php?id=".$fila['ID_Reunion']."' class='fas fa-archive  btn btn-success'></a> </td>
+	<td><a href='Vistas/VistaReunion/ActualizarReunion.php?id=".$fila['ID_Reunion']."' class='btn btn-success'><i class='fas fa-pencil-alt'></i></a> </td>
+	<td><a href='ListaReunion.php?id=".$fila['ID_Reunion']."' class='btn btn-success'><i class='fas fa-archive'></i></a></td>
 	</tr>";
 
 }

@@ -27,6 +27,16 @@ $stmt4->execute();
 
 ?>
 
+<!-- jsPDF -->
+<script src="js/jspdf.umd.js"></script>
+<!-- jsPDF Autotable -->
+<script src="js/jspdf.plugin.autotable.js"></script>
+<!-- SheetJs -->
+<script src="js/xlsx.full.min.js"></script>
+<!-- FileSaver -->
+<script src="js/FileSaver.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <link rel="stylesheet" type="text/css" href="css/Renovacion.css">
 <div class="title mb-2">
     <a href="javascript:history.back();"><img src="../img/back.png" class="icon"></a>
@@ -173,16 +183,6 @@ $stmt4->execute();
 <script src="js/exportpdfreporte.js"></script>
 <!-- js para exportar a Excel -->
 <script src="js/exportexcelreporte.js"></script>
-
-<!-- jsPDF -->
-<script src="js/jspdf.umd.js"></script>
-<!-- jsPDF Autotable -->
-<script src="js/jspdf.plugin.autotable.js"></script>
-<!-- SheetJs -->
-<script src="js/xlsx.full.min.js"></script>
-<!-- FileSaver -->
-<script src="js/FileSaver.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <!-- fin de proceso de  graficas -->
 <!-- **************************************** Fin de estructura de trabajo **************************** -->

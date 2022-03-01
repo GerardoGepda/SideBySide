@@ -589,8 +589,8 @@ include 'Modularidad/MenuVertical.php';
                                     }
                                     echo "
 							<th>" . $asiste . "</th>
-							<td><a href='Modelo/ModeloReunion/AsistenciaReunion.php?id=" . $fila2['ID_Reunion'] . "&id2=" . $fila2['ID_Alumno'] . "' class='fas fa-check  btn btn-warning'></a> </td>
-							<td><a href='Modelo/ModeloReunion/NoAsistioReunion.php?id=" . $fila2['ID_Reunion'] . "&id2=" . $fila2['ID_Alumno'] . "' class='fas fa-times  btn btn-danger'></a> </td>
+							<td><a href='Modelo/ModeloReunion/AsistenciaReunion.php?id=" . $fila2['ID_Reunion'] . "&id2=" . $fila2['ID_Alumno'] . "' class='btn btn-warning'><i class='fas fa-check'></i></a></td>
+							<td><a href='Modelo/ModeloReunion/NoAsistioReunion.php?id=" . $fila2['ID_Reunion'] . "&id2=" . $fila2['ID_Alumno'] . "' class='btn btn-danger'><i class='fas fa-times'></i></a></td>
 
 						</tr>";
                                 }
