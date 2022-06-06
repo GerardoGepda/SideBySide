@@ -151,8 +151,8 @@ if ($consulta->rowCount()>=1)
                             </span>
                         </div>
                         <div class="wrap-input100 validate-input" data-validate="se requiere una contraseña">
-                            <input class="input100" type="text" name="celular" id="celular"
-                                placeholder="Celular (########)" required>
+                            <input class="input100" type="tel" name="celular" id="celular"
+                                placeholder="Celular (########)" minlength="8" maxlength="8" autocomplete="new-password" required>
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-phone-square" aria-hidden="true"></i>
@@ -163,8 +163,8 @@ if ($consulta->rowCount()>=1)
 
                     <div class="col -sm">
                         <div class="wrap-input100 validate-input" data-validate="se requiere una contraseña">
-                            <input class="input100" type="text" name="password" id="password"
-                                placeholder="Contraseña" required>
+                            <input class="input100" type="password" name="password" id="password"
+                                placeholder="Contraseña" autocomplete="new-password" required>
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-lock" aria-hidden="true"></i>

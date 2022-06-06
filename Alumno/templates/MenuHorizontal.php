@@ -113,7 +113,7 @@
         <div class="dark border-right" id="sidebar-wrapper">
             <div class="sidebar-heading justify-content-center align-items-center">
                 <center>
-                    <img src="../img/imgUser/<?php echo $_SESSION['Foto'] ?>" class="rounded-circle" class="img-responsive" style="width: 100px; height: 100px">
+                    <img src="../img/imgUser/<?php echo $_SESSION['Foto'] ?>" class="rounded-circle img-responsive" style="width: 100px; height: 100px; object-fit: cover">
                 </center>
                 <hr>
                 <b>

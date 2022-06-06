@@ -229,7 +229,7 @@ $(document).ready(function() {
   </div>
   <div class="form-group">
     <label for="exampleInputPassword1">avance de carrera:</label>
-    <input type="number" step="0.01" min="0" max="100" name="avance"  value="<?php echo $avance;?>" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese su CUM">
+    <input type="number" step="0.01" min="0" max="100" name="avance"  value="<?php echo $avance;?>" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingrese su porcentaje de avance">
   
   </div>
   <div class="form-check">

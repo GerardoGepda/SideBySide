@@ -363,7 +363,7 @@ while($fila2 = $stmt2->fetch()){
                 <div class="row">
                     <div class="text-center align-self-center" id="carnet">
                         <br>
-                        <img src="../img/imgUser/<?php echo $FotoAlumno?>" alt="img de usuario" class="user">
+                        <img src="../img/imgUser/<?php echo $FotoAlumno?>" alt="img de usuario" class="user" style="object-fit: cover;">
                         <h4 id="info1"><?php echo $Nombre_Alumno; ?></h4>
                         <h4 id="info1"><?php echo $Carnet; ?></h4>
                         <h6 id="info1" class="little"> <?php echo $univerisdad; ?></h6>

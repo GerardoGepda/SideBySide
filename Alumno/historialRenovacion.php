@@ -23,7 +23,7 @@ foreach ($dbh->query("SELECT ID_Empresa FROM alumnos WHERE ID_Alumno = '".$ID."'
 foreach ($dbh->query("SELECT Nombre FROM alumnos WHERE ID_Alumno = '".$ID."'") as $ES) {
   $Alumno = $ES["Nombre"];
 }
-foreach ($dbh->query("SELECT imagen FROM usuarios WHERE nombre = '".$Alumno."'") as $PIC) {
+foreach ($dbh->query("SELECT imagen FROM usuarios us INNER JOIN alumnos al ON us.correo = al.correo WHERE al.ID_Alumno = '".$ID."'") as $PIC) {
   $FotoAlumno = $PIC["imagen"];
 }
 foreach ($dbh->query("SELECT COUNT(*) AS 'Condicion' FROM renovacion 
@@ -85,7 +85,7 @@ if (isset($_SESSION['noti'])) {
 
   if ($condicion < 1) {
       echo " <thead><td colspan='4' style='font-size: 18px;font-weight: bold;''>".$Alumno."</td></thead>";
-      echo "<thead><td colspan='4'><img src='../img/imgUser/$FotoAlumno?>' alt='img de usuario' id='perfil'></td></thead>";
+      echo "<thead><td colspan='4'><img src='../img/imgUser/$FotoAlumno' style='object-fit: cover;' alt='img de usuario' id='perfil'></td></thead>";
       echo "<td colspan='4' class='alert alert-danger'>Sin renovaciones de Beca</td>";
     }else
     {
@@ -95,7 +95,7 @@ if (isset($_SESSION['noti'])) {
         <td colspan="5" style="font-size: 18px;font-weight: bold;"><?php echo  $Alumno ?></td>
       </thead>
       <thead>
-        <td colspan="5"><img src="../img/imgUser/<?php echo $FotoAlumno?>" alt="img de usuario" id="perfil"></td>
+        <td colspan="5"><img src="../img/imgUser/<?php echo $FotoAlumno?>" style='object-fit: cover;' alt="img de usuario" id="perfil"></td>
 
       
           <thead class="table-dark">

@@ -196,7 +196,8 @@ $stmt9->execute(array($idExpedienteU));
       width: 150px; background-repeat: no-repeat;
       background-position: 50%;
       border-radius: 50%;
-      background-size: 100% auto;">
+      background-size: 100% auto;
+      object-fit: cover;">
             <h4 style="color: white; text-align: center; font-weight: bold;"><?php echo utf8_encode($univerisdad)  ?>
             </h4>
 
