@@ -125,6 +125,10 @@ if ($consulta->rowCount()>=1)
                     <div class="col -sm">
                         <span class="login100-form-title" style="color: white;">
                             Formas de contacto
+                            <br>
+                            <small>y</small>
+                            <br>
+                            <small style="text-align: center">Creación de nueva contraseña</small>
                         </span>
                         <div class="wrap-input100 validate-input" >
                             <input class="input100" type="text" name="facebook" id="facebook" placeholder="Facebook"
@@ -164,7 +168,7 @@ if ($consulta->rowCount()>=1)
                     <div class="col -sm">
                         <div class="wrap-input100 validate-input" data-validate="se requiere una contraseña">
                             <input class="input100" type="password" name="password" id="password"
-                                placeholder="Contraseña" autocomplete="new-password" required>
+                                placeholder="Nueva contraseña" autocomplete="new-password" required>
                             <span class="focus-input100"></span>
                             <span class="symbol-input100">
                                 <i class="fa fa-lock" aria-hidden="true"></i>
