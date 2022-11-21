@@ -493,7 +493,7 @@ while($fila2 = $stmt2->fetch()){
                 </div>
                 <div class="status5">
                     <p>Estado <br>Laboral</p>
-                    <a href="SolicitudCambio.php" class="btn btn-info" id="button-info">Cambiar</a>
+                    <a href="SolicitudCambio.php?id=<?php echo $alumno;?>" class="btn btn-info" id="button-info">Cambiar</a>
                 </div>
             </div>
 
