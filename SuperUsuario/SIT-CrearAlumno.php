@@ -372,6 +372,8 @@ CAMBIAR MENU, CONSULTAR-->
 												<option value="" disabled selected >Seleccione la opción</option>
 												<option value="SSFT" >San Salvador</option>
 												<option value="SAFT" >Santa Ana</option>
+												<option value="SMFT" >San Miguel</option>
+												<option value="SOFT" >Sonsonate</option>
 											</select>
 
 
