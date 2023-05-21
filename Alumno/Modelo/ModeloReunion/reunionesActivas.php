@@ -29,9 +29,10 @@ while ($row = $stmt2->fetch()) {
     if ($row["Tipo"] == 'Charla Informativa' || $row["Tipo"] == "Reunión General") {
         $data[] = $row;
     } else {
-        if ($row["ID_Sede"] == $sede) {
+        $data[] = $row;
+        /*if ($row["ID_Sede"] == $sede) {
             $data[] = $row;
-        }
+        }*/
     }
 }
 
