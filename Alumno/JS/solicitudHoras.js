@@ -12,9 +12,9 @@ $(document).ready(function () {
 
     $("#horasSoc").focusout(function() {
       horas=$("#horasSoc").val();
-      if (horas>20) {
+      if (horas>40) {
         $("#horasSoc").focus();
-        var html ="No deben exceder de 20 horas"
+        var html ="No deben exceder de 40 horas"
         $('#errorhoras').html(html);
         $("#errorhoras").show();
         
