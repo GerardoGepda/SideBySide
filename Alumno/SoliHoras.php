@@ -70,7 +70,7 @@ if ($consulta->rowCount() >= 0) {
 
 // Consulta para ver si existe un docuemento
 if ($ArchivoPDF != null) {
-  $RutaArchivo = "../ComproCambio/" . $ArchivoPDF; //Buscammos el archivo con el nombre que se encuentra en la base
+  $RutaArchivo = "../ComproHoras/" . $ArchivoPDF; //Buscammos el archivo con el nombre que se encuentra en la base
   unlink($RutaArchivo);  // Eliminanos el archivo
   if ($tamañoarchivo <= 5000000) {
     if (!file_exists($destino)) {
